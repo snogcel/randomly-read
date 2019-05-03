@@ -39,11 +39,13 @@ const Header = ({ user, logout }) => (
         <HeaderNavLink as='span' onClick={logout}>
           log out
         </HeaderNavLink>
+        <HeaderNavLink to='/randomlyread'>RR</HeaderNavLink>
       </>
     ) : (
       <>
         <HeaderNavLink to='/login'>log in</HeaderNavLink>
         <HeaderNavLink to='/signup'>sign up</HeaderNavLink>
+        <HeaderNavLink to='/randomlyread'>RR</HeaderNavLink>
       </>
     )}
   </Wrapper>
