@@ -7,32 +7,16 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
 
 function WordCard(props) {
-  const styles = {
-    card: {
-      minWidth: 275
-    },
-    bullet: {
-      display: 'inline-block',
-      margin: '0 2px',
-      transform: 'scale(0.8)'
-    },
-    title: {
-      fontSize: 14
-    },
-    pos: {
-      marginBottom: 12
-    }
-  };
-  console.log('HI');
   return (
     <Grid container justify='center'>
-      <Card alignItems='center' style={{ width: 400 }}>
+      <Card alignItems='center' style={{ width: 925 }}>
         <CardContent>
-          <Typography color='textSecondary' align='center' gutterBottom>
-            Word
-          </Typography>
+          <Typography color='textSecondary' align='center' gutterBottom />
           <Query
             query={gql`
               {
@@ -57,7 +41,7 @@ function WordCard(props) {
                   </Typography>
                 );
               return (
-                <Typography variant='h5' component='h2' align='center'>
+                <Typography variant='h2' component='h2' align='center'>
                   {data.words[0].lexeme}
                 </Typography>
               );
@@ -79,10 +63,37 @@ function WordCard(props) {
           <Button size='small' align='left'>
             Vote
           </Button>
-          <Button size='small' align='right'>
+          <Button
+            size='small'
+            align='right'
+            style={{ flex: 1, marginLeft: '750px' }}
+          >
             Comment
           </Button>
         </CardActions>
+        <FormGroup row style={{ flex: '1', marginLeft: '25px' }}>
+          <FormControlLabel control={<Checkbox value='checkedA' />} label='ɑ' />
+          <FormControlLabel control={<Checkbox value='checkedB' />} label='æ' />
+          <FormControlLabel control={<Checkbox value='checkedC' />} label='ʌ' />
+          <FormControlLabel control={<Checkbox value='checkedD' />} label='ɔ' />
+          <FormControlLabel
+            control={<Checkbox value='checkedE' />}
+            label='aʊ'
+          />
+          <FormControlLabel
+            control={<Checkbox value='checkedF' />}
+            label='aɪ'
+          />
+          <FormControlLabel control={<Checkbox value='checkedG' />} label='ɛ' />
+          <FormControlLabel control={<Checkbox value='checkedH' />} label='ɝ' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='eɪ' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='ɪ' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='i' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='oʊ' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='ɔɪ' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='ʊ' />
+          <FormControlLabel control={<Checkbox value='Vowel' />} label='u' />
+        </FormGroup>
       </Card>
     </Grid>
   );
