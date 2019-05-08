@@ -13,11 +13,11 @@ import FormGroup from '@material-ui/core/FormGroup';
 
 class WordCard extends React.Component  {
   
-  constructor(props) {
+    constructor(props) {
     super(props) 
     this.state = {text: null, vowel: [], isFirstRender: true}
   }
-
+  
   handleChange = name => event => {
     console.log(event.target.checked)
     if (event.target.checked){
@@ -35,20 +35,16 @@ class WordCard extends React.Component  {
       })
       this.props.removeVowel(name)
       this.props.removeWord()
-
-
    }
-
   };
 
   setWord(title) {
-   
       this.setState({text: title, isFirstRender: false})
       this.props.addWord(this.state.text)
   }
 
-
   render() { 
+
     let vowel = JSON.stringify(this.state.vowel);
     console.log(this.state);
    
