@@ -11,7 +11,22 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 
-function WordCard(props) {
+class WordCard extends React.Component  {
+  
+  constructor(props) {
+    super(props) 
+    this.state = {text: null, vowel: ["AA"]}
+  }
+
+  handleChange = name => event => {
+    this.setState({ vowel: [...this.state.vowel, name ]});
+  };
+
+  
+
+  render() {
+    console.log(this.state.vowel);
+    
   return (
     <Grid container justify='center'>
       <Card alignItems='center' style={{ width: 925 }}>
@@ -20,14 +35,14 @@ function WordCard(props) {
           <Query
             query={gql`
               {
-                words(vowel: ["AO"], syllables: [1, 2, 3], limit: 1) {
+                words(vowel: ["AA"], syllables: [1, 2, 3], limit: 1) {
                   lexeme
                   cmudict_id
                 }
               }
             `}
           >
-            {({ loading, error, data }) => {
+            {({ loading, error, data }) => {  
               if (loading)
                 return (
                   <Typography variant='h5' component='h2' align='center'>
@@ -42,13 +57,12 @@ function WordCard(props) {
                 );
               return (
                 <Typography variant='h2' component='h2' align='center'>
-                  {data.words[0].lexeme}
+                    { <p>{data.words[0].lexeme === undefined ? 'Empty' : data.words[0].lexeme}</p> }
                 </Typography>
               );
+              
             }}
-            {/* <Typography variant='h5' component='h2' align='center'>
-            be nev lent
-          </Typography> */}
+            
           </Query>
           <Typography color='textSecondary' align='center'>
             adjective
@@ -72,31 +86,33 @@ function WordCard(props) {
           </Button>
         </CardActions>
         <FormGroup row style={{ flex: '1', marginLeft: '25px' }}>
-          <FormControlLabel control={<Checkbox value='checkedA' />} label='ɑ' />
-          <FormControlLabel control={<Checkbox value='checkedB' />} label='æ' />
-          <FormControlLabel control={<Checkbox value='checkedC' />} label='ʌ' />
-          <FormControlLabel control={<Checkbox value='checkedD' />} label='ɔ' />
+          <FormControlLabel control={<Checkbox value='a' />} label='ɑ' onChange={this.handleChange('AA')}/>
+          <FormControlLabel control={<Checkbox value='æ' />} label='æ' onChange={this.handleChange('AE')}/>
+          <FormControlLabel control={<Checkbox value='ʌ' />} label='ʌ' onChange={this.handleChange('AH')}/>
+          <FormControlLabel control={<Checkbox value='ɔ' />} label='ɔ' onChange={this.handleChange('AO')}/>
           <FormControlLabel
-            control={<Checkbox value='checkedE' />}
+            control={<Checkbox value='aʊ' />}
             label='aʊ'
+            onChange={this.handleChange('AW')}
           />
           <FormControlLabel
-            control={<Checkbox value='checkedF' />}
+            control={<Checkbox value='aɪ' />}
             label='aɪ'
+            onChange={this.handleChange('AY')}
           />
-          <FormControlLabel control={<Checkbox value='checkedG' />} label='ɛ' />
-          <FormControlLabel control={<Checkbox value='checkedH' />} label='ɝ' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='eɪ' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='ɪ' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='i' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='oʊ' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='ɔɪ' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='ʊ' />
-          <FormControlLabel control={<Checkbox value='Vowel' />} label='u' />
+          <FormControlLabel control={<Checkbox value='ɛ' />} label='ɛ'  onChange={this.handleChange('EH')}/>
+          <FormControlLabel control={<Checkbox value='ɝ' />} label='ɝ' onChange={this.handleChange('ER')}/>
+          <FormControlLabel control={<Checkbox value='eɪ' />} label='eɪ' onChange={this.handleChange('EY')}/>
+          <FormControlLabel control={<Checkbox value='ɪ' />} label='ɪ' onChange={this.handleChange('IH')}/>
+          <FormControlLabel control={<Checkbox value='i' />} label='i' onChange={this.handleChange('IY')}/>
+          <FormControlLabel control={<Checkbox value='oʊ' />} label='oʊ' onChange={this.handleChange('OW')}/>
+          <FormControlLabel control={<Checkbox value='ɔɪ' />} label='ɔɪ' onChange={this.handleChange('OY')}/>
+          <FormControlLabel control={<Checkbox value='ʊ' />} label='ʊ' onChange={this.handleChange('UH')}/>
+          <FormControlLabel control={<Checkbox value='u' />} label='u' onChange={this.handleChange('UW')}/>
         </FormGroup>
       </Card>
     </Grid>
   );
 }
-
+}
 export default WordCard;
