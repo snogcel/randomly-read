@@ -1,20 +1,35 @@
 import { connect } from 'react-redux';
-import RRComponent from './RRComponent';
+import WordCard from './WordCard';
+import {addVowel} from '../../actions/word'
+import {addWord} from '../../actions/word'
+import {removeVowel} from '../../actions/word'
+import {removeWord} from '../../actions/word'
 
 const mapStateToProps = state => ({
-  text: state.word.text,
-  vowel: state.word.vowel
+  text: state.text,
+  vowel: state.vowel
   
 });
 
 const mapDispatchToProps = dispatch => ({
-  // empty for now
+  addVowel: (vowel) => {
+    dispatch(addVowel(vowel))
+  },
+  addWord: (word) => {
+    dispatch(addWord(word))
+  },
+  removeVowel: (vowel) => {
+    dispatch(removeVowel(vowel))
+  },
+removeWord: (word) => {
+  dispatch(removeWord(word))
+}
   
 });
 
 const RRContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RRComponent);
+)(WordCard);
 
 export default RRContainer;
