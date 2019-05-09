@@ -61,6 +61,12 @@ class WordCard extends React.Component  {
                 words(vowel: ${vowel}, syllables: [1, 2, 3], limit: 1) {
                   lexeme
                   cmudict_id
+                  wordid
+                  wordsXsensesXsynsets {
+                  wordid
+                  pos
+                  definition
+              }
                 }
               }
             `}
@@ -86,10 +92,10 @@ class WordCard extends React.Component  {
                 </Typography>
                 <Typography color='textSecondary' align='center'>
                 {/* Parts of Speech */}
-                { data.words[0].wordsXsensesXsynsets[0].definitions.definition.pos }
+                { data.words[0].wordsXsensesXsynsets[0].pos }
                 </Typography>
                 <Typography component='p' align='center'>
-                 Definiton
+                { data.words[0].wordsXsensesXsynsets[0].definition }
                 </Typography>
                 </>  
               );
