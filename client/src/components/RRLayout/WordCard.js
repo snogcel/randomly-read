@@ -12,7 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 
 class WordCard extends React.Component  {
-  
+
     constructor(props) {
     super(props) 
     this.state = {text: null, vowel: [], isFirstRender: true}
@@ -80,23 +80,22 @@ class WordCard extends React.Component  {
                   </Typography>
                 );
               return (
+                <>
                 <Typography variant='h2' component='h2' align='center'>
-
-                  { data.words[0].lexeme === undefined ? 'Empty' : data.words[0].lexeme }
+                  { data.words[0].lexeme }
                 </Typography>
+                <Typography color='textSecondary' align='center'>
+                {/* Parts of Speech */}
+                { data.words[0].wordsXsensesXsynsets[0].definitions.definition.pos }
+                </Typography>
+                <Typography component='p' align='center'>
+                 Definiton
+                </Typography>
+                </>  
               );
-              
             }} 
             </Query>
            }
-          <Typography color='textSecondary' align='center'>
-            adjective
-          </Typography>
-          <Typography component='p' align='center'>
-            well meaning and kindly.
-            <br />
-            {'"a benevolent smile"'}
-          </Typography>
         </CardContent>
         <CardActions>
           <Button size='small' align='left'>
@@ -111,29 +110,21 @@ class WordCard extends React.Component  {
           </Button>
         </CardActions>
         <FormGroup row style={{ flex: '1', marginLeft: '25px' }}>
-          <FormControlLabel control={<Checkbox value='a' />} label='ɑ' onChange={this.handleChange('AA')}/>
-          <FormControlLabel control={<Checkbox value='æ' />} label='æ' onChange={this.handleChange('AE')}/>
-          <FormControlLabel control={<Checkbox value='ʌ' />} label='ʌ' onChange={this.handleChange('AH')}/>
-          <FormControlLabel control={<Checkbox value='ɔ' />} label='ɔ' onChange={this.handleChange('AO')}/>
-          <FormControlLabel
-            control={<Checkbox value='aʊ' />}
-            label='aʊ'
-            onChange={this.handleChange('AW')}
-          />
-          <FormControlLabel
-            control={<Checkbox value='aɪ' />}
-            label='aɪ'
-            onChange={this.handleChange('AY')}
-          />
-          <FormControlLabel control={<Checkbox/>} label='ɛ'  onChange={this.handleChange('EH')}/>
+          <FormControlLabel control={<Checkbox/>} label='ɑ' onChange={this.handleChange('AA')}/>
+          <FormControlLabel control={<Checkbox/>} label='æ' onChange={this.handleChange('AE')}/>
+          <FormControlLabel control={<Checkbox/>} label='ʌ' onChange={this.handleChange('AH')}/>
+          <FormControlLabel control={<Checkbox/>} label='ɔ' onChange={this.handleChange('AO')}/>
+          <FormControlLabel control={<Checkbox/>} label='aʊ'onChange={this.handleChange('AW')}/>
+          <FormControlLabel control={<Checkbox/>} label='aɪ'onChange={this.handleChange('AY')}/>
+          <FormControlLabel control={<Checkbox/>} label='ɛ' onChange={this.handleChange('EH')}/>
           <FormControlLabel control={<Checkbox/>} label='ɝ' onChange={this.handleChange('ER')}/>
-          <FormControlLabel control={<Checkbox  />} label='eɪ' onChange={this.handleChange('EY')}/>
-          <FormControlLabel control={<Checkbox  />} label='ɪ' onChange={this.handleChange('IH')}/>
-          <FormControlLabel control={<Checkbox />} label='i' onChange={this.handleChange('IY')}/>
-          <FormControlLabel control={<Checkbox />} label='oʊ' onChange={this.handleChange('OW')}/>
-          <FormControlLabel control={<Checkbox />} label='ɔɪ' onChange={this.handleChange('OY')}/>
-          <FormControlLabel control={<Checkbox />} label='ʊ' onChange={this.handleChange('UH')}/>
-          <FormControlLabel control={<Checkbox />} label='u' onChange={this.handleChange('UW')}/>
+          <FormControlLabel control={<Checkbox/>} label='eɪ'onChange={this.handleChange('EY')}/>
+          <FormControlLabel control={<Checkbox/>} label='ɪ' onChange={this.handleChange('IH')}/>
+          <FormControlLabel control={<Checkbox/>} label='i' onChange={this.handleChange('IY')}/>
+          <FormControlLabel control={<Checkbox/>} label='oʊ'onChange={this.handleChange('OW')}/>
+          <FormControlLabel control={<Checkbox/>} label='ɔɪ'onChange={this.handleChange('OY')}/>
+          <FormControlLabel control={<Checkbox/>} label='ʊ' onChange={this.handleChange('UH')}/>
+          <FormControlLabel control={<Checkbox/>} label='u' onChange={this.handleChange('UW')}/>
         </FormGroup>
       </Card>
     </Grid>
