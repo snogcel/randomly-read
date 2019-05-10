@@ -15,8 +15,22 @@ class WordCard extends React.Component  {
 
     constructor(props) {
     super(props) 
-    this.state = {text: null, vowel: [], isFirstRender: true}
+    this.state = {
+      text: null, 
+      vowel: [], 
+      consonant: ["F"],
+      syllables: [1,2,3],
+      limit: 1,
+      mode: 'words',
+      isFirstRender: true}
+
+     // this.setMode = this.setMode.bind(this);
+      this.refreshQuery = this.refreshQuery.bind(this);
   }
+  
+  refreshQuery() {
+    if (this.refresh) this.refresh();
+}
   
   handleChange = name => event => {
     console.log(event.target.checked)
@@ -43,10 +57,74 @@ class WordCard extends React.Component  {
       this.props.addWord(this.state.text)
   }
 
+  buildQuery() {
+    let vowel = JSON.stringify(this.state.vowel);
+    let consonant = JSON.stringify(this.state.consonant);
+    let syllables=JSON.stringify(this.state.syllables.map(Number));
+    let limit = parseInt(this.state.limit);
+
+    switch(this.state.mode) {
+        case 'sentences':
+            if (this.state.consonant.length > 0) {
+                return gql`
+                {
+                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                        result
+                        formatted                   
+                    }
+                }
+                `;
+            } else {
+                return gql`
+                {
+                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                        result
+                        formatted                  
+                    }
+                }
+                `;
+            }
+
+        case 'words':
+            if (this.state.consonant.length > 0) {
+                return gql`
+                {
+                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                        cmudict_id
+                        lexeme
+                        wordsXsensesXsynsets {
+                          wordid
+                          pos
+                          definition
+                      }
+                    }
+                }
+                `;
+            } else {
+                return gql`
+                {
+                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                        cmudict_id
+                        lexeme
+                        wordsXsensesXsynsets {
+                          wordid
+                          pos
+                          definition
+                      }
+                    }
+                }
+                `;
+            }
+
+        default:
+            return null;
+    }
+
+}
+
   render() { 
 
-    let vowel = JSON.stringify(this.state.vowel);
-    console.log(this.state);
+    const query = this.buildQuery();
    
   return (
     <Grid container justify='center'>
@@ -56,23 +134,10 @@ class WordCard extends React.Component  {
            { (!Array.isArray(this.state.vowel) || !this.state.vowel.length) ?
                 ''      
             : <Query  
-            query={gql`
-              {
-                words(vowel: ${vowel}, syllables: [1, 2, 3], limit: 1) {
-                  lexeme
-                  cmudict_id
-                  wordid
-                  wordsXsensesXsynsets {
-                  wordid
-                  pos
-                  definition
-              }
-                }
-              }
-            `}
+            query={query}
             onCompleted={data => this.setWord(data.words[0].lexeme)}
           >
-            {({ loading, error, data }) => {  
+            {({ loading, error, data, refetch }) => {  
               if (loading)
                 return (
                   <Typography variant='h5' component='h2' align='center'>
@@ -85,7 +150,9 @@ class WordCard extends React.Component  {
                     Something went wrong... {error.message}
                   </Typography>
                 );
+               
               return (
+              
                 <>
                 <Typography variant='h2' component='h2' align='center'>
                   { data.words[0].lexeme }
@@ -97,9 +164,12 @@ class WordCard extends React.Component  {
                 <Typography component='p' align='center'>
                 { data.words[0].wordsXsensesXsynsets[0].definition }
                 </Typography>
+                <Button align='center' onClick={() => refetch()}> New Word! </Button>
                 </>  
               );
+              
             }} 
+             
             </Query>
            }
         </CardContent>

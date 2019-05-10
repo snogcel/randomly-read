@@ -6,6 +6,7 @@ class RandomlyRead extends React.Component {
     return (
       <div>
         <WordCard />
+        
       </div>
     );
   }
