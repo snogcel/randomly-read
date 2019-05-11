@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import WordCard from './WordCard';
+import RRComponent from './RRComponent';
 import {addVowel} from '../../actions/word'
 import {addWord} from '../../actions/word'
 import {removeVowel} from '../../actions/word'
@@ -8,7 +9,7 @@ import {removeWord} from '../../actions/word'
 const mapStateToProps = state => ({
   text: state.text,
   vowel: state.vowel
-  
+
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -24,12 +25,12 @@ const mapDispatchToProps = dispatch => ({
 removeWord: (word) => {
   dispatch(removeWord(word))
 }
-  
+
 });
 
 const RRContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(WordCard);
+)(RRComponent);
 
 export default RRContainer;
