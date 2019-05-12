@@ -34,7 +34,7 @@ const Sidebar = ({ token }) => (
     <TimerWrapper>
       <RRComponent />
     </TimerWrapper>
-    {token && <SidebarCreatePostButton />}
+    
     <SidebarCategoryList />
 
   </Wrapper>
