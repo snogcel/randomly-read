@@ -254,13 +254,9 @@ class Timer extends React.Component {
           </div>
         </div>
 
-        <h3>{status} ({ms(this.state.time, {compact: true})})</h3>
+        <br /><br />
 
-        <h3>{currentExercise}</h3>
-        <h3>{completeExerciseStack}</h3>
-
-
-
+        <h4>{status} ({ms(this.state.time, {compact: true})})</h4>
 
       </div>
     )

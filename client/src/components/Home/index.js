@@ -6,6 +6,9 @@ import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
+import RRContainer from '../RRLayout/RRContainer';
+
+import RRComponent from '../RRLayout/RRComponent';
 
 const Wrapper = styled.div`
   display: flex;
@@ -25,7 +28,19 @@ const Wrapper = styled.div`
 const Home = () => (
   <Wrapper>
     <HomeMainSection>
+
       <Route component={CategoryMenuContainer} />
+
+      <Route
+        exact
+        path='/u/:randomlyread'
+        render={() => (
+          <RRContainer />
+        )}
+      />
+
+      <br />
+
       <Route exact path='/' component={PostListContainer} />
       <Route
         exact

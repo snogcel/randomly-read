@@ -14,10 +14,10 @@ import FormGroup from '@material-ui/core/FormGroup';
 class WordCard extends React.Component  {
 
     constructor(props) {
-    super(props) 
+    super(props)
     this.state = {
-      text: null, 
-      vowel: [], 
+      text: null,
+      vowel: [],
       consonant: ["F"],
       syllables: [1,2,3],
       limit: 1,
@@ -27,11 +27,11 @@ class WordCard extends React.Component  {
      // this.setMode = this.setMode.bind(this);
       this.refreshQuery = this.refreshQuery.bind(this);
   }
-  
+
   refreshQuery() {
     if (this.refresh) this.refresh();
 }
-  
+
   handleChange = name => event => {
     console.log(event.target.checked)
     if (event.target.checked){
@@ -122,22 +122,22 @@ class WordCard extends React.Component  {
 
 }
 
-  render() { 
+  render() {
 
     const query = this.buildQuery();
-   
+
   return (
     <Grid container justify='center'>
-      <Card alignItems='center' style={{ width: 925 }}>
+      <Card style={{ width: 925 }}>
         <CardContent>
           <Typography color='textSecondary' align='center' gutterBottom />
            { (!Array.isArray(this.state.vowel) || !this.state.vowel.length) ?
-                ''      
-            : <Query  
+                ''
+            : <Query
             query={query}
             onCompleted={data => this.setWord(data.words[0].lexeme)}
           >
-            {({ loading, error, data, refetch }) => {  
+            {({ loading, error, data, refetch }) => {
               if (loading)
                 return (
                   <Typography variant='h5' component='h2' align='center'>
@@ -150,9 +150,9 @@ class WordCard extends React.Component  {
                     Something went wrong... {error.message}
                   </Typography>
                 );
-               
+
               return (
-              
+
                 <>
                 <Typography variant='h2' component='h2' align='center'>
                   { data.words[0].lexeme }
@@ -165,11 +165,11 @@ class WordCard extends React.Component  {
                 { data.words[0].wordsXsensesXsynsets[0].definition }
                 </Typography>
                 <Button align='center' onClick={() => refetch()}> New Word! </Button>
-                </>  
+                </>
               );
-              
-            }} 
-             
+
+            }}
+
             </Query>
            }
         </CardContent>

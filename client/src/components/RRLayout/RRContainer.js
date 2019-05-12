@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import WordCard from './WordCard';
-import RRComponent from './RRComponent';
 import {addVowel} from '../../actions/word'
 import {addWord} from '../../actions/word'
 import {removeVowel} from '../../actions/word'
@@ -31,6 +30,6 @@ removeWord: (word) => {
 const RRContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(RRComponent);
+)(WordCard);
 
 export default RRContainer;
