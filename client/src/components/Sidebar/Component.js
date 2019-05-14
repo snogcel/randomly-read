@@ -3,7 +3,7 @@ import styled from 'styled-components/macro';
 import SidebarCreatePostButton from './CreatePostButton';
 import SidebarCategoryList from './CategoryList';
 
-import RRComponent from '../RRLayout/RRComponent';
+import TimerContainer from '../RRLayout/TimerContainer';
 
 import 'react-awesome-button/dist/styles.css';
 
@@ -32,7 +32,7 @@ const Sidebar = ({ token }) => (
   <Wrapper>
 
     <TimerWrapper>
-      <RRComponent />
+      <TimerContainer />
     </TimerWrapper>
     
     <SidebarCategoryList />

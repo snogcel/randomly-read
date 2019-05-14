@@ -16,56 +16,55 @@ class WordCard extends React.Component  {
     constructor(props) {
     super(props)
     this.state = {
-      text: null,
-      vowel: [],
-      consonant: ["F"],
-      syllables: [1,2,3],
-      limit: 1,
-      mode: 'words',
-      isFirstRender: true}
-
-     // this.setMode = this.setMode.bind(this);
-      this.refreshQuery = this.refreshQuery.bind(this);
+      isFirstRender: true,
+    }
   }
+  
+ 
 
-  refreshQuery() {
-    if (this.refresh) this.refresh();
-}
+
 
   handleChange = name => event => {
-    console.log(event.target.checked)
+   // console.log(event.target.checked)
     if (event.target.checked){
       //append to array
-      this.setState({
+    /*   this.setState({
         vowel: this.state.vowel.concat([name])
-      })
-      this.props.addVowel(name)
+      }) */
+
+   
+      this.props.addVowel([name])
     } else {
       //remove from array
-      this.setState({
+     /*  this.setState({
         vowel: this.state.vowel.filter(val => {return val !== name}),
         text: null
 
-      })
+      }) */
       this.props.removeVowel(name)
       this.props.removeWord()
+
    }
   };
 
   setWord(title) {
-      this.setState({text: title, isFirstRender: false})
+     // this.setState({text: title, isFirstRender: false})
       this.props.addWord(this.state.text)
   }
 
   buildQuery() {
-    let vowel = JSON.stringify(this.state.vowel);
-    let consonant = JSON.stringify(this.state.consonant);
-    let syllables=JSON.stringify(this.state.syllables.map(Number));
-    let limit = parseInt(this.state.limit);
 
-    switch(this.state.mode) {
+    let vowel = JSON.stringify(this.props.vowel);
+    let consonant = JSON.stringify(this.props.consonant);
+    let syllables= JSON.stringify(this.props.syllables);
+    let limit = parseInt(this.props.limit);
+    console.log("Vowel:", vowel);
+    console.log("consonant:", consonant);
+    console.log("syllables:", syllables);
+
+    switch(this.props.mode) {
         case 'sentences':
-            if (this.state.consonant.length > 0) {
+            if (this.props.consonant.length > 0) {
                 return gql`
                 {
                     sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
@@ -85,8 +84,8 @@ class WordCard extends React.Component  {
                 `;
             }
 
-        case 'words':
-            if (this.state.consonant.length > 0) {
+        case 'Word':
+            if (this.props.consonant.length > 0) {
                 return gql`
                 {
                     words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
@@ -123,15 +122,16 @@ class WordCard extends React.Component  {
 }
 
   render() {
-
+    
     const query = this.buildQuery();
-
+    console.log("query", query);
   return (
     <Grid container justify='center'>
       <Card style={{ width: 925 }}>
         <CardContent>
           <Typography color='textSecondary' align='center' gutterBottom />
-           { (!Array.isArray(this.state.vowel) || !this.state.vowel.length) ?
+          {console.log(this.props.mode)}
+           { (!Array.isArray(this.props.vowel) || !this.props.vowel.length || this.props.mode === 'Intermission')  ?
                 ''
             : <Query
             query={query}
@@ -186,21 +186,21 @@ class WordCard extends React.Component  {
           </Button>
         </CardActions>
         <FormGroup row style={{ flex: '1', marginLeft: '25px' }}>
-          <FormControlLabel control={<Checkbox/>} label='ɑ' onChange={this.handleChange('AA')}/>
-          <FormControlLabel control={<Checkbox/>} label='æ' onChange={this.handleChange('AE')}/>
-          <FormControlLabel control={<Checkbox/>} label='ʌ' onChange={this.handleChange('AH')}/>
-          <FormControlLabel control={<Checkbox/>} label='ɔ' onChange={this.handleChange('AO')}/>
-          <FormControlLabel control={<Checkbox/>} label='aʊ'onChange={this.handleChange('AW')}/>
-          <FormControlLabel control={<Checkbox/>} label='aɪ'onChange={this.handleChange('AY')}/>
-          <FormControlLabel control={<Checkbox/>} label='ɛ' onChange={this.handleChange('EH')}/>
-          <FormControlLabel control={<Checkbox/>} label='ɝ' onChange={this.handleChange('ER')}/>
-          <FormControlLabel control={<Checkbox/>} label='eɪ'onChange={this.handleChange('EY')}/>
-          <FormControlLabel control={<Checkbox/>} label='ɪ' onChange={this.handleChange('IH')}/>
-          <FormControlLabel control={<Checkbox/>} label='i' onChange={this.handleChange('IY')}/>
-          <FormControlLabel control={<Checkbox/>} label='oʊ'onChange={this.handleChange('OW')}/>
-          <FormControlLabel control={<Checkbox/>} label='ɔɪ'onChange={this.handleChange('OY')}/>
-          <FormControlLabel control={<Checkbox/>} label='ʊ' onChange={this.handleChange('UH')}/>
-          <FormControlLabel control={<Checkbox/>} label='u' onChange={this.handleChange('UW')}/>
+          <FormControlLabel control={<Checkbox />} label='ɑ'  onChange={this.handleChange('AA')}/>
+          <FormControlLabel control={<Checkbox />} label='æ'  onChange={this.handleChange('AE')}/>
+          <FormControlLabel control={<Checkbox />} label='ʌ'  onChange={this.handleChange('AH')}/>
+          <FormControlLabel control={<Checkbox />} label='ɔ'  onChange={this.handleChange('AO')}/>
+          <FormControlLabel control={<Checkbox />} label='aʊ' onChange={this.handleChange('AW')}/>
+          <FormControlLabel control={<Checkbox />} label='aɪ' onChange={this.handleChange('AY')}/>
+          <FormControlLabel control={<Checkbox />} label='ɛ'  onChange={this.handleChange('EH')}/>
+          <FormControlLabel control={<Checkbox />} label='ɝ'  onChange={this.handleChange('ER')}/>
+          <FormControlLabel control={<Checkbox />} label='eɪ' onChange={this.handleChange('EY')}/>
+          <FormControlLabel control={<Checkbox />} label='ɪ'  onChange={this.handleChange('IH')}/>
+          <FormControlLabel control={<Checkbox />} label='i'  onChange={this.handleChange('IY')}/>
+          <FormControlLabel control={<Checkbox />} label='oʊ' onChange={this.handleChange('OW')}/>
+          <FormControlLabel control={<Checkbox />} label='ɔɪ' onChange={this.handleChange('OY')}/>
+          <FormControlLabel control={<Checkbox />} label='ʊ'  onChange={this.handleChange('UH')}/>
+          <FormControlLabel control={<Checkbox />} label='u'  onChange={this.handleChange('UW')}/>
         </FormGroup>
       </Card>
     </Grid>
