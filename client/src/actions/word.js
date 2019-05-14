@@ -2,6 +2,11 @@ export const ADD_VOWEL = 'ADD_VOWEL'
 export const ADD_WORD = 'ADD_WORD'
 export const REMOVE_VOWEL = 'REMOVE_VOWEL';
 export const REMOVE_WORD = 'REMOVE_WORD';
+export const ADD_CONSONANT = 'ADD_CONSONANT';
+export const ADD_SYLLABLES = 'ADD_SYLLABLES'; 
+export const SET_LIMIT = 'SET_LIMIT';
+export const SET_MODE = 'SET_MODE';
+
 
 export function addVowel(text) {
     return {
@@ -26,3 +31,30 @@ export function removeWord() {
         type: REMOVE_WORD
     }
 }
+
+export function addConsonant(text) {
+    return {
+        type: ADD_CONSONANT, text
+    }
+}
+
+export function addSyllables(integer) {
+    return {
+        type: ADD_SYLLABLES, integer
+    }
+}
+
+export function setLimit(text) {
+    return {
+        type: SET_LIMIT, text
+    }
+}
+
+export function setMode(text) {
+    return {
+        type: SET_MODE, text
+    }
+}
+
+
+
