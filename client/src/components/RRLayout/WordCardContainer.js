@@ -1,0 +1,40 @@
+import { connect } from 'react-redux';
+import WordCard from './WordCard';
+import {addVowel} from '../../actions/word'
+import {addWord} from '../../actions/word'
+import {removeVowel} from '../../actions/word'
+import {removeWord} from '../../actions/word'
+
+const mapStateToProps = state => ({
+
+  text: state.word.text,
+  vowel: state.word.vowel,
+  consonant: state.word.consonant,
+  syllables: state.word.syllables,
+  mode: state.word.mode,
+  limit: state.word.limit
+
+});
+
+const mapDispatchToProps = dispatch => ({
+  addVowel: (vowel) => {
+    dispatch(addVowel(vowel))
+  },
+  addWord: (word) => {
+    dispatch(addWord(word))
+  },
+  removeVowel: (vowel) => {
+    dispatch(removeVowel(vowel))
+  },
+  removeWord: (word) => {
+  dispatch(removeWord(word))
+}
+
+});
+
+const WordCardContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WordCard);
+
+export default WordCardContainer;
