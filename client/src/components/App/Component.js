@@ -10,7 +10,7 @@ import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
 import CreatePostFormContainer from '../CreatePostForm/Container';
 import Home from '../Home';
-import RRContainer from '../RRLayout/RRContainer';
+import WordCardContainer from '../RRLayout/WordCardContainer';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 
@@ -30,7 +30,7 @@ const App = props => (
             <Route path='/login' component={LoginFormContainer} />
             <Route path='/signup' component={SignupFormContainer} />
             <Route path='/createpost' component={CreatePostFormContainer} />
-            <Route path='/RandomlyRead' component={RRContainer} />
+            <Route path='/RandomlyRead' component={WordCardContainer} />
             <Route path='/' component={Home} />
           </Switch>
         </>

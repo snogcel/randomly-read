@@ -6,7 +6,7 @@ import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
-import RRContainer from '../RRLayout/RRContainer';
+import WordCardContainer from '../RRLayout/WordCardContainer';
 
 import RRComponent from '../RRLayout/RRComponent';
 
@@ -35,7 +35,7 @@ const Home = () => (
         exact
         path='/u/:randomlyread'
         render={() => (
-          <RRContainer />
+          <WordCardContainer />
         )}
       />
 
