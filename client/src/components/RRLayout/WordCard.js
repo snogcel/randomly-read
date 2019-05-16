@@ -10,6 +10,7 @@ import gql from 'graphql-tag';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
+import Intermission from './Intermission';
 
 class WordCard extends React.Component  {
 
@@ -126,14 +127,15 @@ class WordCard extends React.Component  {
     const query = this.buildQuery();
     console.log("query", query);
   return (
-    <Grid container justify='center'>
-      <Card style={{ width: 925 }}>
+    <Grid container justify='center' alignItems='center' >
+      <Card style={{ width: 925}}>
         <CardContent>
-          <Typography color='textSecondary' align='center' gutterBottom />
           {console.log(this.props.mode)}
-           { (!Array.isArray(this.props.vowel) || !this.props.vowel.length || this.props.mode === 'Intermission')  ?
+           { (!Array.isArray(this.props.vowel) || !this.props.vowel.length)  ?
                 ''
-            : <Query
+            : this.props.mode === 'Intermission' ?
+            console.log("TEST") :
+            <Query
             query={query}
             onCompleted={data => this.setWord(data.words[0].lexeme)}
           >
@@ -141,7 +143,6 @@ class WordCard extends React.Component  {
               if (loading)
                 return (
                   <Typography variant='h5' component='h2' align='center'>
-                    Loading....
                   </Typography>
                 );
               if (error)
@@ -150,21 +151,51 @@ class WordCard extends React.Component  {
                     Something went wrong... {error.message}
                   </Typography>
                 );
-
+              if (this.props.mode === 'Intermission')
+                  return (
+                    <Intermission>Hello</Intermission>
+                  );
               return (
 
                 <>
                 <Typography variant='h2' component='h2' align='center'>
                   { data.words[0].lexeme }
                 </Typography>
+                {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
+
+                  return (
+                    <>
+                   
+                    <Grid container direction='row' alignItems='center' justify = 'center'>
+                  <Grid item xs={12} align='center'>
+                  <Typography color='textSecondary' align='center'>
+                    {(`(${word.pos}): `)}
+                  </Typography>   
+                  </Grid> 
+                  <Grid item xs={12} align='center'>
+                  <Typography component='p' align='center'>
+                   { `${word.definition}` } 
+                  </Typography> 
+                  </Grid>
+                  </Grid>
+                  </>
+                  );
+                })}
+                
+                 {/*  <Grid item align='center'>
                 <Typography color='textSecondary' align='center'>
-                {/* Parts of Speech */}
-                { data.words[0].wordsXsensesXsynsets[0].pos }
+                  {console.log(data.words[0].wordsXsensesXsynsets)}
+                {   ) }
                 </Typography>
+                </Grid>
+                <Grid item align='center'>
                 <Typography component='p' align='center'>
                 { data.words[0].wordsXsensesXsynsets[0].definition }
-                </Typography>
-                <Button align='center' onClick={() => refetch()}> New Word! </Button>
+                </Typography> 
+                </Grid>  */}
+                {/* </Grid>  */}
+                <br></br>
+                <Button align='top' onClick={() => refetch()}> New Word! </Button>
                 </>
               );
 
@@ -185,7 +216,7 @@ class WordCard extends React.Component  {
             Comment
           </Button>
         </CardActions>
-        <FormGroup row style={{ flex: '1', marginLeft: '25px' }}>
+        <FormGroup row style={{ flex: '1', marginLeft: '25px'}}>
           <FormControlLabel control={<Checkbox />} label='ɑ'  onChange={this.handleChange('AA')}/>
           <FormControlLabel control={<Checkbox />} label='æ'  onChange={this.handleChange('AE')}/>
           <FormControlLabel control={<Checkbox />} label='ʌ'  onChange={this.handleChange('AH')}/>

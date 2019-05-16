@@ -88,7 +88,7 @@ class RandomlyRead extends React.Component {
     consonant = options.consonant;
     templates = options.templates;
     syllables = options.syllables;
-    this.props.addVowel(options.vowel);
+    this.props.addRoutineVowel(options.vowel);
     this.props.addConsonant(options.consonant);
     this.props.addSyllables(options.syllables);
     this.props.setLimit(limitText);

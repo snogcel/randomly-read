@@ -5,6 +5,7 @@ import {addSyllables} from '../../actions/word'
 import {setLimit} from '../../actions/word'
 import {setMode} from '../../actions/word'
 import Timer from './RRComponent';
+import {addRoutineVowel} from '../../actions/word';
 
 const mapStateToProps = state => ({
     mode: state.mode,
@@ -16,8 +17,8 @@ const mapStateToProps = state => ({
   });
 
   const mapDispatchToProps = dispatch => ({
-    addVowel: (vowel) => {
-      dispatch(addVowel(vowel))
+    addRoutineVowel: (vowel) => {
+      dispatch(addRoutineVowel(vowel))
     },
     addConsonant: (consonant) => {
       dispatch(addConsonant(consonant))

@@ -6,6 +6,7 @@ import {ADD_CONSONANT} from '../actions/word';
 import {SET_LIMIT} from '../actions/word';
 import {SET_MODE} from '../actions/word';
 import {ADD_SYLLABLES} from '../actions/word';
+import {ADD_ROUTINE_VOWEL} from '../actions/word';
 
 const initialState = {
     text: [],
@@ -20,6 +21,8 @@ export default (state = initialState, action) => {
     switch (action.type) {
         case ADD_VOWEL:
         return {...state, vowel: !Array.isArray(state.vowel) ? action.text : [...new Set([...state.vowel].concat(action.text))]}//vowel: state.vowel.concat([action.text])}
+        case ADD_ROUTINE_VOWEL:
+        return {...state, vowel: action.text}
         case ADD_WORD:
         return {...state, text: action.text}
         case REMOVE_VOWEL:

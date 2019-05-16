@@ -6,11 +6,17 @@ export const ADD_CONSONANT = 'ADD_CONSONANT';
 export const ADD_SYLLABLES = 'ADD_SYLLABLES'; 
 export const SET_LIMIT = 'SET_LIMIT';
 export const SET_MODE = 'SET_MODE';
-
+export const ADD_ROUTINE_VOWEL = 'ADD_ROUTINE_VOWEL';
 
 export function addVowel(text) {
     return {
         type: ADD_VOWEL, text
+    }
+}
+
+export function addRoutineVowel(text) {
+    return {
+        type: ADD_ROUTINE_VOWEL, text
     }
 }
 
