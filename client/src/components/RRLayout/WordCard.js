@@ -22,8 +22,6 @@ class WordCard extends React.Component  {
     }
   }
   
- 
-
   handleChange = name => event => {
 
     if (event.target.checked) {
