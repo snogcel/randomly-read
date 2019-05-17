@@ -2,7 +2,7 @@ import RoutineBuilder from './RoutineBuilder';
 import Range from "./Range";
 import Routines from './Routines.js';
 import { AwesomeButton } from 'react-awesome-button';
-
+import Button from '@material-ui/core/Button';
 const React = require('react');
 const ms = require('pretty-ms');
 
@@ -179,6 +179,8 @@ class Timer extends React.Component {
   resetTimer() {
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false})
+    this.props.addRoutineVowel(null);
+   
   }
 
   render() {
@@ -232,13 +234,13 @@ class Timer extends React.Component {
     let status = completed + ' of ' + total + ' Exercises Completed';
 
     let start = (this.state.time === 0) ?
-      <AwesomeButton action={this.startTimer} size="medium" type="primary">Start Routine</AwesomeButton> : null;
+      <Button onClick={this.startTimer} size="medium" variant="contained" color="primary" >Start Routine</Button> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null : <AwesomeButton action={this.stopTimer} size="medium" type="primary">Pause</AwesomeButton>;
+      null : <Button onClick={this.stopTimer} size="medium" variant="contained" color="primary" >Pause</Button>;
     let resume = (this.state.time === 0 || this.state.isOn) ?
-      null : <AwesomeButton action={this.resumeTimer} size="medium" type="primary">Resume</AwesomeButton>;
+      null : <Button onClick={this.resumeTimer} size="medium" variant="contained" color="primary" >Resume</Button>;
     let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <AwesomeButton action={this.resetTimer} size="small" type="primary">Reset</AwesomeButton>;
+      null : <Button onClick={this.resetTimer} size="small" variant="contained" color="primary" >Reset</Button>;
 
     return(
       <div>
