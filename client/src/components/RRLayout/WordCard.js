@@ -11,46 +11,35 @@ import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import Intermission from './Intermission';
+import VowelCheckboxes from './VowelCheckboxes';
 
 class WordCard extends React.Component  {
 
     constructor(props) {
     super(props)
     this.state = {
-      isFirstRender: true,
+     
     }
   }
   
  
 
-
-
   handleChange = name => event => {
-   // console.log(event.target.checked)
-    if (event.target.checked){
-      //append to array
-    /*   this.setState({
-        vowel: this.state.vowel.concat([name])
-      }) */
 
-   
+    if (event.target.checked) {
+
       this.props.addVowel([name])
-    } else {
-      //remove from array
-     /*  this.setState({
-        vowel: this.state.vowel.filter(val => {return val !== name}),
-        text: null
 
-      }) */
+    }
+    else {
+      
       this.props.removeVowel(name)
       this.props.removeWord()
-
    }
   };
 
   setWord(title) {
-     // this.setState({text: title, isFirstRender: false})
-      this.props.addWord(this.state.text)
+      this.props.addWord(title)
   }
 
   buildQuery() {
@@ -123,18 +112,17 @@ class WordCard extends React.Component  {
 }
 
   render() {
-    
     const query = this.buildQuery();
-    console.log("query", query);
   return (
-    <Grid container justify='center' alignItems='center' >
-      <Card style={{ width: 925}}>
-        <CardContent>
+    <Grid container justify='center' alignItems='center'>
+      <Card style={{ width: 950, minHeight: '40vh', maxHeight: '40vh', overflow: 'hidden'}}>
+        <Grid>
+        <CardContent style={{ overflow: 'hidden'}}>
           {console.log(this.props.mode)}
-           { (!Array.isArray(this.props.vowel) || !this.props.vowel.length)  ?
-                ''
-            : this.props.mode === 'Intermission' ?
-            console.log("TEST") :
+           { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
+                '' 
+            : (this.props.mode === 'Intermission') ?
+            <Intermission /> :
             <Query
             query={query}
             onCompleted={data => this.setWord(data.words[0].lexeme)}
@@ -142,7 +130,7 @@ class WordCard extends React.Component  {
             {({ loading, error, data, refetch }) => {
               if (loading)
                 return (
-                  <Typography variant='h5' component='h2' align='center'>
+                  <Typography variant='h5' component='h2' align='center'> 
                   </Typography>
                 );
               if (error)
@@ -151,21 +139,14 @@ class WordCard extends React.Component  {
                     Something went wrong... {error.message}
                   </Typography>
                 );
-              if (this.props.mode === 'Intermission')
-                  return (
-                    <Intermission>Hello</Intermission>
-                  );
               return (
-
                 <>
                 <Typography variant='h2' component='h2' align='center'>
                   { data.words[0].lexeme }
                 </Typography>
                 {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
-
                   return (
                     <>
-                   
                     <Grid container direction='row' alignItems='center' justify = 'center'>
                   <Grid item xs={12} align='center'>
                   <Typography color='textSecondary' align='center'>
@@ -182,60 +163,38 @@ class WordCard extends React.Component  {
                   );
                 })}
                 
-                 {/*  <Grid item align='center'>
-                <Typography color='textSecondary' align='center'>
-                  {console.log(data.words[0].wordsXsensesXsynsets)}
-                {   ) }
-                </Typography>
-                </Grid>
-                <Grid item align='center'>
-                <Typography component='p' align='center'>
-                { data.words[0].wordsXsensesXsynsets[0].definition }
-                </Typography> 
-                </Grid>  */}
-                {/* </Grid>  */}
-                <br></br>
-                <Button align='top' onClick={() => refetch()}> New Word! </Button>
+                 <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button> 
                 </>
               );
-
             }}
-
-            </Query>
-           }
-        </CardContent>
-        <CardActions>
-          <Button size='small' align='left'>
+             </Query>
+           } 
+        
+        <Grid item align='bottom'>
+        <CardActions style ={{overflow: 'hidden',  marginTop: 'auto'}}>
+          <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1}}>
             Vote
           </Button>
-          <Button
-            size='small'
-            align='right'
-            style={{ flex: 1, marginLeft: '750px' }}
+          <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1 }}
           >
             Comment
           </Button>
         </CardActions>
-        <FormGroup row style={{ flex: '1', marginLeft: '25px'}}>
-          <FormControlLabel control={<Checkbox />} label='ɑ'  onChange={this.handleChange('AA')}/>
-          <FormControlLabel control={<Checkbox />} label='æ'  onChange={this.handleChange('AE')}/>
-          <FormControlLabel control={<Checkbox />} label='ʌ'  onChange={this.handleChange('AH')}/>
-          <FormControlLabel control={<Checkbox />} label='ɔ'  onChange={this.handleChange('AO')}/>
-          <FormControlLabel control={<Checkbox />} label='aʊ' onChange={this.handleChange('AW')}/>
-          <FormControlLabel control={<Checkbox />} label='aɪ' onChange={this.handleChange('AY')}/>
-          <FormControlLabel control={<Checkbox />} label='ɛ'  onChange={this.handleChange('EH')}/>
-          <FormControlLabel control={<Checkbox />} label='ɝ'  onChange={this.handleChange('ER')}/>
-          <FormControlLabel control={<Checkbox />} label='eɪ' onChange={this.handleChange('EY')}/>
-          <FormControlLabel control={<Checkbox />} label='ɪ'  onChange={this.handleChange('IH')}/>
-          <FormControlLabel control={<Checkbox />} label='i'  onChange={this.handleChange('IY')}/>
-          <FormControlLabel control={<Checkbox />} label='oʊ' onChange={this.handleChange('OW')}/>
-          <FormControlLabel control={<Checkbox />} label='ɔɪ' onChange={this.handleChange('OY')}/>
-          <FormControlLabel control={<Checkbox />} label='ʊ'  onChange={this.handleChange('UH')}/>
-          <FormControlLabel control={<Checkbox />} label='u'  onChange={this.handleChange('UW')}/>
-        </FormGroup>
+        </Grid>
+        <FormGroup row style={{ flex: '1', marginLeft: '25px', overflow: 'hidden'}} >
+       { VowelCheckboxes.map((item, i) => (
+       <>
+          <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/>
+       </>
+      ))}
+        </FormGroup> 
+        </CardContent>
+        </Grid>
       </Card>
     </Grid>
+    
   );
 }
 }
+
 export default WordCard;
