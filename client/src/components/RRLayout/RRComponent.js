@@ -1,5 +1,5 @@
 import React from 'react';
-import Timer from './Timer';
+import Timer from './SecondTimerContainer';
 import styled from 'styled-components/macro';
 import SelectWrapper from '../shared/form/SelectWrapper';
 
