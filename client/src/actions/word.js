@@ -7,6 +7,7 @@ export const ADD_SYLLABLES = 'ADD_SYLLABLES';
 export const SET_LIMIT = 'SET_LIMIT';
 export const SET_MODE = 'SET_MODE';
 export const ADD_ROUTINE_VOWEL = 'ADD_ROUTINE_VOWEL';
+export const ADD_INTERMISSION_TEXT = 'ADD_INTERMISSION_TEXT';
 
 export function addVowel(text) {
     return {
@@ -59,6 +60,12 @@ export function setLimit(text) {
 export function setMode(text) {
     return {
         type: SET_MODE, text
+    }
+}
+
+export function setIntermissionText(text) {
+    return {
+        type: ADD_INTERMISSION_TEXT, text
     }
 }
 

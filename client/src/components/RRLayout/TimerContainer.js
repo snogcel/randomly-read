@@ -6,13 +6,10 @@ import {setLimit} from '../../actions/word'
 import {setMode} from '../../actions/word'
 import Timer from './RRComponent';
 import {addRoutineVowel} from '../../actions/word';
+import {setIntermissionText} from '../../actions/word';
 
 const mapStateToProps = state => ({
-    mode: state.mode,
-    vowel: state.vowel,
-    consonant: state.consonant,
-    syllables: state.syllables,
-    limit: state.limit
+    
 
   });
 
@@ -31,8 +28,11 @@ const mapStateToProps = state => ({
     },
     setMode: (mode) => {
     dispatch(setMode(mode))
+  },
+  setIntermissionText: (mode) => {
+    dispatch(setIntermissionText(mode))
   }
-  
+
   });
 
   const TimerContainer = connect(

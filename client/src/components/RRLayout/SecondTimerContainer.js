@@ -3,12 +3,8 @@ import Timer from './Timer';
 import {addRoutineVowel} from '../../actions/word';
 
 const mapStateToProps = state => ({
-    mode: state.mode,
-    vowel: state.vowel,
-    consonant: state.consonant,
-    syllables: state.syllables,
-    limit: state.limit
-
+ 
+  
   });
 
 const mapDispatchToProps = dispatch => ({

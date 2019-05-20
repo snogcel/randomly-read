@@ -7,6 +7,7 @@ import {SET_LIMIT} from '../actions/word';
 import {SET_MODE} from '../actions/word';
 import {ADD_SYLLABLES} from '../actions/word';
 import {ADD_ROUTINE_VOWEL} from '../actions/word';
+import {ADD_INTERMISSION_TEXT} from '../actions/word';
 
 const initialState = {
     text: [],
@@ -14,7 +15,8 @@ const initialState = {
     consonant: ["F"],
     syllables: [1],
     limit: 1,
-    mode: "Word"
+    mode: "Word",
+    intermissionText: null,
 }
 
 export default (state = initialState, action) => {
@@ -37,6 +39,8 @@ export default (state = initialState, action) => {
         return {...state, limit: action.text}
         case SET_MODE:
         return {...state, mode: action.text}
+        case ADD_INTERMISSION_TEXT:
+        return {...state, intermissionText: action.text}
         default: 
         return state;
     }
