@@ -10,8 +10,9 @@ import gql from 'graphql-tag';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
-import Intermission from './Intermission';
+import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
+import Fab from "@material-ui/core/Fab";
 
 class WordCard extends React.Component  {
 
@@ -22,6 +23,7 @@ class WordCard extends React.Component  {
     }
   }
   
+
   handleChange = name => event => {
 
     if (event.target.checked) {
@@ -40,15 +42,20 @@ class WordCard extends React.Component  {
       this.props.addWord(title)
   }
 
+  componentWillReceiveProps() {
+    console.log("Vowel:", this.props.vowel);
+    console.log("consonant:", this.props.consonant);
+    console.log("syllables:",this.props. syllables);
+    console.log("limit:", this.props.limit);
+    console.log("mode:", this.props.mode);
+  }
+
   buildQuery() {
 
     let vowel = JSON.stringify(this.props.vowel);
     let consonant = JSON.stringify(this.props.consonant);
     let syllables= JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
-    console.log("Vowel:", vowel);
-    console.log("consonant:", consonant);
-    console.log("syllables:", syllables);
 
     switch(this.props.mode) {
         case 'sentences':
@@ -111,6 +118,7 @@ class WordCard extends React.Component  {
 
   render() {
     const query = this.buildQuery();
+
   return (
     <Grid container justify='center' alignItems='center'>
       <Card style={{ width: 950, minHeight: '40vh', maxHeight: '40vh', overflow: 'hidden'}}>
@@ -182,8 +190,10 @@ class WordCard extends React.Component  {
         <FormGroup row style={{ flex: '1', marginLeft: '25px', overflow: 'hidden'}} >
        { VowelCheckboxes.map((item, i) => (
        <>
-          <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/>
+           <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/> 
+       {/* <FormControlLabel control={<Fab color="primary" aria-label="Add" onClick={this.handleChangeButton(item.name)}> {item.name} </Fab>} /> */}
        </>
+
       ))}
         </FormGroup> 
         </CardContent>

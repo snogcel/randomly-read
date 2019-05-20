@@ -88,11 +88,13 @@ class RandomlyRead extends React.Component {
     consonant = options.consonant;
     templates = options.templates;
     syllables = options.syllables;
+
     this.props.addRoutineVowel(options.vowel);
     this.props.addConsonant(options.consonant);
     this.props.addSyllables(options.syllables);
     this.props.setLimit(limitText);
     this.props.setMode(mode);
+    this.props.setIntermissionText(options.intermissionText)
   
 
     if (this.state.mode === "Intermission") refresh = false;
