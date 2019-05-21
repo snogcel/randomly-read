@@ -208,7 +208,7 @@ class WordCard extends React.Component  {
     const { classes } = this.props;
     const query = this.buildQuery();
 
-  return (
+
     /* <Grid container justify='center' alignItems='center'>
       <Card style={{ width: 950, minHeight: '40vh', maxHeight: '40vh', overflow: 'hidden'}}>
         <Grid>
@@ -290,60 +290,26 @@ class WordCard extends React.Component  {
       </Card>
        </Grid> */
 
-    <div className={classes.root}>
-    <Grid container spacing={24}>
-      <Grid item xs={12} sm={3}>
-        <div className={classes.sideColumn}>
-          <Typography
-            align="center"
-            className={classes.sideTitle}
-            color="textPrimary"
-          >
-            <ListItem>
-              <ListItemIcon>
-                <CheckboxOutlineBlankIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={[
-                  <Typography inline variant="h6" color="textPrimary">
-                    5
-                  </Typography>,
-                  <Typography
-                    className={classes.exerciseHeadline}
-                    inline
-                    color="textPrimary"
-                    variant="h6"
-                  >
-                    words with
-                  </Typography>,
-                  <Typography inline variant="h6" color="textSecondary">
-                    EH
-                  </Typography>
-                ]}
-                secondary="bet, dress, net, head..."
-              />
-            </ListItem>
-          </Typography>
-        </div>
-      </Grid>
-      <Grid item xs={12} sm={6}>
+    return (
+
         <div className={classes.column}>
           <Card square elevation="4" className={classes.card}>
             <CardContent>
               {console.log(this.props.mode)}
               { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
                   ''
-              : (this.props.mode === 'Intermission') ?
-              <Intermission /> :
+              : (this.props.mode === 'Intermission') ? <Intermission /> :
               <Query
               query={query}
               onCompleted={data => this.setWord(data.words[0].lexeme)}
               >
               {({ loading, error, data, refetch }) => {
+
                 if (loading)
                   return (
                    ''
                   );
+
                 if (error)
                   return (
                     <Typography
@@ -354,9 +320,10 @@ class WordCard extends React.Component  {
                     Error
                   </Typography>
                   );
+
                 return (
-                  <>
-                  <Typography
+                    <>
+                    <Typography
                       align="center"
                       className={classes.title}
                       color="textPrimary"
@@ -364,117 +331,62 @@ class WordCard extends React.Component  {
                       {data.words[0].lexeme}
                     </Typography>
 
+                    <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
 
-                   <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
+                    <CardActions>
 
-                  <CardActions>
-                    <Button onClick={this.handleOpen} size="small">
-                      See More
-                    </Button>
-                    <Modal
-                      aria-labelledby="simple-modal-title"
-                      aria-describedby="simple-modal-description"
-                      open={this.state.open}
-                      onClose={this.handleClose}
-                    >
+                      <Button onClick={this.handleOpen} size="small">
+                        See More
+                      </Button>
+                      <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                      >
                       <div style={getModalStyle()} className={classes.paper}>
                         <Typography className={classes.title} color="textPrimary">
-                        {data.words[0].lexeme}
+                          {data.words[0].lexeme}
                         </Typography>
-                        {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
-                          return (
-                            <>
-                        <List dense="true">
-                          <ListItem>
-                            <ListItemText
-                              primary={word.definition}
-                              secondary={word.pos}
-                            />
-                          </ListItem>
-                        </List>
-                        </>
-                          );
-                        })}
+                          {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
+                            return (
+                              <>
+                              <List dense="true">
+                                <ListItem>
+                                  <ListItemText
+                                    primary={word.definition}
+                                    secondary={word.pos}
+                                  />
+                                </ListItem>
+                              </List>
+                              </>
+                            );
+                          })}
                       </div>
                     </Modal>
                   </CardActions>
                   </>
-                )
+                );
+
                 }}
                 </Query>
               }
             </CardContent>
           </Card>
+
           <br />
+
           { VowelCheckboxes.map((item, i) => (
              <>
              <Button style ={{backgroundColor: "#ffffff"}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}>{item.name}</Button>
              </>
           ))}
-        </div>
-    </Grid>
-    <Grid item xs={12} sm={3}>
-      <div className={classes.sideColumn}>
-        <Card elevation="1" className={classes.sideCard}>
-          <CardContent>
-            <Typography
-              align="center"
-              className={classes.sideTitle}
-              color="textSecondary"
-            >
-              timer controls
-            </Typography>
-          </CardContent>
-        </Card>
-        <br />
-        <br />
-        <Card elevation="1" className={classes.sideCard}>
-          <CardContent>
-            <Typography
-              align="center"
-              className={classes.sideTitle}
-              color="textSecondary"
-            >
-              routine selector
-            </Typography>
-          </CardContent>
-        </Card>
-      </div>
-    </Grid>
 
-
- {/*          <Grid item xs={12} sm={3}>
-            <div className={classes.sideColumn}>
-              <Card elevation="1" className={classes.sideCard}>
-                <CardContent>
-                  <Typography
-                    align="center"
-                    className={classes.sideTitle}
-                    color="textSecondary"
-                  >
-                    timer controls
-                  </Typography>
-                </CardContent>
-              </Card>
-              <br />
-              <br />
-              <Card elevation="1" className={classes.sideCard}>
-                <CardContent>
-                  <Typography
-                    align="center"
-                    className={classes.sideTitle}
-                    color="textSecondary"
-                  >
-                    routine selector
-                  </Typography>
-                </CardContent>
-              </Card>
-            </div>
-          </Grid> */}
-        </Grid>
         </div>
- );
-       }
+
+    );
+
+  }
  }
 
 WordCard.propTypes = {

@@ -1,41 +1,138 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+
+import { withStyles } from "@material-ui/core/styles";
+
 import WordCardContainer from '../RRLayout/WordCardContainer';
 import TimerContainer from '../RRLayout/TimerContainer';
+import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 
-const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 0 5vw;
-  
-  @media (max-width: 1024px) {
-    margin: 0 5vw;
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    padding: 50
+  },
+  column: {
+    padding: theme.spacing.unit * 2,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  },
+  sideColumn: {
+    padding: theme.spacing.unit * 2,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  },
+  sideTitle: {
+    fontSize: 18
+  },
+  exerciseHeadline: {
+    margin: "0.25em"
+  },
+});
+
+class WordCardHome extends React.Component {
+  state = {};
+
+  render() {
+    const {classes} = this.props;
+
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+
+          <Grid item xs={12} sm={3}>
+            
+            <div className={classes.sideColumn}>
+              <Typography
+                align="center"
+                className={classes.sideTitle}
+                color="textPrimary"
+              >
+                <ListItem>
+                  <ListItemIcon>
+                    <CheckboxOutlineBlankIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={[
+                      <Typography inline variant="h6" color="textPrimary">
+                        5
+                      </Typography>,
+                      <Typography
+                        className={classes.exerciseHeadline}
+                        inline
+                        color="textPrimary"
+                        variant="h6"
+                      >
+                        words with
+                      </Typography>,
+                      <Typography inline variant="h6" color="textSecondary">
+                        EH
+                      </Typography>
+                    ]}
+                    secondary="bet, dress, net, head..."
+                  />
+                </ListItem>
+              </Typography>
+            </div>
+
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+
+            <WordCardContainer />
+
+          </Grid>
+
+          <Grid item xs={12} sm={3}>
+            <div className={classes.sideColumn}>
+
+              <Card elevation="1" className={classes.sideCard}>
+                <CardContent>
+                  <Typography
+                    align="center"
+                    className={classes.sideTitle}
+                    color="textSecondary"
+                  >
+
+                    <TimerContainer />
+
+                  </Typography>
+                </CardContent>
+              </Card>
+              <br />
+              <br />
+              <Card elevation="1" className={classes.sideCard}>
+                <CardContent>
+                  <Typography
+                    align="center"
+                    className={classes.sideTitle}
+                    color="textSecondary"
+                  >
+                    routine selector
+                  </Typography>
+                </CardContent>
+              </Card>
+
+            </div>
+          </Grid>
+
+        </Grid>
+      </div>
+    )
   }
 
-  @media (max-width: 768px) {
-    display: block;
-    margin: 0;
-  }
-`;
+}
 
-const TimerWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-basis: 240px;
-  margin: 12px 12px;
-`;
+const WordCardHomeWrapped = withStyles(styles)(WordCardHome);
 
-const WordCardHome = () => (
-    <Wrapper>
-    <WordCardContainer />
-    <TimerWrapper>
-    <TimerContainer />
-    </TimerWrapper>
-    </Wrapper>
-
-  
-     
-  );
-  
-  export default WordCardHome;
+export default WordCardHomeWrapped;
