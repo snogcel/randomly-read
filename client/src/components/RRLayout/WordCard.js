@@ -118,7 +118,7 @@ class WordCard extends React.Component  {
   handleChange = name => {
 
 
-      this.props.addVowel([name])
+      this.props.addRoutineVowel([name])
 
 
    }

@@ -4,6 +4,7 @@ import {addVowel} from '../../actions/word'
 import {addWord} from '../../actions/word'
 import {removeVowel} from '../../actions/word'
 import {removeWord} from '../../actions/word'
+import {addRoutineVowel} from '../../actions/word'
 
 const mapStateToProps = state => ({
 
@@ -19,6 +20,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addVowel: (vowel) => {
     dispatch(addVowel(vowel))
+  },
+  addRoutineVowel: (vowel) => {
+    dispatch(addRoutineVowel(vowel))
   },
   addWord: (word) => {
     dispatch(addWord(word))
