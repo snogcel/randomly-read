@@ -5,6 +5,7 @@ import { AwesomeButton } from 'react-awesome-button';
 import Button from '@material-ui/core/Button';
 const React = require('react');
 const ms = require('pretty-ms');
+import Grid from '@material-ui/core/Grid'; // eslint-disable-line
 
 class Timer extends React.Component {
   constructor(props){
@@ -243,10 +244,9 @@ class Timer extends React.Component {
       null : <Button onClick={this.resetTimer} size="small" variant="contained" color="primary" >Reset</Button>;
 
     return(
-      <div>
 
-
-        <div className="TimerControls">
+      <Grid>
+        <div className="TimerControls">  
           {start}
           {resume}
           {stop}
@@ -255,12 +255,10 @@ class Timer extends React.Component {
             <Range range={rangeVal} updateRange={this.updateRange}/>
           </div>
         </div>
-
         <br /><br />
-
         <h4>{status} ({ms(this.state.time, {compact: true})})</h4>
 
-      </div>
+      </Grid>
     )
   }
 }
