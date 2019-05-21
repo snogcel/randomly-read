@@ -37,8 +37,7 @@ function getModalStyle() {
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
-    padding: 50
+    flexGrow: 1
   },
   column: {
     padding: theme.spacing.unit * 2,
@@ -293,7 +292,7 @@ class WordCard extends React.Component  {
     return (
 
         <div className={classes.column}>
-          <Card square elevation="4" className={classes.card}>
+          <Card square elevation="2" className={classes.card}>
             <CardContent>
               {console.log(this.props.mode)}
               { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?

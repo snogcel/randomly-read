@@ -51,7 +51,7 @@ class WordCardHome extends React.Component {
         <Grid container spacing={24}>
 
           <Grid item xs={12} sm={3}>
-            
+
             <div className={classes.sideColumn}>
               <Typography
                 align="center"
