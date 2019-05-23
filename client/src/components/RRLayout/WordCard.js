@@ -104,7 +104,8 @@ class WordCard extends React.Component  {
     constructor(props) {
     super(props)
     this.state = {
-      open: false
+      open: false,
+      buttonColor: 'White'
     }
   }
 
@@ -120,7 +121,7 @@ class WordCard extends React.Component  {
 
 
       this.props.addRoutineVowel([name])
-
+      this.setState({buttonColor: 'Blue'})
 
    }
 
@@ -129,23 +130,28 @@ class WordCard extends React.Component  {
       this.props.addWord(title)
   }
 
-  componentWillReceiveProps() {
+
+
+  buildQuery() {
+
     console.log("Vowel:", this.props.vowel);
     console.log("consonant:", this.props.consonant);
     console.log("syllables:",this.props. syllables);
     console.log("limit:", this.props.limit);
     console.log("mode:", this.props.mode);
-  }
-
-  buildQuery() {
 
     let vowel = JSON.stringify(this.props.vowel);
     let consonant = JSON.stringify(this.props.consonant);
     let syllables= JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
+    console.log("Vowel:", vowel);
+    console.log("consonant:", consonant);
+    console.log("syllables:", syllables);
+    console.log("limit:", limit);
+    console.log("mode:", this.props.mode);
 
     switch(this.props.mode) {
-        case 'sentences':
+        case 'Sentence':
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -300,10 +306,11 @@ class WordCard extends React.Component  {
               : (this.props.mode === 'Intermission') ? <Intermission /> :
               <Query
               query={query}
-              onCompleted={data => this.setWord(data.words[0].lexeme)}
+          //    onCompleted={data => this.setWord(data.words[0].lexeme)}
+              
               >
               {({ loading, error, data, refetch }) => {
-
+                  
                 if (loading)
                   return (
                    ''
@@ -327,16 +334,17 @@ class WordCard extends React.Component  {
                       className={classes.title}
                       color="textPrimary"
                     >
-                      {data.words[0].lexeme}
+                      {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
                     </Typography>
 
                     <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
-
+                  { this.props.mode === 'Word' ? 
                     <CardActions>
-
+                      {console.log("is this reached")}
                       <Button onClick={this.handleOpen} size="small">
                         See More
                       </Button>
+                      
                       <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -364,8 +372,11 @@ class WordCard extends React.Component  {
                       </div>
                     </Modal>
                   </CardActions>
+                  :  null}
                   </>
+                        
                 );
+ 
 
                 }}
                 </Query>
@@ -377,7 +388,7 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style ={{backgroundColor: "#ffffff"}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}>{item.name}</Button>
+             <Button style ={{backgroundColor: this.props.vowel != item.name ? 'white' : '#3f51b5'}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button>
              </>
           ))}
 
