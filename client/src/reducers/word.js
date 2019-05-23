@@ -12,7 +12,7 @@ import {ADD_INTERMISSION_TEXT} from '../actions/word';
 const initialState = {
     text: [],
     vowel: null,
-    consonant: ["F"],
+    consonant: [],
     syllables: [1],
     limit: 1,
     mode: "Word",
@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
         case ADD_CONSONANT:
         return {...state, consonant: action.text}//state.consonant.concat([action.text])}
         case ADD_SYLLABLES:
-        return {...state, syllables: parseInt(action.integer)}//state.syllables.concat([parseInt(action.integer)])}
+        return {...state, syllables: !Array.isArray(state.syllables) ? action.text : action.text.map(Number)}//state.syllables.concat([parseInt(action.integer)])}
         case SET_LIMIT:
         return {...state, limit: action.text}
         case SET_MODE:

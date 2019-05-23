@@ -45,9 +45,9 @@ export function addConsonant(text) {
     }
 }
 
-export function addSyllables(integer) {
+export function addSyllables(text) {
     return {
-        type: ADD_SYLLABLES, integer
+        type: ADD_SYLLABLES, text
     }
 }
 
