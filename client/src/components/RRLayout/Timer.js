@@ -3,9 +3,11 @@ import Range from "./Range";
 import Routines from './Routines.js';
 import { AwesomeButton } from 'react-awesome-button';
 import Button from '@material-ui/core/Button';
-const React = require('react');
-const ms = require('pretty-ms');
-import Grid from '@material-ui/core/Grid'; // eslint-disable-line
+import React from 'react';
+import ms from 'pretty-ms';
+import Grid from '@material-ui/core/Grid'; 
+import RoutineSelectContainer from './RoutineSelect' 
+
 
 class Timer extends React.Component {
   constructor(props){
@@ -34,15 +36,22 @@ class Timer extends React.Component {
     this.currentRoutine = {};
   }
 
+
   componentDidMount() {
 
     // TODO - find a better way to set routines
 
-    this.routineSelectHandler(Routines[1]);
+   // this.routineSelectHandler(Routines[1]);
 
   }
 
   routineSelectHandler(routine) {
+
+    console.log("test", routine)
+    if(!routine || Object.keys(routine).length === 0) {
+      console.log("Hello")
+      return null;
+    }
 
     this.exerciseStack = [];
 
@@ -189,14 +198,14 @@ class Timer extends React.Component {
 
     let currentExercise = null;
 
+
     if (this.exerciseStack[this.exercisePointer]) {
       currentExercise =
         <div className='CurrentRoutineContainer'>
           <label>&gt; Duration: </label><span>{((this.exerciseStack[this.exercisePointer].duration))} seconds</span> ({this.exerciseStack[this.exercisePointer].rangeVal} seconds x {this.exerciseStack[this.exercisePointer].repetitions} {this.exerciseStack[this.exercisePointer].mode})<br />
           <br />
         </div>;
-    }
-
+    } 
     let completeExerciseStack = [];
 
     let current = this.exercisePointer;
@@ -233,9 +242,9 @@ class Timer extends React.Component {
     }
 
     let status = completed + ' of ' + total + ' Exercises Completed';
-
+    let isDisabled = currentExercise === null ? true : false;
     let start = (this.state.time === 0) ?
-      <Button onClick={this.startTimer} size="medium" variant="contained" color="primary" >Start Routine</Button> : null;
+      <Button onClick={this.startTimer} disabled={isDisabled} size="medium" variant="contained" color="primary" >Start Routine</Button> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
       null : <Button onClick={this.stopTimer} size="medium" variant="contained" color="primary" >Pause</Button>;
     let resume = (this.state.time === 0 || this.state.isOn) ?
@@ -255,10 +264,19 @@ class Timer extends React.Component {
             <Range range={rangeVal} updateRange={this.updateRange}/>
           </div>
         </div>
-        <br /><br />
-        <h4>{status} ({ms(this.state.time, {compact: true})})</h4>
 
+        <br /><br />
+        <div className="RoutineSelector">
+                    <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
+                </div>
+                <h4>{status} ({ms(this.state.time, {compact: true})})</h4>
+                <br /><br />
+                
+                <p>{currentExercise}</p>
+                <p>{completeExerciseStack}</p>
       </Grid>
+
+      
     )
   }
 }
