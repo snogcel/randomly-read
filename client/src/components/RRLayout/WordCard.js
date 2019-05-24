@@ -102,11 +102,18 @@ class WordCard extends React.Component  {
 
 
     constructor(props) {
-    super(props)
-    this.state = {
-      open: false,
-      buttonColor: 'White'
-    }
+      super(props);
+      this.state = {
+        open: false,
+        buttonColor: 'White'
+      }
+
+      this.refreshQuery = this.refreshQuery.bind(this);
+
+  }
+
+  refreshQuery() {
+    if (this.refresh) this.refresh();
   }
 
   handleOpen = () => {
@@ -120,10 +127,10 @@ class WordCard extends React.Component  {
   handleChange = name => {
 
 
-      this.props.addRoutineVowel([name])
-      this.setState({buttonColor: 'Blue'})
+      this.props.addRoutineVowel([name]);
+      this.refresh();
 
-   }
+   };
 
 
   setWord(title) {
@@ -307,10 +314,12 @@ class WordCard extends React.Component  {
               <Query
               query={query}
           //    onCompleted={data => this.setWord(data.words[0].lexeme)}
-              
+
               >
               {({ loading, error, data, refetch }) => {
-                  
+
+                this.refresh = refetch;
+
                 if (loading)
                   return (
                    ''
@@ -336,15 +345,14 @@ class WordCard extends React.Component  {
                     >
                       {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
                     </Typography>
-
-                    <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
-                  { this.props.mode === 'Word' ? 
+                    
+                  { this.props.mode === 'Word' ?
                     <CardActions>
                       {console.log("is this reached")}
                       <Button onClick={this.handleOpen} size="small">
                         See More
                       </Button>
-                      
+
                       <Modal
                         aria-labelledby="simple-modal-title"
                         aria-describedby="simple-modal-description"
@@ -374,9 +382,9 @@ class WordCard extends React.Component  {
                   </CardActions>
                   :  null}
                   </>
-                        
+
                 );
- 
+
 
                 }}
                 </Query>

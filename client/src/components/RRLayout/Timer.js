@@ -5,8 +5,8 @@ import { AwesomeButton } from 'react-awesome-button';
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import ms from 'pretty-ms';
-import Grid from '@material-ui/core/Grid'; 
-import RoutineSelectContainer from './RoutineSelect' 
+import Grid from '@material-ui/core/Grid';
+import RoutineSelectContainer from './RoutineSelect'
 
 
 class Timer extends React.Component {
@@ -47,9 +47,10 @@ class Timer extends React.Component {
 
   routineSelectHandler(routine) {
 
-    console.log("test", routine)
+    console.log("test", routine);
+
     if(!routine || Object.keys(routine).length === 0) {
-      console.log("Hello")
+      console.log("Hello");
       return null;
     }
 
@@ -190,7 +191,7 @@ class Timer extends React.Component {
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false})
     this.props.addRoutineVowel(null);
-   
+
   }
 
   render() {
@@ -205,7 +206,7 @@ class Timer extends React.Component {
           <label>&gt; Duration: </label><span>{((this.exerciseStack[this.exercisePointer].duration))} seconds</span> ({this.exerciseStack[this.exercisePointer].rangeVal} seconds x {this.exerciseStack[this.exercisePointer].repetitions} {this.exerciseStack[this.exercisePointer].mode})<br />
           <br />
         </div>;
-    } 
+    }
     let completeExerciseStack = [];
 
     let current = this.exercisePointer;
@@ -255,7 +256,7 @@ class Timer extends React.Component {
     return(
 
       <Grid>
-        <div className="TimerControls">  
+        <div className="TimerControls">
           {start}
           {resume}
           {stop}
@@ -271,12 +272,12 @@ class Timer extends React.Component {
                 </div>
                 <h4>{status} ({ms(this.state.time, {compact: true})})</h4>
                 <br /><br />
-                
+
                 <p>{currentExercise}</p>
                 <p>{completeExerciseStack}</p>
       </Grid>
 
-      
+
     )
   }
 }
