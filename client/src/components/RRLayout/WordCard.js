@@ -1,4 +1,13 @@
 import React from 'react';
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Modal from "@material-ui/core/Modal";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -14,50 +23,135 @@ import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
 import Fab from "@material-ui/core/Fab";
 
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+
+  return {
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`
+  };
+}
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  column: {
+    padding: theme.spacing.unit * 2,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  },
+  sideColumn: {
+    padding: theme.spacing.unit * 2,
+    textAlign: "center",
+    color: theme.palette.text.secondary
+  },
+  paper: {
+    position: "absolute",
+    width: theme.spacing.unit * 50,
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing.unit * 4,
+    outline: "none"
+  },
+  card: {
+    minHeight:175
+  },
+  sideCard: {
+    marginBottom: 20
+  },
+  title: {
+    fontSize: 36
+  },
+  subtitle: {
+    fontSize: 20
+  },
+  sideTitle: {
+    fontSize: 18
+  },
+  button: {
+    margin: 4,
+    minWidth: 35,
+    padding: 4
+  },
+  activeButton: {
+    margin: 4,
+    minWidth: 35,
+    padding: 4,
+    backgroundColor: "#EFEFEF"
+  },
+  activeExercise: {
+    backgroundColor: "#EFEFEF"
+  },
+  exerciseHeadline: {
+    margin: "0.25em"
+  },
+  actionsContainer: {
+    marginBottom: theme.spacing.unit * 2
+  },
+  resetContainer: {
+    padding: theme.spacing.unit * 3
+  }
+});
+
 class WordCard extends React.Component  {
+
+
 
     constructor(props) {
     super(props)
     this.state = {
-     
+      open: false,
+      buttonColor: 'White'
     }
   }
-  
-  handleChange = name => event => {
 
-    if (event.target.checked) {
-
-      this.props.addVowel([name])
-
-    }
-    else {
-      
-      this.props.removeVowel(name)
-      this.props.removeWord()
-   }
+  handleOpen = () => {
+    this.setState({ open: true });
   };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  handleChange = name => {
+
+
+      this.props.addRoutineVowel([name])
+      this.setState({buttonColor: 'Blue'})
+
+   }
+
 
   setWord(title) {
       this.props.addWord(title)
   }
 
-  componentWillReceiveProps() {
+
+
+  buildQuery() {
+
     console.log("Vowel:", this.props.vowel);
     console.log("consonant:", this.props.consonant);
     console.log("syllables:",this.props. syllables);
     console.log("limit:", this.props.limit);
     console.log("mode:", this.props.mode);
-  }
-
-  buildQuery() {
 
     let vowel = JSON.stringify(this.props.vowel);
     let consonant = JSON.stringify(this.props.consonant);
     let syllables= JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
+    console.log("Vowel:", vowel);
+    console.log("consonant:", consonant);
+    console.log("syllables:", syllables);
+    console.log("limit:", limit);
+    console.log("mode:", this.props.mode);
 
     switch(this.props.mode) {
-        case 'sentences':
+        case 'Sentence':
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -116,16 +210,17 @@ class WordCard extends React.Component  {
 }
 
   render() {
+    const { classes } = this.props;
     const query = this.buildQuery();
 
-  return (
-    <Grid container justify='center' alignItems='center'>
+
+    /* <Grid container justify='center' alignItems='center'>
       <Card style={{ width: 950, minHeight: '40vh', maxHeight: '40vh', overflow: 'hidden'}}>
         <Grid>
         <CardContent style={{ overflow: 'hidden'}}>
           {console.log(this.props.mode)}
            { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
-                '' 
+                ''
             : (this.props.mode === 'Intermission') ?
             <Intermission /> :
             <Query
@@ -135,7 +230,7 @@ class WordCard extends React.Component  {
             {({ loading, error, data, refetch }) => {
               if (loading)
                 return (
-                  <Typography variant='h5' component='h2' align='center'> 
+                  <Typography variant='h5' component='h2' align='center'>
                   </Typography>
                 );
               if (error)
@@ -156,25 +251,25 @@ class WordCard extends React.Component  {
                   <Grid item xs={12} align='center'>
                   <Typography color='textSecondary' align='center'>
                     {(`(${word.pos}): `)}
-                  </Typography>   
-                  </Grid> 
+                  </Typography>
+                  </Grid>
                   <Grid item xs={12} align='center'>
                   <Typography component='p' align='center'>
-                   { `${word.definition}` } 
-                  </Typography> 
+                   { `${word.definition}` }
+                  </Typography>
                   </Grid>
                   </Grid>
                   </>
                   );
                 })}
-                
-                 <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button> 
+
+                 <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
                 </>
               );
             }}
              </Query>
-           } 
-        
+           }
+
         <Grid item align='bottom'>
         <CardActions style ={{overflow: 'hidden',  marginTop: 'auto'}}>
           <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1}}>
@@ -189,19 +284,126 @@ class WordCard extends React.Component  {
         <FormGroup row style={{ flex: '1', marginLeft: '25px', overflow: 'hidden'}} >
        { VowelCheckboxes.map((item, i) => (
        <>
-           <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/> 
-       {/* <FormControlLabel control={<Fab color="primary" aria-label="Add" onClick={this.handleChangeButton(item.name)}> {item.name} </Fab>} /> */}
-       </>
+           <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/>
+       {/* <FormControlLabel control={<Fab color="primary" aria-label="Add" onClick={this.handleChangeButton(item.name)}> {item.name} </Fab>} /> */
+     /*   </>
 
       ))}
-        </FormGroup> 
+        </FormGroup>
         </CardContent>
         </Grid>
       </Card>
-    </Grid>
-    
-  );
-}
-}
+       </Grid> */
 
-export default WordCard;
+    return (
+
+        <div className={classes.column}>
+          <Card square elevation="2" className={classes.card}>
+            <CardContent>
+              {console.log(this.props.mode)}
+              { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
+                  ''
+              : (this.props.mode === 'Intermission') ? <Intermission /> :
+              <Query
+              query={query}
+          //    onCompleted={data => this.setWord(data.words[0].lexeme)}
+              
+              >
+              {({ loading, error, data, refetch }) => {
+                  
+                if (loading)
+                  return (
+                   ''
+                  );
+
+                if (error)
+                  return (
+                    <Typography
+                    align="center"
+                    className={classes.title}
+                    color="textPrimary"
+                  >
+                    Error
+                  </Typography>
+                  );
+
+                return (
+                    <>
+                    <Typography
+                      align="center"
+                      className={classes.title}
+                      color="textPrimary"
+                    >
+                      {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
+                    </Typography>
+
+                    <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
+                  { this.props.mode === 'Word' ? 
+                    <CardActions>
+                      {console.log("is this reached")}
+                      <Button onClick={this.handleOpen} size="small">
+                        See More
+                      </Button>
+                      
+                      <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                      >
+                      <div style={getModalStyle()} className={classes.paper}>
+                        <Typography className={classes.title} color="textPrimary">
+                          {data.words[0].lexeme}
+                        </Typography>
+                          {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
+                            return (
+                              <>
+                              <List dense="true">
+                                <ListItem>
+                                  <ListItemText
+                                    primary={word.definition}
+                                    secondary={word.pos}
+                                  />
+                                </ListItem>
+                              </List>
+                              </>
+                            );
+                          })}
+                      </div>
+                    </Modal>
+                  </CardActions>
+                  :  null}
+                  </>
+                        
+                );
+ 
+
+                }}
+                </Query>
+              }
+            </CardContent>
+          </Card>
+
+          <br />
+
+          { VowelCheckboxes.map((item, i) => (
+             <>
+             <Button style ={{backgroundColor: this.props.vowel != item.name ? 'white' : '#3f51b5'}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button>
+             </>
+          ))}
+
+        </div>
+
+    );
+
+  }
+ }
+
+WordCard.propTypes = {
+  classes: PropTypes.object.isRequired
+};
+
+const WordCardWrapped = withStyles(styles)(WordCard);
+
+
+export default WordCardWrapped;
