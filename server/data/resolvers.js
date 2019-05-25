@@ -35,8 +35,13 @@ const resolvers = {
                       let lexeme = new Lexeme(queryResult);
 
                       lexeme.submitPost().then(function(doc) {
-                        console.log(doc);
+
+                        queryResult[0].dataValues.id = doc._id;
+
+                        console.log(queryResult);
+
                         resolve(queryResult);
+
                       }, function(err) { reject(err); });
 
                   });

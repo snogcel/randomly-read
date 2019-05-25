@@ -8,6 +8,7 @@ type Query {
 }
 
 type Word {
+  id: Int
   cmudict_id: Int
   wordid: Int
   lexeme: String
