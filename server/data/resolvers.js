@@ -34,20 +34,10 @@ const resolvers = {
 
                       let lexeme = new Lexeme(queryResult);
 
-                      lexeme.createPost(function(err, res) {
-
-                        if (err) reject(result);
-                        if (res) {
-
-                          queryResult[0].dataValues.id = res._id;
-
-                          console.log("success: ", res._id);
-
-                          resolve(queryResult);
-
-                        }
-
-                      });
+                      lexeme.submitPost().then(function(doc) {
+                        console.log(doc);
+                        resolve(queryResult);
+                      }, function(err) { reject(err); });
 
                   });
               });
