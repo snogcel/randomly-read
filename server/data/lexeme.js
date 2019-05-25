@@ -21,18 +21,44 @@ const Lexeme = function(data) {
   if (this.type === 'adj') this.category = 'adjectives';
   if (this.type === 'adv') this.category = 'adverbs';
 
+  this.author = '5ccf8c65debb7576d5bdd451';
+  this.post_type = 'text';
+  this.post_text = JSON.stringify(this.wordsXsensesXsynsets);
+
 };
 
-Lexeme.prototype.createPost = function() {
+Lexeme.prototype.createPost = function(cb) {
+  saveNewPost(
+    this.lexeme,
+    this.author,
+    this.category,
+    this.post_type,
+    this.post_text
+  ).then(function(doc) {
 
-  Post.create({
-    title: this.lexeme,
-    author: '5ccf8c65debb7576d5bdd451',
-    category: this.category,
-    type: 'text',
-    text: JSON.stringify(this.wordsXsensesXsynsets)
+    cb(null, doc); // success
+
+  }, function(err) {
+
+    cb(err, null); // failure
+    
   });
-
 };
+
+function saveNewPost(title, author, category, post_type, post_text) {
+  return Post.create({
+    title: title,
+    author: author,
+    category: category,
+    type: post_type,
+    text: post_text
+  }).then(null, function(err) {
+    if (err.code === 11000) {
+      return Post.findOne({title:title}).exec()
+    } else {
+      throw err;
+    }
+  });
+}
 
 module.exports = Lexeme;

@@ -30,13 +30,22 @@ const resolvers = {
               return new Promise((resolve, reject) => {
                   Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
 
-                      let lexeme = new Lexeme(data);
+                      let queryResult = data;
 
-                      console.log(lexeme);
+                      let lexeme = new Lexeme(queryResult);
 
-                      lexeme.createPost();
+                      lexeme.createPost(function(err, res) {
 
-                      resolve(data);
+                        if (err) reject(result);
+                        if (res) {
+
+                          console.log("post", res);
+                          console.log("query", queryResult);
+                          resolve(queryResult);
+
+                        }
+
+                      });
 
                   });
               });
