@@ -39,8 +39,10 @@ const resolvers = {
                         if (err) reject(result);
                         if (res) {
 
-                          console.log("post", res);
-                          console.log("query", queryResult);
+                          queryResult[0].dataValues.id = res._id;
+
+                          console.log("success: ", res._id);
+
                           resolve(queryResult);
 
                         }
