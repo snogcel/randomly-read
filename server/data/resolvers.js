@@ -1,9 +1,7 @@
 const Sequelize = require('sequelize');
 const Sentencer = require('sentencer');
-
-const Post = require('../models/post');
-
 const Word = require('./connectors');
+const Lexeme = require('./lexeme');
 
 const resolvers = {
     Query: {
@@ -32,54 +30,11 @@ const resolvers = {
               return new Promise((resolve, reject) => {
                   Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
 
-                      // TODO - reject if no match found?
+                      let lexeme = new Lexeme(data);
 
-                      let category = data[0].dataValues.type;
+                      console.log(lexeme);
 
-                      if (data[0].dataValues.type === 'noun') category = 'nouns';
-                      if (data[0].dataValues.type === 'verb') category = 'verbs';
-                      if (data[0].dataValues.type === 'adj') category = 'adjectives';
-                      if (data[0].dataValues.type === 'adv') category = 'adverbs';
-
-                      let title = data[0].dataValues.lexeme;
-
-                      let url = '';
-
-                      let text = '';
-
-                      for (let i = 0; i < data[0].dataValues.wordsXsensesXsynsets.length; i++) {
-
-                        if (category === 'nouns' && data[0].dataValues.wordsXsensesXsynsets[i].dataValues.pos === 'n') {
-                          text += data[0].dataValues.wordsXsensesXsynsets[i].dataValues.definition+'. ';
-                        }
-
-                        if (category === 'verbs' && data[0].dataValues.wordsXsensesXsynsets[i].dataValues.pos === 'v') {
-                          text += data[0].dataValues.wordsXsensesXsynsets[i].dataValues.definition+'. ';
-                        }
-
-                        if (category === 'adjectives' && (data[0].dataValues.wordsXsensesXsynsets[i].dataValues.pos === 'a' || data[0].dataValues.wordsXsensesXsynsets[i].dataValues.pos === 's')) {
-                          text += data[0].dataValues.wordsXsensesXsynsets[i].dataValues.definition+'. ';
-                        }
-
-                        if (category === 'adverbs' && data[0].dataValues.wordsXsensesXsynsets[i].dataValues.pos === 'r') {
-                          text += data[0].dataValues.wordsXsensesXsynsets[i].dataValues.definition+'. ';
-                        }
-
-                      }
-
-                      let type = 'text';
-
-                      // TODO - get authenticated user ID
-                      const author = '5ccf8c65debb7576d5bdd451';
-
-                      Post.create({
-                        title,
-                        url,
-                        author,
-                        category,
-                        type,
-                        text
-                      });
+                      lexeme.createPost();
 
                       resolve(data);
 
