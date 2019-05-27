@@ -1,21 +1,18 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-
+//import styled from 'styled-components/macro';
 import { withStyles } from "@material-ui/core/styles";
-
-import WordCardContainer from '../RRLayout/WordCardContainer';
-import TimerContainer from '../RRLayout/TimerContainer';
+import WordCardContainer from './WordCardContainer';
+import TimerContainer from './TimerContainer';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
-import List from "@material-ui/core/List";
+//import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
+//import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 
 const styles = theme => ({
   root: {
@@ -40,8 +37,18 @@ const styles = theme => ({
   },
 });
 
-class WordCardHome extends React.Component {
-  state = {};
+class RRHome extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+     
+
+    }
+
+   
+
+}
+
 
   render() {
     const {classes} = this.props;
@@ -54,6 +61,7 @@ class WordCardHome extends React.Component {
 
             <div className={classes.sideColumn}>
               <Typography
+              component={'span'}
                 align="center"
                 className={classes.sideTitle}
                 color="textPrimary"
@@ -64,10 +72,11 @@ class WordCardHome extends React.Component {
                   </ListItemIcon>
                   <ListItemText
                     primary={[
-                      <Typography inline variant="h6" color="textPrimary">
+                      <Typography component={'span'} inline variant="h6" color="textPrimary">
                         5
                       </Typography>,
                       <Typography
+                      component={'span'}
                         className={classes.exerciseHeadline}
                         inline
                         color="textPrimary"
@@ -99,6 +108,7 @@ class WordCardHome extends React.Component {
               <Card elevation="1" className={classes.sideCard}>
                 <CardContent>
                   <Typography
+                  component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
@@ -114,6 +124,7 @@ class WordCardHome extends React.Component {
               <Card elevation="1" className={classes.sideCard}>
                 <CardContent>
                   <Typography
+                  component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
@@ -133,6 +144,6 @@ class WordCardHome extends React.Component {
 
 }
 
-const WordCardHomeWrapped = withStyles(styles)(WordCardHome);
+const RRHomeWrapped = withStyles(styles)(RRHome);
 
-export default WordCardHomeWrapped;
+export default RRHomeWrapped;
