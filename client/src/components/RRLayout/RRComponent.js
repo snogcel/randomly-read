@@ -1,9 +1,7 @@
 import React from 'react';
 import Timer from './SecondTimerContainer';
-import styled from 'styled-components/macro';
-import SelectWrapper from '../shared/form/SelectWrapper';
 
-const Wrapper = styled.div`
+/* const Wrapper = styled.div`
   display: flex;
   align-items: flex-start;
   margin: 0 10vw;
@@ -16,7 +14,7 @@ const Wrapper = styled.div`
     display: block;
     margin: 0;
   }
-`;
+`; */
 
 class RandomlyRead extends React.Component {
   constructor(props) {
@@ -60,8 +58,8 @@ class RandomlyRead extends React.Component {
     // this.consonantCheckboxes.current.setMany(newConsonants);
 
     // Handle Vowels
-    let newVowels = options.vowel;
-    let removedVowels = difference(vowel, newVowels);
+  //  let newVowels = options.vowel;
+   // let removedVowels = difference(vowel, newVowels);
     // this.vowelCheckboxes.current.unsetMany(removedVowels);
     // this.vowelCheckboxes.current.setMany(newVowels);
 

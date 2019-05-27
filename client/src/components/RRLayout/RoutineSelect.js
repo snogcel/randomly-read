@@ -12,7 +12,6 @@ class RoutineSelect extends React.Component {
             Routine: ""
         };
 
-        this.selectContainer = React.createRef();
 
         this.handleChange = this.handleChange.bind(this);
 
@@ -69,7 +68,7 @@ class RoutineSelect extends React.Component {
 
         let selectedRoutine = {};
 
-        if(e.target.value != "") {
+        if(e.target.value !== "") {
         for (let i = 0; i < Routines.length; i++) {
             if (e.target.value === Routines[i].name) {
                 selectedRoutine = Routines[i];
@@ -77,7 +76,7 @@ class RoutineSelect extends React.Component {
         }
     } 
 
-        let obj = {
+        /* let obj = {
             duration: 39,
             rangeVal: 13,
             map: 'randomly',
@@ -93,7 +92,7 @@ class RoutineSelect extends React.Component {
             syllables: ["2"],
             repetitions: 3
         };
-
+ */
         this.props.action(selectedRoutine); // pass mode update back to QueryManager
     }
 

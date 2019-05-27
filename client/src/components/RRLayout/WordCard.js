@@ -5,23 +5,15 @@ import Modal from "@material-ui/core/Modal";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import Checkbox from '@material-ui/core/Checkbox';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
-import Fab from "@material-ui/core/Fab";
 
 
 function getModalStyle() {
@@ -128,7 +120,7 @@ class WordCard extends React.Component  {
 
 
       this.props.addRoutineVowel([name]);
-      this.refresh();
+      this.refreshQuery();
 
    };
 
@@ -143,7 +135,7 @@ class WordCard extends React.Component  {
 
     console.log("Vowel:", this.props.vowel);
     console.log("consonant:", this.props.consonant);
-    console.log("syllables:",this.props. syllables);
+    console.log("syllables:",this.props.syllables);
     console.log("limit:", this.props.limit);
     console.log("mode:", this.props.mode);
 
@@ -308,7 +300,7 @@ class WordCard extends React.Component  {
           <Card square elevation="2" className={classes.card}>
             <CardContent>
               {console.log(this.props.mode)}
-              { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
+              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
                   ''
               : (this.props.mode === 'Intermission') ? <Intermission /> :
               <Query
@@ -322,12 +314,13 @@ class WordCard extends React.Component  {
 
                 if (loading)
                   return (
-                   ''
+                  ''
                   );
 
                 if (error)
                   return (
                     <Typography
+                    component={'span'}
                     align="center"
                     className={classes.title}
                     color="textPrimary"
@@ -339,11 +332,14 @@ class WordCard extends React.Component  {
                 return (
                     <>
                     <Typography
+                    component={'span'}
                       align="center"
                       className={classes.title}
                       color="textPrimary"
                     >
                       {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
+
+                      {this.props.mode === 'Word' ? console.log(data.words[0].lexeme) : console.log(data.sentences[0].result)}
                     </Typography>
                     
                   { this.props.mode === 'Word' ?
@@ -360,10 +356,10 @@ class WordCard extends React.Component  {
                         onClose={this.handleClose}
                       >
                       <div style={getModalStyle()} className={classes.paper}>
-                        <Typography className={classes.title} color="textPrimary">
+                        <Typography component={'span'} className={classes.title} color="textPrimary">
                           {data.words[0].lexeme}
                         </Typography>
-                          {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
+                          {data.words[0].wordsXsensesXsynsets.map((word, i) => {
                             return (
                               <>
                               <List dense="true">
@@ -396,9 +392,10 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style ={{backgroundColor: this.props.vowel != item.name ? 'white' : '#3f51b5'}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button>
+             <Button style ={{backgroundColor: JSON.stringify(this.props.vowel) !== JSON.stringify([item.name]) ? 'white' : '#3f51b5'}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button> 
              </>
           ))}
+
 
         </div>
 
