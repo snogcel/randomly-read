@@ -8,6 +8,7 @@ import {SET_MODE} from '../actions/word';
 import {ADD_SYLLABLES} from '../actions/word';
 import {ADD_ROUTINE_VOWEL} from '../actions/word';
 import {ADD_INTERMISSION_TEXT} from '../actions/word';
+import {REMOVE_CONSONANT} from '../actions/word';
 
 const initialState = {
     text: [],
@@ -33,6 +34,8 @@ export default (state = initialState, action) => {
         return {...state, text: null}
         case ADD_CONSONANT:
         return {...state, consonant: action.text}//state.consonant.concat([action.text])}
+        case REMOVE_CONSONANT:
+        return {...state, consonant: initialState.consonant}
         case ADD_SYLLABLES:
         return {...state, syllables: !Array.isArray(state.syllables) ? action.text : action.text.map(Number)}//state.syllables.concat([parseInt(action.integer)])}
         case SET_LIMIT:
