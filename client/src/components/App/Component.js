@@ -10,15 +10,17 @@ import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
 import CreatePostFormContainer from '../CreatePostForm/Container';
 import Home from '../Home';
-import WordCardContainer from '../RRLayout/WordCardContainer';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import TimerContainer from '../RRLayout/TimerContainer'
-import WordCardHome from '../RRLayout/WordCardHome'
+import WordCardHome from '../RRLayout/RRHome'
 
 const client = new ApolloClient({
   uri: `https://api.stuttered.net/graphql`
 });
+
+client.defaultOptions.query = {
+  fetchPolicy: "no-cache"
+};
 
 const App = props => (
   <ApolloProvider client={client}>
