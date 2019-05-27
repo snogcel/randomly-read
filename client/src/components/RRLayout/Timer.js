@@ -1,12 +1,13 @@
 import RoutineBuilder from './RoutineBuilder';
 import Range from "./Range";
-import Routines from './Routines.js';
-import { AwesomeButton } from 'react-awesome-button';
+//import Routines from './Routines.js';
+//import { AwesomeButton } from 'react-awesome-button';
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import ms from 'pretty-ms';
 import Grid from '@material-ui/core/Grid';
 import RoutineSelectContainer from './RoutineSelect'
+import { Typography } from '@material-ui/core';
 
 
 class Timer extends React.Component {
@@ -17,7 +18,8 @@ class Timer extends React.Component {
       isOn: false,
       start: 0,
       lastUpdated: -1,
-      rangeVal: 3
+      rangeVal: 3,
+      test: "test"
     };
 
     this.routineSelectHandler = this.routineSelectHandler.bind(this);
@@ -34,9 +36,16 @@ class Timer extends React.Component {
     this.routineBuilder = new RoutineBuilder();
 
     this.currentRoutine = {};
+    this.isEmpty = this.isEmpty.bind(this)
   }
 
-
+  isEmpty(obj) {
+    for(let key in obj) {
+        if(obj.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
   componentDidMount() {
 
     // TODO - find a better way to set routines
@@ -48,16 +57,31 @@ class Timer extends React.Component {
   routineSelectHandler(routine) {
 
     console.log("test", routine);
-
-    if(!routine || Object.keys(routine).length === 0) {
-      console.log("Hello");
-      return null;
+    this.exerciseStack = [];
+    if(this.isEmpty(routine)) {
+      console.log("Hello 1");
+      this.setState({test: "None"})
+      
+    }
+    else {
+      
+      for (let i = 0; i < routine.subroutine.length; i++) {
+        this.exerciseStack.push(routine.subroutine[i]);
+      }
+      // fetch first entry in routine stack
+      this.exercisePointer = 0;
+  
+      this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
+      this.setExercise(this.exerciseStack[this.exercisePointer]);
+  
+      this.stopTimer();
+      this.resetTimer();
     }
 
-    this.exerciseStack = [];
 
+    
     // Build Routine Stack
-    for (let i = 0; i < routine.subroutine.length; i++) {
+    /* for (let i = 0; i < routine.subroutine.length; i++) {
       this.exerciseStack.push(routine.subroutine[i]);
     }
 
@@ -68,7 +92,7 @@ class Timer extends React.Component {
     this.setExercise(this.exerciseStack[this.exercisePointer]);
 
     this.stopTimer();
-    this.resetTimer();
+    this.resetTimer() */;
 
   }
 
@@ -178,6 +202,8 @@ class Timer extends React.Component {
 
     }
 
+  
+
   }
 
   stopTimer() {
@@ -185,19 +211,30 @@ class Timer extends React.Component {
     clearInterval(this.timer);
 
     console.log(this.state);
+    console.log(this.exerciseStack)
+    console.log(this.exercisePointer)
   }
 
   resetTimer() {
+    console.log(this.props)
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false})
     this.props.addRoutineVowel(null);
-
+    this.props.removeConsonant();
+    this.props.addSyllables([1])
+    this.props.setMode('Word');
   }
 
   render() {
+    
     const { rangeVal } = this.state;
 
     let currentExercise = null;
+
+    if(this.exerciseStack.length === 0) {
+      currentExercise = null;
+      console.log(this.state.test)
+    } 
 
 
     if (this.exerciseStack[this.exercisePointer]) {
@@ -270,11 +307,12 @@ class Timer extends React.Component {
         <div className="RoutineSelector">
                     <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
                 </div>
+                <br /><br />
                 <h4>{status} ({ms(this.state.time, {compact: true})})</h4>
                 <br /><br />
 
-                <p>{currentExercise}</p>
-                <p>{completeExerciseStack}</p>
+                <Typography variant="h6" >{currentExercise}</Typography>
+                <Typography variant="h6">{completeExerciseStack}</Typography>
       </Grid>
 
 
