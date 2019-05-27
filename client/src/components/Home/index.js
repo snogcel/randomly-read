@@ -6,9 +6,7 @@ import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
-import WordCardContainer from '../RRLayout/WordCardContainer';
-import TimerContainer from '../RRLayout/TimerContainer';
-import RRComponent from '../RRLayout/RRComponent';
+
 
 const Wrapper = styled.div`
   display: flex;
@@ -36,9 +34,9 @@ const Home = () => (
         path='/u/:randomlyread'
         render={() => (
            <div>
-          <WordCardContainer />
-          <TimerContainer />
-          </div>
+         {/*  <WordCardContainer />
+          <TimerContainer /> */}
+          </div> 
         )}
       />
 
