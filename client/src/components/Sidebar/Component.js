@@ -3,8 +3,6 @@ import styled from 'styled-components/macro';
 import SidebarCategoryList from './CategoryList';
 
 
-import 'react-awesome-button/dist/styles.css';
-
 /* const TimerWrapper = styled.div`
   display: flex;
   flex-direction: column;

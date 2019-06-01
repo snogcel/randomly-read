@@ -41,7 +41,7 @@ class RandomlyRead extends React.Component {
     let consonant = this.state.consonant;
     let templates = this.state.templates;
     let syllables = this.state.syllables;
-
+    
     let refresh = false;
 
     function difference(lastProps, newProps) {
@@ -87,12 +87,18 @@ class RandomlyRead extends React.Component {
     templates = options.templates;
     syllables = options.syllables;
 
+    console.log(mode)
+    console.log(vowel)
+    console.log(consonant)
+    console.log(templates)
+    console.log(syllables)
     this.props.addRoutineVowel(options.vowel);
     this.props.addConsonant(options.consonant);
     this.props.addSyllables(options.syllables);
     this.props.setLimit(limitText);
     this.props.setMode(mode);
     this.props.setIntermissionText(options.intermissionText)
+    console.log("IT", options.intermissionText)
   
 
     if (this.state.mode === "Intermission") refresh = false;
