@@ -4,6 +4,32 @@ import Routines from './Routines.js';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
+import { withStyles } from "@material-ui/core/styles";
+
+
+const styles = theme => ({
+      routine: {
+        "&:before": {
+            borderColor: 'white'
+      },
+      '&:after': {
+        borderColor: 'white',
+        color: 'white'
+      },
+      '&:hover': {
+            borderColor: 'white'
+      },
+    },
+    icon: {
+        fill: 'white',
+    },
+    select: {
+        color: 'white'
+    }
+
+
+  });
+  
 
 class RoutineSelect extends React.Component {
     constructor(props) {
@@ -97,14 +123,29 @@ class RoutineSelect extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
+        const { theme } = this.props;
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150}}>
-                 <InputLabel htmlFor="age-simple">Select Routine</InputLabel>
+                 <InputLabel style={{color: theme === true ? 'white' : 'black'}}>Select Routine</InputLabel>
                   <Select
+                  classes={{select: theme === true ? classes.select : undefined}}
                   value={this.state.Routine}
                   onChange={this.handleChange}
+                  className={theme === true ? classes.routine : undefined}
+                  inputProps={{
+                    style: {
+                        color: 'red'
+                    },
+                    classes: {
+                        icon: theme === true ? classes.icon : undefined
+                    }
+                    
+
+                }}
                   >
+                      
                  <MenuItem value={""}>
                  <em>None</em>      
                  </MenuItem>
@@ -121,4 +162,4 @@ class RoutineSelect extends React.Component {
     }
 }
 
-export default RoutineSelect;
+export default withStyles(styles)(RoutineSelect);

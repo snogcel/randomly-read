@@ -1,4 +1,5 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 class Range extends React.Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Range extends React.Component {
   render() {
     // console.log(this.props);
     const { range } = this.props;
+    const { theme } = this.props;
     return (
       <div>
         <input id="range" type="range"
@@ -22,7 +24,9 @@ class Range extends React.Component {
                step="1"
                onChange={this.updateRange}
         />
-        <span id="output">{range} Seconds</span>
+        <div id="output">
+        <Typography style={{color: theme === true ? 'white' : 'black' , paddingLeft: 5}}>{range} Seconds</Typography>
+        </div>
       </div>
     )
   }
