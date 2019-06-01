@@ -29,8 +29,8 @@ const mapStateToProps = state => ({
     setMode: (mode) => {
     dispatch(setMode(mode))
   },
-  setIntermissionText: (mode) => {
-    dispatch(setIntermissionText(mode))
+  setIntermissionText: (text) => {
+    dispatch(setIntermissionText(text))
   }
 
   });

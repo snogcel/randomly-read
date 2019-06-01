@@ -4,10 +4,15 @@ import {addRoutineVowel} from '../../actions/word';
 import {removeConsonant} from '../../actions/word';
 import {setMode} from '../../actions/word';
 import {addSyllables} from '../../actions/word';
+import {addExercise} from '../../actions/exerciseHistory'
+import {addExerciseNumber} from '../../actions/exerciseHistory'
 
 const mapStateToProps = state => ({
- 
   
+  currentExercise: state.exerciseHistory.currentExercise,
+  currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
+  dark: state.theme.dark
+
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -22,6 +27,12 @@ const mapDispatchToProps = dispatch => ({
     },
     setMode: (mode) => {
       dispatch(setMode(mode))
+    },
+    addExercise: (exercise) => {
+      dispatch(addExercise(exercise))
+    },
+    addExerciseNumber: (exerciseNum) => {
+      dispatch(addExerciseNumber(exerciseNum))
     }
   });
 
