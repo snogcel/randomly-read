@@ -12,7 +12,7 @@ import CreatePostFormContainer from '../CreatePostForm/Container';
 import Home from '../Home';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import WordCardHome from '../RRLayout/RRHome'
+import RRHomeContainer from '../RRLayout/RRHomeContainer'
 
 const client = new ApolloClient({
   uri: `https://api.stuttered.net/graphql`
@@ -34,7 +34,7 @@ const App = props => (
             <Route path='/login' component={LoginFormContainer} />
             <Route path='/signup' component={SignupFormContainer} />
             <Route path='/createpost' component={CreatePostFormContainer} />
-            <Route path='/RandomlyRead' component={WordCardHome} />
+            <Route path='/RandomlyRead' component={RRHomeContainer} />
             <Route path='/' component={Home} />
           </Switch>
         </>

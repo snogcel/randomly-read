@@ -12,12 +12,15 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import ExerciseHistoryContainer from './ExerciseHistoryContainer';
 //import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
+
+
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: 50
+    padding: 25
   },
   column: {
     padding: theme.spacing.unit * 2,
@@ -41,14 +44,9 @@ class RRHome extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-     
-
+    
     }
-
-   
-
 }
-
 
   render() {
     const {classes} = this.props;
@@ -60,38 +58,8 @@ class RRHome extends React.Component {
           <Grid item xs={12} sm={3}>
 
             <div className={classes.sideColumn}>
-              <Typography
-              component={'span'}
-                align="center"
-                className={classes.sideTitle}
-                color="textPrimary"
-              >
-                <ListItem>
-                  <ListItemIcon>
-                    <CheckboxOutlineBlankIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={[
-                      <Typography component={'span'} inline variant="h6" color="textPrimary">
-                        5
-                      </Typography>,
-                      <Typography
-                      component={'span'}
-                        className={classes.exerciseHeadline}
-                        inline
-                        color="textPrimary"
-                        variant="h6"
-                      >
-                        words with
-                      </Typography>,
-                      <Typography inline variant="h6" color="textSecondary">
-                        EH
-                      </Typography>
-                    ]}
-                    secondary="bet, dress, net, head..."
-                  />
-                </ListItem>
-              </Typography>
+              <ExerciseHistoryContainer />
+              
             </div>
 
           </Grid>
@@ -105,7 +73,7 @@ class RRHome extends React.Component {
           <Grid item xs={12} sm={3}>
             <div className={classes.sideColumn}>
 
-              <Card elevation="1" className={classes.sideCard}>
+              <Card elevation="1" className={classes.sideCard} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
                 <CardContent>
                   <Typography
                   component={'span'}
@@ -121,13 +89,14 @@ class RRHome extends React.Component {
               </Card>
               <br />
               <br />
-              <Card elevation="1" className={classes.sideCard}>
+              <Card elevation="1" className={classes.sideCard} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
                 <CardContent>
                   <Typography
                   component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
+                    style={{color: this.props.dark === true ? 'white' : 'black'}}
                   >
                     routine selector
                   </Typography>
