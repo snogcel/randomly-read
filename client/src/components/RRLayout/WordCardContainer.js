@@ -13,8 +13,8 @@ const mapStateToProps = state => ({
   consonant: state.word.consonant,
   syllables: state.word.syllables,
   mode: state.word.mode,
-  limit: state.word.limit
-
+  limit: state.word.limit,
+  dark: state.theme.dark
 });
 
 const mapDispatchToProps = dispatch => ({

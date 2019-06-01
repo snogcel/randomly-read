@@ -14,6 +14,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
+import theme from '../../theme';
 
 
 function getModalStyle() {
@@ -50,7 +51,7 @@ const styles = theme => ({
     outline: "none"
   },
   card: {
-    minHeight:175
+    minHeight:175,
   },
   sideCard: {
     marginBottom: 20
@@ -67,7 +68,17 @@ const styles = theme => ({
   button: {
     margin: 4,
     minWidth: 35,
-    padding: 4
+    padding: 4, 
+    "&:hover": {
+      backgroundColor: "#2d90e5"
+    },
+      backgroundColor: '#33a0ff',
+  },
+  seeMorebutton: {
+    "&:hover": {
+      backgroundColor: "#2d90e5"
+    },
+      backgroundColor: '#33a0ff',
   },
   activeButton: {
     margin: 4,
@@ -297,7 +308,7 @@ class WordCard extends React.Component  {
     return (
 
         <div className={classes.column}>
-          <Card square elevation="2" className={classes.card}>
+          <Card square elevation="2" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
             <CardContent>
               {console.log(this.props.mode)}
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
@@ -336,6 +347,7 @@ class WordCard extends React.Component  {
                       align="center"
                       className={classes.title}
                       color="textPrimary"
+                      style={{color: this.props.dark === true ? 'white' : 'black'}} 
                     >
                       {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
 
@@ -345,8 +357,8 @@ class WordCard extends React.Component  {
                   { this.props.mode === 'Word' ?
                     <CardActions>
                       {console.log("is this reached")}
-                      <Button onClick={this.handleOpen} size="small">
-                        See More
+                      <Button className={classes.seeMorebutton} color={"primary"} onClick={this.handleOpen} size="medium" variant="contained">
+                        <b>See More</b>
                       </Button>
 
                       <Modal
@@ -354,9 +366,10 @@ class WordCard extends React.Component  {
                         aria-describedby="simple-modal-description"
                         open={this.state.open}
                         onClose={this.handleClose}
+                        style={{color: this.props.dark === true ? 'white' : 'black'}}
                       >
-                      <div style={getModalStyle()} className={classes.paper}>
-                        <Typography component={'span'} className={classes.title} color="textPrimary">
+                      <div  style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
+                        <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} className={classes.title} color="textPrimary">
                           {data.words[0].lexeme}
                         </Typography>
                           {data.words[0].wordsXsensesXsynsets.map((word, i) => {
@@ -364,10 +377,14 @@ class WordCard extends React.Component  {
                               <>
                               <List dense="true">
                                 <ListItem>
-                                  <ListItemText
-                                    primary={word.definition}
-                                    secondary={word.pos}
-                                  />
+                                  <ListItemText>
+                                    <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'}  color="textPrimary">
+                                    {word.definition}
+                                  </Typography>
+                                  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} color="textSecondary">
+                                  {word.pos}
+                                  </Typography>
+                                    </ListItemText>
                                 </ListItem>
                               </List>
                               </>
@@ -392,7 +409,7 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style ={{backgroundColor: JSON.stringify(this.props.vowel) !== JSON.stringify([item.name]) ? 'white' : '#3f51b5'}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button> 
+             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button> 
              </>
           ))}
 
