@@ -160,7 +160,7 @@ class Timer extends React.Component {
   startTimer() {
     console.log(this.exerciseStack)
     this.props.addExercise(this.exerciseStack)
-    console.log("TESTTTTTTTTTTTTT", this.exercisePointer)
+    console.log("test", this.exercisePointer)
     this.props.addExerciseNumber(this.exercisePointer)
     this.setExercise(this.exerciseStack[this.exercisePointer]);
     this.setState({
