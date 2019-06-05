@@ -6,12 +6,14 @@ import {setMode} from '../../actions/word';
 import {addSyllables} from '../../actions/word';
 import {addExercise} from '../../actions/exerciseHistory'
 import {addExerciseNumber} from '../../actions/exerciseHistory'
+import {setExercisePause} from '../../actions/exerciseHistory';
 
 const mapStateToProps = state => ({
   
   currentExercise: state.exerciseHistory.currentExercise,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
-  dark: state.theme.dark
+  dark: state.theme.dark,
+  isPaused: state.exerciseHistory.isPaused
 
   });
 
@@ -33,6 +35,9 @@ const mapDispatchToProps = dispatch => ({
     },
     addExerciseNumber: (exerciseNum) => {
       dispatch(addExerciseNumber(exerciseNum))
+    },
+    setExercisePause: (pause) => {
+      dispatch(setExercisePause(pause))
     }
   });
 
