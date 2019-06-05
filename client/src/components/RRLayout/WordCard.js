@@ -121,10 +121,13 @@ class WordCard extends React.Component  {
 
   handleOpen = () => {
     this.setState({ open: true });
+    this.props.setExercisePause(true)
+    
   };
 
   handleClose = () => {
     this.setState({ open: false });
+    this.props.setExercisePause(false)
   };
 
   handleChange = name => {
