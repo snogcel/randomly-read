@@ -1,3 +1,6 @@
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const bodyParser = require('body-parser');
+const schema = require ('./data/schema');
 const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const comments = require('./controllers/comments');
@@ -24,6 +27,10 @@ router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
 
 module.exports = app => {
   app.use('/api', router);
+
+  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+
+  app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
   app.get('*', (req, res) => {
     res.status(404).json({ message: 'not found' });

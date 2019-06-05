@@ -15,6 +15,7 @@ commentSchema.options.toJSON.transform = (doc, ret) => {
 };
 
 const postSchema = new Schema({
+  cmudict_id:{ type: Number },
   title: { type: String, required: true },
   url: { type: String },
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
@@ -24,8 +25,11 @@ const postSchema = new Schema({
   comments: [commentSchema],
   created: { type: Date, default: Date.now },
   views: { type: Number, default: 0 },
-  type: { type: String, default: 'link', required: true },
-  text: { type: String },
+  type: { type: String, default: 'text' },
+  text: { type: String }, // definitions
+  consonant: { type: String },
+  vowel: { type: String },
+  syllables: { type: String }
 });
 
 postSchema.set('toJSON', { getters: true, virtuals: true });
