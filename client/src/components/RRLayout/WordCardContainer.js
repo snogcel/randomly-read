@@ -5,16 +5,17 @@ import {addWord} from '../../actions/word'
 import {removeVowel} from '../../actions/word'
 import {removeWord} from '../../actions/word'
 import {addRoutineVowel} from '../../actions/word'
+import {setExercisePause} from '../../actions/exerciseHistory';
+
 
 const mapStateToProps = state => ({
-
   text: state.word.text,
   vowel: state.word.vowel,
   consonant: state.word.consonant,
   syllables: state.word.syllables,
   mode: state.word.mode,
-  limit: state.word.limit
-
+  limit: state.word.limit,
+  dark: state.theme.dark
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -32,9 +33,12 @@ const mapDispatchToProps = dispatch => ({
   },
   removeWord: (word) => {
   dispatch(removeWord(word))
-}
-
+  },
+  setExercisePause: (pause) => {
+    dispatch(setExercisePause(pause))
+  },
 });
+
 
 const WordCardContainer = connect(
   mapStateToProps,

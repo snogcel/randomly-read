@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import {addVowel} from '../../actions/word'
 import {addConsonant} from '../../actions/word'
 import {addSyllables} from '../../actions/word'
 import {setLimit} from '../../actions/word'
@@ -7,6 +6,7 @@ import {setMode} from '../../actions/word'
 import Timer from './RRComponent';
 import {addRoutineVowel} from '../../actions/word';
 import {setIntermissionText} from '../../actions/word';
+
 
 const mapStateToProps = state => ({
     
@@ -29,8 +29,8 @@ const mapStateToProps = state => ({
     setMode: (mode) => {
     dispatch(setMode(mode))
   },
-  setIntermissionText: (mode) => {
-    dispatch(setIntermissionText(mode))
+  setIntermissionText: (text) => {
+    dispatch(setIntermissionText(text))
   }
 
   });

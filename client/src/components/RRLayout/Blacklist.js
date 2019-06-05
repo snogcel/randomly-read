@@ -1,48 +1,48 @@
 const blacklist = {
   "AA": {
-    consonants: []
+      consonants: []
   },
   "AE": {
-    consonants: []
+      consonants: []
   },
   "AH": {
-    consonants: ["L","N","S","T","Z"]
+      consonants: ["L","N","S","SH","T","Z"]
   },
   "AO": {
-    consonants: []
+      consonants: []
   },
   "AW": {
-    consonants: ["Z"]
+      consonants: ["Y","Z"]
   },
   "AY": {
-    consonants: []
+      consonants: ["Y"]
   },
   "EH": {
-    consonants: []
+      consonants: []
   },
   "ER": {
-    consonants: []
+      consonants: ["R"]
   },
   "EY": {
-    consonants: []
+      consonants: ["Z"]
   },
   "IH": {
-    consonants: []
+      consonants: []
   },
   "IY": {
-    consonants: []
+      consonants: []
   },
   "OW": {
-    consonants: []
+      consonants: []
   },
   "OY": {
-    consonants: []
+      consonants: ["M","SH","TH","W","Y","Z"]
   },
   "UH": {
-    consonants: []
+      consonants: ["CH","TH","V",]
   },
   "UW": {
-    consonants: []
+      consonants: []
   }
 };
 

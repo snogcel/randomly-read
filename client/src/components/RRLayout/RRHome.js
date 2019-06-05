@@ -1,26 +1,26 @@
 import React from 'react';
-import styled from 'styled-components/macro';
-
+//import styled from 'styled-components/macro';
 import { withStyles } from "@material-ui/core/styles";
-
-import WordCardContainer from '../RRLayout/WordCardContainer';
-import TimerContainer from '../RRLayout/TimerContainer';
+import WordCardContainer from './WordCardContainer';
+import TimerContainer from './TimerContainer';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-
-import List from "@material-ui/core/List";
+//import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
+import ExerciseHistoryContainer from './ExerciseHistoryContainer';
+//import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
+
+
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    padding: 50
+    padding: 25
   },
   column: {
     padding: theme.spacing.unit * 2,
@@ -40,8 +40,13 @@ const styles = theme => ({
   },
 });
 
-class WordCardHome extends React.Component {
-  state = {};
+class RRHome extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    
+    }
+}
 
   render() {
     const {classes} = this.props;
@@ -53,36 +58,8 @@ class WordCardHome extends React.Component {
           <Grid item xs={12} sm={3}>
 
             <div className={classes.sideColumn}>
-              <Typography
-                align="center"
-                className={classes.sideTitle}
-                color="textPrimary"
-              >
-                <ListItem>
-                  <ListItemIcon>
-                    <CheckboxOutlineBlankIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={[
-                      <Typography inline variant="h6" color="textPrimary">
-                        5
-                      </Typography>,
-                      <Typography
-                        className={classes.exerciseHeadline}
-                        inline
-                        color="textPrimary"
-                        variant="h6"
-                      >
-                        words with
-                      </Typography>,
-                      <Typography inline variant="h6" color="textSecondary">
-                        EH
-                      </Typography>
-                    ]}
-                    secondary="bet, dress, net, head..."
-                  />
-                </ListItem>
-              </Typography>
+              <ExerciseHistoryContainer />
+              
             </div>
 
           </Grid>
@@ -96,9 +73,10 @@ class WordCardHome extends React.Component {
           <Grid item xs={12} sm={3}>
             <div className={classes.sideColumn}>
 
-              <Card elevation="1" className={classes.sideCard}>
+              <Card elevation="1" className={classes.sideCard} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
                 <CardContent>
                   <Typography
+                  component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
@@ -111,12 +89,14 @@ class WordCardHome extends React.Component {
               </Card>
               <br />
               <br />
-              <Card elevation="1" className={classes.sideCard}>
+              <Card elevation="1" className={classes.sideCard} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
                 <CardContent>
                   <Typography
+                  component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
+                    style={{color: this.props.dark === true ? 'white' : 'black'}}
                   >
                     routine selector
                   </Typography>
@@ -133,6 +113,6 @@ class WordCardHome extends React.Component {
 
 }
 
-const WordCardHomeWrapped = withStyles(styles)(WordCardHome);
+const RRHomeWrapped = withStyles(styles)(RRHome);
 
-export default WordCardHomeWrapped;
+export default RRHomeWrapped;

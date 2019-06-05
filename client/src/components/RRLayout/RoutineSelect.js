@@ -4,6 +4,32 @@ import Routines from './Routines.js';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
+import { withStyles } from "@material-ui/core/styles";
+
+
+const styles = theme => ({
+      routine: {
+        "&:before": {
+            borderColor: 'white'
+      },
+      '&:after': {
+        borderColor: 'white',
+        color: 'white'
+      },
+      '&:hover': {
+            borderColor: 'white'
+      },
+    },
+    icon: {
+        fill: 'white',
+    },
+    select: {
+        color: 'white'
+    }
+
+
+  });
+  
 
 class RoutineSelect extends React.Component {
     constructor(props) {
@@ -12,7 +38,6 @@ class RoutineSelect extends React.Component {
             Routine: ""
         };
 
-        this.selectContainer = React.createRef();
 
         this.handleChange = this.handleChange.bind(this);
 
@@ -69,7 +94,7 @@ class RoutineSelect extends React.Component {
 
         let selectedRoutine = {};
 
-        if(e.target.value != "") {
+        if(e.target.value !== "") {
         for (let i = 0; i < Routines.length; i++) {
             if (e.target.value === Routines[i].name) {
                 selectedRoutine = Routines[i];
@@ -77,7 +102,7 @@ class RoutineSelect extends React.Component {
         }
     } 
 
-        let obj = {
+        /* let obj = {
             duration: 39,
             rangeVal: 13,
             map: 'randomly',
@@ -93,19 +118,34 @@ class RoutineSelect extends React.Component {
             syllables: ["2"],
             repetitions: 3
         };
-
+ */
         this.props.action(selectedRoutine); // pass mode update back to QueryManager
     }
 
     render() {
+        const { classes } = this.props;
+        const { theme } = this.props;
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150}}>
-                 <InputLabel htmlFor="age-simple">Select Routine</InputLabel>
+                 <InputLabel style={{color: theme === true ? 'white' : 'black'}}>Select Routine</InputLabel>
                   <Select
+                  classes={{select: theme === true ? classes.select : undefined}}
                   value={this.state.Routine}
                   onChange={this.handleChange}
+                  className={theme === true ? classes.routine : undefined}
+                  inputProps={{
+                    style: {
+                        color: 'red'
+                    },
+                    classes: {
+                        icon: theme === true ? classes.icon : undefined
+                    }
+                    
+
+                }}
                   >
+                      
                  <MenuItem value={""}>
                  <em>None</em>      
                  </MenuItem>
@@ -122,4 +162,4 @@ class RoutineSelect extends React.Component {
     }
 }
 
-export default RoutineSelect;
+export default withStyles(styles)(RoutineSelect);

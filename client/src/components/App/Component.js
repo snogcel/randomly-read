@@ -10,15 +10,17 @@ import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
 import CreatePostFormContainer from '../CreatePostForm/Container';
 import Home from '../Home';
-import WordCardContainer from '../RRLayout/WordCardContainer';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-import TimerContainer from '../RRLayout/TimerContainer'
-import WordCardHome from '../RRLayout/WordCardHome'
+import RRHomeContainer from '../RRLayout/RRHomeContainer'
 
 const client = new ApolloClient({
   uri: `https://api.stuttered.net/graphql`
 });
+
+client.defaultOptions.query = {
+  fetchPolicy: "no-cache"
+};
 
 const App = props => (
   <ApolloProvider client={client}>
@@ -32,7 +34,7 @@ const App = props => (
             <Route path='/login' component={LoginFormContainer} />
             <Route path='/signup' component={SignupFormContainer} />
             <Route path='/createpost' component={CreatePostFormContainer} />
-            <Route path='/RandomlyRead' component={WordCardHome} />
+            <Route path='/RandomlyRead' component={RRHomeContainer} />
             <Route path='/' component={Home} />
           </Switch>
         </>
