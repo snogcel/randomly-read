@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Timer from './Timer';
 import {addRoutineVowel} from '../../actions/word';
+import {addWord} from '../../actions/word';
 import {removeConsonant} from '../../actions/word';
 import {setMode} from '../../actions/word';
 import {addSyllables} from '../../actions/word';
@@ -11,6 +12,7 @@ import {updateCompleted} from '../../actions/exerciseHistory';
 import {updateTotal} from '../../actions/exerciseHistory';
 import {setModalOpen} from '../../actions/exerciseHistory';
 import {setRange} from '../../actions/exerciseHistory';
+import {updatetimeLeft} from '../../actions/exerciseHistory';
 
 const mapStateToProps = state => ({
   
@@ -24,6 +26,9 @@ const mapStateToProps = state => ({
   });
 
 const mapDispatchToProps = dispatch => ({
+    addWord: (word) => {
+      dispatch(addWord(word))
+    },
     addRoutineVowel: (vowel) => {
       dispatch(addRoutineVowel(vowel))
     },
@@ -56,7 +61,11 @@ const mapDispatchToProps = dispatch => ({
     },
     updateTotal: (total) => {
       dispatch(updateTotal(total))
-    }
+    },
+    updatetimeLeft: (timeLeft) => {
+      dispatch(updatetimeLeft(timeLeft))
+    },
+
 
   });
 

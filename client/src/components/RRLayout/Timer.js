@@ -84,6 +84,7 @@ class Timer extends React.Component {
       this.setState({test: "None"})
       this.props.addExercise([])
       this.props.addExerciseNumber(null)
+      this.props.addWord([])
     }
     else {
 
@@ -99,7 +100,7 @@ class Timer extends React.Component {
       this.setExercise(this.exerciseStack[this.exercisePointer]);
       this.props.addExerciseNumber(null)
       this.completed = 0;
-
+      this.props.addWord([])
       this.stopTimer();
       this.resetTimerAndQuery();
     }
@@ -139,6 +140,7 @@ class Timer extends React.Component {
       case 'intermission':
         this.currentRoutine = this.routineBuilder.buildIntermission(exercise);
         console.log("Exercise Map", this.currentRoutine);
+        this.props.addWord([]) // resetting the word array in redux to reset the WordHistory
         break;
       default:
         break;
@@ -291,7 +293,7 @@ class Timer extends React.Component {
 
         this.timeLeftLastUpdated = 0;
 
-        let timeLeft = (Math.ceil(((this.state.rangeVal * 1000) - (prevState.time - this.state.lastUpdated))/1000));
+        let timeLeft = (Math.round(((this.state.rangeVal * 1000) - (prevState.time - this.state.lastUpdated))/1000)); // Math.ceil() was rounding up and increase the range + 1, round() returns the exact range selected
 
         if (timeLeft !== this.state.timeLeft) {
           this.setState({
@@ -299,6 +301,7 @@ class Timer extends React.Component {
           });
 
           console.log(timeLeft); // TODO - pass this back to ProgressIndicator
+          this.props.updatetimeLeft(timeLeft) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
 
         }
 
@@ -333,6 +336,7 @@ class Timer extends React.Component {
   }
 
   resetTimerQueryAndEH() {
+
     this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
     this.completed = 0;
     this.props.updateCompleted(this.completed)
@@ -340,6 +344,7 @@ class Timer extends React.Component {
     this.completed = 0;
     this.setState({time: 0, isOn: false})
     this.props.setRange(0)
+    this.props.addWord([])
     this.props.addRoutineVowel(null);
     this.props.removeConsonant();
     this.props.addSyllables([1])
