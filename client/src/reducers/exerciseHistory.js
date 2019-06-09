@@ -5,6 +5,7 @@ import {UPDATE_COMPLETED} from '../actions/exerciseHistory';
 import {UPDATE_TOTAL} from '../actions/exerciseHistory';
 import {MODAL_OPEN} from '../actions/exerciseHistory';
 import {SET_RANGE} from '../actions/exerciseHistory';
+import {UPDATE_TIMELEFT} from '../actions/exerciseHistory';
 
 const initialState = {
     currentExercise: [],
@@ -13,7 +14,8 @@ const initialState = {
     isModalOpen: null,
     range: 0,
     completed: 0,
-    total: 0
+    total: 0,
+    timeLeft: null,
 }
 
 export default (state = initialState, action) => {
@@ -32,6 +34,8 @@ export default (state = initialState, action) => {
         return {...state, completed: action.text}
         case UPDATE_TOTAL:
         return {...state, total: action.text}
+        case UPDATE_TIMELEFT:
+        return {...state, timeLeft: action.text}
         default: 
         return state;
     }

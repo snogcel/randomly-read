@@ -5,6 +5,7 @@ export const MODAL_OPEN = 'MODAL_OPEN';
 export const UPDATE_COMPLETED = 'UPDATE_COMPLETED';
 export const UPDATE_TOTAL = 'UPDATE_TOTAL';
 export const SET_RANGE = 'SET_RANGE';
+export const UPDATE_TIMELEFT = 'UPDATE_TIMELEFT';
 
 export function addExercise(text) {
     return {
@@ -48,6 +49,13 @@ export function setRange(text) {
         type: SET_RANGE, text
     }
 }
+
+export function updatetimeLeft(text) {
+    return {
+        type: UPDATE_TIMELEFT, text
+    }
+}
+
 
 
 
