@@ -51,13 +51,14 @@ const styles = theme => ({
     outline: "none"
   },
   card: {
-    minHeight:175,
+    minHeight:250,
   },
   sideCard: {
     marginBottom: 20
   },
   title: {
-    fontSize: 36
+    fontSize: 72,
+    fontWeight: "bold"
   },
   subtitle: {
     fontSize: 20
@@ -65,10 +66,14 @@ const styles = theme => ({
   sideTitle: {
     fontSize: 18
   },
+  seeMore: {
+    fontSize: 18,
+    cursor: "pointer"
+  },
   button: {
     margin: 4,
     minWidth: 35,
-    padding: 4, 
+    padding: 4,
     "&:hover": {
       backgroundColor: "#2d90e5"
     },
@@ -122,7 +127,7 @@ class WordCard extends React.Component  {
   handleOpen = () => {
     this.setState({ open: true });
     this.props.setExercisePause(true)
-    
+
   };
 
   handleClose = () => {
@@ -311,7 +316,7 @@ class WordCard extends React.Component  {
     return (
 
         <div className={classes.column}>
-          <Card square elevation="2" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
+          <Card elevation="0" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : 'transparent'}}>
             <CardContent>
               {console.log(this.props.mode)}
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
@@ -346,23 +351,31 @@ class WordCard extends React.Component  {
                 return (
                     <>
                     <Typography
-                    component={'span'}
+                      component={'span'}
                       align="center"
                       className={classes.title}
                       color="textPrimary"
-                      style={{color: this.props.dark === true ? 'white' : 'black'}} 
+                      style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
                     >
                       {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
 
                       {this.props.mode === 'Word' ? console.log(data.words[0].lexeme) : console.log(data.sentences[0].result)}
                     </Typography>
-                    
+
                   { this.props.mode === 'Word' ?
-                    <CardActions>
+                    <CardActions style={{justifyContent: 'center'}}>
                       {console.log("is this reached")}
-                      <Button className={classes.seeMorebutton} color={"primary"} onClick={this.handleOpen} size="medium" variant="contained">
-                        <b>See More</b>
-                      </Button>
+
+
+                      <Typography
+                        style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
+                        align="center"
+                        component={'span'}
+                        className={classes.seeMore}
+                        color="textPrimary"
+                        onClick={this.handleOpen}>
+                        see more
+                      </Typography>
 
                       <Modal
                         aria-labelledby="simple-modal-title"
@@ -412,7 +425,7 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button> 
+             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button>
              </>
           ))}
 
