@@ -32,6 +32,7 @@ class Timer extends React.Component {
     super(props);
     this.state = {
       time: 0,
+      timeLeft: 0,
       isOn: false,
       start: 0,
       lastUpdated: -1,
@@ -52,6 +53,7 @@ class Timer extends React.Component {
     this.count = 0;
     this.completed = 0;
     this.total = 0;
+    this.timeLeftLastUpdated = 0;
     this.routineBuilder = new RoutineBuilder();
 
     this.currentRoutine = {};
@@ -204,6 +206,8 @@ class Timer extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
 
+    // TODO - Throttle
+
     return true;
   }
 
@@ -229,7 +233,6 @@ class Timer extends React.Component {
       this.exercisePointer = this.props.currentExerciseNumber
       this.setExercise(this.exerciseStack[this.exercisePointer]);
     }
-
 
     if ((prevState.time - this.state.lastUpdated) > (this.state.rangeVal * 1000)) {
 
@@ -279,6 +282,27 @@ class Timer extends React.Component {
         });
       }
 
+
+    } else {
+
+      this.timeLeftLastUpdated++;
+
+      if (this.timeLeftLastUpdated > 100) {
+
+        this.timeLeftLastUpdated = 0;
+
+        let timeLeft = (Math.ceil(((this.state.rangeVal * 1000) - (prevState.time - this.state.lastUpdated))/1000));
+
+        if (timeLeft !== this.state.timeLeft) {
+          this.setState({
+            timeLeft: timeLeft
+          });
+
+          console.log(timeLeft); // TODO - pass this back to ProgressIndicator
+
+        }
+
+      }
 
     }
 
