@@ -1,7 +1,7 @@
 const constants = {
   error: '#f5222d',
   vote: '#b6b6b6',
-  upvote: '#f9920b',
+  upvote: '#6F0377',
   downvote: '#2e70ff'
 };
 
@@ -16,22 +16,36 @@ const dark = {
   foreground: '#262626',
   activeBackground: '#333333',
   inputBackground: '#212121',
-  shadow: 'rgba(0, 0, 0, 0.4)'
+  shadow: 'rgba(0, 0, 0, 0.4)',
+  wordcardText: '#ffffff'
 };
 
 const light = {
   ...constants,
-  normalText: '#454f5b',
+  normalText: '#14197E',
   mutedText: '#818e99',
   border: '#ebedf0',
-  accent: '#1890ff',
-  pageBackground: '#f4f6f8',
+  accent: '#6F0377',
+  pageBackground: '#FEFFFF',
   voteButtonHover: '#f2f2f2',
-  foreground: '#ffffff',
+  foreground: '#FFFFFF',
   activeBackground: '#fafafa',
   inputBackground: '#fcfcfc',
-  shadow: 'rgba(0, 0, 0, 0.05)'
+  shadow: 'rgba(0, 0, 0, 0.05)',
+  wordcardText: '#000000'
 };
+
+// yellow: FFEB3B
+// purple: 9F28A7
+// blue: 3C42B1
+
+// light blue: FBFDFF
+// light green: FBFCFB
+// light yellow: FFFEF8
+
+// theme yellow: ffeb3b
+
+// background blue: FEFFFF
 
 const theme = isDark => (isDark ? dark : light);
 

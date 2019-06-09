@@ -1,7 +1,9 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Router, Route, Switch } from 'react-router-dom';
-import theme from '../../theme';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import theme from '../../theme'; // TODO - remove
+import { MuiTheme } from '../../themeHandler';
 import history from '../../util/history';
 import GlobalStyle from '../../globalStyle';
 import HeaderContainer from '../Header/Container';
@@ -23,24 +25,26 @@ client.defaultOptions.query = {
 };
 
 const App = props => (
-  <ApolloProvider client={client}>
-    <ThemeProvider theme={theme(props.dark)}>
-      <Router history={history}>
-        <>
-          <GlobalStyle />
-          <Route component={HeaderContainer} />
-          <Route component={ErrorNotificationContainer} />
-          <Switch>
-            <Route path='/login' component={LoginFormContainer} />
-            <Route path='/signup' component={SignupFormContainer} />
-            <Route path='/createpost' component={CreatePostFormContainer} />
-            <Route path='/RandomlyRead' component={RRHomeContainer} />
-            <Route path='/' component={Home} />
-          </Switch>
-        </>
-      </Router>
-    </ThemeProvider>
-  </ApolloProvider>
+  <MuiThemeProvider theme={MuiTheme}>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme(props.dark)}>
+        <Router history={history}>
+          <>
+            <GlobalStyle />
+            <Route component={HeaderContainer} />
+            <Route component={ErrorNotificationContainer} />
+            <Switch>
+              <Route path='/login' component={LoginFormContainer} />
+              <Route path='/signup' component={SignupFormContainer} />
+              <Route path='/createpost' component={CreatePostFormContainer} />
+              <Route path='/RandomlyRead' component={RRHomeContainer} />
+              <Route path='/' component={Home} />
+            </Switch>
+          </>
+        </Router>
+      </ThemeProvider>
+    </ApolloProvider>
+  </MuiThemeProvider>
 );
 
 export default App;

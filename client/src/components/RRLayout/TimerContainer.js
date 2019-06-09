@@ -32,7 +32,6 @@ const mapStateToProps = state => ({
   setIntermissionText: (text) => {
     dispatch(setIntermissionText(text))
   }
-
   });
 
   const TimerContainer = connect(

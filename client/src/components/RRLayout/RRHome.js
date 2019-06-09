@@ -13,9 +13,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import ExerciseHistoryContainer from './ExerciseHistoryContainer';
+import ProgressIndicator from './ProgressIndicatorContainer'
+import WordHistory from './WordHistoryContainer'
 //import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
-
-
 
 const styles = theme => ({
   root: {
@@ -40,18 +40,12 @@ const styles = theme => ({
   },
 });
 
-class RRHome extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    
-    }
-}
+const RRHome = props => {
 
-  render() {
-    const {classes} = this.props;
+  const {classes} = props;
 
-    return (
+  return (
+
       <div className={classes.root}>
         <Grid container spacing={24}>
 
@@ -67,13 +61,16 @@ class RRHome extends React.Component {
           <Grid item xs={12} sm={6}>
 
             <WordCardContainer />
-
+            <ProgressIndicator />
+           <WordHistory />  
           </Grid>
+
+         
 
           <Grid item xs={12} sm={3}>
             <div className={classes.sideColumn}>
 
-              <Card elevation="1" className={classes.sideCard} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
+              <Card elevation="1" className={classes.sideColumn} style={{backgroundColor: props.dark === true ? "#262626" : '#ffffff'}}>
                 <CardContent>
                   <Typography
                   component={'span'}
@@ -89,14 +86,14 @@ class RRHome extends React.Component {
               </Card>
               <br />
               <br />
-              <Card elevation="1" className={classes.sideCard} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
+              <Card elevation="1" className={classes.sideColumn} style={{backgroundColor: props.dark === true ? "#262626" : '#ffffff'}}>
                 <CardContent>
                   <Typography
                   component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
-                    style={{color: this.props.dark === true ? 'white' : 'black'}}
+                    style={{color: props.dark === true ? 'white' : 'black'}}
                   >
                     routine selector
                   </Typography>
@@ -108,10 +105,10 @@ class RRHome extends React.Component {
 
         </Grid>
       </div>
-    )
-  }
+    
+  )}
 
-}
+
 
 const RRHomeWrapped = withStyles(styles)(RRHome);
 
