@@ -1,6 +1,9 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
 
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import themes from '../../themes';
+
 class Intermission extends React.Component {
 
     constructor(props) {
