@@ -7,14 +7,20 @@ import {addSyllables} from '../../actions/word';
 import {addExercise} from '../../actions/exerciseHistory'
 import {addExerciseNumber} from '../../actions/exerciseHistory'
 import {setExercisePause} from '../../actions/exerciseHistory';
+import {updateCompleted} from '../../actions/exerciseHistory';
+import {updateTotal} from '../../actions/exerciseHistory';
+import {setModalOpen} from '../../actions/exerciseHistory';
+import {setRange} from '../../actions/exerciseHistory';
 
 const mapStateToProps = state => ({
   
   currentExercise: state.exerciseHistory.currentExercise,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
   dark: state.theme.dark,
-  isPaused: state.exerciseHistory.isPaused
-
+  isPaused: state.exerciseHistory.isPaused,
+  completed: state.exerciseHistory.completed,
+  total: state.exerciseHistory.total,
+  isModalOpen: state.exerciseHistory.isModalOpen
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -38,7 +44,20 @@ const mapDispatchToProps = dispatch => ({
     },
     setExercisePause: (pause) => {
       dispatch(setExercisePause(pause))
+    },
+    setModalOpen: (bool) => {
+      dispatch(setModalOpen(bool))
+    },
+    setRange: (value) => {
+      dispatch(setRange(value))
+    },
+    updateCompleted: (completed) => {
+      dispatch(updateCompleted(completed))
+    },
+    updateTotal: (total) => {
+      dispatch(updateTotal(total))
     }
+
   });
 
     const SecondTimerContainer = connect(

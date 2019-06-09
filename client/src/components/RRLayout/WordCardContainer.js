@@ -5,7 +5,7 @@ import {addWord} from '../../actions/word'
 import {removeVowel} from '../../actions/word'
 import {removeWord} from '../../actions/word'
 import {addRoutineVowel} from '../../actions/word'
-import {setExercisePause} from '../../actions/exerciseHistory';
+import {setModalOpen} from '../../actions/exerciseHistory';
 
 
 const mapStateToProps = state => ({
@@ -34,8 +34,8 @@ const mapDispatchToProps = dispatch => ({
   removeWord: (word) => {
   dispatch(removeWord(word))
   },
-  setExercisePause: (pause) => {
-    dispatch(setExercisePause(pause))
+  setModalOpen: (bool) => {
+    dispatch(setModalOpen(bool))
   },
 });
 
