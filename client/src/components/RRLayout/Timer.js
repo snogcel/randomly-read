@@ -51,6 +51,7 @@ class Timer extends React.Component {
     this.exercisePointer = null;
     this.count = 0;
     this.completed = 0;
+    this.total = 0;
     this.routineBuilder = new RoutineBuilder();
 
     this.currentRoutine = {};
@@ -80,7 +81,7 @@ class Timer extends React.Component {
       console.log("Hello 1");
       this.setState({test: "None"})
       this.props.addExercise([])
-      
+      this.props.addExerciseNumber(null)
     }
     else {
       
@@ -92,7 +93,10 @@ class Timer extends React.Component {
       this.exercisePointer = 0;
       this.props.addExercise(this.exerciseStack)
       this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
+      this.props.setRange(this.exerciseStack[this.exercisePointer].rangeVal)
       this.setExercise(this.exerciseStack[this.exercisePointer]);
+      this.props.addExerciseNumber(null)
+      this.completed = 0;
   
       this.stopTimer();
       this.resetTimerAndQuery();
@@ -140,12 +144,21 @@ class Timer extends React.Component {
   }
 
   updateRange(val) {
+    
+    this.setState({
+      lastUpdated: Date.now() - this.state.start
+    });
+    this.stopTimer();
+    
     this.setState({
       rangeVal: val
     })
+    this.props.setRange(val);
+
   }
 
   resumeTimer() {
+    this.props.setExercisePause(false);
     this.setState({
       isOn: true,
       start: Date.now() - this.state.time
@@ -158,6 +171,8 @@ class Timer extends React.Component {
   }
 
   startTimer() {
+    this.props.setRange(this.state.rangeVal)
+    this.props.setExercisePause(false)
     console.log(this.exerciseStack)
     this.props.addExercise(this.exerciseStack)
     console.log("test", this.exercisePointer)
@@ -194,22 +209,28 @@ class Timer extends React.Component {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
-    if(this.props.isPaused === false) {
+    if(this.props.isModalOpen === false && this.props.currentExerciseNumber !== null) {
       this.resumeTimer();
-      this.props.setExercisePause(null);
+      this.props.setModalOpen(null);
     }
-    if(this.props.isPaused === true) {
+    if(this.props.isModalOpen === true) {
       this.stopTimer();
-      this.props.setExercisePause(null);
+      this.props.setModalOpen(null);
     }
 
+    if(this.props.completed !== this.completed && this.completed !== 0) {
+      this.props.updateCompleted(this.completed);
+    }
+    if(this.props.total !== this.total && this.total !== 0) {
+      this.props.updateTotal(this.total);
+    }
 
     if(this.props.currentExerciseNumber !== null && this.props.currentExerciseNumber !== this.exercisePointer) {
       this.exercisePointer = this.props.currentExerciseNumber
       this.setExercise(this.exerciseStack[this.exercisePointer]);
     }
 
-    
+
     if ((prevState.time - this.state.lastUpdated) > (this.state.rangeVal * 1000)) {
 
       let routineKeys = this.currentRoutine.keys();
@@ -230,7 +251,7 @@ class Timer extends React.Component {
       if (!nextAction && (this.exerciseStack.length > 0) && (this.exercisePointer < (this.exerciseStack.length - 1))) {
 
         this.count++;
-        if(this.count % 2 === 0) this.completed++;
+        if(this.exerciseStack[this.exercisePointer].map !== 'intermission') this.completed++;
 
         this.exercisePointer++;
         this.props.addExerciseNumber(this.exercisePointer);
@@ -238,7 +259,8 @@ class Timer extends React.Component {
         console.log("Does it reach the increment? ", this.exercisePointer);
         console.log("Exercise Stack Pointer: ", this.exercisePointer);
         console.log("CURRENT EXERCISE: ", this.exerciseStack[this.exercisePointer]);
-        this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
+       // this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
+        
         this.setExercise(this.exerciseStack[this.exercisePointer]);
 
         routineKeys = this.currentRoutine.keys();
@@ -265,9 +287,11 @@ class Timer extends React.Component {
   }
 
   stopTimer() {
+    
+
     this.setState({isOn: false});
     clearInterval(this.timer);
-
+    this.props.setExercisePause(true);
     console.log(this.state);
     console.log(this.exerciseStack)
     console.log(this.exercisePointer)
@@ -285,10 +309,13 @@ class Timer extends React.Component {
   }
 
   resetTimerQueryAndEH() {
-  
+    this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
+    this.completed = 0;
+    this.props.updateCompleted(this.completed)
     this.exercisePointer = 0;
     this.completed = 0;
     this.setState({time: 0, isOn: false})
+    this.props.setRange(0)
     this.props.addRoutineVowel(null);
     this.props.removeConsonant();
     this.props.addSyllables([1])
@@ -328,8 +355,8 @@ class Timer extends React.Component {
     let completeExerciseStack = [];
 
     let current = this.exercisePointer;
-    let total = 0;
     let completed = 0;
+    this.total = 0;
 
     if (this.exerciseStack && this.exerciseStack.length > 0) {
 
@@ -344,7 +371,7 @@ class Timer extends React.Component {
         }
 
         if (this.exerciseStack[i].mode === 'Word' || this.exerciseStack[i].mode === 'Sentence') {
-          total++;
+          this.total++;
           if (i < current) completed++;
 
           completeExerciseStack.push(
@@ -359,8 +386,8 @@ class Timer extends React.Component {
       }
 
     }
-
-    let status = this.completed + ' of ' + total + ' Exercises Completed';
+    
+    let status = this.completed + ' of ' + this.total + ' Exercises Completed';
     let isDisabled = currentExercise === null ? true : false;
     let start = (this.state.time === 0) ?
       <Button className={classes.button} onClick={this.startTimer} disabled={isDisabled} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
@@ -390,7 +417,7 @@ class Timer extends React.Component {
                     <RoutineSelectContainer theme={this.props.dark} ref={this.routineSelect} action={this.routineSelectHandler} />
                 </div>
                 <br /><br />
-                <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{status} ({ms(this.state.time, {compact: true})})</Typography>
+                <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">({ms(this.state.time, {compact: true})})</Typography>
                 <br /><br />
 
                {/*  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{currentExercise}</Typography> */}
