@@ -14,8 +14,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
-import theme from '../../theme';
-
+import { styles } from '../../themeHandler';
 
 function getModalStyle() {
   const top = 50;
@@ -28,81 +27,7 @@ function getModalStyle() {
   };
 }
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  column: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideColumn: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  paper: {
-    position: "absolute",
-    width: theme.spacing.unit * 50,
-    backgroundColor: theme.palette.background.paper,
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
-    outline: "none"
-  },
-  card: {
-    minHeight:175,
-  },
-  sideCard: {
-    marginBottom: 20
-  },
-  title: {
-    fontSize: 36
-  },
-  subtitle: {
-    fontSize: 20
-  },
-  sideTitle: {
-    fontSize: 18
-  },
-  button: {
-    margin: 4,
-    minWidth: 35,
-    padding: 4, 
-    "&:hover": {
-      backgroundColor: "#2d90e5"
-    },
-      backgroundColor: '#33a0ff',
-  },
-  seeMorebutton: {
-    "&:hover": {
-      backgroundColor: "#2d90e5"
-    },
-      backgroundColor: '#33a0ff',
-  },
-  activeButton: {
-    margin: 4,
-    minWidth: 35,
-    padding: 4,
-    backgroundColor: "#EFEFEF"
-  },
-  activeExercise: {
-    backgroundColor: "#EFEFEF"
-  },
-  exerciseHeadline: {
-    margin: "0.25em"
-  },
-  actionsContainer: {
-    marginBottom: theme.spacing.unit * 2
-  },
-  resetContainer: {
-    padding: theme.spacing.unit * 3
-  }
-});
-
 class WordCard extends React.Component  {
-
-
 
     constructor(props) {
       super(props);
@@ -122,7 +47,6 @@ class WordCard extends React.Component  {
   handleOpen = () => {
     this.setState({ open: true });
     this.props.setModalOpen(true)
-    
   };
 
   handleClose = () => {
@@ -313,7 +237,8 @@ class WordCard extends React.Component  {
     return (
 
         <div className={classes.column}>
-          <Card square elevation="2" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : '#ffffff'}}>
+
+          <Card elevation="0" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : 'transparent'}}>
             <CardContent>
               {console.log(this.props.mode)}
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
@@ -348,23 +273,31 @@ class WordCard extends React.Component  {
                 return (
                     <>
                     <Typography
-                    component={'span'}
+                      component={'span'}
                       align="center"
                       className={classes.title}
                       color="textPrimary"
-                      style={{color: this.props.dark === true ? 'white' : 'black'}} 
+                      style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
                     >
                       {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
 
                       {this.props.mode === 'Word' ? console.log(data.words[0].lexeme) : console.log(data.sentences[0].result)}
                     </Typography>
-                    
+
                   { this.props.mode === 'Word' ?
-                    <CardActions>
+                    <CardActions style={{justifyContent: 'center'}}>
                       {console.log("is this reached")}
-                      <Button className={classes.seeMorebutton} color={"primary"} onClick={this.handleOpen} size="medium" variant="contained">
-                        <b>See More</b>
-                      </Button>
+
+
+                      <Typography
+                        style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
+                        align="center"
+                        component={'span'}
+                        className={classes.seeMore}
+                        color="textPrimary"
+                        onClick={this.handleOpen}>
+                        see more
+                      </Typography>
 
                       <Modal
                         aria-labelledby="simple-modal-title"
@@ -373,7 +306,7 @@ class WordCard extends React.Component  {
                         onClose={this.handleClose}
                         style={{color: this.props.dark === true ? 'white' : 'black'}}
                       >
-                      <div  style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
+                      <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
                         <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} className={classes.title} color="textPrimary">
                           {data.words[0].lexeme}
                         </Typography>
@@ -414,9 +347,23 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button> 
+             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button>
              </>
-          ))}
+          )) }
+
+          {
+            <>
+            <div>
+              <Button>
+                <div>Button 1</div>
+              </Button>
+              <Button>
+                <div>Button 2</div>
+              </Button>
+            </div>
+            </>
+          }
+
 
 
         </div>
