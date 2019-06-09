@@ -107,8 +107,6 @@ const styles = theme => ({
 
 class WordCard extends React.Component  {
 
-
-
     constructor(props) {
       super(props);
       this.state = {
@@ -317,6 +315,7 @@ class WordCard extends React.Component  {
     return (
 
         <div className={classes.column}>
+
           <Card elevation="0" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : 'transparent'}}>
             <CardContent>
               {console.log(this.props.mode)}
@@ -385,7 +384,7 @@ class WordCard extends React.Component  {
                         onClose={this.handleClose}
                         style={{color: this.props.dark === true ? 'white' : 'black'}}
                       >
-                      <div  style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
+                      <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
                         <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} className={classes.title} color="textPrimary">
                           {data.words[0].lexeme}
                         </Typography>
@@ -428,7 +427,21 @@ class WordCard extends React.Component  {
              <>
              <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button>
              </>
-          ))}
+          )) }
+
+          {
+            <>
+            <div>
+              <Button>
+                <div>Button 1</div>
+              </Button>
+              <Button>
+                <div>Button 2</div>
+              </Button>
+            </div>
+            </>
+          }
+
 
 
         </div>

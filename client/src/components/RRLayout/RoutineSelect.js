@@ -29,7 +29,7 @@ const styles = theme => ({
 
 
   });
-  
+
 
 class RoutineSelect extends React.Component {
     constructor(props) {
@@ -100,7 +100,7 @@ class RoutineSelect extends React.Component {
                 selectedRoutine = Routines[i];
             }
         }
-    } 
+    }
 
         /* let obj = {
             duration: 39,
@@ -141,18 +141,18 @@ class RoutineSelect extends React.Component {
                     classes: {
                         icon: theme === true ? classes.icon : undefined
                     }
-                    
+
 
                 }}
                   >
-                      
+
                  <MenuItem value={""}>
-                 <em>None</em>      
+                 <em>None</em>
                  </MenuItem>
                 {this.options.map((item, i) => (
-                    
+
                 <MenuItem value={item.value}>{item.value}</MenuItem>
-                    
+
                 ))}
 
                   </Select>

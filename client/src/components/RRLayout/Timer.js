@@ -14,13 +14,13 @@ const styles = theme => ({
   button: {
     "&:disabled": {
       backgroundColor: "#d3d3d3",
-      color: '#7d7d7d' 
+      color: '#7d7d7d'
     },
     "&:hover": {
       backgroundColor: "#2d90e5"
     },
       backgroundColor: '#33a0ff',
-     
+
 
   }
 });
@@ -84,7 +84,7 @@ class Timer extends React.Component {
       this.props.addExerciseNumber(null)
     }
     else {
-      
+
       for (let i = 0; i < routine.subroutine.length; i++) {
         this.exerciseStack.push(routine.subroutine[i]);
       }
@@ -97,7 +97,7 @@ class Timer extends React.Component {
       this.setExercise(this.exerciseStack[this.exercisePointer]);
       this.props.addExerciseNumber(null)
       this.completed = 0;
-  
+
       this.stopTimer();
       this.resetTimerAndQuery();
     }
@@ -105,7 +105,7 @@ class Timer extends React.Component {
 
 
 
-    
+
     // Build Routine Stack
     /* for (let i = 0; i < routine.subroutine.length; i++) {
       this.exerciseStack.push(routine.subroutine[i]);
@@ -144,12 +144,12 @@ class Timer extends React.Component {
   }
 
   updateRange(val) {
-    
+
     this.setState({
       lastUpdated: Date.now() - this.state.start
     });
     this.stopTimer();
-    
+
     this.setState({
       rangeVal: val
     })
@@ -189,7 +189,7 @@ class Timer extends React.Component {
     }), 1);
 
     // TODO - initiate routine
-    
+
     let routineKeys = this.currentRoutine.keys();
     let currentKey = routineKeys.next().value;
 
@@ -243,7 +243,7 @@ class Timer extends React.Component {
       console.log("Are they equal", test)
       console.log("CURRENT Exercise Number:", this.props.currentExerciseNumber)
       console.log("PROPS", this.props.currentExercise[this.props.currentExerciseNumber])
-      
+
 
       let nextAction = this.currentRoutine.get(currentKey);
 
@@ -260,7 +260,7 @@ class Timer extends React.Component {
         console.log("Exercise Stack Pointer: ", this.exercisePointer);
         console.log("CURRENT EXERCISE: ", this.exerciseStack[this.exercisePointer]);
        // this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
-        
+
         this.setExercise(this.exerciseStack[this.exercisePointer]);
 
         routineKeys = this.currentRoutine.keys();
@@ -268,9 +268,9 @@ class Timer extends React.Component {
 
         nextAction = this.currentRoutine.get(currentKey);
       }
-    
+
       if (nextAction) {
-        
+
         this.props.action(nextAction);
         this.currentRoutine.delete(currentKey);
 
@@ -279,15 +279,15 @@ class Timer extends React.Component {
         });
       }
 
-     
+
     }
 
-  
+
 
   }
 
   stopTimer() {
-    
+
 
     this.setState({isOn: false});
     clearInterval(this.timer);
@@ -298,7 +298,7 @@ class Timer extends React.Component {
   }
 
   resetTimerAndQuery() {
-  
+
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false})
     this.props.addRoutineVowel(null);
@@ -333,7 +333,7 @@ class Timer extends React.Component {
   render() {
 
     const { classes } = this.props;
-    
+
     const { rangeVal } = this.state;
 
     let currentExercise = null;
@@ -341,7 +341,7 @@ class Timer extends React.Component {
     if(this.exerciseStack.length === 0) {
       currentExercise = null;
       console.log(this.state.test)
-    } 
+    }
 
 
     if (this.exerciseStack[this.exercisePointer]) {
@@ -350,7 +350,7 @@ class Timer extends React.Component {
           <label>&gt; Duration: </label><span>{((this.exerciseStack[this.exercisePointer].duration))} seconds</span> ({this.exerciseStack[this.exercisePointer].rangeVal} seconds x {this.exerciseStack[this.exercisePointer].repetitions} {this.exerciseStack[this.exercisePointer].mode})<br />
           <br />
         </div>;
-      
+
     }
     let completeExerciseStack = [];
 
@@ -386,7 +386,7 @@ class Timer extends React.Component {
       }
 
     }
-    
+
     let status = this.completed + ' of ' + this.total + ' Exercises Completed';
     let isDisabled = currentExercise === null ? true : false;
     let start = (this.state.time === 0) ?
