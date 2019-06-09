@@ -53,6 +53,9 @@ const styles = theme => ({
     fontSize: 72,
     fontWeight: "bold"
   },
+  historyTitle: {
+    fontSize: 35,
+  },
   subtitle: {
     fontSize: 20
   },
