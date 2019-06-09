@@ -15,7 +15,7 @@ function ProgressIndicator(props) {
 
   let status = props.completed + ' of ' + props.total + ' Exercises Completed';
 
-  let timeLeft = props.timeLeft;
+ // let timeLeft = props.timeLeft;
 
   const {classes} = props;
 
@@ -23,8 +23,9 @@ function ProgressIndicator(props) {
       <div className={classes.column}>
 
         {status}
+        <br></br>
 
-        {timeLeft}
+       {props.currentExerciseNumber !== null ? props.timeLeft : ''}
 
       </div>
       );
