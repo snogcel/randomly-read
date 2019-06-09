@@ -286,9 +286,6 @@ class WordCard extends React.Component  {
 
                   { this.props.mode === 'Word' ?
                     <CardActions style={{justifyContent: 'center'}}>
-                      {console.log("is this reached")}
-
-
                       <Typography
                         style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
                         align="center"
