@@ -3,7 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import { Router, Route, Switch } from 'react-router-dom';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
 import theme from '../../theme'; // TODO - remove
-import themes from '../../themes';
+import { MuiTheme } from '../../themeHandler';
 import history from '../../util/history';
 import GlobalStyle from '../../globalStyle';
 import HeaderContainer from '../Header/Container';
@@ -25,7 +25,7 @@ client.defaultOptions.query = {
 };
 
 const App = props => (
-  <MuiThemeProvider theme={themes}>
+  <MuiThemeProvider theme={MuiTheme}>
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme(props.dark)}>
         <Router history={history}>
