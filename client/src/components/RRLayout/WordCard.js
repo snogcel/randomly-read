@@ -121,13 +121,13 @@ class WordCard extends React.Component  {
 
   handleOpen = () => {
     this.setState({ open: true });
-    this.props.setExercisePause(true)
+    this.props.setModalOpen(true)
     
   };
 
   handleClose = () => {
     this.setState({ open: false });
-    this.props.setExercisePause(false)
+    this.props.setModalOpen(false)
   };
 
   handleChange = name => {
@@ -139,8 +139,10 @@ class WordCard extends React.Component  {
    };
 
 
-  setWord(title) {
-      this.props.addWord(title)
+  setWord(word, definitions) {
+    let obj = {word: word, defintions: definitions}
+    console.log("OBJ" , obj)
+      this.props.addWord(obj)
   }
 
 
@@ -319,7 +321,7 @@ class WordCard extends React.Component  {
               : (this.props.mode === 'Intermission') ? <Intermission /> :
               <Query
               query={query}
-          //    onCompleted={data => this.setWord(data.words[0].lexeme)}
+              onCompleted={data => this.setWord(data.words[0].lexeme, data.words[0].wordsXsensesXsynsets)}
 
               >
               {({ loading, error, data, refetch }) => {
