@@ -5,7 +5,7 @@ import Timer from './SecondTimerContainer';
   display: flex;
   align-items: flex-start;
   margin: 0 10vw;
-  
+
   @media (max-width: 1024px) {
     margin: 0 5vw;
   }
@@ -41,7 +41,7 @@ class RandomlyRead extends React.Component {
     let consonant = this.state.consonant;
     let templates = this.state.templates;
     let syllables = this.state.syllables;
-    
+
     let refresh = false;
 
     function difference(lastProps, newProps) {
@@ -87,19 +87,12 @@ class RandomlyRead extends React.Component {
     templates = options.templates;
     syllables = options.syllables;
 
-    console.log(mode)
-    console.log(vowel)
-    console.log(consonant)
-    console.log(templates)
-    console.log(syllables)
     this.props.addRoutineVowel(options.vowel);
     this.props.addConsonant(options.consonant);
     this.props.addSyllables(options.syllables);
     this.props.setLimit(limitText);
     this.props.setMode(mode);
     this.props.setIntermissionText(options.intermissionText)
-    console.log("IT", options.intermissionText)
-  
 
     if (this.state.mode === "Intermission") refresh = false;
 
@@ -115,11 +108,9 @@ class RandomlyRead extends React.Component {
 
     if (refresh) {
       console.log("Refetching...");
-      console.log(options);
       // this.queryWindow.current.refreshQuery();
     } else {
       console.log("Fetching...");
-      console.log(options);
     }
 
   }
@@ -138,8 +129,5 @@ class RandomlyRead extends React.Component {
 
   }
 }
-
-// const CategoryMenu = props => (
-
 
 export default RandomlyRead;

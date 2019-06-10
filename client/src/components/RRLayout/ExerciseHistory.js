@@ -37,12 +37,12 @@ class ExerciseHistory extends React.Component {
       this.state = {
         isChecked: false,
       }
-      this.handleChange = this.handleChange.bind(this);  
+      this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(number) {
-    
-    
+
+
     this.setState({isChecked: !this.state.isChecked})
     this.props.addExerciseNumber(number);
     console.log(this.state.isChecked)
@@ -58,14 +58,11 @@ class ExerciseHistory extends React.Component {
   }   */
 
   componentWillReceiveProps() {
-  
+
   }
 
   render() {
-    let count = 0;
     const {classes} = this.props;
-    console.log(this.state.isChecked)
-    console.log("HOW MANY TIMES IS THIS OUTPUTTING", this.props.currentExercise[this.props.currentExerciseNumber])
 
     return(
 
@@ -73,7 +70,7 @@ class ExerciseHistory extends React.Component {
           {(this.props.currentExercise) ? this.props.currentExercise.map((item, i) => (
            this.props.currentExercise[i].mode === 'Word' || this.props.currentExercise[i].mode === 'Sentence' ? (
           <ListItem dense className = {classes.listItem}>
-          <ListItemIcon> 
+          <ListItemIcon>
             <Checkbox style ={{color: "#33a0ff"}} checked={i === this.props.currentExerciseNumber} onClick={() => this.handleChange(i)}/>
              </ListItemIcon>
             <ListItemText
@@ -101,15 +98,15 @@ class ExerciseHistory extends React.Component {
             </Typography>
             }
             />
-            </ListItem> 
+            </ListItem>
            ) :
            null
           ))
-          : 
+          :
           null
             }
         </List>
- 
+
     )
 
   }

@@ -34,9 +34,10 @@ class WordCard extends React.Component  {
       this.state = {
         open: false,
         buttonColor: 'White'
-      }
+      };
 
       this.refreshQuery = this.refreshQuery.bind(this);
+      this.fetching = false;
 
   }
 
@@ -56,41 +57,37 @@ class WordCard extends React.Component  {
 
   handleChange = name => {
 
+      console.log("-state change-");
+      console.log("-fetching:", this.fetching);
 
       this.props.addRoutineVowel([name]);
       this.refreshQuery();
 
+      // TODO - determine if query should be refreshed
+
    };
 
-
   setWord(word, definitions) {
-    let obj = {word: word, defintions: definitions}
-    console.log("OBJ" , obj)
-      this.props.addWord(obj)
+    let obj = {word: word, definitions: definitions};
+    console.log("OBJ" , obj);
+    this.props.addWord(obj);
   }
-
 
 
   buildQuery() {
 
-    console.log("Vowel:", this.props.vowel);
-    console.log("consonant:", this.props.consonant);
-    console.log("syllables:",this.props.syllables);
-    console.log("limit:", this.props.limit);
-    console.log("mode:", this.props.mode);
+    // if (this.fetching) return null;
 
     let vowel = JSON.stringify(this.props.vowel);
     let consonant = JSON.stringify(this.props.consonant);
     let syllables= JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
-    console.log("Vowel:", vowel);
-    console.log("consonant:", consonant);
-    console.log("syllables:", syllables);
-    console.log("limit:", limit);
-    console.log("mode:", this.props.mode);
+
+    console.log("Building New Query...");
 
     switch(this.props.mode) {
         case 'Sentence':
+            console.log("Sentence Query...");
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -112,6 +109,7 @@ class WordCard extends React.Component  {
             }
 
         case 'Word':
+            console.log("Word Query...");
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -143,96 +141,35 @@ class WordCard extends React.Component  {
             }
 
         default:
+            console.log("No Query...");
             return null;
     }
 
-}
+  }
+
+  checkRefresh(oldQuery, newQuery) {
+
+    let refresh = false;
+
+    function difference(lastProps, newProps) {
+      let newSet = new Set(newProps);
+      return lastProps.filter(function(x) { return !newSet.has(x); });
+    }
+
+    if (refresh) {
+      this.refresh();
+    }
+
+  }
 
   render() {
     const { classes } = this.props;
-    const query = this.buildQuery();
 
+    console.log("calling buildQuery()");
 
-    /* <Grid container justify='center' alignItems='center'>
-      <Card style={{ width: 950, minHeight: '40vh', maxHeight: '40vh', overflow: 'hidden'}}>
-        <Grid>
-        <CardContent style={{ overflow: 'hidden'}}>
-          {console.log(this.props.mode)}
-           { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
-                ''
-            : (this.props.mode === 'Intermission') ?
-            <Intermission /> :
-            <Query
-            query={query}
-            onCompleted={data => this.setWord(data.words[0].lexeme)}
-          >
-            {({ loading, error, data, refetch }) => {
-              if (loading)
-                return (
-                  <Typography variant='h5' component='h2' align='center'>
-                  </Typography>
-                );
-              if (error)
-                return (
-                  <Typography variant='h5' component='h2' align='center'>
-                    Something went wrong... {error.message}
-                  </Typography>
-                );
-              return (
-                <>
-                <Typography variant='h2' component='h2' align='center'>
-                  { data.words[0].lexeme }
-                </Typography>
-                {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
-                  return (
-                    <>
-                    <Grid container direction='row' alignItems='center' justify = 'center'>
-                  <Grid item xs={12} align='center'>
-                  <Typography color='textSecondary' align='center'>
-                    {(`(${word.pos}): `)}
-                  </Typography>
-                  </Grid>
-                  <Grid item xs={12} align='center'>
-                  <Typography component='p' align='center'>
-                   { `${word.definition}` }
-                  </Typography>
-                  </Grid>
-                  </Grid>
-                  </>
-                  );
-                })}
+    this.query = this.buildQuery();
 
-                 <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
-                </>
-              );
-            }}
-             </Query>
-           }
-
-        <Grid item align='bottom'>
-        <CardActions style ={{overflow: 'hidden',  marginTop: 'auto'}}>
-          <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1}}>
-            Vote
-          </Button>
-          <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1 }}
-          >
-            Comment
-          </Button>
-        </CardActions>
-        </Grid>
-        <FormGroup row style={{ flex: '1', marginLeft: '25px', overflow: 'hidden'}} >
-       { VowelCheckboxes.map((item, i) => (
-       <>
-           <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/>
-       {/* <FormControlLabel control={<Fab color="primary" aria-label="Add" onClick={this.handleChangeButton(item.name)}> {item.name} </Fab>} /> */
-     /*   </>
-
-      ))}
-        </FormGroup>
-        </CardContent>
-        </Grid>
-      </Card>
-       </Grid> */
+    this.fetching = true;
 
     return (
 
@@ -240,103 +177,133 @@ class WordCard extends React.Component  {
 
           <Card elevation="0" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : 'transparent'}}>
             <CardContent>
-              {console.log(this.props.mode)}
-              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
-                  ''
-              : (this.props.mode === 'Intermission') ? <Intermission /> :
-              <Query
-              query={query}
-              onCompleted={data => this.setWord(data.words[0].lexeme, data.words[0].wordsXsensesXsynsets)}
+              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="no-cache" onCompleted={() => { this.fetching = false; this.props.addWord({ word: this.result, definitions: null }); }}>
+                {({ loading, error, data, refetch }) => {
 
-              >
-              {({ loading, error, data, refetch }) => {
+                  if (loading) return null;
 
-                this.refresh = refetch;
+                  if (error) {
+                    console.log("error...");
+                  }
 
-                if (loading)
+                  if (data) {
+
+                    this.refresh = refetch;
+
+                    // check if data object is empty
+                    if (Object.keys(data).length === 0 && data.constructor === Object) {
+                      console.log("empty data");
+                      this.result = null;
+                      refetch();
+                      return null;
+                    }
+
+                    if (this.props.mode === 'Word' && typeof(data.words) === 'undefined') {
+                      console.log(data);
+                      return null;
+                    }
+
+                    if (this.props.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
+                      return null;
+                    }
+
+                    // {data => this.setWord(data.words[0].lexeme, data.words[0].wordsXsensesXsynsets)
+
+                    // check if word is a repeat
+                    if (this.props.mode === 'Word') {
+
+                      console.log('fetching:', this.fetching);
+                      console.log('previous data: ', this.result);
+                      console.log('retrieved data:', data.words[0].lexeme);
+
+                      if (this.result === data.words[0].lexeme && this.fetching){
+                        console.log("refetch!!");
+                        refetch();
+                      }
+
+                      if (this.result !== data.words[0].lexeme && this.fetching) {
+
+                        this.result = data.words[0].lexeme;
+                        this.fetching = false;
+
+                      }
+
+                    } else if (this.props.mode === 'Sentence') {
+                      this.result = data.sentences[0].result;
+                    } else {
+
+
+                      console.log("wtf??");
+
+                    }
+
+                  }
+
                   return (
-                  ''
-                  );
-
-                if (error)
-                  return (
-                    <Typography
-                    component={'span'}
-                    align="center"
-                    className={classes.title}
-                    color="textPrimary"
-                  >
-                    Error
-                  </Typography>
-                  );
-
-                return (
-                    <>
-                    <Typography
-                      component={'span'}
-                      align="center"
-                      className={classes.title}
-                      color="textPrimary"
-                      style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
-                    >
-                      {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
-
-                      {this.props.mode === 'Word' ? console.log(data.words[0].lexeme) : console.log(data.sentences[0].result)}
-                    </Typography>
-
-                  { this.props.mode === 'Word' ?
-                    <CardActions style={{justifyContent: 'center'}}>
+                      <>
                       <Typography
-                        style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
-                        align="center"
                         component={'span'}
-                        className={classes.seeMore}
+                        align="center"
+                        className={classes.title}
                         color="textPrimary"
-                        onClick={this.handleOpen}>
-                        see more
+                        style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
+                      >
+                        { this.result }
                       </Typography>
 
-                      <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={this.state.open}
-                        onClose={this.handleClose}
-                        style={{color: this.props.dark === true ? 'white' : 'black'}}
-                      >
-                      <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
-                        <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} className={classes.title} color="textPrimary">
-                          {data.words[0].lexeme}
+                    { this.props.mode === 'Word' ?
+                      <CardActions style={{justifyContent: 'center'}}>
+                        <Typography
+                          style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
+                          align="center"
+                          component={'span'}
+                          className={classes.seeMore}
+                          color="textPrimary"
+                          onClick={this.handleOpen}>
+                          see more
                         </Typography>
-                          {data.words[0].wordsXsensesXsynsets.map((word, i) => {
-                            return (
-                              <>
-                              <List dense="true">
-                                <ListItem>
-                                  <ListItemText>
-                                    <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'}  color="textPrimary">
-                                    {word.definition}
-                                  </Typography>
-                                  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} color="textSecondary">
-                                  {word.pos}
-                                  </Typography>
-                                    </ListItemText>
-                                </ListItem>
-                              </List>
-                              </>
-                            );
-                          })}
-                      </div>
-                    </Modal>
-                  </CardActions>
-                  :  null}
-                  </>
 
-                );
+                        <Modal
+                          aria-labelledby="simple-modal-title"
+                          aria-describedby="simple-modal-description"
+                          open={this.state.open}
+                          onClose={this.handleClose}
+                          style={{color: this.props.dark === true ? 'white' : 'black'}}
+                        >
+                        <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
+                          <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} className={classes.title} color="textPrimary">
+                            {this.result}
+                          </Typography>
+                            {data.words[0].wordsXsensesXsynsets.map((word, i) => {
+                              return (
+                                <>
+                                <List dense="true">
+                                  <ListItem>
+                                    <ListItemText>
+                                      <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'}  color="textPrimary">
+                                      {word.definition}
+                                    </Typography>
+                                    <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} color="textSecondary">
+                                    {word.pos}
+                                    </Typography>
+                                      </ListItemText>
+                                  </ListItem>
+                                </List>
+                                </>
+                              );
+                            })}
+                        </div>
+                      </Modal>
+                    </CardActions>
+                    :  null}
+                    </>
+
+                  );
 
 
-                }}
-                </Query>
-              }
+                  }}
+                  </Query>
+                }
             </CardContent>
           </Card>
 
