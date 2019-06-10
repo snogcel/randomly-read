@@ -301,7 +301,7 @@ class Timer extends React.Component {
 
       this.timeLeftLastUpdated++;
 
-      if (this.timeLeftLastUpdated > 100) {
+      if (this.timeLeftLastUpdated > 25) {
 
         this.timeLeftLastUpdated = 0;
 
