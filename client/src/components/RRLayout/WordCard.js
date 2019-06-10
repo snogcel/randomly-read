@@ -141,6 +141,8 @@ class WordCard extends React.Component  {
 
   render() {
     const { classes } = this.props;
+
+    console.log("calling buildQuery()");
     const query = this.buildQuery();
 
     return (
@@ -152,14 +154,15 @@ class WordCard extends React.Component  {
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
                   ''
               : (this.props.mode === 'Intermission') ? <Intermission /> :
-              <Query
-              query={query}
-              onCompleted={data => this.setWord(data.words[0].lexeme, data.words[0].wordsXsensesXsynsets)}
-
-              >
+              <Query query={query} fetchPolicy="no-cache" onCompleted={data => this.setWord(data.words[0].lexeme, data.words[0].wordsXsensesXsynsets)}>
               {({ loading, error, data, refetch }) => {
 
                 this.refresh = refetch;
+
+                // check if data object is empty
+                if (Object.keys(data).length === 0 && data.constructor === Object) {
+                  return null;
+                }
 
                 if (loading)
                   return (
@@ -187,7 +190,7 @@ class WordCard extends React.Component  {
                       color="textPrimary"
                       style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
                     >
-                      {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
+                      { this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result }
                     </Typography>
 
                   { this.props.mode === 'Word' ?
