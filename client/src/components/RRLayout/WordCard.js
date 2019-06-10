@@ -56,41 +56,30 @@ class WordCard extends React.Component  {
 
   handleChange = name => {
 
-
       this.props.addRoutineVowel([name]);
       this.refreshQuery();
 
    };
 
-
   setWord(word, definitions) {
-    let obj = {word: word, defintions: definitions}
-    console.log("OBJ" , obj)
-      this.props.addWord(obj)
+    let obj = {word: word, definitions: definitions};
+    console.log("OBJ" , obj);
+    this.props.addWord(obj)
   }
 
 
-
   buildQuery() {
-
-    console.log("Vowel:", this.props.vowel);
-    console.log("consonant:", this.props.consonant);
-    console.log("syllables:",this.props.syllables);
-    console.log("limit:", this.props.limit);
-    console.log("mode:", this.props.mode);
 
     let vowel = JSON.stringify(this.props.vowel);
     let consonant = JSON.stringify(this.props.consonant);
     let syllables= JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
-    console.log("Vowel:", vowel);
-    console.log("consonant:", consonant);
-    console.log("syllables:", syllables);
-    console.log("limit:", limit);
-    console.log("mode:", this.props.mode);
+
+    console.log("Building New Query...");
 
     switch(this.props.mode) {
         case 'Sentence':
+            console.log("Sentence Query...");
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -112,6 +101,7 @@ class WordCard extends React.Component  {
             }
 
         case 'Word':
+            console.log("Word Query...");
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -143,6 +133,7 @@ class WordCard extends React.Component  {
             }
 
         default:
+            console.log("No Query...");
             return null;
     }
 
@@ -152,95 +143,12 @@ class WordCard extends React.Component  {
     const { classes } = this.props;
     const query = this.buildQuery();
 
-
-    /* <Grid container justify='center' alignItems='center'>
-      <Card style={{ width: 950, minHeight: '40vh', maxHeight: '40vh', overflow: 'hidden'}}>
-        <Grid>
-        <CardContent style={{ overflow: 'hidden'}}>
-          {console.log(this.props.mode)}
-           { (!this.props.vowel || !this.props.vowel.length && !this.props.mode)  ?
-                ''
-            : (this.props.mode === 'Intermission') ?
-            <Intermission /> :
-            <Query
-            query={query}
-            onCompleted={data => this.setWord(data.words[0].lexeme)}
-          >
-            {({ loading, error, data, refetch }) => {
-              if (loading)
-                return (
-                  <Typography variant='h5' component='h2' align='center'>
-                  </Typography>
-                );
-              if (error)
-                return (
-                  <Typography variant='h5' component='h2' align='center'>
-                    Something went wrong... {error.message}
-                  </Typography>
-                );
-              return (
-                <>
-                <Typography variant='h2' component='h2' align='center'>
-                  { data.words[0].lexeme }
-                </Typography>
-                {data.words[0].wordsXsensesXsynsets.slice(0,2).map((word, i) => {
-                  return (
-                    <>
-                    <Grid container direction='row' alignItems='center' justify = 'center'>
-                  <Grid item xs={12} align='center'>
-                  <Typography color='textSecondary' align='center'>
-                    {(`(${word.pos}): `)}
-                  </Typography>
-                  </Grid>
-                  <Grid item xs={12} align='center'>
-                  <Typography component='p' align='center'>
-                   { `${word.definition}` }
-                  </Typography>
-                  </Grid>
-                  </Grid>
-                  </>
-                  );
-                })}
-
-                 <Button color="primary"  align='top' onClick={() => refetch()}> New Word! </Button>
-                </>
-              );
-            }}
-             </Query>
-           }
-
-        <Grid item align='bottom'>
-        <CardActions style ={{overflow: 'hidden',  marginTop: 'auto'}}>
-          <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1}}>
-            Vote
-          </Button>
-          <Button color="primary" variant="contained" size='small' align='bottom' style={{flex: 1 }}
-          >
-            Comment
-          </Button>
-        </CardActions>
-        </Grid>
-        <FormGroup row style={{ flex: '1', marginLeft: '25px', overflow: 'hidden'}} >
-       { VowelCheckboxes.map((item, i) => (
-       <>
-           <FormControlLabel control={<Checkbox />}  label={item.label}  checked={this.props.vowel === null ? false : this.props.vowel.includes(item.name)} onChange={this.handleChange(item.name)}/>
-       {/* <FormControlLabel control={<Fab color="primary" aria-label="Add" onClick={this.handleChangeButton(item.name)}> {item.name} </Fab>} /> */
-     /*   </>
-
-      ))}
-        </FormGroup>
-        </CardContent>
-        </Grid>
-      </Card>
-       </Grid> */
-
     return (
 
         <div className={classes.column}>
 
           <Card elevation="0" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : 'transparent'}}>
             <CardContent>
-              {console.log(this.props.mode)}
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ?
                   ''
               : (this.props.mode === 'Intermission') ? <Intermission /> :
@@ -280,8 +188,6 @@ class WordCard extends React.Component  {
                       style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
                     >
                       {this.props.mode === 'Word' ? data.words[0].lexeme : data.sentences[0].result}
-
-                      {this.props.mode === 'Word' ? console.log(data.words[0].lexeme) : console.log(data.sentences[0].result)}
                     </Typography>
 
                   { this.props.mode === 'Word' ?

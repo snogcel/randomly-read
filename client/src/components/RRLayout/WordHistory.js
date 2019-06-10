@@ -6,29 +6,25 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { styles } from '../../themeHandler';
 
-  
+
   let words = [];
   function WordHistory(props) {
- 
-    console.log("WORDS 1", words.length)
-    if(props.word.length === 0) words = []; 
-    if(props.word.length !== 0) console.log("PROPS", props.word)
-    if(words.length === 5) words = []; 
+
+    if(props.word.length === 0) words = [];
+    if(words.length === 5) words = [];
 
     const {classes} = props;
 
-    if(props.currentExerciseNumber !== null && props.word && props.word.length !== 0 && props.currentExerciseNumber % 2 === 0)  { 
-      
+    if(props.currentExerciseNumber !== null && props.word && props.word.length !== 0 && props.currentExerciseNumber % 2 === 0)  {
+
       words.push(props.word)
     }
-   // console.log(props.word.length)
-    console.log("WORDS 2", words)
-    console.log("WORDS LENGTH", words.length)
-    return ( 
-     
+
+    return (
+
       props.currentExerciseNumber !== null && words.length >= 0 ?  (
-        
-      <Grid className={classes.column} container spacing={3}>
+
+      <Grid className={classes.column} container spacing={4}>
         {words.map((item, i) => (
           <Grid item xs={12}>
             <Card square elevation="0" style={{backgroundColor: 'transparent'}}>
@@ -80,7 +76,7 @@ import { styles } from '../../themeHandler';
             </Card>
             <br></br>  {/* Temporary work around for paddingBottom */}
             </Grid>
-            
+
         ))}
       </Grid>
       ) : ''
