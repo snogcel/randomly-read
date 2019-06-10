@@ -24,7 +24,7 @@ import { styles } from '../../themeHandler';
 
       props.currentExerciseNumber !== null && words.length >= 0 ?  (
 
-      <Grid className={classes.column} container spacing={4}>
+      <Grid className={classes.column} container spacing={8}>
         {words.map((item, i) => (
           <Grid item xs={12}>
             <Card square elevation="0" style={{backgroundColor: 'transparent'}}>
