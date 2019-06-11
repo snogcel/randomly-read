@@ -83,8 +83,6 @@ class WordCard extends React.Component  {
     let syllables= JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
 
-    console.log("Building New Query...");
-
     switch(this.props.mode) {
         case 'Sentence':
             console.log("Sentence Query...");
@@ -165,8 +163,6 @@ class WordCard extends React.Component  {
   render() {
     const { classes } = this.props;
 
-    console.log("calling buildQuery()");
-
     this.query = this.buildQuery();
 
     this.fetching = true;
@@ -192,51 +188,35 @@ class WordCard extends React.Component  {
 
                     // check if data object is empty
                     if (Object.keys(data).length === 0 && data.constructor === Object) {
-                      console.log("empty data");
                       this.result = null;
                       refetch();
                       return null;
                     }
 
                     if (this.props.mode === 'Word' && typeof(data.words) === 'undefined') {
-                      console.log(data);
                       return null;
                     }
 
                     if (this.props.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
-                      console.log(data);
                       return null;
                     }
 
-                    // {data => this.setWord(data.words[0].lexeme, data.words[0].wordsXsensesXsynsets)
 
                     // check if word is a repeat
                     if (this.props.mode === 'Word') {
 
-                      console.log('fetching:', this.fetching);
-                      console.log('previous data: ', this.result);
-                      console.log('retrieved data:', data.words[0].lexeme);
-
                       if (this.result === data.words[0].lexeme && this.fetching){
-                        console.log("refetch!!");
                         refetch();
                       }
 
                       if (this.result !== data.words[0].lexeme && this.fetching) {
-
                         this.result = data.words[0].lexeme;
                         this.fetching = false;
-
                       }
 
                     } else if (this.props.mode === 'Sentence') {
 
-                      console.log('fetching:', this.fetching);
-                      console.log('previous data: ', this.result);
-                      console.log('retrieved data:', data.sentences[0].result);
-
                       if (this.result === data.sentences[0].result && this.fetching){
-                        console.log("refetch!!");
                         refetch();
                       }
 
@@ -247,13 +227,7 @@ class WordCard extends React.Component  {
 
                       }
 
-                    } else {
-
-                      console.log("??");
-
                     }
-
-                    console.log("-completed, fetching status:", this.fetching);
 
                   }
 
