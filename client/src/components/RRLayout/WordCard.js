@@ -204,6 +204,7 @@ class WordCard extends React.Component  {
                     }
 
                     if (this.props.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
+                      console.log(data);
                       return null;
                     }
 
@@ -229,13 +230,30 @@ class WordCard extends React.Component  {
                       }
 
                     } else if (this.props.mode === 'Sentence') {
-                      this.result = data.sentences[0].result;
+
+                      console.log('fetching:', this.fetching);
+                      console.log('previous data: ', this.result);
+                      console.log('retrieved data:', data.sentences[0].result);
+
+                      if (this.result === data.sentences[0].result && this.fetching){
+                        console.log("refetch!!");
+                        refetch();
+                      }
+
+                      if (this.result !== data.sentences[0].result && this.fetching) {
+
+                        this.result = data.sentences[0].result;
+                        this.fetching = false;
+
+                      }
+
                     } else {
 
-
-                      console.log("wtf??");
+                      console.log("??");
 
                     }
+
+                    console.log("-completed, fetching status:", this.fetching);
 
                   }
 
