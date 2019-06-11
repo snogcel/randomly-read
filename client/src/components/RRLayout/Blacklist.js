@@ -1,48 +1,138 @@
 const blacklist = {
   "AA": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "AE": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "AH": {
-      consonants: ["L","N","S","SH","T","Z"]
+      consonants: [
+        ["L","N","S","T","Z"],
+        ["L","N","S","T","Z"],
+        ["CH","L","N","S","T","Y","Z"],
+        ["L","N","S","T","Y","Z"],
+        ["L","N","S","SH","T","Z"]
+      ]
   },
   "AO": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "AW": {
-      consonants: ["Y","Z"]
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        ["Y","Z"],
+      ]
   },
   "AY": {
-      consonants: ["Y"]
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        ["Y"],
+      ],
   },
   "EH": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "ER": {
-      consonants: ["R"]
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        ["R"],
+      ],
   },
   "EY": {
-      consonants: ["Z"]
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        ["Z"],
+      ],
   },
   "IH": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "IY": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "OW": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   },
   "OY": {
-      consonants: ["M","SH","TH","W","Y","Z"]
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        ["M","SH","TH","W","Y","Z"],
+      ],
   },
   "UH": {
-      consonants: ["CH","TH","V",]
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        ["CH","TH","V",],
+      ],
   },
   "UW": {
-      consonants: []
+      consonants: [
+        [],
+        [],
+        [],
+        [],
+        [],
+      ]
   }
 };
 

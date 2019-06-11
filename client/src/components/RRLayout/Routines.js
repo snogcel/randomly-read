@@ -113,6 +113,18 @@ const routines = [
         repetitions: 10
       },
       {
+        duration: 5,
+        rangeVal: 5,
+        map: 'intermission',
+        intermissionText: "relax",
+        mode: 'Intermission',
+        limit: 1,
+        vowels: [],
+        consonants: [],
+        templates: [],
+        syllables: []
+      },
+      {
         duration: 50,
         rangeVal: 5,
         map: "default",
