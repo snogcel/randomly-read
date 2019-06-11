@@ -58,10 +58,9 @@ const resolvers = {
 
             // Default Templates
             let templates = [
-                "{{ adjective }} {{ noun }} has {{ an_adjective }} {{ noun }}",
-                "{{ noun }} goes to {{ an_adjective }} {{ noun }}",
-                "{{ an_adjective }} {{ noun }} is {{ adjective }}",
-                "{{ noun }} is {{ an_adjective }} {{ noun }}",
+                "{{ adjective }} {{ noun }}",
+                "{{ noun }} goes to {{ an_adjective }}",
+                "{{ noun }} is {{ an_adjective }}",
             ];
 
             // Parse Parameters
