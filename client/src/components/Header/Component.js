@@ -39,6 +39,7 @@ const Header = ({ user, logout }) => (
           log out
         </HeaderNavLink>
         <HeaderNavLink to='/randomlyread'>RR</HeaderNavLink>
+        <HeaderNavLink to='/fluencyreport'>Fluency Report</HeaderNavLink>
       </>
     ) : (
       <>
