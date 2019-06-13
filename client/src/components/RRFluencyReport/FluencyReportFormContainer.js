@@ -4,12 +4,13 @@ import { reduxForm } from 'redux-form';
 import withAuth from '../../util/withAuth';
 import MyFluencyForm from './FluencyReportForm';
 import validate from './validate'
+import { attemptCreateInteraction } from '../../actions/interactions';
 
 const mapStateToProps = state => ({
    
   });
   
-  const mapDispatchToProps = {  };
+  const mapDispatchToProps = { attemptCreateInteraction };
 
 const enhance = compose(
   reduxForm({ form: 'MyFluencyForm' ,

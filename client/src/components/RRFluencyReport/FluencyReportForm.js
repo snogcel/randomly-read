@@ -38,17 +38,23 @@ const renderSelectField = ({
     </FormControl>
   )
 
-const MyFluencyForm = props => {
-  const { handleSubmit, pristine, reset, submitting, classes } = props
+class MyFluencyForm extends React.Component {
+
+
+  onSubmit = interactions => this.props.attemptCreateInteraction(interactions);
+
+  render() {
+
+  const { handleSubmit, pristine, reset, submitting, classes } = this.props
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(this.onSubmit)}>
 
          <Grid className={classes.column} container spacing={8}>
 
          <Grid item xs={12}>
         <Field
           classes={classes}
-          name="settingField"
+          name="setting"
           component={renderSelectField}
           label="Setting"
         >
@@ -67,7 +73,7 @@ const MyFluencyForm = props => {
       <Grid item xs={12}>
         <Field
           classes={classes}
-          name="audienceField"
+          name="audience"
           component={renderSelectField}
           label="Audience"
         >
@@ -86,7 +92,7 @@ const MyFluencyForm = props => {
         <Grid item xs={12}>
         <Field
           classes={classes}
-          name="intentionField"
+          name="intention"
           component={renderSelectField}
           label="Intention"
         >
@@ -97,7 +103,22 @@ const MyFluencyForm = props => {
           <MenuItem value={10}>10: I remembered and used"</MenuItem>
         </Field>
         </Grid>
-
+        
+        <Grid item xs={12}>
+        <Field
+          classes={classes}
+          name="ease"
+          component={renderSelectField}
+          label="Ease of Speech"
+        >
+           <MenuItem value={""}></MenuItem>
+          <MenuItem value={1}>1: Speech is difficult</MenuItem>
+          <MenuItem value={4}>4: Speech was less difficult</MenuItem>
+          <MenuItem value={7}>7: Speech was easier</MenuItem>
+          <MenuItem value={10}>10: Speech was easy</MenuItem>
+        </Field>
+        </Grid>
+        
         <Grid item xs={12}>
         <Button type="button" align="left" type="button" variant="contained" disabled={pristine || submitting} color = "primary" size = "small" onClick={reset}><b>Clear Values</b></Button>
         <Button type="submit" className={classes.submitButton} variant="contained" color = "primary" size ="large" disabled={pristine || submitting}><b>Submit</b></Button>
@@ -106,6 +127,7 @@ const MyFluencyForm = props => {
         </Grid>
     </form>
   )
+}
 }
 
 
