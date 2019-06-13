@@ -5,7 +5,7 @@ const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const interactions = require('./controllers/interactions');
 const comments = require('./controllers/comments');
-const { jwtAuth, postAuth, commentAuth } = require('./auth');
+const { jwtAuth, postAuth, commentAuth, interactionAuth } = require('./auth');
 const router = require('express').Router();
 
 router.post('/login', users.validate(), users.login);
@@ -24,7 +24,7 @@ router.get('/user/:user', posts.listByUser);
 router.param('comment', comments.load);
 router.post('/post/:post', [jwtAuth, comments.validate], comments.create);
 router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
-router.post('/interactions', [jwtAuth], interactions.create);
+router.post('/interactions', [jwtAuth, interactionAuth], interactions.create);
 router.get('/interactions', interactions.list);
 
 module.exports = app => {
