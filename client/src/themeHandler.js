@@ -66,6 +66,15 @@ const styles = theme => ({
     fontSize: 18,
     cursor: "pointer"
   },
+  submitButton: {
+    margin: 5,
+    minWidth: 100,
+    padding: 4,
+    "&:hover": {
+      backgroundColor: "#2d90e5"
+    },
+    backgroundColor: '#33a0ff',
+  },
   button: {
     margin: 4,
     minWidth: 35,
