@@ -42,7 +42,7 @@ const FluencyReport = props => {
                 <CardContent>
                 
 
-                    <FluencyReportForm onSubmit={showResults}/>
+                    <FluencyReportForm/>
 
                 </CardContent>
               </Card>
