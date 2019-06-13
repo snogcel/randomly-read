@@ -1,9 +1,10 @@
 export default function validate(values) {
     const errors = {}
     const requiredFields = [
-      'settingField',
-      'audienceField',
-      'intentionField',
+      'setting',
+      'audience',
+      'intention',
+      'ease'
     ]
   
     requiredFields.forEach(field => {
