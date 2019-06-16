@@ -5,7 +5,7 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import FluencyReportForm from './FluencyReportFormContainer';
-import showResults from './showResults';
+import FluencyReportHistory from './FluencyReportHistoryContainer'
 
 const styles = theme => ({
     root: {
@@ -35,19 +35,13 @@ const FluencyReport = props => {
     const {classes} = props;
 
     return (
-
-
         <div className={classes.root}>
               <Card elevation="1" className={classes.column}>
                 <CardContent>
-                
-
                     <FluencyReportForm/>
-
+                    <FluencyReportHistory/>
                 </CardContent>
               </Card>
-        
-        
         </div>
 
     )
