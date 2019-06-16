@@ -25,6 +25,15 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
+  formTable: {
+    marginTop: theme.spacing.unit * 3
+  },
+  form: {
+    textAlign: "left",
+  },
+  formControl: {
+    marginRight: 40,
+  },
   column: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",
