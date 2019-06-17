@@ -111,8 +111,9 @@ class MyFluencyForm extends React.Component {
         interactions: JSON.parse(localStorage.getItem("Interactions"))
       });
       console.log("local storange", JSON.parse(localStorage.getItem("Interactions")))
-
+      if (JSON.parse(localStorage.getItem("Interactions") !== null)) {
       this.props.addInitialFormData(JSON.parse(localStorage.getItem("Interactions")))
+      }
     }
 
 
