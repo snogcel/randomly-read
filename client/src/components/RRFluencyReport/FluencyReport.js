@@ -4,8 +4,9 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
-import FluencyReportForm from './FluencyReportFormContainer';
+import FluencyReportForm from './FluencyReportForm';
 import FluencyReportHistory from './FluencyReportHistoryContainer'
+
 
 const styles = theme => ({
     root: {
@@ -13,6 +14,10 @@ const styles = theme => ({
       padding: 25
     },
     column: {
+      marginTop: theme.spacing.unit * 4,
+      position: 'center',
+      bottomPadding: 50,
+      width: 1400,
       padding: theme.spacing.unit * 2,
       textAlign: "center",
       color: theme.palette.text.secondary
@@ -35,14 +40,65 @@ const FluencyReport = props => {
     const {classes} = props;
 
     return (
-        <div className={classes.root}>
-              <Card elevation="1" className={classes.column}>
+            <div className={classes.root}>
+            <Grid container spacing={0} direction="row" alignItems="center" justify="center">
+              <Grid item>
+              <Card elevation="1" className={classes.column}>      
+              <Typography className={classes.title} variant="h4" align="center">Speaking at Work or School</Typography>  
                 <CardContent>
-                    <FluencyReportForm/>
-                    <FluencyReportHistory/>
+                    <FluencyReportForm form={"Setting1Form"} initialValues={{"setting": "1"}} setting={"1"}/>
+                     <FluencyReportHistory setting={"1"}/> 
                 </CardContent>
               </Card>
-        </div>
+              </Grid>      
+
+            <Grid item>
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">Speaking on the Phone</Typography>  
+                <CardContent>
+                    <FluencyReportForm form={"Setting2Form"} initialValues={{"setting": "2"}}/>
+                    <FluencyReportHistory setting={"2"}/> 
+                </CardContent>
+              </Card>
+              </Grid>
+              <Grid item>
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">Presenting a Topic</Typography>  
+                <CardContent>
+                    <FluencyReportForm form={"Setting3Form"} initialValues={{"setting": "3"}}/>
+                     <FluencyReportHistory setting={"3"}/> 
+                </CardContent>
+              </Card>
+              </Grid>
+              <Grid item>
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">Attending a Social Event</Typography>  
+                <CardContent>
+                    <FluencyReportForm form={"Setting4Form"} initialValues={{"setting": "4"}} setting={"4"}/>
+                    <FluencyReportHistory setting={"4"}/> 
+                </CardContent>
+              </Card>
+              </Grid>
+              <Grid item>
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">Relaxing with Friends</Typography>  
+                <CardContent>
+                    <FluencyReportForm form={"Setting5Form"} initialValues={{"setting": "5"}} setting={"5"}/>
+                    <FluencyReportHistory setting={"5"}/> 
+                </CardContent>
+              </Card>
+              </Grid>
+              <Grid item>
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">Relaxing at Home</Typography>  
+                <CardContent>
+                    <FluencyReportForm form={"Setting6Form"} initialValues={{"setting": "6"}} setting={"6"}/>
+                     <FluencyReportHistory setting={"6"}/> 
+                </CardContent>
+              </Card>
+              </Grid>
+              </Grid>
+            </div>
 
     )
 
