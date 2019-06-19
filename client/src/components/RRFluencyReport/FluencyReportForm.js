@@ -13,34 +13,26 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { reduxForm } from 'redux-form';
+import withAuth from '../../util/withAuth';
+import validate from './validate'
+import { attemptCreateInteraction } from '../../actions/interactions';
+import { addSetting1FormData } from '../../actions/formData';
+import { addSetting2FormData } from '../../actions/formData';
+import { addSetting3FormData } from '../../actions/formData';
+import { addSetting4FormData } from '../../actions/formData';
+import { addSetting5FormData } from '../../actions/formData';
+import { addSetting6FormData } from '../../actions/formData';
+import { resetFormData } from '../../actions/formData';
+import { loadSetting1FormData } from '../../actions/formData';
+import { loadSetting2FormData } from '../../actions/formData';
+import { loadSetting3FormData } from '../../actions/formData';
+import { loadSetting4FormData } from '../../actions/formData';
+import { loadSetting5FormData } from '../../actions/formData';
+import { loadSetting6FormData } from '../../actions/formData';
 
-const renderFromHelper = ({ touched, error }) => {
-    if (!(touched && error)) {
-      return
-    } else {
-      return <FormHelperText>{touched && error}</FormHelperText>
-    }
-  }
-
-
-  const settingradioButton = ({ label, input,children, ...rest }) => (
-    
-    <FormControl style={{padding: 50}}>
-       <FormLabel component="legend">{label}</FormLabel>
-      <RadioGroup 
-      {...input} 
-      {...rest}
-      >
-          <FormControlLabel value={"1"} control={<Radio />} label="1: Speaking at Work or School"/>
-          <FormControlLabel value={"2"} control={<Radio />} label="2: Speaking on the Phone"/> 
-          <FormControlLabel value={"3"} control={<Radio />} label="3: Presenting a Topic"/>   
-          <FormControlLabel value={"4"} control={<Radio />} label="4: Attending a Social Event"/> 
-          <FormControlLabel value={"5"} control={<Radio />} label="5: Relaxing with Friends"/>    
-          <FormControlLabel value={"6"} control={<Radio />} label="6: Relaxing at Home"/>     
-    </RadioGroup>
-    </FormControl>
-
-  ) 
 
   const audienceradioButton = ({ label, input, ...rest }) => (
     
@@ -50,14 +42,14 @@ const renderFromHelper = ({ touched, error }) => {
       {...input} 
       {...rest}
       >
-      <FormControlLabel value={"1"} control={<Radio />} label="1: Parents"/>
-      <FormControlLabel value={"2"} control={<Radio />} label="2: Family"/> 
-      <FormControlLabel value={"3"} control={<Radio />} label="3: Significant Other"/>   
-      <FormControlLabel value={"4"} control={<Radio />} label="4: Friend"/> 
-      <FormControlLabel value={"5"} control={<Radio />} label="5: Coworker / Classmate"/>    
-      <FormControlLabel value={"6"} control={<Radio />} label="6: Authority Figure"/> 
-      <FormControlLabel value={"7"} control={<Radio />} label="7: Service Workere"/>    
-      <FormControlLabel value={"8"} control={<Radio />} label="8: No Relationship"/>
+      <FormControlLabel value={"1"} control={<Radio />} label="Parents"/>
+      <FormControlLabel value={"2"} control={<Radio />} label="Family"/> 
+      <FormControlLabel value={"3"} control={<Radio />} label="Significant Other"/>   
+      <FormControlLabel value={"4"} control={<Radio />} label="Friend"/> 
+      <FormControlLabel value={"5"} control={<Radio />} label="Coworker / Classmate"/>    
+      <FormControlLabel value={"6"} control={<Radio />} label="Authority Figure"/> 
+      <FormControlLabel value={"7"} control={<Radio />} label="Service Workere"/>    
+      <FormControlLabel value={"8"} control={<Radio />} label="No Relationship"/>
     </RadioGroup>
     </FormControl>
 
@@ -71,9 +63,9 @@ const renderFromHelper = ({ touched, error }) => {
       {...input} 
       {...rest}
       >
-      <FormControlLabel value={"1"}  control={<Radio />}   label="1: I did not remember or use"/>
-      <FormControlLabel value={"5"}  control={<Radio />}   label="5: I remembered but did not use"/> 
-      <FormControlLabel value={"10"} control={<Radio />}   label="10: I remembered and used"/>   
+      <FormControlLabel value={"1"}  control={<Radio />}   label="I did not remember or use"/>
+      <FormControlLabel value={"5"}  control={<Radio />}   label="I remembered but did not use"/> 
+      <FormControlLabel value={"10"} control={<Radio />}   label="I remembered and used"/>   
     </RadioGroup>
     </FormControl>
 
@@ -87,10 +79,10 @@ const renderFromHelper = ({ touched, error }) => {
       {...input} 
       {...rest}
       >
-      <FormControlLabel value={"1"} control={<Radio />}   label="1: Speech is difficult"/>
-      <FormControlLabel value={"4"} control={<Radio />}   label="4: Speech was less difficult"/> 
-      <FormControlLabel value={"7"} control={<Radio />}   label="7: Speech was easier"/>   
-      <FormControlLabel value={"10"} control={<Radio />}  label="10: Speech was easy"/> 
+      <FormControlLabel value={"1"} control={<Radio />}   label="Speech is difficult"/>
+      <FormControlLabel value={"4"} control={<Radio />}   label="Speech was less difficult"/> 
+      <FormControlLabel value={"7"} control={<Radio />}   label="Speech was easier"/>   
+      <FormControlLabel value={"10"} control={<Radio />}  label="Speech was easy"/> 
     </RadioGroup>
     </FormControl>
 
@@ -103,51 +95,84 @@ class MyFluencyForm extends React.Component {
     this.state = {
       interactions: []
     };
+
+    this.insertInteraction = this.insertInteraction.bind(this)
+    this.onSubmit = this.onSubmit.bind(this)
   }
 
   componentDidMount() {
+
     localStorage.getItem("Interactions") &&
-      this.setState({
-        interactions: JSON.parse(localStorage.getItem("Interactions"))
-      });
-      console.log("local storange", JSON.parse(localStorage.getItem("Interactions")))
-      if (JSON.parse(localStorage.getItem("Interactions") !== null)) {
-      this.props.addInitialFormData(JSON.parse(localStorage.getItem("Interactions")))
+    this.setState({
+      interactions: JSON.parse(localStorage.getItem("Interactions"))
+    });
+    if(typeof(Storage) !== "undefined") {
+      if(localStorage.getItem("Interactions") !== null) {
+        if(JSON.parse(localStorage.getItem("Interactions")).setting1.length !== 0) { 
+          (this.props.loadSetting1FormData(JSON.parse(localStorage.getItem("Interactions")).setting1)) 
+        }
+        if(JSON.parse(localStorage.getItem("Interactions")).setting2.length !== 0) {  
+          (this.props.loadSetting2FormData(JSON.parse(localStorage.getItem("Interactions")).setting2))
+        }
+        if(JSON.parse(localStorage.getItem("Interactions")).setting3.length !== 0) {
+          (this.props.loadSetting3FormData(JSON.parse(localStorage.getItem("Interactions")).setting3)) 
+        }
+        if(JSON.parse(localStorage.getItem("Interactions")).setting4.length !== 0) {
+          (this.props.loadSetting4FormData(JSON.parse(localStorage.getItem("Interactions")).setting4))
+        }
+        if(JSON.parse(localStorage.getItem("Interactions")).setting5.length !== 0) {
+          (this.props.loadSetting5FormData(JSON.parse(localStorage.getItem("Interactions")).setting5))
+        }
+        if(JSON.parse(localStorage.getItem("Interactions")).setting6.length !== 0) { 
+          (this.props.loadSetting6FormData(JSON.parse(localStorage.getItem("Interactions")).setting6))
+        }
       }
     }
+  }
 
 
   componentDidUpdate() {
+  
+    if(this.props.formData !== null) {
     localStorage.setItem(
       "Interactions",
-      JSON.stringify(this.state.interactions)
-    );
+      JSON.stringify(this.props.formData)
+    );  
+    }
   }
 
+  insertInteraction(interactions) {
+    let date = {date: new Date().toLocaleString()};
+    let obj = {...date, ...interactions};
+    console.log(obj)
+    console.log(interactions.setting)
+    switch (interactions.setting) {
+      case "1":
+      return this.props.addSetting1FormData(obj)
+      case "2":
+      return this.props.addSetting2FormData(obj)
+      case "3":
+      return this.props.addSetting3FormData(obj)
+      case "4":
+      return this.props.addSetting4FormData(obj)
+      case "5":
+      return this.props.addSetting5FormData(obj)
+      case "6":
+      return this.props.addSetting6FormData(obj)
+      default: 
+      return this.props.formData;
+    }
+  }
 
   onSubmit = interactions => {
-    this.props.attemptCreateInteraction(interactions);
-    let date = {date: new Date().toLocaleString()};
-
-    let obj = {...date, ...interactions};
-
-    this.setState({interactions: [...this.state.interactions, obj]})
-    this.props.addFormData(obj)
-
-    console.log(obj)
+   // this.props.attemptCreateInteraction(interactions);
+    this.insertInteraction(interactions);
     this.props.reset();
-  }
-
-  handleChange = () => {
-    this.setState({interactions: []})
-    this.props.resetFormData()
-
   }
 
   render() {
 
-  const { handleSubmit, pristine, reset, submitting, classes } = this.props
-  console.log(this.state.interactions)
+  const { handleSubmit, invalid, pristine, reset, submitting, classes } = this.props
   return (
     <>
     <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -158,7 +183,7 @@ class MyFluencyForm extends React.Component {
         <Field
           classes={classes.FormControl}
           name="setting"
-          component={settingradioButton}
+          component='hidden'
           label="Setting"
         >
         </Field>
@@ -196,13 +221,12 @@ class MyFluencyForm extends React.Component {
         </Grid>
         
         <Grid item>
-        <Button type="submit" className={classes.submitButton} variant="contained" color = "primary" size ="large" disabled={pristine || submitting}><b>Submit</b></Button>
-        <Button type="button" align="left" type="button" variant="contained" disabled={pristine || submitting} color = "primary" size = "small" onClick={reset}><b>Clear</b></Button>
+        <Button type="submit" className={classes.submitButton} variant="contained" color = "primary" size ="large" disabled={invalid || pristine || submitting}><b>Submit</b></Button>
+        <Button type="button" align="left" type="button" variant="contained" disabled={pristine || submitting} color="primary" size = "small" onClick={reset}><b>Clear</b></Button>
         </Grid>
         </Grid>
     </form>
     
-      <Button align="right" type="button" variant="contained" color = "primary" size="small" onClick={this.handleChange}><b>Clear History</b></Button>
     </>
   )
 }
@@ -210,4 +234,39 @@ class MyFluencyForm extends React.Component {
 
 
 const MyFluencyFormyWrapped = withStyles(styles)(MyFluencyForm);
-export default MyFluencyFormyWrapped;
+
+const mapStateToProps = state => ({
+  formData: state.formData
+   
+});
+
+const mapDispatchToProps = 
+{ attemptCreateInteraction, 
+  loadSetting1FormData,
+  loadSetting2FormData,
+  loadSetting3FormData,
+  loadSetting4FormData,
+  loadSetting5FormData,
+  loadSetting6FormData, 
+  addSetting1FormData, 
+  addSetting2FormData, 
+  addSetting3FormData, 
+  addSetting4FormData, 
+  addSetting5FormData, 
+  addSetting6FormData ,
+  resetFormData
+};
+
+const enhance = compose(
+reduxForm({ form: "test",//this.props.form,
+validate }),
+withAuth,
+connect(
+  mapStateToProps,
+  mapDispatchToProps
+)
+);
+
+const MyFluencyFormContainer = enhance(MyFluencyFormyWrapped);
+
+export default MyFluencyFormContainer;
