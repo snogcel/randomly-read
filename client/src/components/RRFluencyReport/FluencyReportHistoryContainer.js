@@ -20,7 +20,7 @@ import { loadSetting3FormData } from '../../actions/formData';
 import { loadSetting4FormData } from '../../actions/formData';
 import { loadSetting5FormData } from '../../actions/formData';
 import { loadSetting6FormData } from '../../actions/formData';
-
+import { mutateCombinedData } from '../../actions/formData';
 
 const mapStateToProps = state => ({
     formData: state.formData,
@@ -30,6 +30,7 @@ const mapStateToProps = state => ({
     setting4: state.formData.setting4,
     setting5: state.formData.setting5,
     setting6: state.formData.setting6,
+    combinedData: state.formData.combinedData
 });
 
 const mapDispatchToProps = { 
@@ -51,8 +52,9 @@ const mapDispatchToProps = {
   deleteSetting4FormData,
   deleteSetting5FormData,
   deleteSetting6FormData,
+  mutateCombinedData,
   resetFormData, 
-  addInitialFormData};
+  };
 
 const FluencyReportHistoryContainer = connect(
     mapStateToProps,

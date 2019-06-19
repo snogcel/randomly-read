@@ -37,37 +37,14 @@ class FluencyReportHistory extends React.Component {
       }
 
      handleChange = (i, propVal) => e => {
-        let newVal;
-        this.setState({isEditClicked: false})    
-      switch (this.props.setting) {
-        case "1": 
-        newVal = this.props.setting1;
-        newVal[i][propVal] = e.target.value;
-        return this.props.loadSetting1FormData(newVal);
-        case "2": 
-        newVal = this.props.setting2;
-        newVal[i][propVal] = e.target.value;
-        return this.props.loadSetting2FormData(newVal);
-        case "3": 
-        newVal = this.props.setting3;
-        newVal[i][propVal] = e.target.value;
-        return this.props.loadSetting3FormData(newVal);
-        case "4": 
-        newVal = this.props.setting4;
-        newVal[i][propVal] = e.target.value;
-        return this.props.loadSetting4FormData(newVal);
-        case "5": 
-        newVal = this.props.setting5;
-        newVal[i][propVal] = e.target.value;
-        return this.props.loadSetting5FormData(newVal);
-        case "6": 
-        newVal = this.props.setting6;
-        newVal[i][propVal] = e.target.value;
-        return this.props.loadSetting6FormData(newVal);
-        default: 
-        return this.props.formData;
-      }
-     }
+      let newVal;
+      newVal = this.props.combinedData;
+      newVal[i][propVal] = e.target.value;
+      this.setState({isEditClicked: false})
+      return this.props.mutateCombinedData(newVal)
+    }
+       
+    
 
      settingLoader() {
       switch (this.props.setting) {
@@ -86,11 +63,16 @@ class FluencyReportHistory extends React.Component {
         default: 
         return this.props.formData;
       }
-     }     
+     }
+     
 
-     deleteLoader(value) {
+     deleteLoader(value, settingVal) {
       let temp;
-      switch (this.props.setting) {
+      let temp2;
+      if(Array.isArray(value)) {
+        this.props.resetFormData();
+      }
+      switch (settingVal) {
         case "1": 
         if(Array.isArray(value)) { 
           return this.props.deleteSetting1FormData(value)
@@ -98,52 +80,56 @@ class FluencyReportHistory extends React.Component {
         else { 
           temp = this.props.setting1;
           temp.splice(value,1);
-          return this.props.deleteSetting1FormData(temp)
+          temp2 = this.props.combinedData;
+          temp2.splice(value,1);
+
+          return this.props.mutateCombinedData(temp2)
+
         }
         case "2": 
         if(Array.isArray(value)) { 
           return this.props.deleteSetting2FormData(value)
         }
         else { 
-          temp = this.props.setting2;
-          temp.splice(value,1);
-          return this.props.deleteSetting2FormData(temp)
+          temp2 = this.props.combinedData;
+          temp2.splice(value,1);
+          return this.props.mutateCombinedData(temp2)
         }
         case "3": 
         if(Array.isArray(value)) { 
           return this.props.deleteSetting3FormData(value)
         }
         else { 
-          temp = this.props.setting3;
-          temp.splice(value,1);
-          return this.props.deleteSetting3FormData(temp)
+          temp2 = this.props.combinedData;
+          temp2.splice(value,1);
+          return this.props.mutateCombinedData(temp2)
         }
         case "4": 
         if(Array.isArray(value)) { 
           return this.props.deleteSetting4FormData(value)
         }
         else { 
-          temp = this.props.setting4;
-          temp.splice(value,1);
-          return this.props.deleteSetting4FormData(temp)
+          temp2 = this.props.combinedData;
+          temp2.splice(value,1);
+          return this.props.mutateCombinedData(temp2)
         }
         case "5": 
         if(Array.isArray(value)) { 
           return this.props.deleteSetting5FormData(value)
         }
         else { 
-          temp = this.props.setting5;
-          temp.splice(value,1);
-          return this.props.deleteSetting5FormData(temp)
+          temp2 = this.props.combinedData;
+          temp2.splice(value,1);
+          return this.props.mutateCombinedData(temp2)
         }
         case "6": 
         if(Array.isArray(value)) { 
           return this.props.deleteSetting6FormData(value)
         }
         else { 
-          temp = this.props.setting6;
-          temp.splice(value,1);
-          return this.props.deleteSetting6FormData(temp)
+          temp2 = this.props.combinedData;
+          temp2.splice(value,1);
+          return this.props.mutateCombinedData(temp2)
         }
         default: 
         return this.props.formData;
@@ -153,10 +139,10 @@ class FluencyReportHistory extends React.Component {
     
   render() {
     const { classes } = this.props
-    const data  = this.settingLoader();
+  //  this.combineData();
 return (
-      data !== null ?
-    (!Array.isArray(data) || !data.length) ? '' : 
+      this.props.combinedData.length !== 0 ?
+    (!Array.isArray(this.props.combinedData) || this.props.combinedData.length === 0) ? '' : 
     <Paper className={classes.formTable}>
     <Table>
       <TableHead>
@@ -170,10 +156,12 @@ return (
         </TableRow>
       </TableHead>
       <TableBody>
-         {data.map((row,i) =>  (
+         {this.props.combinedData.map((row,i) =>  (
           <TableRow key={i}>
+              {console.log("is it reaching here")}
             <TableCell align="center" component="th" scope="row">
               {row.date}
+            
             </TableCell>
             <TableCell align="center">
 
@@ -231,7 +219,7 @@ return (
                     <MenuItem disabled="true" value={row.ease}>
                       <em>{easeLabelLoader(row.ease)}</em>
                     </MenuItem>
-                    { row.ease !== "1" ? <MenuItem value="1">Speech is difficult</MenuItem> : null} 
+                    { row.ease !== "1" ? <MenuItem value="1">Speech was difficult</MenuItem> : null} 
                     { row.ease !== "4" ? <MenuItem value="4">Speech was less difficult</MenuItem> : null}
                     { row.ease !== "7" ? <MenuItem value="7">Speech was easier</MenuItem> : null}
                     { row.ease !== "10" ? <MenuItem value="10">Speech was easy</MenuItem> : null}
@@ -243,7 +231,7 @@ return (
             <TableCell align="center">
                 <Button key={i} style={{backgroundColor: '#1cd632'}} color="primary"variant="contained" size="small" onClick={() => this.setState({isEditClicked: true, currentRow: i})}><b>Edit</b></Button>
                 {this.state.isEditClicked === true && this.state.currentRow === i ? <Button style={{backgroundColor: 'grey'}} key={i} color="primary"variant="contained" size="small" onClick={() => this.setState({isEditClicked: false})}><b>Cancel</b></Button> : ''}
-                <Button color="primary"variant="contained" size="small" onClick={() => this.deleteLoader(i)}><b>Delete</b></Button>
+                <Button color="primary"variant="contained" size="small" onClick={() => this.deleteLoader(i, row.setting)}><b>Delete</b></Button>
           </TableCell>
           </TableRow> 
         ))} 

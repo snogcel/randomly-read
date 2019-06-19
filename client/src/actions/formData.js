@@ -22,8 +22,18 @@ export const LOAD_SETTING_6_FORM_DATA = 'LOAD_SETTING_6_FORM_DATA';
 export const ADD_SETTING_6_FORM_DATA = 'ADD_SETTING_6_FORM_DATA';
 export const DELETE_SETTING_6_FORM_DATA = 'DELETE_SETTING_6_FORM_DATA';
 
+export const LOAD_COMBINED_FORM_DATA = 'LOAD_COMBINED_FORM_DATA'
+export const MUTATE_COMBINED_FORM_DATA = 'MUTATE_COMBINED_FORM_DATA'
+export const SET_CHANGED = 'SET_CHANGED'
+
 export const RESET_FORM_DATA = 'RESET_FORM_DATA';
-export const ADD_INITIAL_FORM_DATA = 'ADD_INITIAL_FORM_DATA';
+
+
+export function setChanged(text) {
+    return {
+        type: SET_CHANGED, text
+    }
+}
 
 export function loadSetting1FormData(text) {
     return {
@@ -134,9 +144,15 @@ export function deleteSetting6FormData(text) {
     }
 }
 
-export function addInitialFormData(text) {
+export function loadCombinedData(text) {
     return {
-        type: ADD_INITIAL_FORM_DATA, text
+        type: LOAD_COMBINED_FORM_DATA, text
+    }
+}
+
+export function mutateCombinedData(text) {
+    return {
+        type: MUTATE_COMBINED_FORM_DATA, text
     }
 }
 

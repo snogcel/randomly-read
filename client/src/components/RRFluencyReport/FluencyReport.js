@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import FluencyReportForm from './FluencyReportForm';
 import FluencyReportHistory from './FluencyReportHistoryContainer'
-
+import { connect } from 'react-redux';
 
 const styles = theme => ({
     root: {
@@ -38,7 +38,7 @@ const styles = theme => ({
 const FluencyReport = props => {
 
     const {classes} = props;
-
+    console.log("PROPS", props)
     return (
             <div className={classes.root}>
             <Grid container spacing={0} direction="row" alignItems="center" justify="center">
@@ -47,7 +47,6 @@ const FluencyReport = props => {
               <Typography className={classes.title} variant="h4" align="center">Speaking at Work or School</Typography>  
                 <CardContent>
                     <FluencyReportForm form={"Setting1Form"} initialValues={{"setting": "1"}} setting={"1"}/>
-                     <FluencyReportHistory setting={"1"}/> 
                 </CardContent>
               </Card>
               </Grid>      
@@ -57,7 +56,6 @@ const FluencyReport = props => {
               <Typography className={classes.title} variant="h4" align="center">Speaking on the Phone</Typography>  
                 <CardContent>
                     <FluencyReportForm form={"Setting2Form"} initialValues={{"setting": "2"}}/>
-                    <FluencyReportHistory setting={"2"}/> 
                 </CardContent>
               </Card>
               </Grid>
@@ -66,7 +64,6 @@ const FluencyReport = props => {
               <Typography className={classes.title} variant="h4" align="center">Presenting a Topic</Typography>  
                 <CardContent>
                     <FluencyReportForm form={"Setting3Form"} initialValues={{"setting": "3"}}/>
-                     <FluencyReportHistory setting={"3"}/> 
                 </CardContent>
               </Card>
               </Grid>
@@ -75,7 +72,6 @@ const FluencyReport = props => {
               <Typography className={classes.title} variant="h4" align="center">Attending a Social Event</Typography>  
                 <CardContent>
                     <FluencyReportForm form={"Setting4Form"} initialValues={{"setting": "4"}} setting={"4"}/>
-                    <FluencyReportHistory setting={"4"}/> 
                 </CardContent>
               </Card>
               </Grid>
@@ -84,7 +80,6 @@ const FluencyReport = props => {
               <Typography className={classes.title} variant="h4" align="center">Relaxing with Friends</Typography>  
                 <CardContent>
                     <FluencyReportForm form={"Setting5Form"} initialValues={{"setting": "5"}} setting={"5"}/>
-                    <FluencyReportHistory setting={"5"}/> 
                 </CardContent>
               </Card>
               </Grid>
@@ -93,10 +88,18 @@ const FluencyReport = props => {
               <Typography className={classes.title} variant="h4" align="center">Relaxing at Home</Typography>  
                 <CardContent>
                     <FluencyReportForm form={"Setting6Form"} initialValues={{"setting": "6"}} setting={"6"}/>
-                     <FluencyReportHistory setting={"6"}/> 
                 </CardContent>
               </Card>
               </Grid>
+              {props.combinedData.length !== 0 ?
+              <Grid item>
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">History</Typography>  
+                <CardContent>
+                <FluencyReportHistory/> 
+                </CardContent>
+              </Card>
+              </Grid> : null }
               </Grid>
             </div>
 
@@ -106,4 +109,15 @@ const FluencyReport = props => {
 
 const FluencyReportWrapped = withStyles(styles)(FluencyReport);
 
-export default FluencyReportWrapped;
+const mapStateToProps = state => ({
+ combinedData: state.formData.combinedData
+});
+
+const mapDispatchToProps = { };
+
+const FluencyReportContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FluencyReportWrapped);
+
+export default FluencyReportContainer; 

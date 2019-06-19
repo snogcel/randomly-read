@@ -19,20 +19,10 @@ import { reduxForm } from 'redux-form';
 import withAuth from '../../util/withAuth';
 import validate from './validate'
 import { attemptCreateInteraction } from '../../actions/interactions';
-import { addSetting1FormData } from '../../actions/formData';
-import { addSetting2FormData } from '../../actions/formData';
-import { addSetting3FormData } from '../../actions/formData';
-import { addSetting4FormData } from '../../actions/formData';
-import { addSetting5FormData } from '../../actions/formData';
-import { addSetting6FormData } from '../../actions/formData';
+import { addSetting1FormData, addSetting2FormData, addSetting3FormData, addSetting4FormData, addSetting5FormData, addSetting6FormData}  from '../../actions/formData';
 import { resetFormData } from '../../actions/formData';
-import { loadSetting1FormData } from '../../actions/formData';
-import { loadSetting2FormData } from '../../actions/formData';
-import { loadSetting3FormData } from '../../actions/formData';
-import { loadSetting4FormData } from '../../actions/formData';
-import { loadSetting5FormData } from '../../actions/formData';
-import { loadSetting6FormData } from '../../actions/formData';
-
+import { loadSetting1FormData,loadSetting2FormData, loadSetting3FormData, loadSetting4FormData, loadSetting5FormData, loadSetting6FormData} from '../../actions/formData';
+import { loadCombinedData, setChanged, mutateCombinedData } from '../../actions/formData';
 
   const audienceradioButton = ({ label, input, ...rest }) => (
     
@@ -48,7 +38,7 @@ import { loadSetting6FormData } from '../../actions/formData';
       <FormControlLabel value={"4"} control={<Radio />} label="Friend"/> 
       <FormControlLabel value={"5"} control={<Radio />} label="Coworker / Classmate"/>    
       <FormControlLabel value={"6"} control={<Radio />} label="Authority Figure"/> 
-      <FormControlLabel value={"7"} control={<Radio />} label="Service Workere"/>    
+      <FormControlLabel value={"7"} control={<Radio />} label="Service Worker"/>    
       <FormControlLabel value={"8"} control={<Radio />} label="No Relationship"/>
     </RadioGroup>
     </FormControl>
@@ -126,10 +116,14 @@ class MyFluencyForm extends React.Component {
         if(JSON.parse(localStorage.getItem("Interactions")).setting6.length !== 0) { 
           (this.props.loadSetting6FormData(JSON.parse(localStorage.getItem("Interactions")).setting6))
         }
-      }
+        if(JSON.parse(localStorage.getItem("Interactions")).combinedData.length !== 0) { 
+          (this.props.mutateCombinedData(JSON.parse(localStorage.getItem("Interactions")).combinedData))
+        }
+        }
     }
-  }
-
+      }
+    
+    
 
   componentDidUpdate() {
   
@@ -137,15 +131,16 @@ class MyFluencyForm extends React.Component {
     localStorage.setItem(
       "Interactions",
       JSON.stringify(this.props.formData)
-    );  
-    }
+    );
   }
+}
 
   insertInteraction(interactions) {
     let date = {date: new Date().toLocaleString()};
     let obj = {...date, ...interactions};
     console.log(obj)
     console.log(interactions.setting)
+    this.props.loadCombinedData(obj)
     switch (interactions.setting) {
       case "1":
       return this.props.addSetting1FormData(obj)
@@ -236,8 +231,8 @@ class MyFluencyForm extends React.Component {
 const MyFluencyFormyWrapped = withStyles(styles)(MyFluencyForm);
 
 const mapStateToProps = state => ({
-  formData: state.formData
-   
+  formData: state.formData,
+  isChanged: state.formData.isChanged
 });
 
 const mapDispatchToProps = 
@@ -253,8 +248,12 @@ const mapDispatchToProps =
   addSetting3FormData, 
   addSetting4FormData, 
   addSetting5FormData, 
-  addSetting6FormData ,
+  addSetting6FormData,
+  loadCombinedData,
+  setChanged,
+  mutateCombinedData,
   resetFormData
+
 };
 
 const enhance = compose(
