@@ -79,7 +79,7 @@ import { loadSetting6FormData } from '../../actions/formData';
       {...input} 
       {...rest}
       >
-      <FormControlLabel value={"1"} control={<Radio />}   label="Speech is difficult"/>
+      <FormControlLabel value={"1"} control={<Radio />}   label="Speech was difficult"/>
       <FormControlLabel value={"4"} control={<Radio />}   label="Speech was less difficult"/> 
       <FormControlLabel value={"7"} control={<Radio />}   label="Speech was easier"/>   
       <FormControlLabel value={"10"} control={<Radio />}  label="Speech was easy"/> 
