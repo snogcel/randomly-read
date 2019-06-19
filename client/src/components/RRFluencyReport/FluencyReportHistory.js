@@ -12,154 +12,247 @@ import Select from '@material-ui/core/Select'
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Button from '@material-ui/core/Button';
+import { settingLabelLoader, audienceLabelLoader, intentionLabelLoader, easeLabelLoader } from './LabelLoaders';
+
+
 
 class FluencyReportHistory extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
           isEditClicked: false,
-          currentRow: 0
+          currentRow: 0,
         };
+        this.settingLoader = this.settingLoader.bind(this)
+        this.deleteLoader  = this.deleteLoader.bind(this)
       }
 
-      
-  componentDidUpdate() {
-    localStorage.setItem(
-      "Interactions",
-      JSON.stringify(this.props.formData)
-    );
-  }
+     componentDidUpdate() {
+      if(this.props.formData !== null) {
+         localStorage.setItem(
+          "Interactions",
+          JSON.stringify(this.props.formData)
+         );  
+        }
+      }
 
+     handleChange = (i, propVal) => e => {
+        let newVal;
+        this.setState({isEditClicked: false})    
+      switch (this.props.setting) {
+        case "1": 
+        newVal = this.props.setting1;
+        newVal[i][propVal] = e.target.value;
+        return this.props.loadSetting1FormData(newVal);
+        case "2": 
+        newVal = this.props.setting2;
+        newVal[i][propVal] = e.target.value;
+        return this.props.loadSetting2FormData(newVal);
+        case "3": 
+        newVal = this.props.setting3;
+        newVal[i][propVal] = e.target.value;
+        return this.props.loadSetting3FormData(newVal);
+        case "4": 
+        newVal = this.props.setting4;
+        newVal[i][propVal] = e.target.value;
+        return this.props.loadSetting4FormData(newVal);
+        case "5": 
+        newVal = this.props.setting5;
+        newVal[i][propVal] = e.target.value;
+        return this.props.loadSetting5FormData(newVal);
+        case "6": 
+        newVal = this.props.setting6;
+        newVal[i][propVal] = e.target.value;
+        return this.props.loadSetting6FormData(newVal);
+        default: 
+        return this.props.formData;
+      }
+     }
 
+     settingLoader() {
+      switch (this.props.setting) {
+        case "1":
+        return this.props.setting1
+        case "2":
+        return this.props.setting2
+        case "3":
+        return this.props.setting3
+        case "4":
+        return this.props.setting4
+        case "5":
+        return this.props.setting5
+        case "6":
+        return this.props.setting6
+        default: 
+        return this.props.formData;
+      }
+     }     
 
-          handleChange = (i, setting) => e => {
-                let obj = this.props.formData;
-                obj[i][setting] = e.target.value;
-                this.props.addInitialFormData(obj);
-                this.setState({isEditClicked: false})
-                
-          }
+     deleteLoader(value) {
+      let temp;
+      switch (this.props.setting) {
+        case "1": 
+        if(Array.isArray(value)) { 
+          return this.props.deleteSetting1FormData(value)
+        }
+        else { 
+          temp = this.props.setting1;
+          temp.splice(value,1);
+          return this.props.deleteSetting1FormData(temp)
+        }
+        case "2": 
+        if(Array.isArray(value)) { 
+          return this.props.deleteSetting2FormData(value)
+        }
+        else { 
+          temp = this.props.setting2;
+          temp.splice(value,1);
+          return this.props.deleteSetting2FormData(temp)
+        }
+        case "3": 
+        if(Array.isArray(value)) { 
+          return this.props.deleteSetting3FormData(value)
+        }
+        else { 
+          temp = this.props.setting3;
+          temp.splice(value,1);
+          return this.props.deleteSetting3FormData(temp)
+        }
+        case "4": 
+        if(Array.isArray(value)) { 
+          return this.props.deleteSetting4FormData(value)
+        }
+        else { 
+          temp = this.props.setting4;
+          temp.splice(value,1);
+          return this.props.deleteSetting4FormData(temp)
+        }
+        case "5": 
+        if(Array.isArray(value)) { 
+          return this.props.deleteSetting5FormData(value)
+        }
+        else { 
+          temp = this.props.setting5;
+          temp.splice(value,1);
+          return this.props.deleteSetting5FormData(temp)
+        }
+        case "6": 
+        if(Array.isArray(value)) { 
+          return this.props.deleteSetting6FormData(value)
+        }
+        else { 
+          temp = this.props.setting6;
+          temp.splice(value,1);
+          return this.props.deleteSetting6FormData(temp)
+        }
+        default: 
+        return this.props.formData;
+      }
+     }     
+
     
-render() {
-
-    console.log("History", this.props.formData)
-    console.log(!Array.isArray(  this.props.formData) || !  this.props.formData)
+  render() {
     const { classes } = this.props
+    const data  = this.settingLoader();
 return (
-    (!Array.isArray(this.props.formData) || !this.props.formData.length) ? '' : 
+      data !== null ?
+    (!Array.isArray(data) || !data.length) ? '' : 
     <Paper className={classes.formTable}>
     <Table>
       <TableHead>
         <TableRow>
-          <TableCell>Date</TableCell>
-          <TableCell align="right">Setting</TableCell>
-          <TableCell align="right">Audience</TableCell>
-          <TableCell align="right">Intention</TableCell>
-          <TableCell align="right">Ease of Speech</TableCell>
-          <TableCell align="right">Edit</TableCell>
+          <TableCell align="center">Date</TableCell>
+          <TableCell align="center">Setting</TableCell>
+          <TableCell align="center">Audience</TableCell>
+          <TableCell align="center">Intention</TableCell>
+          <TableCell align="center">Ease of Speech</TableCell>
+          <TableCell align="center">Edit</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {this.props.formData.map((row,i) => (
+         {data.map((row,i) =>  (
           <TableRow key={i}>
-            <TableCell component="th" scope="row">
+            <TableCell align="center" component="th" scope="row">
               {row.date}
             </TableCell>
-            <TableCell align="right"> {this.state.isEditClicked === true && this.state.currentRow === i ? 
-                  <FormControl style={{width: '40px'}}>
-                  <InputLabel>{row.setting}</InputLabel>
-                  <Select
-                    onChange={this.handleChange(i, "setting")}
-                  >
-                    <MenuItem value={row.setting}>
-                      <em>{row.setting}</em>
-                    </MenuItem>
-                    <MenuItem value="1">1: Speaking at Work or School </MenuItem> 
-                    <MenuItem value="2">2: Speaking on the Phone </MenuItem> 
-                    <MenuItem value="3">3: Presenting a Topic </MenuItem>
-                    <MenuItem value="4">4: Attending a Social Event</MenuItem> 
-                     <MenuItem value="5">5: Relaxing with Friends</MenuItem> 
-                 <MenuItem value="6">6: Relaxing at Home</MenuItem>
-                  </Select>
-                </FormControl>
-              :  
-            
-            row.setting}
+            <TableCell align="center">
+
+             { settingLabelLoader(row.setting) }
             
             </TableCell>
-            <TableCell align="right">{this.state.isEditClicked === true && this.state.currentRow === i ? 
-                  <FormControl style={{width: '40px'}}>
-                  <InputLabel>{row.audience}</InputLabel>
+            <TableCell align="center">{this.state.isEditClicked === true && this.state.currentRow === i ? 
+                  <FormControl>
+                  <InputLabel>{audienceLabelLoader(row.audience)}</InputLabel>
                   <Select
+                    style={{width: '80px', height: '40px'}}
                     onChange={this.handleChange(i, "audience")}
                   >
-                    <MenuItem value={row.audience}>
-                      <em>{row.audience}</em>
+                    <MenuItem disabled="true" value={row.audience}>
+                      <em>{audienceLabelLoader(row.audience)}</em>
                     </MenuItem>
-                    <MenuItem value="1">1: Parents</MenuItem>
-          <MenuItem  value="2">2: Family</MenuItem>
-          <MenuItem value="3">3: Significant Other</MenuItem> 
-          <MenuItem value="4">4: Friend</MenuItem>
-          <MenuItem value="5">5: Coworker / Classmate </MenuItem>
-          <MenuItem value="6">6: Authority Figure</MenuItem>
-          <MenuItem value="7">7: Service Worker</MenuItem>
-          <MenuItem value="7">8: No Relationship</MenuItem>
-                  </Select>
-                </FormControl>
+                  { row.audience !== "1" ? <MenuItem value="1">Parents</MenuItem> : null}
+                  { row.audience !== "2" ? <MenuItem value="2">Family</MenuItem> : null}
+                  { row.audience !== "3" ? <MenuItem value="3">Significant Other</MenuItem> : null}
+                  { row.audience !== "4" ? <MenuItem value="4">Friend</MenuItem> : null}
+                  { row.audience !== "5" ? <MenuItem value="5">Coworker / Classmate</MenuItem> : null} 
+                  { row.audience !== "6" ? <MenuItem value="6">Authority Figure</MenuItem> : null}
+                  { row.audience !== "7" ? <MenuItem value="7">Service Worker</MenuItem> : null}
+                  { row.audience !== "8" ? <MenuItem value="8">No Relationship</MenuItem> : null}
+                   </Select>
+                  </FormControl>
               :  
-            
-            row.audience}
+              audienceLabelLoader(row.audience)}
             </TableCell>
-            <TableCell align="right">{this.state.isEditClicked === true && this.state.currentRow === i ? 
-                  <FormControl style={{width: '40px'}}>
-                  <InputLabel>{row.intention}</InputLabel>
-                  <Select
+            <TableCell align="center">{this.state.isEditClicked === true && this.state.currentRow === i ? 
+                  <FormControl>
+                  <InputLabel>{ intentionLabelLoader(row.intention)}</InputLabel>
+                  <Select 
+                    style={{width: '100px', height: '80px'}}
                     onChange={this.handleChange(i, "intention")}
                   >
-                    <MenuItem value={row.intention}>
-                      <em>{row.intention}</em>
+                    <MenuItem disabled="true" value={row.intention}>
+                      <em>{ intentionLabelLoader(row.intention)}</em>
                     </MenuItem>
-                    <MenuItem value="1">1: I did not use or remember</MenuItem>
-          <MenuItem value="5">5: I remembered but did not use</MenuItem>
-          <MenuItem value="10">10: I remembered and used</MenuItem>
-                  </Select>
-                </FormControl>
+                    { row.intention !== "1" ? <MenuItem value="1">I did not use or remember</MenuItem> : null}
+                    { row.intention !== "5" ? <MenuItem value="5">I remembered but did not use</MenuItem> : null} 
+                    { row.intention !== "10" ? <MenuItem value="10">I remembered and used</MenuItem> : null}
+                   </Select>
+                  </FormControl>
               :  
-            
-            row.intention}
+              intentionLabelLoader(row.intention)}
             </TableCell>
-            <TableCell align="right">{this.state.isEditClicked === true && this.state.currentRow === i ? 
-                  <FormControl style={{width: '40px'}}>
-                  <InputLabel>{row.ease}</InputLabel>
+            <TableCell align="center">{this.state.isEditClicked === true && this.state.currentRow === i ? 
+                  <FormControl>
+                  <InputLabel>{easeLabelLoader(row.ease)}</InputLabel>
                   <Select
+                    style={{width: '90px', height: '60px'}}
                     onChange={this.handleChange(i, "ease")}
                   >
-                    <MenuItem value={row.ease}>
-                      <em>{row.ease}</em>
+                    <MenuItem disabled="true" value={row.ease}>
+                      <em>{easeLabelLoader(row.ease)}</em>
                     </MenuItem>
-                     <MenuItem value="1">1: Speech is difficult</MenuItem>
-          <MenuItem value="4">4: Speech was less difficult</MenuItem>
-          <MenuItem value="7">7: Speech was easier</MenuItem>
-          <MenuItem value="10">10: Speech was easy</MenuItem>
+                    { row.ease !== "1" ? <MenuItem value="1">Speech is difficult</MenuItem> : null} 
+                    { row.ease !== "4" ? <MenuItem value="4">Speech was less difficult</MenuItem> : null}
+                    { row.ease !== "7" ? <MenuItem value="7">Speech was easier</MenuItem> : null}
+                    { row.ease !== "10" ? <MenuItem value="10">Speech was easy</MenuItem> : null}
                   </Select>
                 </FormControl>
               :  
-            
-            row.ease}
+              easeLabelLoader(row.ease)}
             </TableCell>
-            <TableCell align="right">
+            <TableCell align="center">
                 <Button key={i} style={{backgroundColor: '#1cd632'}} color="primary"variant="contained" size="small" onClick={() => this.setState({isEditClicked: true, currentRow: i})}><b>Edit</b></Button>
-                {this.state.isEditClicked === true && this.state.currentRow === i ? <Button key={i} color="primary"variant="contained" size="small" onClick={() => this.setState({isEditClicked: false})}><b>Cancel</b></Button> : ''}
-      </TableCell>
-          </TableRow>
-        ))}
+                {this.state.isEditClicked === true && this.state.currentRow === i ? <Button style={{backgroundColor: 'grey'}} key={i} color="primary"variant="contained" size="small" onClick={() => this.setState({isEditClicked: false})}><b>Cancel</b></Button> : ''}
+                <Button color="primary"variant="contained" size="small" onClick={() => this.deleteLoader(i)}><b>Delete</b></Button>
+          </TableCell>
+          </TableRow> 
+        ))} 
       </TableBody>
     </Table>
-  </Paper>
+    <Button style={{marginTop: 15}}align="right" type="button" variant="contained" color = "primary" size="small" onClick={() => this.deleteLoader([])}><b>Clear History</b></Button>
+  </Paper> : null
 );
-
 }
-
 }
 
 const FluencyReportHistoryWrapped = withStyles(styles)(FluencyReportHistory);
