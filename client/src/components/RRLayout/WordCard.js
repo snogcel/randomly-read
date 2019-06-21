@@ -179,7 +179,13 @@ class WordCard extends React.Component  {
                   if (loading) return null;
 
                   if (error) {
-                    console.log("error...");
+                    return(<div><Typography
+                      component={'span'}
+                      align="center"
+                      className={classes.title}
+                      color="textPrimary"
+                    >Server Error
+                    </Typography></div>);
                   }
 
                   if (data) {
@@ -194,7 +200,18 @@ class WordCard extends React.Component  {
                     }
 
                     if (this.props.mode === 'Word' && typeof(data.words) === 'undefined') {
-                      return null;
+                      this.result = null;
+
+                      console.log("empty result found");
+
+                      return(<div><Typography
+                        component={'span'}
+                        align="center"
+                        className={classes.title}
+                        color="textPrimary"
+                      >No Result Found
+                      </Typography></div>);
+
                     }
 
                     if (this.props.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
