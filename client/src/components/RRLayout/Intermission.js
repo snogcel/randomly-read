@@ -6,7 +6,7 @@ const Intermission = props => {
 
 
       return (
-        <Typography style={{color: props.dark === true ? 'white' : '#dba987'}} variant='h1' component='h1' align='center'>{props.intermissionText}</Typography>
+        <Typography variant='h1' component='h1' align='center'>{props.intermissionText}</Typography>
       )
 }
 

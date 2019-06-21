@@ -18,7 +18,6 @@ const mapStateToProps = state => ({
   
   currentExercise: state.exerciseHistory.currentExercise,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
-  dark: state.theme.dark,
   isPaused: state.exerciseHistory.isPaused,
   completed: state.exerciseHistory.completed,
   total: state.exerciseHistory.total,

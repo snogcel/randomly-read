@@ -70,7 +70,7 @@ const RRHome = props => {
           <Grid item xs={12} sm={3}>
             <div className={classes.sideColumn}>
 
-              <Card elevation="1" className={classes.sideColumn} style={{backgroundColor: props.dark === true ? "#262626" : '#ffffff'}}>
+              <Card elevation="1" className={classes.sideColumn}>
                 <CardContent>
                   <Typography
                   component={'span'}
@@ -86,14 +86,13 @@ const RRHome = props => {
               </Card>
               <br />
               <br />
-              <Card elevation="1" className={classes.sideColumn} style={{backgroundColor: props.dark === true ? "#262626" : '#ffffff'}}>
+              <Card elevation="1" className={classes.sideColumn}>
                 <CardContent>
                   <Typography
                   component={'span'}
                     align="center"
                     className={classes.sideTitle}
                     color="textSecondary"
-                    style={{color: props.dark === true ? 'white' : 'black'}}
                   >
                     routine selector
                   </Typography>

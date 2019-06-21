@@ -3,11 +3,8 @@ import ExerciseHistory from './ExerciseHistory';
 import {addExerciseNumber} from '../../actions/exerciseHistory'
 
 const mapStateToProps = state => ({
-
     currentExercise: state.exerciseHistory.currentExercise,
     currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
-    dark: state.theme.dark
-
   });
 
   const mapDispatchToProps = dispatch => ({

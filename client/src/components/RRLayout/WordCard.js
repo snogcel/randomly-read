@@ -171,7 +171,7 @@ class WordCard extends React.Component  {
 
         <div className={classes.column}>
 
-          <Card elevation="0" className={classes.card} style={{backgroundColor: this.props.dark === true ? "#262626" : 'transparent'}}>
+          <Card elevation="0" className={classes.card}>
             <CardContent>
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="no-cache" onCompleted={() => { this.fetching = false; this.props.addWord({ word: this.result, definitions: null }); }}>
                 {({ loading, error, data, refetch }) => {
@@ -238,7 +238,6 @@ class WordCard extends React.Component  {
                         align="center"
                         className={classes.title}
                         color="textPrimary"
-                        style={{color: this.props.dark === true ? 'white' : '#2f8eed'}}
                       >
                         { this.result }
                       </Typography>
@@ -246,7 +245,6 @@ class WordCard extends React.Component  {
                     { this.props.mode === 'Word' ?
                       <CardActions style={{justifyContent: 'center'}}>
                         <Typography
-                          style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
                           align="center"
                           component={'span'}
                           className={classes.seeMore}
@@ -260,10 +258,9 @@ class WordCard extends React.Component  {
                           aria-describedby="simple-modal-description"
                           open={this.state.open}
                           onClose={this.handleClose}
-                          style={{color: this.props.dark === true ? 'white' : 'black'}}
                         >
-                        <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: this.props.dark === true ? '#262626' : 'white'}} className={classes.paper}>
-                          <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} className={classes.title} color="textPrimary">
+                        <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)'}} className={classes.paper}>
+                          <Typography component={'span'} className={classes.title} color="textPrimary">
                             {this.result}
                           </Typography>
                             {data.words[0].wordsXsensesXsynsets.map((word, i) => {
@@ -272,10 +269,10 @@ class WordCard extends React.Component  {
                                 <List dense="true">
                                   <ListItem>
                                     <ListItemText>
-                                      <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'}  color="textPrimary">
+                                      <Typography component={'span'}  color="textPrimary">
                                       {word.definition}
                                     </Typography>
-                                    <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} color="textSecondary">
+                                    <Typography component={'span'} color="textSecondary">
                                     {word.pos}
                                     </Typography>
                                       </ListItemText>
@@ -303,7 +300,7 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : (this.props.dark === true ? "#262626" : "white")}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)} color={this.props.dark === true ? "primary" : undefined}><b>{item.name}</b></Button>
+             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : "white"}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button>
              </>
           )) }
 
