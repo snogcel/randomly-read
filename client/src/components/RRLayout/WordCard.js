@@ -324,7 +324,7 @@ class WordCard extends React.Component  {
 
              </>
           )) }
-          
+
         </div>
 
     );
