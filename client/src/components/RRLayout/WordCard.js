@@ -16,6 +16,8 @@ import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
 import { styles } from '../../themeHandler';
 
+import VowelCheckbox from './Fragments/VowelCheckbox';
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -317,25 +319,12 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : "white"}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button>
+
+               <VowelCheckbox action={this.handleChange} value={{name: item.name, selectedVowel: this.props.vowel}} />
+
              </>
           )) }
-
-          {
-            <>
-            <div>
-              <Button>
-                <div>Button 1</div>
-              </Button>
-              <Button>
-                <div>Button 2</div>
-              </Button>
-            </div>
-            </>
-          }
-
-
-
+          
         </div>
 
     );
