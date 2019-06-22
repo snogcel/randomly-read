@@ -75,6 +75,8 @@ const styles = theme => ({
     fontWeight: "bold",
     marginLeft: theme.spacing.unit * 4,
     marginRight: theme.spacing.unit * 4,
+    marginTop: theme.spacing.unit * 1,
+    marginBottom: theme.spacing.unit * 1,
     textAlign: "center"
   },
   historyTitle: {
