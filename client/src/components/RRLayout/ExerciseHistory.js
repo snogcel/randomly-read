@@ -75,7 +75,7 @@ class ExerciseHistory extends React.Component {
              </ListItemIcon>
             <ListItemText
               primary={[
-                <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'} inline variant="body1" color="textPrimary" className={classes.repetitions}>
+                <Typography component={'span'} inline variant="body1" color="textPrimary" className={classes.repetitions}>
                 <b>{item.repetitions}</b>
                 </Typography>,
                 <Typography
@@ -84,16 +84,15 @@ class ExerciseHistory extends React.Component {
                   inline
                   color="textPrimary"
                   variant="body1"
-                  style={{color: this.props.dark === true ? 'white' : 'black'}}
                 >
                   {this.props.currentExercise[i].mode === 'Word' ? 'words with' : 'sentences with'}
                 </Typography>,
-                <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} inline variant="h6" color="textSecondary" className={classes.vowel}>
+                <Typography inline variant="h6" color="textSecondary" className={classes.vowel}>
                   {item.vowels.toString()}
                 </Typography>
               ]}
               secondary= {
-              <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} component={'span'}>
+              <Typography component={'span'}>
               "bet, dress, net, head..."
             </Typography>
             }

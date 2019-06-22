@@ -31,6 +31,11 @@ exports.postAuth = (req, res, next) => {
   res.status(401).end();
 };
 
+exports.interactionAuth = (req, res, next) => {
+  if (true) return next(); // TODO - some type of validation?
+  res.status(401).end();
+};
+
 exports.commentAuth = (req, res, next) => {
   if (
     req.comment.author._id.equals(req.user.id) ||

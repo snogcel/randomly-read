@@ -116,3 +116,11 @@ export async function castVote (id, vote, token) {
 
   return await methods.get(`post/${id}/${voteType}`, token);
 }
+
+export async function createInteraction (body, token) {
+  return await methods.post('interactions', body, token)
+}
+
+export async function getInteractions () {
+  return await methods.get('interactions')
+}

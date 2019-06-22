@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -15,21 +15,22 @@ import { styles } from '../../themeHandler';
 
     const {classes} = props;
 
-    if(props.currentExerciseNumber !== null && props.word && props.word.length !== 0 && props.currentExerciseNumber % 2 === 0)  {
+    if(props.word.word !== null && props.currentExerciseNumber !== null && props.word && props.word.length !== 0 && props.currentExerciseNumber % 2 === 0)  {
 
       words.push(props.word)
     }
 
+
     return (
 
-      props.currentExerciseNumber !== null && words.length >= 0 ?  (
+      props.currentExerciseNumber !== null && words.length >= 0 ? (
 
       <Grid className={classes.column} container spacing={8}>
-        {words.map((item, i) => (
+        {words.map((item, i) => ( 
           <Grid item xs={12}>
             <Card square elevation="0" style={{backgroundColor: 'transparent'}}>
             <CardContent>
-            {props.currentExerciseNumber === null ? '' : <Typography className={classes.historyTitle} color="textPrimary" style={{color: props.dark === true ? 'white' : '#2f8eed'}} variant="h3">{item.word}</Typography>}
+            {props.currentExerciseNumber === null ? '' : <Typography className={classes.historyTitle} color="textPrimary" variant="h3">{item.word}</Typography>}
            {/*   <CardActions style={{justifyContent: 'center'}}>
                       <Typography
                         style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}

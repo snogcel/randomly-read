@@ -128,7 +128,7 @@ class RoutineSelect extends React.Component {
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150}}>
-                 <InputLabel style={{color: theme === true ? 'white' : 'black'}}>Select Routine</InputLabel>
+                 <InputLabel >Select Routine</InputLabel>
                   <Select
                   classes={{select: theme === true ? classes.select : undefined}}
                   value={this.state.Routine}

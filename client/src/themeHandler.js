@@ -25,6 +25,15 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
+  formTable: {
+    marginTop: theme.spacing.unit * 3
+  },
+  form: {
+    textAlign: "left",
+  },
+  formControl: {
+    marginRight: 40,
+  },
   column: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",
@@ -65,6 +74,15 @@ const styles = theme => ({
   seeMore: {
     fontSize: 18,
     cursor: "pointer"
+  },
+  submitButton: {
+    margin: 5,
+    minWidth: 100,
+    padding: 4,
+    "&:hover": {
+      backgroundColor: "#2d90e5"
+    },
+    backgroundColor: '#33a0ff',
   },
   button: {
     margin: 4,
