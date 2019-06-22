@@ -63,6 +63,11 @@ const styles = theme => ({
     fontWeight: "bold",
     color: "#2f8eed"
   },
+  intermission: {
+    fontSize: 72,
+    fontWeight: "bold",
+    color: "#dba987"
+  },
   historyTitle: {
     fontSize: 35,
   },

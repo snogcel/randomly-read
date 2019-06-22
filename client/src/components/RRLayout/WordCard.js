@@ -169,7 +169,7 @@ class WordCard extends React.Component  {
     this.query = this.buildQuery();
 
     this.fetching = true;
-
+    
     return (
 
         <div className={classes.column}>

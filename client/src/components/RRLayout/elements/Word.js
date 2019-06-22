@@ -8,7 +8,7 @@ class Word extends React.Component {
   constructor(props) {
     super(props);
 
-    this.name = null;
+    this.name = null; // TODO - wrap with redux stuff
     this.selectedVowel = null;
 
   }
