@@ -169,7 +169,7 @@ class WordCard extends React.Component  {
     this.query = this.buildQuery();
 
     this.fetching = true;
-    
+
     return (
 
         <div className={classes.column}>
@@ -251,7 +251,7 @@ class WordCard extends React.Component  {
           { VowelCheckboxes.map((item, i) => (
              <>
 
-               <VowelCheckbox action={this.handleChange} value={{name: item.name, selectedVowel: this.props.vowel}} />
+               <VowelCheckbox action={this.handleChange} value={{name: item.name, displayName: item.label, selectedVowel: this.props.vowel}} />
 
              </>
           )) }

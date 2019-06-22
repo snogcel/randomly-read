@@ -3,6 +3,8 @@ import indigo from '@material-ui/core/colors/indigo';
 import pink from '@material-ui/core/colors/pink';
 import red from '@material-ui/core/colors/red';
 
+
+
 const MuiTheme = createMuiTheme({
   palette: {
     primary: {
@@ -18,7 +20,7 @@ const MuiTheme = createMuiTheme({
       contrastText: '#ffcc00',
     }
     // error: will use the default color
-  },
+  }
 });
 
 const styles = theme => ({
@@ -53,7 +55,7 @@ const styles = theme => ({
     outline: "none"
   },
   card: {
-    minHeight:250,
+    minHeight:150,
   },
   sideCard: {
     marginBottom: 20
@@ -67,6 +69,14 @@ const styles = theme => ({
     fontSize: 72,
     fontWeight: "bold",
     color: "#dba987"
+  },
+  vowelButton: {
+    fontSize: 24,
+    fontFamily: "'Noto Sans', sans-serif",
+    fontWeight: "bold",
+    marginLeft: theme.spacing.unit * 4,
+    marginRight: theme.spacing.unit * 4,
+    textAlign: "center"
   },
   historyTitle: {
     fontSize: 35,
