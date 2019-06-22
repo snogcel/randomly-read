@@ -60,7 +60,8 @@ const styles = theme => ({
   },
   title: {
     fontSize: 72,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    color: "#2f8eed"
   },
   historyTitle: {
     fontSize: 35,
