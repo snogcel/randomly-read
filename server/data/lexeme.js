@@ -25,6 +25,11 @@ const Lexeme = function(data) {
 };
 
 Lexeme.prototype.submitPost = function() {
+
+  let lexeme = this.lexeme;
+
+  console.log("writing to mongodb: ", lexeme);
+
   return Post.create({
     cmudict_id: this.cmudict_id,
     title: this.lexeme,
@@ -36,6 +41,8 @@ Lexeme.prototype.submitPost = function() {
     syllables: this.syllables
   }).then(null, function(err) {
     if (err.code === 11000) {
+
+      console.log("fetching: ", lexeme);
 
       /*
 
@@ -49,7 +56,8 @@ Lexeme.prototype.submitPost = function() {
 
        */
 
-      return Post.findOne({title:title}).exec()
+      return Post.findOne({title:lexeme}).exec();
+
     } else {
       throw err;
     }
