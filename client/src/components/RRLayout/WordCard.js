@@ -16,7 +16,7 @@ import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
 import { styles } from '../../themeHandler';
 
-import VowelCheckbox from './Fragments/VowelCheckbox';
+import VowelCheckbox from './elements/VowelCheckbox';
 
 function getModalStyle() {
   const top = 50;
