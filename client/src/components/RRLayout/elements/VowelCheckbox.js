@@ -27,7 +27,7 @@ class VowelCheckbox extends React.Component {
     const { classes } = this.props;
 
     return (
-          <Button size="small" className={classes.vowelButton} color={(this.selected) ? "primary" : "secondary"} centerRipple="true" onClick={() => this.props.action(this.props.value.name)}>
+          <Button variant={(this.selected) ? "outlined" : ""} size="small" className={classes.vowelButton} color={(this.selected) ? "primary" : "secondary"} centerRipple="true" onClick={() => this.props.action(this.props.value.name)}>
             {this.props.value.displayName}
           </Button>
     );
