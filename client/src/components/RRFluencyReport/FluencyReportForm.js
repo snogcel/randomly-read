@@ -13,6 +13,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Slider from "@material-ui/lab/Slider";
+import Typography from "@material-ui/core/Typography";
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { reduxForm } from 'redux-form';
@@ -24,7 +26,42 @@ import { resetFormData } from '../../actions/formData';
 import { loadSetting1FormData,loadSetting2FormData, loadSetting3FormData, loadSetting4FormData, loadSetting5FormData, loadSetting6FormData} from '../../actions/formData';
 import { loadCombinedData, setChanged, mutateCombinedData } from '../../actions/formData';
 
-  const audienceradioButton = ({ label, input, ...rest }) => (
+  
+const intentionMarks = [
+  {
+    value: 0,
+    label: "Did not remember"
+  },
+  {
+    value: 50,
+    label: "Remembered"
+  },
+  {
+    value: 100,
+    label: "Remembered and used"
+  },
+];
+
+const easeMarks = [
+  {
+    value: 0,
+    label: "Difficult"
+  },
+  {
+    value: 35,
+    label: "Less Difficult"
+  },
+  {
+    value: 70,
+    label: "Easier"
+  },
+  {
+    value: 100,
+    label: "Easy"
+  }
+];
+
+const audienceradioButton = ({ label, input, ...rest }) => (
     
     <FormControl style={{padding: 50}}>
        <FormLabel component="legend">{label}</FormLabel>
@@ -45,22 +82,23 @@ import { loadCombinedData, setChanged, mutateCombinedData } from '../../actions/
 
   ) 
 
-  const intentionradioButton = ({ label, input, ...rest }) => (
-    
-    <FormControl style={{padding: 50}}>
-       <FormLabel component="legend">{label}</FormLabel>
-      <RadioGroup 
-      {...input} 
-      {...rest}
-      >
-      <FormControlLabel value={"1"}  control={<Radio />}   label="I did not remember or use"/>
-      <FormControlLabel value={"5"}  control={<Radio />}   label="I remembered but did not use"/> 
-      <FormControlLabel value={"10"} control={<Radio />}   label="I remembered and used"/>   
-    </RadioGroup>
-    </FormControl>
-
-  ) 
-
+/*  const intentionSlider = ({ label, input, ...rest }) => (
+    <>
+    <Typography id="discrete-slider" gutterBottom>
+      {label}
+      </Typography>
+        <Slider
+        style={{width: 500, margin: 50}}
+        aria-labelledby="discrete-slider"
+        marks={marks}
+        {...input}
+        {...rest}
+        step={35}
+        valueLabelDisplay="auto"  
+      />
+      </>
+  )  */
+ 
   const easeradioButton = ({ label, input, ...rest }) => (
     
     <FormControl style={{padding: 50}}>
@@ -83,19 +121,18 @@ class MyFluencyForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      interactions: []
+      intentionVal: 0,
+      easeVal: 0
     };
 
     this.insertInteraction = this.insertInteraction.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
+    this.handleIntentionSliderChange =  this.handleIntentionSliderChange.bind(this)
+    this.handleIntentionEaseChange = this.handleIntentionEaseChange.bind(this)
   }
 
   componentDidMount() {
 
-    localStorage.getItem("Interactions") &&
-    this.setState({
-      interactions: JSON.parse(localStorage.getItem("Interactions"))
-    });
     if(typeof(Storage) !== "undefined") {
       if(localStorage.getItem("Interactions") !== null) {
         if(JSON.parse(localStorage.getItem("Interactions")).setting1.length !== 0) { 
@@ -123,7 +160,20 @@ class MyFluencyForm extends React.Component {
     }
       }
     
-    
+  handleIntentionSliderChange = (event, newValue) => {
+      if(this.state.intentionVal !== newValue) {
+        this.setState({intentionVal: newValue});
+        console.log("Intention Val", newValue)
+      }
+    };
+
+
+  handleIntentionEaseChange = (event, newValue) => {
+    if(this.state.easeVal !== newValue) {
+      this.setState({easeVal: newValue});
+      console.log("Ease Val", newValue)
+    }
+   };    
 
   componentDidUpdate() {
   
@@ -135,9 +185,13 @@ class MyFluencyForm extends React.Component {
   }
 }
 
+
+
   insertInteraction(interactions) {
     let date = {date: new Date().toLocaleString()};
-    let obj = {...date, ...interactions};
+    let intention = {intention: this.state.intentionVal}
+    let ease = {ease: this.state.easeVal}
+    let obj = {...date, ...interactions, ...intention, ...ease};
     console.log(obj)
     console.log(interactions.setting)
     this.props.loadCombinedData(obj)
@@ -196,23 +250,54 @@ class MyFluencyForm extends React.Component {
         </Grid>
 
         <Grid item >
-        <Field
+        <div>
+        <Typography id="input-slider-intention" gutterBottom>
+        Intention
+      </Typography>
+        <Slider
+            style={{width: 300, margin: 50, paddingLeft: 6, paddingRight: 6}}
+            value={typeof this.state.intentionVal === 'number' ? this.state.intentionVal : 0}
+            onChange={this.handleIntentionSliderChange}
+            aria-labelledby="input-slider-intention"
+            step={50}
+            marks={intentionMarks}
+            valueLabelDisplay="auto"
+          />
+          </div>
+     
+
+     {/*    <Field
           classes={classes.FormControl}
           name="intention"
-          component={intentionradioButton}
           label="Intention"
+          component={intentionSlider}
         >
-        </Field>
+
+        </Field> */}
         </Grid>
         
         <Grid item >
-        <Field
+       {/*  <Field
           classes={classes.FormControl}
           name="ease"
           component={easeradioButton}
           label="Ease of Speech"
         >
-        </Field>
+        </Field> */}
+         <div>
+      <Typography id="input-slider-ease" gutterBottom>
+        Ease of Speech
+      </Typography>
+        <Slider
+            style={{width: 300, margin: 50, paddingLeft: 6, paddingRight: 6}}
+            value={typeof this.state.easeVal === 'number' ? this.state.easeVal : 0}
+            onChange={this.handleIntentionEaseChange}
+            aria-labelledby="input-slider-ease"
+            step={35}
+            marks={easeMarks}
+            valueLabelDisplay="auto"
+          />
+          </div>
         </Grid>
         
         <Grid item>
@@ -253,7 +338,6 @@ const mapDispatchToProps =
   setChanged,
   mutateCombinedData,
   resetFormData
-
 };
 
 const enhance = compose(

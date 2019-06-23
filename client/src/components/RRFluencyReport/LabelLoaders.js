@@ -42,12 +42,12 @@ export const audienceLabelLoader = (option) => {
 
 export const intentionLabelLoader = (option) => {
     switch (option) {
-        case "1":
-        return "I did not remember or use"
-        case "5":
-        return "I remembered but did not use"
-        case "10":
-        return "I remembered and used"
+        case 0:
+        return "Did not remember"
+        case 50:
+        return "Remembered "
+        case 100:
+        return "Remembered and used"
         default: 
         return option;
     }
@@ -55,13 +55,13 @@ export const intentionLabelLoader = (option) => {
 
 export const easeLabelLoader = (option) => {
     switch (option) {
-        case "1":
+        case 0:
         return "Speech was difficult"
-        case "4":
+        case 35:
         return "Speech was less difficult"
-        case "7":
+        case 70:
         return "Speech was easier"
-        case "10":
+        case 100:
         return "Speech was easy"
         default: 
         return option;
