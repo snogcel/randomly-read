@@ -172,20 +172,17 @@ return (
                   <FormControl>
                   <InputLabel>{audienceLabelLoader(row.audience)}</InputLabel>
                   <Select
-                    style={{width: '80px', height: '40px'}}
+                    style={{width: '120px', height: '60px'}}
                     onChange={this.handleChange(i, "audience")}
                   >
                     <MenuItem disabled="true" value={row.audience}>
                       <em>{audienceLabelLoader(row.audience)}</em>
                     </MenuItem>
-                  { row.audience !== "1" ? <MenuItem value="1">Parents</MenuItem> : null}
-                  { row.audience !== "2" ? <MenuItem value="2">Family</MenuItem> : null}
-                  { row.audience !== "3" ? <MenuItem value="3">Significant Other</MenuItem> : null}
-                  { row.audience !== "4" ? <MenuItem value="4">Friend</MenuItem> : null}
-                  { row.audience !== "5" ? <MenuItem value="5">Coworker / Classmate</MenuItem> : null} 
-                  { row.audience !== "6" ? <MenuItem value="6">Authority Figure</MenuItem> : null}
-                  { row.audience !== "7" ? <MenuItem value="7">Service Worker</MenuItem> : null}
-                  { row.audience !== "8" ? <MenuItem value="8">No Relationship</MenuItem> : null}
+                  { row.audience !== "1" ? <MenuItem value="1">Family or Friend</MenuItem> : null}
+                  { row.audience !== "2" ? <MenuItem value="2">Classmate or Colleague</MenuItem> : null}
+                  { row.audience !== "3" ? <MenuItem value="3">Authority Figure</MenuItem> : null}
+                  { row.audience !== "4" ? <MenuItem value="4">Service Worker</MenuItem> : null}
+                  { row.audience !== "5" ? <MenuItem value="5">No Relationship</MenuItem> : null} 
                    </Select>
                   </FormControl>
               :  
@@ -195,15 +192,15 @@ return (
                   <FormControl>
                   <InputLabel>{ intentionLabelLoader(row.intention)}</InputLabel>
                   <Select 
-                    style={{width: '100px', height: '80px'}}
+                    style={{width: '100px', height: '50px'}}
                     onChange={this.handleChange(i, "intention")}
                   >
                     <MenuItem disabled="true" value={row.intention}>
                       <em>{ intentionLabelLoader(row.intention)}</em>
                     </MenuItem>
-                    { row.intention !== "1" ? <MenuItem value="1">I did not use or remember</MenuItem> : null}
-                    { row.intention !== "5" ? <MenuItem value="5">I remembered but did not use</MenuItem> : null} 
-                    { row.intention !== "10" ? <MenuItem value="10">I remembered and used</MenuItem> : null}
+                    { row.intention !== 0 ? <MenuItem value={0}>Did not remember</MenuItem> : null}
+                    { row.intention !== 50 ? <MenuItem value={50}>Remembered</MenuItem> : null} 
+                    { row.intention !== 100 ? <MenuItem value={100}>remembered and used</MenuItem> : null}
                    </Select>
                   </FormControl>
               :  
@@ -213,16 +210,16 @@ return (
                   <FormControl>
                   <InputLabel>{easeLabelLoader(row.ease)}</InputLabel>
                   <Select
-                    style={{width: '90px', height: '60px'}}
+                    style={{width: '90px', height: '40px'}}
                     onChange={this.handleChange(i, "ease")}
                   >
                     <MenuItem disabled="true" value={row.ease}>
                       <em>{easeLabelLoader(row.ease)}</em>
                     </MenuItem>
-                    { row.ease !== "1" ? <MenuItem value="1">Speech was difficult</MenuItem> : null} 
-                    { row.ease !== "4" ? <MenuItem value="4">Speech was less difficult</MenuItem> : null}
-                    { row.ease !== "7" ? <MenuItem value="7">Speech was easier</MenuItem> : null}
-                    { row.ease !== "10" ? <MenuItem value="10">Speech was easy</MenuItem> : null}
+                    { row.ease !== 0 ? <MenuItem value={0}>Difficult</MenuItem> : null} 
+                    { row.ease !== 35 ? <MenuItem value={35}>Less Difficult</MenuItem> : null}
+                    { row.ease !== 70 ? <MenuItem value={70}>Easier</MenuItem> : null}
+                    { row.ease !== 100 ? <MenuItem value={100}>Easy</MenuItem> : null}
                   </Select>
                 </FormControl>
               :  

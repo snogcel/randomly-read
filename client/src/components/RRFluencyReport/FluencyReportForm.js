@@ -69,14 +69,11 @@ const audienceradioButton = ({ label, input, ...rest }) => (
       {...input} 
       {...rest}
       >
-      <FormControlLabel value={"1"} control={<Radio />} label="Parents"/>
-      <FormControlLabel value={"2"} control={<Radio />} label="Family"/> 
-      <FormControlLabel value={"3"} control={<Radio />} label="Significant Other"/>   
-      <FormControlLabel value={"4"} control={<Radio />} label="Friend"/> 
-      <FormControlLabel value={"5"} control={<Radio />} label="Coworker / Classmate"/>    
-      <FormControlLabel value={"6"} control={<Radio />} label="Authority Figure"/> 
-      <FormControlLabel value={"7"} control={<Radio />} label="Service Worker"/>    
-      <FormControlLabel value={"8"} control={<Radio />} label="No Relationship"/>
+      <FormControlLabel value={"1"} control={<Radio />} label="Family or Friend"/>
+      <FormControlLabel value={"2"} control={<Radio />} label="Classmate or Colleague"/> 
+      <FormControlLabel value={"3"} control={<Radio />} label="Authority Figure"/>   
+      <FormControlLabel value={"4"} control={<Radio />} label="Service Worker"/> 
+      <FormControlLabel value={"5"} control={<Radio />} label="No Relationship"/>    
     </RadioGroup>
     </FormControl>
 
@@ -216,6 +213,8 @@ class MyFluencyForm extends React.Component {
   onSubmit = interactions => {
    // this.props.attemptCreateInteraction(interactions);
     this.insertInteraction(interactions);
+    this.setState({intentionVal: 0})
+    this.setState({easeVal: 0})
     this.props.reset();
   }
 
