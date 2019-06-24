@@ -46,7 +46,7 @@ const FluencyReport = props => {
               <Card elevation="1" className={classes.column}>      
               <Typography className={classes.title} variant="h4" align="center">Speaking at Work or School</Typography>  
                 <CardContent>
-                    <FluencyReportForm form={"Setting1Form"} initialValues={{"setting": "1"}} setting={"1"}/>
+                    <FluencyReportForm form={"Setting1Form"} initialValues={{"setting": "1",}} setting={"1"}/>
                 </CardContent>
               </Card>
               </Grid>      
@@ -55,7 +55,7 @@ const FluencyReport = props => {
               <Card elevation="1" className={classes.column}>
               <Typography className={classes.title} variant="h4" align="center">Speaking on the Phone</Typography>  
                 <CardContent>
-                    <FluencyReportForm form={"Setting2Form"} initialValues={{"setting": "2"}}/>
+                    <FluencyReportForm form={"Setting2Form"} initialValues={{"setting": "2",}}/>
                 </CardContent>
               </Card>
               </Grid>
@@ -63,7 +63,7 @@ const FluencyReport = props => {
               <Card elevation="1" className={classes.column}>
               <Typography className={classes.title} variant="h4" align="center">Presenting a Topic</Typography>  
                 <CardContent>
-                    <FluencyReportForm form={"Setting3Form"} initialValues={{"setting": "3"}}/>
+                    <FluencyReportForm form={"Setting3Form"} initialValues={{"setting": "3",}}/>
                 </CardContent>
               </Card>
               </Grid>
@@ -71,7 +71,7 @@ const FluencyReport = props => {
               <Card elevation="1" className={classes.column}>
               <Typography className={classes.title} variant="h4" align="center">Attending a Social Event</Typography>  
                 <CardContent>
-                    <FluencyReportForm form={"Setting4Form"} initialValues={{"setting": "4"}} setting={"4"}/>
+                    <FluencyReportForm form={"Setting4Form"} initialValues={{"setting": "4",}} setting={"4"}/>
                 </CardContent>
               </Card>
               </Grid>
@@ -79,7 +79,7 @@ const FluencyReport = props => {
               <Card elevation="1" className={classes.column}>
               <Typography className={classes.title} variant="h4" align="center">Relaxing with Friends</Typography>  
                 <CardContent>
-                    <FluencyReportForm form={"Setting5Form"} initialValues={{"setting": "5"}} setting={"5"}/>
+                    <FluencyReportForm form={"Setting5Form"} initialValues={{"setting": "5",}} setting={"5"}/>
                 </CardContent>
               </Card>
               </Grid>
@@ -87,7 +87,7 @@ const FluencyReport = props => {
               <Card elevation="1" className={classes.column}>
               <Typography className={classes.title} variant="h4" align="center">Relaxing at Home</Typography>  
                 <CardContent>
-                    <FluencyReportForm form={"Setting6Form"} initialValues={{"setting": "6"}} setting={"6"}/>
+                    <FluencyReportForm form={"Setting6Form"} initialValues={{"setting": "6","intention": 0}} setting={"6"}/>
                 </CardContent>
               </Card>
               </Grid>
