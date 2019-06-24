@@ -4,14 +4,17 @@ const RoutineBuilder = function() {
 
 };
 
-RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant) {
+RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, syllables) {
 
-  let vowelBlacklist = Blacklist[vowel].consonants;
+  let depth = 0;
+
+  for (let i = 0; i < syllables.length; i++) {
+    if (syllables[i] > depth) depth = syllables[i];
+  }
+
+  let vowelBlacklist = Blacklist[vowel].consonants[depth - 1];
 
   if (vowelBlacklist.indexOf(consonant) > -1) {
-
-    // console.log("Blocked Consonant: ", consonant);
-
     return false;
   }
 
@@ -83,12 +86,12 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
     let verified = false;
     let consonant = exerciseConfig.consonants[k][rand]; // Use Random Number
 
-    verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant); // set and verify initial matched word
+    verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables); // set and verify initial matched word
 
     while (!verified) {
       rand = Math.floor(Math.random() * (exerciseConfig.consonants.length + 1));
       consonant = exerciseConfig.consonants[k][rand];
-      verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant);
+      verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables);
       if (verified) console.log('Word replaced with: ' + consonant);
     }
 

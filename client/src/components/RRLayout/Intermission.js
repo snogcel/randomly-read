@@ -3,7 +3,7 @@ import { styles } from '../../themeHandler';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-class Intermission extends React.Component {
+const Intermission = props => {
 
   constructor(props) {
     super(props);
