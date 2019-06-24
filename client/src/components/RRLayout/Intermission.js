@@ -1,18 +1,20 @@
-import React from 'react';
-import { styles } from '../../themeHandler';
+import React from 'react'
 import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core';
 
-const Intermission = props => {
+class Intermission extends React.Component {
 
-  const { classes } = this.props;
+  constructor(props) {
+    super(props);
+  }
 
-  return (
-    <Typography className={classes.intermission}>{this.props.intermissionText}</Typography>
+  render() {
+
+    return (
+      <Typography style={{color: this.props.dark === true ? 'white' : '#dba987'}} variant='h1' component='h1' align='center'>{this.props.intermissionText}</Typography>
     )
+  }
 
 }
 
-const IntermissionWrapped = withStyles(styles)(Intermission);
 
-export default IntermissionWrapped;
+export default Intermission;
