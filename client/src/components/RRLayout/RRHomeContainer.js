@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import RRHome from './RRHome'
 
-const mapStateToProps = state => ({ dark: state.theme.dark });
+const mapStateToProps = () => ({});
 
 const RRHomeContainer = connect(mapStateToProps)(RRHome);
 

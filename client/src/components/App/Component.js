@@ -15,6 +15,7 @@ import Home from '../Home';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
+import FluencyReport from '../RRFluencyReport/FluencyReport'
 
 const client = new ApolloClient({
   uri: `https://api.stuttered.net/graphql`
@@ -38,6 +39,7 @@ const App = props => (
               <Route path='/signup' component={SignupFormContainer} />
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
+              <Route path='/FluencyReport' component={FluencyReport} />
               <Route path='/' component={Home} />
             </Switch>
           </>
