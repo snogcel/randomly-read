@@ -36,6 +36,7 @@ const resolvers = {
 
                       lexeme.submitPost().then(function(doc) {
 
+                        // TODO - handle empty doc
                         queryResult[0].dataValues.id = doc._id;
 
                         console.log(queryResult);

@@ -446,16 +446,16 @@ class Timer extends React.Component {
           {stop}
           {reset}
           <div className="RangeContainer">
-            <Range theme={this.props.dark} range={rangeVal} updateRange={this.updateRange}/>
+            <Range range={rangeVal} updateRange={this.updateRange}/>
           </div>
         </div>
 
         <br /><br />
         <div className="RoutineSelector">
-                    <RoutineSelectContainer theme={this.props.dark} ref={this.routineSelect} action={this.routineSelectHandler} />
+                    <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
                 </div>
                 <br /><br />
-                <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">({ms(this.state.time, {compact: true})})</Typography>
+                <Typography variant="h6">({ms(this.state.time, {compact: true})})</Typography>
                 <br /><br />
 
                {/*  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{currentExercise}</Typography> */}

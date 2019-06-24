@@ -25,6 +25,22 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
+  sliderRoot:{
+    width: 500,
+    margin: 50
+  },
+  margin: {
+    height: theme.spacing.unit * 3
+  },
+  formTable: {
+    marginTop: theme.spacing.unit * 3
+  },
+  form: {
+    textAlign: "left",
+  },
+  formControl: {
+    marginRight: 40,
+  },
   column: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",

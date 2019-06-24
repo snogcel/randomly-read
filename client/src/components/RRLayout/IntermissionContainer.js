@@ -4,7 +4,6 @@ import Intermission from './Intermission';
 const mapStateToProps = state => ({
 
     intermissionText: state.word.intermissionText,
-    dark: state.theme.dark
 
   });
 

@@ -15,7 +15,6 @@ const mapStateToProps = state => ({
   syllables: state.word.syllables,
   mode: state.word.mode,
   limit: state.word.limit,
-  dark: state.theme.dark
 });
 
 const mapDispatchToProps = dispatch => ({

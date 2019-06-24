@@ -30,7 +30,7 @@ import { styles } from '../../themeHandler';
           <Grid item xs={12}>
             <Card square elevation="0" style={{backgroundColor: 'transparent'}}>
             <CardContent>
-            {props.currentExerciseNumber === null ? '' : <Typography className={classes.historyTitle} color="textPrimary" style={{color: props.dark === true ? 'white' : '#2f8eed'}} variant="h3">{item.word}</Typography>}
+            {props.currentExerciseNumber === null ? '' : <Typography className={classes.historyTitle} color="textPrimary" variant="h3">{item.word}</Typography>}
            {/*   <CardActions style={{justifyContent: 'center'}}>
                       <Typography
                         style={{color: this.props.dark === true ? 'white' : '#9C9C9C'}}
