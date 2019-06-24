@@ -5,19 +5,12 @@ import { withStyles } from '@material-ui/core';
 
 const Intermission = props => {
 
-  constructor(props) {
-    super(props);
-  }
+  const { classes } = this.props;
 
-  render() {
-    const { classes } = this.props;
+  return (
+    <Typography className={classes.intermission}>{this.props.intermissionText}</Typography>
+    )
 
-    return (
-      <Typography className={classes.intermission}>
-        {this.props.intermissionText}
-      </Typography>
-    );
-  }
 }
 
 const IntermissionWrapped = withStyles(styles)(Intermission);
