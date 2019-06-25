@@ -9,11 +9,19 @@ const interactionSchema = new Schema({
     intention: { type: Number, required: true },
     ease: { type: Number, required: true },
 
-})
+});
 
 interactionSchema.set('timestamps', true);
+
+interactionSchema.set('toJSON', { getters: true, virtuals: true });
+
+interactionSchema.options.toJSON.transform = (doc, ret) => {
+  const obj = { ...ret };
+  delete obj._id;
+  delete obj.__v;
+  return obj;
+};
 
 const Interaction = mongoose.model('Interaction', interactionSchema);
 
 module.exports = Interaction;
-
