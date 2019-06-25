@@ -30,3 +30,23 @@ exports.create = async (req, res, next) => {
     const interactions =  Interaction.find();
     res.json(interactions);
   };
+
+  exports.listby24hrs = async (req, res) => {
+    const interactions = Interaction.find({"createdAt":{$gt:new Date(Date.now() - 24 * 60* 60 * 1000)}})
+    res.json(interactions)
+  }
+
+  exports.listbyWeek = async (req, res) => {
+    const interactions = Interaction.find({"createdAt":{$gt:new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)}})
+    res.json(interactions)
+  }
+  let d = new Date();
+  exports.listbyMonth = async (req, res) => {
+    const interactions = Interaction.find({"createdAt":{$gt:new Date(d.setMonth(d.getMonth() - 1))}})
+    res.json(interactions)
+  }
+
+  exports.listby3Months = async (req, res) => {
+    const interactions = Interaction.find({"createdAt":{$gt:new Date(d.setMonth(d.getMonth() - 1 * 3))}})
+    res.json(interactions)
+  }

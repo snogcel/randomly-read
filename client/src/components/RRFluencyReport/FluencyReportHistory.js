@@ -27,16 +27,52 @@ class FluencyReportHistory extends React.Component {
         this.deleteLoader  = this.deleteLoader.bind(this)
       }
 
-     componentDidUpdate() {
+    
+      componentDidMount() {
+
+        fetch('https://api.stuttered.net/api/posts')
+         .then(response => response.json())
+         .then(data => console.log("posts", data[0]))
+         .catch(error => console.log("posts", error))
+     
+        fetch('https://api.stuttered.net/api/interactions')
+         .then(response => response.json())
+         .then(data => console.log("interactions", {data}))
+         .catch(error => console.log("interactions",error))
+
+        fetch('https://api.stuttered.net/api/interactions/day')
+         .then(response => response.json())
+         .then(data => console.log("interactions by day", {data}))
+         .catch(error => console.log("interactions by day", error)) 
+
+        fetch('https://api.stuttered.net/api/interactions/week')
+         .then(response => response.json())
+         .then(data => console.log("interactions by week", {data}))
+         .catch(error => console.log("interactions by week", error)) 
+
+        fetch('https://api.stuttered.net/api/interactions/month')
+         .then(response => response.json())
+         .then(data => console.log("interactions by month", {data}))
+         .catch(error => console.log("interactions by month", error))   
+
+        fetch('https://api.stuttered.net/api/interactions/3months')
+         .then(response => response.json())
+         .then(data => console.log("interactions by 3 months", {data}))
+         .catch(error => console.log("interactions by 3 months", error)) 
+      }    
+    
+    
+      componentDidUpdate() {
       if(this.props.formData !== null) {
          localStorage.setItem(
           "Interactions",
           JSON.stringify(this.props.formData)
          );  
         }
-      }
+      
+     }
 
-     handleChange = (i, propVal) => e => {
+    handleChange = (i, propVal) => e => {
       let newVal;
       newVal = this.props.combinedData;
       newVal[i][propVal] = e.target.value;
@@ -46,7 +82,7 @@ class FluencyReportHistory extends React.Component {
        
     
 
-     settingLoader() {
+    settingLoader() {
       switch (this.props.setting) {
         case "1":
         return this.props.setting1
@@ -66,7 +102,7 @@ class FluencyReportHistory extends React.Component {
      }
      
 
-     deleteLoader(value, settingVal) {
+    deleteLoader(value, settingVal) {
       let temp;
       let temp2;
       if(Array.isArray(value)) {
@@ -140,7 +176,7 @@ class FluencyReportHistory extends React.Component {
   render() {
     const { classes } = this.props
   //  this.combineData();
-return (
+  return (
       this.props.combinedData.length !== 0 ?
     (!Array.isArray(this.props.combinedData) || this.props.combinedData.length === 0) ? '' : 
     <Paper className={classes.formTable}>
@@ -158,7 +194,6 @@ return (
       <TableBody>
          {this.props.combinedData.map((row,i) =>  (
           <TableRow key={i}>
-              {console.log("is it reaching here")}
             <TableCell align="center" component="th" scope="row">
               {row.date}
             
