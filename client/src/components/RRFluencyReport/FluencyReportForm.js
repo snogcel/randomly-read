@@ -26,7 +26,7 @@ import { resetFormData } from '../../actions/formData';
 import { loadSetting1FormData,loadSetting2FormData, loadSetting3FormData, loadSetting4FormData, loadSetting5FormData, loadSetting6FormData} from '../../actions/formData';
 import { loadCombinedData, setChanged, mutateCombinedData } from '../../actions/formData';
 
-  
+
 const intentionMarks = [
   {
     value: 0,
@@ -62,22 +62,22 @@ const easeMarks = [
 ];
 
 const audienceradioButton = ({ label, input, ...rest }) => (
-    
+
     <FormControl style={{padding: 50}}>
        <FormLabel component="legend">{label}</FormLabel>
-      <RadioGroup 
-      {...input} 
+      <RadioGroup
+      {...input}
       {...rest}
       >
       <FormControlLabel value={"1"} control={<Radio />} label="Family or Friend"/>
-      <FormControlLabel value={"2"} control={<Radio />} label="Classmate or Colleague"/> 
-      <FormControlLabel value={"3"} control={<Radio />} label="Authority Figure"/>   
-      <FormControlLabel value={"4"} control={<Radio />} label="Service Worker"/> 
-      <FormControlLabel value={"5"} control={<Radio />} label="No Relationship"/>    
+      <FormControlLabel value={"2"} control={<Radio />} label="Classmate or Colleague"/>
+      <FormControlLabel value={"3"} control={<Radio />} label="Authority Figure"/>
+      <FormControlLabel value={"4"} control={<Radio />} label="Service Worker"/>
+      <FormControlLabel value={"5"} control={<Radio />} label="No Relationship"/>
     </RadioGroup>
     </FormControl>
 
-  ) 
+  )
 
 /*  const intentionSlider = ({ label, input, ...rest }) => (
     <>
@@ -91,23 +91,23 @@ const audienceradioButton = ({ label, input, ...rest }) => (
         {...input}
         {...rest}
         step={35}
-        valueLabelDisplay="auto"  
+        valueLabelDisplay="auto"
       />
       </>
   )  */
- 
+
   const easeradioButton = ({ label, input, ...rest }) => (
-    
+
     <FormControl style={{padding: 50}}>
        <FormLabel component="legend">{label}</FormLabel>
-      <RadioGroup 
-      {...input} 
+      <RadioGroup
+      {...input}
       {...rest}
       >
       <FormControlLabel value={"1"} control={<Radio />}   label="Speech was difficult"/>
-      <FormControlLabel value={"4"} control={<Radio />}   label="Speech was less difficult"/> 
-      <FormControlLabel value={"7"} control={<Radio />}   label="Speech was easier"/>   
-      <FormControlLabel value={"10"} control={<Radio />}  label="Speech was easy"/> 
+      <FormControlLabel value={"4"} control={<Radio />}   label="Speech was less difficult"/>
+      <FormControlLabel value={"7"} control={<Radio />}   label="Speech was easier"/>
+      <FormControlLabel value={"10"} control={<Radio />}  label="Speech was easy"/>
     </RadioGroup>
     </FormControl>
 
@@ -132,14 +132,14 @@ class MyFluencyForm extends React.Component {
 
     if(typeof(Storage) !== "undefined") {
       if(localStorage.getItem("Interactions") !== null) {
-        if(JSON.parse(localStorage.getItem("Interactions")).setting1.length !== 0) { 
-          (this.props.loadSetting1FormData(JSON.parse(localStorage.getItem("Interactions")).setting1)) 
+        if(JSON.parse(localStorage.getItem("Interactions")).setting1.length !== 0) {
+          (this.props.loadSetting1FormData(JSON.parse(localStorage.getItem("Interactions")).setting1))
         }
-        if(JSON.parse(localStorage.getItem("Interactions")).setting2.length !== 0) {  
+        if(JSON.parse(localStorage.getItem("Interactions")).setting2.length !== 0) {
           (this.props.loadSetting2FormData(JSON.parse(localStorage.getItem("Interactions")).setting2))
         }
         if(JSON.parse(localStorage.getItem("Interactions")).setting3.length !== 0) {
-          (this.props.loadSetting3FormData(JSON.parse(localStorage.getItem("Interactions")).setting3)) 
+          (this.props.loadSetting3FormData(JSON.parse(localStorage.getItem("Interactions")).setting3))
         }
         if(JSON.parse(localStorage.getItem("Interactions")).setting4.length !== 0) {
           (this.props.loadSetting4FormData(JSON.parse(localStorage.getItem("Interactions")).setting4))
@@ -147,18 +147,18 @@ class MyFluencyForm extends React.Component {
         if(JSON.parse(localStorage.getItem("Interactions")).setting5.length !== 0) {
           (this.props.loadSetting5FormData(JSON.parse(localStorage.getItem("Interactions")).setting5))
         }
-        if(JSON.parse(localStorage.getItem("Interactions")).setting6.length !== 0) { 
+        if(JSON.parse(localStorage.getItem("Interactions")).setting6.length !== 0) {
           (this.props.loadSetting6FormData(JSON.parse(localStorage.getItem("Interactions")).setting6))
         }
-        if(JSON.parse(localStorage.getItem("Interactions")).combinedData.length !== 0) { 
+        if(JSON.parse(localStorage.getItem("Interactions")).combinedData.length !== 0) {
           (this.props.mutateCombinedData(JSON.parse(localStorage.getItem("Interactions")).combinedData))
         }
       }
     }
-    
+
   }
 
-    
+
   handleIntentionSliderChange = (event, newValue) => {
       if(this.state.intentionVal !== newValue) {
         this.setState({intentionVal: newValue});
@@ -172,10 +172,10 @@ class MyFluencyForm extends React.Component {
       this.setState({easeVal: newValue});
       console.log("Ease Val", newValue)
     }
-   };    
+   };
 
   componentDidUpdate() {
-  
+
     if(this.props.formData !== null) {
     localStorage.setItem(
       "Interactions",
@@ -207,7 +207,7 @@ class MyFluencyForm extends React.Component {
       return this.props.addSetting5FormData(obj)
       case "6":
       return this.props.addSetting6FormData(obj)
-      default: 
+      default:
       return this.props.formData;
     }
   }
@@ -226,88 +226,73 @@ class MyFluencyForm extends React.Component {
   return (
     <>
     <form onSubmit={handleSubmit(this.onSubmit)}>
+      <Grid container spacing={8}>
+        <Grid item>
+          <Field
+            classes={classes.FormControl}
+            name="setting"
+            component='hidden'
+            label="Setting"
+          >
+          </Field>
+        </Grid>
+        <Grid item >
+          <Field
+            classes={classes.FormControl}
+            name="audience"
+            component={audienceradioButton}
+            label="Audience"
+          >
+          </Field>
+        </Grid>
+        <Grid item>
+          
+            <br />
 
-         <Grid container spacing={8}>
+            <Typography id="input-slider-intention" gutterBottom>Intention</Typography>
+            <div style={{
+              textAlign:"left",
+              width: 300
+            }}>
+              <Slider
+                value={typeof this.state.intentionVal === 'number' ? this.state.intentionVal : 0}
+                onChange={this.handleIntentionSliderChange}
+                aria-labelledby="input-slider-intention"
+                step={50}
+                marks={intentionMarks}
+                valueLabelDisplay="auto"
+              />
+            </div>
 
-         <Grid item>
-        <Field
-          classes={classes.FormControl}
-          name="setting"
-          component='hidden'
-          label="Setting"
-        >
-        </Field>
-      </Grid>
+            <br /><br />
 
-
-      <Grid item >
-        <Field
-          classes={classes.FormControl}
-          name="audience"
-          component={audienceradioButton}
-          label="Audience"
-        >
-        </Field>
+            <Typography id="input-slider-ease" gutterBottom>Ease of Speech</Typography>
+            <div style={{
+              textAlign:"left",
+              width: 300
+            }}>
+              <Slider
+                value={typeof this.state.easeVal === 'number' ? this.state.easeVal : 0}
+                onChange={this.handleIntentionEaseChange}
+                aria-labelledby="input-slider-ease"
+                step={35}
+                marks={easeMarks}
+                valueLabelDisplay="auto"
+              />
+            </div>
         </Grid>
 
         <Grid item >
-        <div>
-        <Typography id="input-slider-intention" gutterBottom>
-        Intention
-      </Typography>
-        <Slider
-            style={{width: 300, margin: 50, paddingLeft: 6, paddingRight: 6}}
-            value={typeof this.state.intentionVal === 'number' ? this.state.intentionVal : 0}
-            onChange={this.handleIntentionSliderChange}
-            aria-labelledby="input-slider-intention"
-            step={50}
-            marks={intentionMarks}
-            valueLabelDisplay="auto"
-          />
-          </div>
-     
 
-     {/*    <Field
-          classes={classes.FormControl}
-          name="intention"
-          label="Intention"
-          component={intentionSlider}
-        >
+        </Grid>
 
-        </Field> */}
-        </Grid>
-        
-        <Grid item >
-       {/*  <Field
-          classes={classes.FormControl}
-          name="ease"
-          component={easeradioButton}
-          label="Ease of Speech"
-        >
-        </Field> */}
-         <div>
-      <Typography id="input-slider-ease" gutterBottom>
-        Ease of Speech
-      </Typography>
-        <Slider
-            style={{width: 300, margin: 50, paddingLeft: 6, paddingRight: 6}}
-            value={typeof this.state.easeVal === 'number' ? this.state.easeVal : 0}
-            onChange={this.handleIntentionEaseChange}
-            aria-labelledby="input-slider-ease"
-            step={35}
-            marks={easeMarks}
-            valueLabelDisplay="auto"
-          />
-          </div>
-        </Grid>
-        
         <Grid item>
         <Button type="submit" className={classes.submitButton} variant="contained" color = "primary" size ="large" disabled={invalid || pristine || submitting}><b>Submit</b></Button>
         <Button type="button" align="left" type="button" variant="contained" disabled={pristine || submitting} color="primary" size = "small" onClick={reset}><b>Clear</b></Button>
         </Grid>
         </Grid>
     </form>
-    
+
     </>
   )
 }
@@ -321,19 +306,19 @@ const mapStateToProps = state => ({
   isChanged: state.formData.isChanged
 });
 
-const mapDispatchToProps = 
-{ attemptCreateInteraction, 
+const mapDispatchToProps =
+{ attemptCreateInteraction,
   loadSetting1FormData,
   loadSetting2FormData,
   loadSetting3FormData,
   loadSetting4FormData,
   loadSetting5FormData,
-  loadSetting6FormData, 
-  addSetting1FormData, 
-  addSetting2FormData, 
-  addSetting3FormData, 
-  addSetting4FormData, 
-  addSetting5FormData, 
+  loadSetting6FormData,
+  addSetting1FormData,
+  addSetting2FormData,
+  addSetting3FormData,
+  addSetting4FormData,
+  addSetting5FormData,
   addSetting6FormData,
   loadCombinedData,
   setChanged,
