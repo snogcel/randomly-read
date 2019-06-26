@@ -3,11 +3,17 @@ import Typography from '@material-ui/core/Typography';
 
 const Intermission = props => {
 
+  constructor(props) {
+    super(props);
+  }
 
+  render() {
 
-      return (
-        <Typography variant='h1' component='h1' align='center'>{props.intermissionText}</Typography>
-      )
+    return (
+      <Typography style={{color: this.props.dark === true ? 'white' : '#dba987'}} variant='h1' component='h1' align='center'>{this.props.intermissionText}</Typography>
+    )
+  }
+
 }
 
 

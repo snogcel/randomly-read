@@ -16,6 +16,9 @@ import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
 import { styles } from '../../themeHandler';
 
+import VowelCheckbox from './elements/VowelCheckbox';
+import Word from './elements/Word';
+
 function getModalStyle() {
   const top = 50;
   const left = 50;
@@ -179,7 +182,9 @@ class WordCard extends React.Component  {
                   if (loading) return null;
 
                   if (error) {
-                    console.log("error...");
+                    return(<div>
+                      <Word value={{name: "Server Error", selectedVowel: this.props.vowel}} />
+                    </div>);
                   }
 
                   if (data) {
@@ -194,101 +199,46 @@ class WordCard extends React.Component  {
                     }
 
                     if (this.props.mode === 'Word' && typeof(data.words) === 'undefined') {
-                      return null;
+                      this.result = null;
+
+                      return(<div>
+                        <Word value={{name: "No Result", selectedVowel: this.props.vowel}} />
+                      </div>);
                     }
 
                     if (this.props.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
-                      return null;
+                      return(<div>
+                        <Word value={{name: "No Result", selectedVowel: this.props.vowel}} />
+                      </div>);
                     }
 
 
-                    // check if word is a repeat
-                    if (this.props.mode === 'Word') {
-
-                      if (this.result === data.words[0].lexeme && this.fetching){
+                    // check if word is a repeat...
+                    if (this.props.mode === 'Word' && data.words.length > 0) {
+                      if (this.result === data.words[0].lexeme && this.fetching){ // if repeat word, refetch
                         refetch();
                       }
 
-                      if (this.result !== data.words[0].lexeme && this.fetching) {
+                      if (this.result !== data.words[0].lexeme && this.fetching) { // if new result, store and display
                         this.result = data.words[0].lexeme;
                         this.fetching = false;
                       }
+                    } else if (this.props.mode === 'Sentence' && data.sentences.length > 0) { // if we are fetching sentences...
 
-                    } else if (this.props.mode === 'Sentence') {
-
-                      if (this.result === data.sentences[0].result && this.fetching){
+                      if (this.result === data.sentences[0].result && this.fetching){ // if repeat sentence, refetch
                         refetch();
                       }
 
-                      if (this.result !== data.sentences[0].result && this.fetching) {
-
+                      if (this.result !== data.sentences[0].result && this.fetching) { // if new result, store and display
                         this.result = data.sentences[0].result;
                         this.fetching = false;
-
                       }
-
                     }
-
                   }
 
-                  return (
-                      <>
-                      <Typography
-                        component={'span'}
-                        align="center"
-                        className={classes.title}
-                        color="textPrimary"
-                      >
-                        { this.result }
-                      </Typography>
-
-                    { this.props.mode === 'Word' ?
-                      <CardActions style={{justifyContent: 'center'}}>
-                        <Typography
-                          align="center"
-                          component={'span'}
-                          className={classes.seeMore}
-                          color="textPrimary"
-                          onClick={this.handleOpen}>
-                          see more
-                        </Typography>
-
-                        <Modal
-                          aria-labelledby="simple-modal-title"
-                          aria-describedby="simple-modal-description"
-                          open={this.state.open}
-                          onClose={this.handleClose}
-                        >
-                        <div style={{ top:'50%', left: '50%', transform: 'translate(-50%, -50%)'}} className={classes.paper}>
-                          <Typography component={'span'} className={classes.title} color="textPrimary">
-                            {this.result}
-                          </Typography>
-                            {data.words[0].wordsXsensesXsynsets.map((word, i) => {
-                              return (
-                                <>
-                                <List dense="true">
-                                  <ListItem>
-                                    <ListItemText>
-                                      <Typography component={'span'}  color="textPrimary">
-                                      {word.definition}
-                                    </Typography>
-                                    <Typography component={'span'} color="textSecondary">
-                                    {word.pos}
-                                    </Typography>
-                                      </ListItemText>
-                                  </ListItem>
-                                </List>
-                                </>
-                              );
-                            })}
-                        </div>
-                      </Modal>
-                    </CardActions>
-                    :  null}
-                    </>
-
-                  );
-
+                  return(<div>
+                    <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
+                  </div>);
 
                   }}
                   </Query>
@@ -300,24 +250,11 @@ class WordCard extends React.Component  {
 
           { VowelCheckboxes.map((item, i) => (
              <>
-             <Button style={{backgroundColor: JSON.stringify(this.props.vowel) === JSON.stringify([item.name]) ? '#33a0ff' : "white"}} size="small" variant="contained" className={classes.button} onClick={() => this.handleChange(item.name)}><b>{item.name}</b></Button>
+
+               <VowelCheckbox action={this.handleChange} value={{name: item.name, displayName: item.label, selectedVowel: this.props.vowel}} />
+
              </>
           )) }
-
-          {
-            <>
-            <div>
-              <Button>
-                <div>Button 1</div>
-              </Button>
-              <Button>
-                <div>Button 2</div>
-              </Button>
-            </div>
-            </>
-          }
-
-
 
         </div>
 

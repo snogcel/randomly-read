@@ -36,6 +36,7 @@ const resolvers = {
 
                       lexeme.submitPost().then(function(doc) {
 
+                        // TODO - handle empty doc
                         queryResult[0].dataValues.id = doc._id;
 
                         console.log(queryResult);
@@ -58,10 +59,9 @@ const resolvers = {
 
             // Default Templates
             let templates = [
-                "{{ adjective }} {{ noun }} has {{ an_adjective }} {{ noun }}",
-                "{{ noun }} goes to {{ an_adjective }} {{ noun }}",
-                "{{ an_adjective }} {{ noun }} is {{ adjective }}",
-                "{{ noun }} is {{ an_adjective }} {{ noun }}",
+		"the {{ noun }} is {{ adjective }}",
+                "{{ adjective }} {{ noun }}",
+                "{{ an_adjective }} {{ noun }}"
             ];
 
             // Parse Parameters

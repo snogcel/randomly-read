@@ -22,7 +22,6 @@ interactionSchema.options.toJSON.transform = (doc, ret) => {
   return obj;
 };
 
-
 const Interaction = mongoose.model('Interaction', interactionSchema);
 
 module.exports = Interaction;

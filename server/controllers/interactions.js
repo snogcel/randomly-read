@@ -26,7 +26,6 @@ exports.create = async (req, res, next) => {
 
   };
 
-
   exports.list = async (req, res) => {
     const interactions =  await Interaction.find();
     res.json(interactions);

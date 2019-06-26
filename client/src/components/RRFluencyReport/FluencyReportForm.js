@@ -157,6 +157,7 @@ class MyFluencyForm extends React.Component {
     }
     
   }
+
     
   handleIntentionSliderChange = (event, newValue) => {
       if(this.state.intentionVal !== newValue) {
