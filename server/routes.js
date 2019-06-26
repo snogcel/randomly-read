@@ -26,6 +26,10 @@ router.post('/post/:post', [jwtAuth, comments.validate], comments.create);
 router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
 router.post('/interactions', [jwtAuth, interactionAuth], interactions.create);
 router.get('/interactions', interactions.list);
+router.get('/interactions/day', interactions.listby24hrs);
+router.get('/interactions/week', interactions.listbyWeek);
+router.get('/interactions/month', interactions.listbyMonth);
+router.get('/interactions/3months', interactions.listby3Months);
 
 module.exports = app => {
   app.use('/api', router);

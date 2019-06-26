@@ -153,9 +153,11 @@ class MyFluencyForm extends React.Component {
         if(JSON.parse(localStorage.getItem("Interactions")).combinedData.length !== 0) { 
           (this.props.mutateCombinedData(JSON.parse(localStorage.getItem("Interactions")).combinedData))
         }
-        }
-    }
       }
+    }
+    
+  }
+
     
   handleIntentionSliderChange = (event, newValue) => {
       if(this.state.intentionVal !== newValue) {

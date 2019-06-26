@@ -36,7 +36,6 @@ const styles = theme => ({
   });
 
 const FluencyReport = props => {
-
     const {classes} = props;
     console.log("PROPS", props)
     return (

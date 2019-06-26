@@ -1,7 +1,7 @@
 import React from 'react'
 import Typography from '@material-ui/core/Typography';
 
-class Intermission extends React.Component {
+const Intermission = props => {
 
   constructor(props) {
     super(props);
