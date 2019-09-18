@@ -1,6 +1,6 @@
 const baseUrl =
   process.env.NODE_ENV === 'development'
-    ? 'https://api.stuttered.net/api'
+    ? 'http://dev.snogcel.com:8080/api'
     : `https://${window.location.hostname}/api`;
 
 const methods = {

@@ -18,7 +18,7 @@ import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
 
 const client = new ApolloClient({
-  uri: `https://api.stuttered.net/graphql`
+  uri: `http://dev.snogcel.com:8080/graphql`
 });
 
 client.defaultOptions.query = {
