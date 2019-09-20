@@ -20,8 +20,8 @@ exports.register = async (req, res, next) => {
   }
 
   try {
-    const { username, password, firstName, lastName } = req.body;
-    const user = await User.create({ username, password, firstName, lastName });
+    const { username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age } = req.body;
+    const user = await User.create({ username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
     const token = createAuthToken(user.toJSON());
     res.status(201).json({ token });
   } catch (err) {
@@ -72,6 +72,118 @@ exports.validate = method => {
 
       .isLength({ max: 32 })
       .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('address')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 128 })
+      .withMessage('must be at most 128 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_ .#-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('city')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 128 })
+      .withMessage('must be at most 128 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_ .#-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('stateProvince')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 64 })
+      .withMessage('must be at most 64 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('postalCode')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 16 })
+      .withMessage('must be at most 16 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('country')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_ .#-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('gender')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 8 })
+      .withMessage('must be at most 8 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('age')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 2 })
+      .withMessage('must be at most 4 characters long')
 
       .custom(value => value.trim() === value)
       .withMessage('cannot start or end with whitespace')
