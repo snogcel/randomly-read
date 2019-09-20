@@ -29,8 +29,6 @@ exports.register = async (req, res, next) => {
   }
 };
 
-// validate firstName, lastName
-
 exports.validate = method => {
   const errors = [
     body('username')
