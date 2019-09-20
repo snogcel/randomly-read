@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import Form from '../shared/form/Form';
 import renderField from '../shared/form/renderField';
-import { usernameValidator, passwordValidator } from '../../util/validators';
+import { usernameValidator, passwordValidator, firstNameValidator, lastNameValidator } from '../../util/validators';
 import SubmitButton from '../shared/form/SubmitButton';
 
 class SignupForm extends React.Component {
@@ -18,8 +18,8 @@ class SignupForm extends React.Component {
     if (this.props.token) this.props.history.push('/');
   }
 
-  onSubmit = ({ username, password }) => {
-    this.props.attemptSignup(username, password);
+  onSubmit = ({ username, password, firstName, lastName }) => {
+    this.props.attemptSignup(username, password, firstName, lastName);
   };
 
   render() {
@@ -34,6 +34,20 @@ class SignupForm extends React.Component {
           type='text'
           component={renderField}
           validate={usernameValidator}
+        />
+        <Field
+          name='firstName'
+          label='first name'
+          type='text'
+          component={renderField}
+          validate={firstNameValidator}
+        />
+        <Field
+          name='lastName'
+          label='last name'
+          type='text'
+          component={renderField}
+          validate={lastNameValidator}
         />
         <Field
           name='password'

@@ -35,6 +35,8 @@ export const postType = value =>
     : 'must be link or text post';
 export const usernameValidator = [required, max(32), validChars, trimmed];
 export const passwordValidator = [required, min(8), max(72)];
+export const firstNameValidator = [required, max(32), validChars, trimmed];
+export const lastNameValidator = [required, max(32), validChars, trimmed];
 export const titleValidator = value =>
   required(value) || checkMaxLength(value, 100);
 export const textPostValidator = value =>

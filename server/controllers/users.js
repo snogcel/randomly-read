@@ -20,8 +20,8 @@ exports.register = async (req, res, next) => {
   }
 
   try {
-    const { username, password } = req.body;
-    const user = await User.create({ username, password });
+    const { username, password, firstName, lastName } = req.body;
+    const user = await User.create({ username, password, firstName, lastName });
     const token = createAuthToken(user.toJSON());
     res.status(201).json({ token });
   } catch (err) {
@@ -29,9 +29,43 @@ exports.register = async (req, res, next) => {
   }
 };
 
+// validate firstName, lastName
+
 exports.validate = method => {
   const errors = [
     body('username')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('firstName')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('lastName')
       .exists()
       .withMessage('is required')
 
