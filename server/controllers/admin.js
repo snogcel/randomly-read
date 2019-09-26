@@ -4,24 +4,17 @@ const User = require('../models/user');
 
 // TODO - add auth
 
-// https://jsonapi.org/format/#document-resource-object-attributes
-
-// https://github.com/holidayextras/jsonapi-store-mongodb
-
-// https://github.com/carsondarling/mongoose-jsonapi
-
 function transformData (data, type) {
-  console.log(data);
 
-  let id = data.id;
+  const id = data.id;
 
   let attributes = data;
   delete attributes.id;
 
   let result = {
-    "id": data.id,
+    "id": id,
     "attributes": attributes
-  }
+  };
 
   return {
     "type": type,
@@ -36,8 +29,6 @@ function transformData (data, type) {
 
 function transformDataSet(data, type) {
 
-  console.log(data);
-
   let result = [];
 
   // iterate through data
@@ -49,9 +40,9 @@ function transformDataSet(data, type) {
 
     // format into JSONAPI
     let dataSet = {
-      "id": data[i].id,
+      "id": id,
       "attributes": attributes
-    }
+    };
 
     result.push(dataSet);
   }
@@ -97,6 +88,31 @@ exports.user = async (req, res) => {
   let response = {};
 
   await User.findOne({"_id":o_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+    } else {
+      response = transformData(data, "user");
+    }
+
+  });
+
+  res.json(response);
+
+};
+
+// update specific user
+exports.updateUser = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  let attributes = req.body.data.attributes;
+  delete attributes.id;
+
+  await User.findOneAndUpdate({"_id":o_id}, attributes, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};

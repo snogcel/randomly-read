@@ -34,6 +34,7 @@ router.get('/interactions/3months', interactions.listby3Months);
 
 router.get('/admin/users', admin.users); // TODO - add auth token
 router.get('/admin/users/:id', admin.user); // TODO - add auth token
+router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
 
 module.exports = app => {
   app.use('/api', router);
