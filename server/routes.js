@@ -32,7 +32,8 @@ router.get('/interactions/week', interactions.listbyWeek);
 router.get('/interactions/month', interactions.listbyMonth);
 router.get('/interactions/3months', interactions.listby3Months);
 
-router.get('/admin/list/users', admin.listAll); // TODO - add auth token
+router.get('/admin/users', admin.users); // TODO - add auth token
+router.get('/admin/users/:id', admin.user); // TODO - add auth token
 
 module.exports = app => {
   app.use('/api', router);
