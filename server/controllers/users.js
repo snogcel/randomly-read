@@ -20,8 +20,8 @@ exports.register = async (req, res, next) => {
   }
 
   try {
-    const { username, password } = req.body;
-    const user = await User.create({ username, password });
+    const { username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age } = req.body;
+    const user = await User.create({ username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
     const token = createAuthToken(user.toJSON());
     res.status(201).json({ token });
   } catch (err) {

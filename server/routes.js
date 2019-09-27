@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const schema = require ('./data/schema');
 const users = require('./controllers/users');
 const posts = require('./controllers/posts');
+const admin = require('./controllers/admin');
 const interactions = require('./controllers/interactions');
 const comments = require('./controllers/comments');
 const { jwtAuth, postAuth, commentAuth, interactionAuth } = require('./auth');
@@ -30,6 +31,10 @@ router.get('/interactions/day', interactions.listby24hrs);
 router.get('/interactions/week', interactions.listbyWeek);
 router.get('/interactions/month', interactions.listbyMonth);
 router.get('/interactions/3months', interactions.listby3Months);
+
+router.get('/admin/users', admin.users); // TODO - add auth token
+router.get('/admin/users/:id', admin.user); // TODO - add auth token
+router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
 
 module.exports = app => {
   app.use('/api', router);
