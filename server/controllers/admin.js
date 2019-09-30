@@ -4,6 +4,50 @@ const User = require('../models/user');
 
 // TODO - add auth
 
+const routineParams = [
+  { id: "AA", name: "ɑ"},
+  { id: "AE", name: "æ"},
+  { id: "AH", name: "ʌ"},
+  { id: "AO", name: "ɔ"},
+  { id: "AW", name: "aʊ"},
+  { id: "AY", name: "aɪ"},
+  { id: "EH", name: "ɛ"},
+  { id: "ER", name: "ɝ"},
+  { id: "EY", name: "eɪ"},
+  { id: "IH", name: "ɪ"},
+  { id: "IY", name: "i"},
+  { id: "OW", name: "oʊ"},
+  { id: "OY", name: "ɔɪ"},
+  { id: "UW", name: "u"},
+  { id: "B", name: "b"},
+  { id: "CH", name: "tʃ"},
+  { id: "D", name: "d"},
+  { id: "F", name: "f"},
+  { id: "G", name: "g"},
+  { id: "HH", name: "h"},
+  { id: "JH", name: "dʒ"},
+  { id: "K", name: "k"},
+  { id: "L", name: "l"},
+  { id: "M", name: "m"},
+  { id: "N", name: "n"},
+  { id: "P", name: "p"},
+  { id: "R", name: "ɹ"},
+  { id: "S", name: "s"},
+  { id: "SH", name: "ʃ"},
+  { id: "T", name: "t"},
+  { id: "TH", name: "θ"},
+  { id: "V", name: "v"},
+  { id: "W", name: "w"},
+  { id: "Y", name: "j"},
+  { id: "Z", name: "Z"},
+  { id: "1", name: "1 Syllable"},
+  { id: "2", name: "2 Syllables"},
+  { id: "3", name: "3 Syllables"},
+  { id: "4", name: "4 Syllables"},
+  { id: "5", name: "5 Syllables"},
+];
+
+
 function transformData (data, type) {
 
   const id = data.id;
@@ -59,6 +103,60 @@ function transformDataSet(data, type) {
 
 }
 
+function transformRoutineSet(data, type) {
+
+  let result = [];
+
+  // iterate through data
+  for (var i = 0; i < data.length; i++) {
+    let id = data[i].id;
+
+    let attributes = data[i];
+    // delete attributes.id; // TODO - revisit this once mongo db is live
+
+    // format into JSONAPI
+    let dataSet = {
+      "id": id,
+      "attributes": attributes
+    };
+
+    result.push(dataSet);
+  }
+
+  return {
+    "type": type,
+    "error": false,
+    "message": "OK",
+    "data": result,
+    "meta": {
+      "total": result.length
+    }
+  }
+
+}
+
+function transformRoutine (data, type) {
+
+  const id = data.id;
+
+  let attributes = data;
+  // delete attributes.id; // TODO - revisit this once mongo db is live
+
+  let result = {
+    "id": id,
+    "attributes": attributes
+  };
+
+  return {
+    "type": type,
+    "error": false,
+    "message": "OK",
+    "data": result,
+    "meta": {
+      "total": 1
+    }
+  }
+}
 
 // list all users
 exports.users = async (req, res) => {
@@ -126,9 +224,186 @@ exports.updateUser = async (req, res) => {
 
 };
 
-// update users
+// test routine options
+const routineTestDataSet = [
+  {
+    id: "5d8a75730d35bc728c96e777",
+    name: "Vowel Specific - ɪ",
+    subroutine: [
+      {
+        duration: 50,
+        rangeVal: 5,
+        map: "randomly",
+        intermissionText: "",
+        mode: "Word",
+        limit: 1,
+        vowels: [
+          "IH"
+        ],
+        consonants: ["B","D","G","P","T","K"],
+        consonants_name: ["B","D","G","P","T","K"],
+        templates: [],
+        syllables: ["1","2","3","4","5"],
+        repetitions: 10
+      },
+      {
+        duration: 5,
+        rangeVal: 5,
+        map: 'intermission',
+        intermissionText: "relax",
+        mode: 'Intermission',
+        limit: 1,
+        vowels: [],
+        consonants: [],
+        consonants_name: [],
+        templates: [],
+        syllables: [],
+        repetitions: 1
+      },
+      {
+        duration: 50,
+        rangeVal: 5,
+        map: "default",
+        intermissionText: "",
+        mode: "Word",
+        limit: 1,
+        vowels: [
+          "IH"
+        ],
+        consonants: ["B","D","G","P","T","K"],
+        consonants_name: ["B","D","G","P","T","K"],
+        templates: [],
+        syllables: ["1","2","3","4","5"],
+        repetitions: 10
+      }
+    ]
+  }
+];
 
-// list routine options
+
+// list all routines
+exports.routines = async (req, res) => {
+
+  if (typeof req.query.page !== "undefined" && typeof req.query.sort !== "undefined" && typeof(req.query.filter === "undefined")) {
+
+    // TODO - consolidate into separate function
+    const id = "5d8a75730d35bc728c96e777";
+    const o_id = new ObjectId(id);
+
+    const data = routineTestDataSet;
+    let response = transformRoutineSet(data, "routines");
+    res.json(response);
+
+  }
+
+  if (typeof req.query.page === "undefined" && typeof req.query.sort === "undefined" && typeof req.query.filter !== "undefined") {
+
+    // check if filter is seeking a MongoDB Document
+
+    let regExp = /[0-9A-Fa-f]{6}/g;
+
+    if (regExp.test(req.query.filter)) {
+
+      // TODO - consolidate into separate function
+
+      const id = "5d8a75730d35bc728c96e777";
+      const o_id = new ObjectId(id);
+
+      const data = routineTestDataSet;
+      let response = transformRoutineSet(data, "routines");
+      res.json(response);
+
+    } else {
+
+      // Return Routine Parameters
+
+      let data = [];
+      let params = JSON.parse(req.query.filter);
+
+      for (let i = 0; i < params.id.length; i++) {
+
+        let obj = routineParams.find(obj => obj.id === params.id[i]);
+        data.push(obj);
+
+      }
+
+      let response = transformRoutineSet(data, "consonants");
+      res.json(response);
+
+    }
+
+  }
+
+};
+
+
+
+const routineTestData = {
+  id: "5d8a75730d35bc728c96e777",
+  name: "Vowel Specific - ɪ",
+  subroutine: [
+    {
+      duration: 50,
+      rangeVal: 5,
+      map: "randomly",
+      intermissionText: "",
+      mode: "Word",
+      limit: 1,
+      vowels: [
+        "IH"
+      ],
+      consonants: ["B","D","G","P","T","K"],
+      consonants_name: ["B","D","G","P","T","K"],
+      templates: [],
+      syllables: ["1","2","3","4","5"],
+      repetitions: 10
+    },
+    {
+      duration: 5,
+      rangeVal: 5,
+      map: 'intermission',
+      intermissionText: "relax",
+      mode: 'Intermission',
+      limit: 1,
+      vowels: [],
+      consonants: [],
+      consonants_name: [],
+      templates: [],
+      syllables: [],
+      repetitions: 1
+    },
+    {
+      duration: 50,
+      rangeVal: 5,
+      map: "default",
+      intermissionText: "",
+      mode: "Word",
+      limit: 1,
+      vowels: [
+        "IH"
+      ],
+      consonants: ["B","D","G","P","T","K"],
+      consonants_name: ["B","D","G","P","T","K"],
+      templates: [],
+      syllables: ["1","2","3","4","5"],
+      repetitions: 10
+    }
+  ]
+};
+
+// list routine
+exports.routine = async (req, res) => {
+
+  const id = "5d8a75730d35bc728c96e777";
+  const o_id = new ObjectId(id);
+
+  const data = routineTestData;
+
+  let response = transformRoutine(data, "routines");
+
+  res.json(response);
+
+};
 
 // update routine options
 
