@@ -4,6 +4,7 @@ const schema = require ('./data/schema');
 const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
+const routine = require('./controllers/routine');
 const interactions = require('./controllers/interactions');
 const comments = require('./controllers/comments');
 const { jwtAuth, postAuth, commentAuth, interactionAuth } = require('./auth');
@@ -38,6 +39,8 @@ router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
 
 router.get('/admin/routines', admin.routines); // TODO - add auth token
 router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
+
+router.get('/admin/testRoutine', routine.testCreate);
 
 module.exports = app => {
   app.use('/api', router);
