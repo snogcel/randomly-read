@@ -44,6 +44,7 @@ RoutineBuilder.prototype._buildCheckpoints = function(exerciseConfig) {
 
   exerciseConfig.duration = duration; // calculation exercise duration
   exerciseConfig.templates = []; // for future functionality
+  exerciseConfig.limit = 1; // for future functionality
 
   while (i < exerciseConfig.duration) {
     checkpoints.push(i);
