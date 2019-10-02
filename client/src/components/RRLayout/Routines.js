@@ -12,104 +12,13 @@ const routines = [
     name: "Vowel Specific - ɪ",
     subroutine: [
       {
-        duration: 50,
         rangeVal: 5,
         map: "randomly",
         mode: "Word",
         limit: 1,
-        vowels: [
-          "IH"
-        ],
-        consonants: [
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ],
-          [
-            "B",
-            "D",
-            "G",
-            "P",
-            "T",
-            "K"
-          ]
-        ],
-        templates: [],
-        syllables: [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
+        vowels: ["IH"],
+        consonants: ["B","D","G","P","T","K"],
+        syllables: ["1","2","3","4","5"],
         repetitions: 10
       },
       {
@@ -125,54 +34,13 @@ const routines = [
         syllables: []
       },
       {
-        duration: 50,
         rangeVal: 5,
-        map: "default",
+        map: "randomly",
         mode: "Word",
         limit: 1,
-        vowels: [
-          "IH"
-        ],
-        consonants: [
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ],
-          [
-            "IH"
-          ]
-        ],
-        templates: [],
-        syllables: [
-          1,
-          2,
-          3,
-          4,
-          5
-        ],
+        vowels: ["IH"],
+        consonants: ["B","D","G","P","T","K"],
+        syllables: ["1","2","3","4","5"],
         repetitions: 10
       },
       {

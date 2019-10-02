@@ -40,6 +40,13 @@ RoutineBuilder.prototype._buildCheckpoints = function(exerciseConfig) {
   let checkpoints = [];
   let i = 0;
 
+  let duration = (parseInt(exerciseConfig.repetitions) * parseInt(exerciseConfig.rangeVal));
+
+  exerciseConfig.duration = duration; // calculation exercise duration
+  exerciseConfig.templates = []; // for future functionality
+
+  console.log(exerciseConfig);
+
   while (i < exerciseConfig.duration) {
     checkpoints.push(i);
     i = i + exerciseConfig.rangeVal;

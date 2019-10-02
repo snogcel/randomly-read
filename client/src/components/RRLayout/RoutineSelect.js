@@ -38,7 +38,6 @@ class RoutineSelect extends React.Component {
             Routine: ""
         };
 
-
         this.handleChange = this.handleChange.bind(this);
 
         this.options = [];

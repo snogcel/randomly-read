@@ -5,22 +5,17 @@ const name = "Vowel Specific - ɪ";
 
 const subroutine = [
       {
-        "duration": 50,
         "rangeVal": 5,
         "map": "randomly",
         "intermissionText": "",
         "mode": "Word",
         "limit": 1,
-        "vowels": [
-          "IH"
-        ],
+        "vowels": ["IH"],
         "consonants": ["B","D","G","P","T","K"],
-        "templates": [],
         "syllables": ["1","2","3","4","5"],
         "repetitions": 10
       },
       {
-        "duration": 5,
         "rangeVal": 5,
         "map": "intermission",
         "intermissionText": "relax",
@@ -28,22 +23,17 @@ const subroutine = [
         "limit": 1,
         "vowels": [],
         "consonants": [],
-        "templates": [],
         "syllables": [],
         "repetitions": 1
       },
       {
-        "duration": 50,
         "rangeVal": 5,
-        "map": "default",
+        "map": "randomly",
         "intermissionText": "",
         "mode": "Word",
         "limit": 1,
-        "vowels": [
-          "IH"
-        ],
+        "vowels": ["IH"],
         "consonants": ["B","D","G","P","T","K"],
-        "templates": [],
         "syllables": ["1","2","3","4","5"],
         "repetitions": 10
       }
