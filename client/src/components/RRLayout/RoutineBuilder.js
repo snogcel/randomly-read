@@ -81,16 +81,16 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
     let action = JSON.parse(JSON.stringify(actionBase));
 
     // Generate Random Number
-    let rand = Math.floor(Math.random() * (exerciseConfig.consonants[k].length));
+    let rand = Math.floor(Math.random() * (exerciseConfig.consonants[0].length));
 
     let verified = false;
-    let consonant = exerciseConfig.consonants[k][rand]; // Use Random Number
+    let consonant = exerciseConfig.consonants[0][rand]; // Use Random Number
 
     verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables); // set and verify initial matched word
 
     while (!verified) {
       rand = Math.floor(Math.random() * (exerciseConfig.consonants.length + 1));
-      consonant = exerciseConfig.consonants[k][rand];
+      consonant = exerciseConfig.consonants[0][rand];
       verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables);
       if (verified) console.log('Word replaced with: ' + consonant);
     }
@@ -100,7 +100,7 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
     action.vowel.unshift(exerciseConfig.vowels[j]); // add vowel to array
 
     // Iterate Vowels and Consonants
-    if (k < exerciseConfig.consonants[k].length - 1) {
+    if (k < exerciseConfig.consonants[0].length - 1) {
 
       // Logic Applied if Random Selection is active
       if (k < (exerciseConfig.repetitions - 1)) {
@@ -150,7 +150,7 @@ RoutineBuilder.prototype.build = function(exerciseConfig) {
     let action = JSON.parse(JSON.stringify(actionBase));
 
     // Set Parameters
-    action.consonant = exerciseConfig.consonants[k]; // add all consonants to array
+    action.consonant = exerciseConfig.consonants[0]; // add all consonants to array
     action.vowel.unshift(exerciseConfig.vowels[j]); // add vowel to array
 
     if (k < (exerciseConfig.repetitions - 1)) {

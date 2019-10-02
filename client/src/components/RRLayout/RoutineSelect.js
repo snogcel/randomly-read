@@ -95,12 +95,12 @@ class RoutineSelect extends React.Component {
         let selectedRoutine = {};
 
         if(e.target.value !== "") {
-        for (let i = 0; i < Routines.length; i++) {
-            if (e.target.value === Routines[i].name) {
-                selectedRoutine = Routines[i];
-            }
+          for (let i = 0; i < Routines.length; i++) {
+              if (e.target.value === Routines[i].name) {
+                  selectedRoutine = Routines[i];
+              }
+          }
         }
-    }
 
         /* let obj = {
             duration: 39,
