@@ -1,11 +1,14 @@
 import React from 'react';
 import Select from '@material-ui/core/Select';
-import Routines from './Routines.js';
+// import Routines from './Routines.js';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 
+const Routines = JSON.parse(localStorage.getItem('routines'));
+
+console.log(Routines[1]);
 
 const styles = theme => ({
       routine: {
@@ -85,8 +88,6 @@ class RoutineSelect extends React.Component {
         this.props.action(selectedRoutine); // pass mode update back to QueryManager
 
     }
-
-
 
     handleChange(e) {
         this.setState({Routine: e.target.value})
