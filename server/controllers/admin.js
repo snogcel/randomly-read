@@ -194,27 +194,6 @@ exports.routines = async (req, res) => {
 
   console.log(req.query);
 
-  if (typeof req.query.sort !== "undefined") {
-
-    // TODO - Paging
-    // TODO - Sorting
-
-    let response = {};
-
-    await Routine.find({}, function(err, data) {
-
-      if(err) {
-        response = {"error" : true, "message" : "Error fetching data"};
-        res.json(response);
-      } else {
-        response = transformRoutineSet(data, "routines");
-        res.json(response);
-      }
-
-    });
-
-  }
-
   if (typeof req.query.filter !== "undefined") {
 
     const filter = JSON.parse(req.query.filter);
@@ -235,7 +214,28 @@ exports.routines = async (req, res) => {
 
     });
 
+  } else {
+
+    // TODO - Paging
+    // TODO - Sorting
+
+    let response = {};
+
+    await Routine.find({}, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformRoutineSet(data, "routines");
+        res.json(response);
+      }
+
+    });
+
   }
+
+
 
 };
 
