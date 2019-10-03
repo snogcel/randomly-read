@@ -88,7 +88,6 @@ class WordCard extends React.Component  {
 
     switch(this.props.mode) {
         case 'Sentence':
-            console.log("Sentence Query...");
             if (this.props.consonant.length > 0) {
                 return gql`
                 {
@@ -110,7 +109,6 @@ class WordCard extends React.Component  {
             }
 
         case 'Word':
-            console.log("Word Query...");
             if (this.props.consonant.length > 0) {
                 return gql`
                 {

@@ -333,7 +333,7 @@ class Timer extends React.Component {
             timeLeft: timeLeft
           });
 
-          console.log(timeLeft); // TODO - pass this back to ProgressIndicator
+          // console.log(timeLeft); // TODO - pass this back to ProgressIndicator
 
           this.props.updatetimeLeft(timeLeft) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
 
