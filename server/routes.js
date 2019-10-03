@@ -37,9 +37,11 @@ router.get('/admin/users', admin.users); // TODO - add auth token
 router.get('/admin/users/:id', admin.user); // TODO - add auth token
 router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
 
+router.post('/admin/routines', admin.createRoutine); // TODO - add auth token
 router.get('/admin/routines', admin.routines); // TODO - add auth token
 router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
 router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token
+router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token
 
 router.get('/admin/testRoutine', routine.testCreate);
 

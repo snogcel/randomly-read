@@ -1,3 +1,4 @@
+const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const User = require('../models/user');
 const Routine = require('../models/routine');
@@ -288,6 +289,60 @@ exports.updateRoutine = async (req, res) => {
   });
 
 };
+
+// create routine
+exports.createRoutine = async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    let response = {};
+    let attributes = req.body.data.attributes;
+
+    await Routine.create(attributes, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error writing data"};
+        res.json(response);
+      } else {
+        response = transformRoutine(data, "routines");
+        res.json(response);
+      }
+
+    });
+
+    } catch (err) {
+      return res.status(422).json(err);
+  }
+};
+
+
+// delete routine
+exports.deleteRoutine = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  await Routine.deleteOne({"_id":o_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformRoutine(data, "routines");
+      res.json(response);
+    }
+
+  });
+
+};
+
 
 // list interactions
 
