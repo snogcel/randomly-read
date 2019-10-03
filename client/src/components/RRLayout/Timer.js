@@ -128,6 +128,25 @@ class Timer extends React.Component {
   }
 
   setExercise(exercise) {
+
+    console.log("Modify exerciseConfig...");
+
+    // Stub out exerciseConfig
+    let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
+
+    exercise.duration = duration; // calculation exercise duration
+    exercise.templates = []; // for future functionality
+    exercise.limit = 1; // for future functionality
+    exercise.map = "randomly";
+
+    if (exercise.isIntermission) {
+      exercise.consonants = [];
+      exercise.vowels = [];
+      exercise.syllables = [];
+      exercise.map = "intermission";
+      exercise.mode = "Intermission";
+    }
+
     console.log("Set Exercise: ", exercise);
 
     switch (exercise.map) {
@@ -141,7 +160,7 @@ class Timer extends React.Component {
         break;
       case 'intermission':
         this.currentRoutine = this.routineBuilder.buildIntermission(exercise);
-        console.log("Exercise Map", this.currentRoutine);
+        console.log("Exercise Map (Intermission)", this.currentRoutine);
         this.props.addWord([]); // resetting the word array in redux to reset the WordHistory
         break;
       default:

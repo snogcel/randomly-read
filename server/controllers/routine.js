@@ -6,41 +6,29 @@ const name = "Vowel Specific - ɪ";
 const subroutine = [
       {
         "rangeVal": 5,
-        "map": "randomly",
-        "intermissionText": "",
+        "repetitions": 10,
+        "isIntermission": false,
         "mode": "Word",
-        "limit": 1,
         "vowels": ["IH"],
         "consonants": ["B","D","G","P","T","K"],
         "syllables": ["1","2","3","4","5"],
-        "repetitions": 10
       },
       {
         "rangeVal": 5,
-        "map": "intermission",
+        "repetitions": 1,
+        "isIntermission": true,
         "intermissionText": "relax",
-        "mode": "Intermission",
-        "limit": 1,
-        "vowels": [],
-        "consonants": [],
-        "syllables": [],
-        "repetitions": 1
       },
       {
         "rangeVal": 5,
-        "map": "randomly",
-        "intermissionText": "",
+        "repetitions": 10,
+        "isIntermission": false,
         "mode": "Word",
-        "limit": 1,
         "vowels": ["IH"],
         "consonants": ["B","D","G","P","T","K"],
         "syllables": ["1","2","3","4","5"],
-        "repetitions": 10
       }
     ];
-
-
-
 
 
 // list all routines
