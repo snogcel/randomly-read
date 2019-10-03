@@ -6,16 +6,9 @@ const RoutineBuilder = function() {
 
 RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, syllables) {
 
-  console.log("- blacklist -");
-  console.log("vowel: ", vowel);
-  console.log("consonant: ", consonant);
-  console.log("syllables: ", syllables);
-
   let depth = Math.min(...syllables);
 
   let vowelBlacklist = Blacklist[vowel].consonants[depth - 1];
-
-  console.log("selected blacklist: ", vowelBlacklist);
 
   if (vowelBlacklist.indexOf(consonant) > -1) {
     return false;

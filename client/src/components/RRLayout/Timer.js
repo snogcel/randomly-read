@@ -147,7 +147,9 @@ class Timer extends React.Component {
       exercise.mode = "Intermission";
     }
 
-    console.log("Set Exercise: ", exercise);
+    // Update Timer Value
+    this.setState({ rangeVal: exercise.rangeVal });
+    this.props.setRange(parseInt(exercise.rangeVal));
 
     switch (exercise.map) {
       case 'default':
@@ -173,11 +175,13 @@ class Timer extends React.Component {
     this.setState({
       lastUpdated: Date.now() - this.state.start
     });
+
     this.stopTimer();
 
     this.setState({
       rangeVal: val
-    })
+    });
+
     this.props.setRange(val);
 
   }
