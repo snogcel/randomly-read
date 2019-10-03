@@ -6,13 +6,16 @@ const RoutineBuilder = function() {
 
 RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, syllables) {
 
-  let depth = 0;
+  console.log("- blacklist -");
+  console.log("vowel: ", vowel);
+  console.log("consonant: ", consonant);
+  console.log("syllables: ", syllables);
 
-  for (let i = 0; i < syllables.length; i++) {
-    if (syllables[i] > depth) depth = syllables[i];
-  }
+  let depth = Math.min(...syllables);
 
   let vowelBlacklist = Blacklist[vowel].consonants[depth - 1];
+
+  console.log("selected blacklist: ", vowelBlacklist);
 
   if (vowelBlacklist.indexOf(consonant) > -1) {
     return false;
@@ -83,13 +86,16 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
     // Generate Random Number
     let rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
 
+    console.log("Consonant Rand: ", rand);
+
     let verified = false;
     let consonant = exerciseConfig.consonants[rand]; // Use Random Number
 
     verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables); // set and verify initial matched word
 
     while (!verified) {
-      rand = Math.floor(Math.random() * (exerciseConfig.consonants.length + 1));
+      rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
+      console.log("Consonant Rand: ", rand);
       consonant = exerciseConfig.consonants[rand];
       verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables);
       if (verified) console.log('Word replaced with: ' + consonant);
