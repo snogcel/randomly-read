@@ -1,4 +1,4 @@
-import { login, signup } from '../util/api';
+import { login, signup, getRoutineSettings } from '../util/api';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -12,6 +12,20 @@ export const attemptLogin = (username, password) => async dispatch => {
   dispatch(loginRequest);
   try {
     const token = await login(username, password);
+    console.log("User Token: ", token);
+
+    // Fetch User Routines Settings
+    const routineData = await getRoutineSettings(); // store in localStorage
+    let routines = [];
+    for (let i = 0; i < routineData.data.length; i++) {
+      routines.push(routineData.data[i].attributes);
+    }
+    console.log("Fetched Routines: ", JSON.stringify(routines));
+    localStorage.setItem('routines', JSON.stringify(routines));
+
+
+    // Fetch User Interaction Settings
+
     dispatch(loginSuccess(token));
   } catch (error) {
     dispatch(loginError(error));

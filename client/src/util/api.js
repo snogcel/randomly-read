@@ -124,3 +124,8 @@ export async function createInteraction (body, token) {
 export async function getInteractions () {
   return await methods.get('interactions')
 }
+
+export async function getRoutineSettings () {
+  console.log("-fetching routines-");
+  return await methods.get('admin/routines')
+}

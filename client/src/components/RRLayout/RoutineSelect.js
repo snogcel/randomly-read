@@ -1,11 +1,12 @@
 import React from 'react';
 import Select from '@material-ui/core/Select';
-import Routines from './Routines.js';
+// import Routines from './Routines.js';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
 import { withStyles } from "@material-ui/core/styles";
 
+let Routines = [];
 
 const styles = theme => ({
       routine: {
@@ -38,12 +39,14 @@ class RoutineSelect extends React.Component {
             Routine: ""
         };
 
-
         this.handleChange = this.handleChange.bind(this);
 
         this.options = [];
+
+        Routines = JSON.parse(localStorage.getItem('routines'));
+
         for (let i = 0; i < Routines.length; i++) {
-            this.options.push({ value: Routines[i].name });
+          this.options.push({ value: Routines[i].name });
         }
 
     }
@@ -87,20 +90,18 @@ class RoutineSelect extends React.Component {
 
     }
 
-
-
     handleChange(e) {
         this.setState({Routine: e.target.value})
 
         let selectedRoutine = {};
 
         if(e.target.value !== "") {
-        for (let i = 0; i < Routines.length; i++) {
-            if (e.target.value === Routines[i].name) {
-                selectedRoutine = Routines[i];
-            }
+          for (let i = 0; i < Routines.length; i++) {
+              if (e.target.value === Routines[i].name) {
+                  selectedRoutine = Routines[i];
+              }
+          }
         }
-    }
 
         /* let obj = {
             duration: 39,
@@ -125,6 +126,7 @@ class RoutineSelect extends React.Component {
     render() {
         const { classes } = this.props;
         const { theme } = this.props;
+
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150}}>

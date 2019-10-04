@@ -6,11 +6,7 @@ const RoutineBuilder = function() {
 
 RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, syllables) {
 
-  let depth = 0;
-
-  for (let i = 0; i < syllables.length; i++) {
-    if (syllables[i] > depth) depth = syllables[i];
-  }
+  let depth = Math.min(...syllables);
 
   let vowelBlacklist = Blacklist[vowel].consonants[depth - 1];
 
@@ -81,26 +77,35 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
     let action = JSON.parse(JSON.stringify(actionBase));
 
     // Generate Random Number
-    let rand = Math.floor(Math.random() * (exerciseConfig.consonants[k].length));
+    let rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
+    let randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
 
     let verified = false;
-    let consonant = exerciseConfig.consonants[k][rand]; // Use Random Number
 
-    verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables); // set and verify initial matched word
+    let consonant = exerciseConfig.consonants[rand]; // Use Random Number
+    let vowel = exerciseConfig.vowels[randVowel];
+
+    verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables); // set and verify initial matched word
+
+    console.log(exerciseConfig.vowels);
 
     while (!verified) {
-      rand = Math.floor(Math.random() * (exerciseConfig.consonants.length + 1));
-      consonant = exerciseConfig.consonants[k][rand];
-      verified = this._verifyBlacklist(exerciseConfig.vowels[j], consonant, exerciseConfig.syllables);
-      if (verified) console.log('Word replaced with: ' + consonant);
+      rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
+      randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
+      consonant = exerciseConfig.consonants[rand];
+      vowel = exerciseConfig.vowels[randVowel];
+      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables);
+      if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
     }
+
+    console.log('Word added with: ' + consonant + " and " + vowel);
 
     // Set Parameters
     action.consonant.unshift(consonant); // add consonant to array
-    action.vowel.unshift(exerciseConfig.vowels[j]); // add vowel to array
+    action.vowel.unshift(vowel); // add vowel to array
 
     // Iterate Vowels and Consonants
-    if (k < exerciseConfig.consonants[k].length - 1) {
+    if (k < exerciseConfig.consonants.length - 1) {
 
       // Logic Applied if Random Selection is active
       if (k < (exerciseConfig.repetitions - 1)) {
@@ -150,7 +155,7 @@ RoutineBuilder.prototype.build = function(exerciseConfig) {
     let action = JSON.parse(JSON.stringify(actionBase));
 
     // Set Parameters
-    action.consonant = exerciseConfig.consonants[k]; // add all consonants to array
+    action.consonant = exerciseConfig.consonants; // add all consonants to array
     action.vowel.unshift(exerciseConfig.vowels[j]); // add vowel to array
 
     if (k < (exerciseConfig.repetitions - 1)) {

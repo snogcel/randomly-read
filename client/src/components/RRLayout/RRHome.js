@@ -62,7 +62,8 @@ const RRHome = props => {
 
             <WordCardContainer />
             <ProgressIndicator />
-           <WordHistory />  
+            <WordHistory />
+
           </Grid>
 
          

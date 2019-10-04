@@ -2,17 +2,16 @@ import { connect } from 'react-redux';
 import WordHistory from './WordHistory'
 
 const mapStateToProps = state => ({
-    word: state.word.text,
-    currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
-    });
+  word: state.word.text
+});
 
-  const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
 
-    });
+});
 
-    const WordHistoryContainer = connect(
-        mapStateToProps,
-        mapDispatchToProps,
-      )(WordHistory);
+const WordHistoryContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WordHistory);
       
-      export default WordHistoryContainer;
+export default WordHistoryContainer;

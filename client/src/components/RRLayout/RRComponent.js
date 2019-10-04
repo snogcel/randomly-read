@@ -123,8 +123,6 @@ class RandomlyRead extends React.Component {
         </div>
     );
 
-
-
     return timer;
 
   }

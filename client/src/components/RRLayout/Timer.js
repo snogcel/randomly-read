@@ -10,6 +10,8 @@ import RoutineSelectContainer from './RoutineSelect'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
+import { getRoutineSettings } from '../../util/api';
+
 const styles = theme => ({
   button: {
     "&:disabled": {
@@ -72,10 +74,6 @@ class Timer extends React.Component {
 }
   componentDidMount() {
 
-    // TODO - find a better way to set routines
-
-   // this.routineSelectHandler(Routines[1]);
-
   }
 
   routineSelectHandler(routine) {
@@ -130,7 +128,28 @@ class Timer extends React.Component {
   }
 
   setExercise(exercise) {
-    console.log("Set Exercise: ", exercise);
+
+    console.log("Modify exerciseConfig...");
+
+    // Stub out exerciseConfig
+    let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
+
+    exercise.duration = duration; // calculation exercise duration
+    exercise.templates = []; // for future functionality
+    exercise.limit = 1; // for future functionality
+    exercise.map = "randomly";
+
+    if (exercise.isIntermission) {
+      exercise.consonants = [];
+      exercise.vowels = [];
+      exercise.syllables = [];
+      exercise.map = "intermission";
+      exercise.mode = "Intermission";
+    }
+
+    // Update Timer Value
+    this.setState({ rangeVal: exercise.rangeVal });
+    this.props.setRange(parseInt(exercise.rangeVal));
 
     switch (exercise.map) {
       case 'default':
@@ -143,7 +162,7 @@ class Timer extends React.Component {
         break;
       case 'intermission':
         this.currentRoutine = this.routineBuilder.buildIntermission(exercise);
-        console.log("Exercise Map", this.currentRoutine);
+        console.log("Exercise Map (Intermission)", this.currentRoutine);
         this.props.addWord([]); // resetting the word array in redux to reset the WordHistory
         break;
       default:
@@ -156,11 +175,13 @@ class Timer extends React.Component {
     this.setState({
       lastUpdated: Date.now() - this.state.start
     });
+
     this.stopTimer();
 
     this.setState({
       rangeVal: val
-    })
+    });
+
     this.props.setRange(val);
 
   }
@@ -312,7 +333,7 @@ class Timer extends React.Component {
             timeLeft: timeLeft
           });
 
-          console.log(timeLeft); // TODO - pass this back to ProgressIndicator
+          // console.log(timeLeft); // TODO - pass this back to ProgressIndicator
 
           this.props.updatetimeLeft(timeLeft) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
 
