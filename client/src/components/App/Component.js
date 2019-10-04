@@ -16,6 +16,7 @@ import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
+import Interactions from '../Interactions/InteractionsHomeContainer';
 
 const client = new ApolloClient({
   uri: `http://dev.snogcel.com:8080/graphql`
@@ -40,6 +41,7 @@ const App = props => (
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
               <Route path='/FluencyReport' component={FluencyReport} />
+              <Route path='/Interactions' component={Interactions} />
               <Route path='/' component={Home} />
             </Switch>
           </>
