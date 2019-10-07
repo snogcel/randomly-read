@@ -118,11 +118,11 @@ export async function castVote (id, vote, token) {
 }
 
 export async function createInteraction (body, token) {
-  return await methods.post('interactions', body, token)
+  return await methods.post('interaction', body, token)
 }
 
-export async function getInteractions () {
-  return await methods.get('interactions')
+export async function getInteractions (token) {
+  return await methods.get('interaction', token)
 }
 
 export async function getRoutineSettings () {

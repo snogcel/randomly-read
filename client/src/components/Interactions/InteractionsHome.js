@@ -1,6 +1,9 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
+
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +15,7 @@ import { getRoutineSettings } from '../../util/api';
 import InteractionForm from './elements/InteractionForm';
 
 import Button from '@material-ui/core/Button';
+import store from "../../store";
 
 const styles = theme => ({
   root: {
@@ -36,30 +40,12 @@ const styles = theme => ({
   },
 });
 
-const intention = [
-  { id: 1, name: "Did not remember", value: 1 },
-  { id: 2, name: "Remembered", value: 50 },
-  { id: 3, name: "Remembered and used", value: 100 }
-];
-
-const ease = [
-  { id: 1, name: "Difficult", value: 25 },
-  { id: 2, name: "Less Difficult", value: 50 },
-  { id: 3, name: "Easier", value: 75 },
-  { id: 4, name: "Easy", value: 100 }
-];
-
-const options = [{
-  "audience": [ { id: 1, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }, { id: 5, name: "No Relationship" }],
-  "name": "Speaking at Work or School",
-  "id": "5d962412a3f6d6a220d2e8d6"
-}];
-
 class InteractionsHome extends React.Component {
   constructor(props) {
     super(props);
 
     this.buttonHandler = this.buttonHandler.bind(this);
+    this.interactionHandler = this.interactionHandler.bind(this);
 
     this.state = {
       intention: [
@@ -73,40 +59,29 @@ class InteractionsHome extends React.Component {
         { id: 3, name: "Easier", value: 75 },
         { id: 4, name: "Easy", value: 100 }
       ],
-      options: [{
-        "audience": [ { id: 1, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }],
-        "name": "Speaking at Work or School",
-        "id": "5d962412a3f6d6a220d2e8d6"
-      },{
-        "audience": [ { id: 2, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }, { id: 5, name: "No Relationship" }],
-        "name": "Speaking at Work or School 2",
-        "id": "5d962412a3f6d6a220d2e8d6"
-      }],
-      selectedOption: {
-        "audience": []
-      }
+      options: [],
+      selectedOption: {}
     };
 
   }
 
   componentWillMount() {
-    let routines = this.renderMyData();
+    this.prepareInteractionForm();
   }
 
-  async renderMyData(){
+  prepareInteractionForm(){
 
-    const routines = await getRoutineSettings(); // TODO - update to fetch interaction settings
+    this.props.fetchInteractionSettings();
+    this.props.fetchInteractions();
 
-    // TODO - fetch first item from options...
+    let options = store.getState().interaction;
+
+    console.log("-fetched settings: ", options.settings);
+
     this.setState({
-      selectedOption: {
-        "audience": [ { id: 1, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }],
-        "name": "Speaking at Work or School",
-        "id": "5d962412a3f6d6a220d2e8d6"
-      }
+      options: options.settings,
+      selectedOption: options.settings[0]
     });
-
-    return routines;
 
   }
 
@@ -116,11 +91,21 @@ class InteractionsHome extends React.Component {
     });
   }
 
+  interactionHandler(interaction) {
+    interaction.setting = this.state.selectedOption.name; // define setting based on current state
+    this.props.attemptCreateInteraction(interaction);
+    this.props.fetchInteractions({});
+  }
+
   componentDidMount() {
 
   }
 
   render() {
+
+    // if (this.props.isFetching) return <LoadingIndicatorBox />;
+
+    let items = store.getState().interaction.items;
 
     return (
 
@@ -131,19 +116,21 @@ class InteractionsHome extends React.Component {
 
             <Button onClick={() => { this.buttonHandler(this.state.options[0]) }}> Default </Button>
 
+            <br /><br />
+
             <Button onClick={() => { this.buttonHandler(this.state.options[1]) }}> Default 2 </Button>
 
           </Grid>
 
           <Grid item xs={12} sm={6}>
 
-            <InteractionForm options={this.state.selectedOption} />
+            <InteractionForm options={this.state.selectedOption} action={this.interactionHandler}/>
 
           </Grid>
 
           <Grid item xs={12} sm={3}>
 
-            Test
+            {JSON.stringify(items)}
 
           </Grid>
 

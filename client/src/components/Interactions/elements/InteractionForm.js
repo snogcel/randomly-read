@@ -52,23 +52,24 @@ export default function InteractionForm(props) {
 
   const [state, setState] = React.useState({
     audience: '',
-    remembered: false,
-    used: false,
+    intention: false,
+    applied: false,
     ease: 0
   });
 
   const handleSubmit = event => {
 
-    // TODO - POST via API
-    console.log(state);
+    // pass form submission back to InteractionsHome
+    props.action(state);
 
     let defaultState = {
       audience: '',
-      remembered: false,
-      used: false,
+      intention: false,
+      applied: false,
       ease: 0
     };
 
+    // reset form state
     setState( defaultState );
 
   };
@@ -88,10 +89,10 @@ export default function InteractionForm(props) {
 
   return (
     <div>
-      <form action="/api/interactions" method="POST" onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
+      <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
         <FormControl component="fieldset" className={classes.formControl}>
             <FormLabel component="legend">{ props.options.name }</FormLabel>
-            <RadioGroup aria-label="gender" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
+            <RadioGroup aria-label="audience" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
               {  props.options.audience.map((item) => (
                 <FormControlLabel
                 value={item.name}
@@ -106,15 +107,15 @@ export default function InteractionForm(props) {
         <br /><br />
 
         <FormControlLabel
-          control={ <Switch checked={state.remembered} onChange={handleSwitchChange('remembered')} value="remembered" color="primary" /> }
-          label="Remembered"
+          control={ <Switch checked={state.intention} onChange={handleSwitchChange('intention')} value="intention" color="primary" /> }
+          label="Thought of intention"
         />
 
         <br /><br /><br />
 
         <FormControlLabel
-          control={ <Switch checked={state.used} onChange={handleSwitchChange('used')} value="used" color="primary" /> }
-          label="Used"
+          control={ <Switch checked={state.applied} onChange={handleSwitchChange('applied')} value="applied" color="primary" /> }
+          label="Spoke with intention"
         />
 
         <br /><br /><br />

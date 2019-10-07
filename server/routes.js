@@ -5,6 +5,7 @@ const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
 const routine = require('./controllers/routine');
+const interaction = require('./controllers/interaction');
 const interactions = require('./controllers/interactions');
 const comments = require('./controllers/comments');
 const { jwtAuth, postAuth, commentAuth, interactionAuth } = require('./auth');
@@ -43,6 +44,10 @@ router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
 router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token
 router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token
 
+router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
+router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
+
+// Test Routes
 router.get('/admin/testRoutine', routine.testCreate);
 
 module.exports = app => {
