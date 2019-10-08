@@ -263,7 +263,6 @@ exports.routine = async (req, res) => {
 
 
 // update routine options
-// update specific user
 exports.updateRoutine = async (req, res) => {
 
   const id = req.params.id;
@@ -412,6 +411,84 @@ exports.interactionSetting = async (req, res) => {
 
 };
 
+// update routine options
+exports.updateInteractionSetting = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  let attributes = req.body.data.attributes;
+  delete attributes.id;
+
+  await interactionSettings.findOneAndUpdate({"_id":o_id}, attributes, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformRoutine(data, "interactionSetting");
+      res.json(response);
+    }
+
+  });
+
+};
+
+// create routine
+exports.createInteractionSetting = async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    let response = {};
+    let attributes = req.body.data.attributes;
+
+    await interactionSettings.create(attributes, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error writing data"};
+        res.json(response);
+      } else {
+        response = transformRoutine(data, "interactionSetting");
+        res.json(response);
+      }
+
+    });
+
+  } catch (err) {
+    return res.status(422).json(err);
+  }
+};
+
+
+// delete routine
+exports.deleteInteractionSetting = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  await interactionSettings.deleteOne({"_id":o_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformRoutine(data, "interactionSetting");
+      res.json(response);
+    }
+
+  });
+
+};
+
 // update interaction settings
 
 
@@ -421,8 +498,8 @@ exports.interactionSetting = async (req, res) => {
 
 exports.interactionSettingsTestCreate = async (req, res) => {
 
-  let name = "Speaking at Work or School - 3";
-  let audience = [ { id: 1, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }];
+  let name = "Speaking at Work";
+  let audience = [ "Family or Friend", "Classmate or Colleague", "Authority Figure", "Service Worker" ];
 
   try {
     const interactionSetting = await interactionSettings.create({

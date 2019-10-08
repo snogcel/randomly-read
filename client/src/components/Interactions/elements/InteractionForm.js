@@ -32,13 +32,6 @@ const useStyles = makeStyles(theme => ({
 
 // Stubbed Out Interaction Settings
 
-const intention = [
-  { label: "Forgot", value: 25 },
-  { label: "Remembered", value: 50 },
-  { label: "Remembered and Attempted", value: 75 },
-  { label: "Remembered and Used", value: 100 }
-];
-
 const ease = [
   { label: "Difficult", value: 0 },
   { label: "Easier", value: 50 },
@@ -95,9 +88,9 @@ export default function InteractionForm(props) {
             <RadioGroup aria-label="audience" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
               {  props.options.audience.map((item) => (
                 <FormControlLabel
-                value={item.name}
+                value={item}
                 control={<Radio color="primary" />}
-                label={item.name}
+                label={item}
 
                 />
                 )) }
@@ -108,14 +101,14 @@ export default function InteractionForm(props) {
 
         <FormControlLabel
           control={ <Switch checked={state.intention} onChange={handleSwitchChange('intention')} value="intention" color="primary" /> }
-          label="Thought of intention"
+          label="Remembered to speak with Intention"
         />
 
         <br /><br /><br />
 
         <FormControlLabel
           control={ <Switch checked={state.applied} onChange={handleSwitchChange('applied')} value="applied" color="primary" /> }
-          label="Spoke with intention"
+          label="Spoke with Intention"
         />
 
         <br /><br /><br />

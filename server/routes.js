@@ -49,8 +49,11 @@ router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // 
 router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
 
 // Interaction Settings
+router.post('/admin/interactionSettings', admin.createInteractionSetting); // TODO - add auth token
 router.get('/admin/interactionSettings', admin.interactionSettings); // TODO - add auth token
 router.get('/admin/interactionSettings/:id', admin.interactionSetting); // TODO - add auth token
+router.patch('/admin/interactionSettings/:id', admin.updateInteractionSetting); // TODO - add auth token
+router.delete('/admin/interactionSettings/:id', admin.deleteInteractionSetting); // TODO - add auth token
 
 // Test Routes
 router.get('/admin/testRoutine', routine.testCreate);
