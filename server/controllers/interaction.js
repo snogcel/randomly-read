@@ -35,6 +35,14 @@ exports.list = async (req, res) => {
   res.json(interactions);
 };
 
+
+
+
+
+
+
+// TODO - remove
+
 exports.listby24hrs = async (req, res) => {
   const interactions = await Interaction.find({"createdAt":{$gt:new Date(Date.now() - 24 * 60* 60 * 1000)}})
   res.json(interactions)

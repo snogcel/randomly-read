@@ -44,11 +44,17 @@ router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
 router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token
 router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token
 
+// Interactions
 router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
 router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
 
+// Interaction Settings
+router.get('/admin/interactionSettings', admin.interactionSettings); // TODO - add auth token
+router.get('/admin/interactionSettings/:id', admin.interactionSetting); // TODO - add auth token
+
 // Test Routes
 router.get('/admin/testRoutine', routine.testCreate);
+router.get('/admin/testInteractionSetting', admin.interactionSettingsTestCreate);
 
 module.exports = app => {
   app.use('/api', router);

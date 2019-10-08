@@ -2,7 +2,7 @@ const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const User = require('../models/user');
 const Routine = require('../models/routine');
-
+const interactionSettings = require('../models/interactionSettings');
 
 // TODO - add auth
 
@@ -236,8 +236,6 @@ exports.routines = async (req, res) => {
 
   }
 
-
-
 };
 
 
@@ -344,16 +342,110 @@ exports.deleteRoutine = async (req, res) => {
 };
 
 
-// list interactions
+// list all interactionSettings
+exports.interactionSettings = async (req, res) => {
 
+  console.log(req.query);
+
+  if (typeof req.query.filter !== "undefined") {
+
+    const filter = JSON.parse(req.query.filter);
+
+    let response = {};
+
+    interactionSettings.find({
+      '_id': {$in: filter["id"]}
+    }, function (err, data) {
+
+      if (err) {
+        response = {"error": true, "message": "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformRoutineSet(data, "interactionSettings");
+        res.json(response);
+      }
+
+    });
+
+  } else {
+
+    // TODO - Paging
+    // TODO - Sorting
+
+    let response = {};
+
+    await interactionSettings.find({}, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformRoutineSet(data, "interactionSettings");
+        res.json(response);
+      }
+
+    });
+
+  }
+
+};
+
+// list specific interactionSetting
+exports.interactionSetting = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  interactionSettings.find({ '_id': o_id }, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformRoutine(data[0], "interactionSetting");
+      res.json(response);
+    }
+
+  });
+
+};
 
 // update interaction settings
 
 
-// test routine options
+// test interactionSettings create
+
+
+
+exports.interactionSettingsTestCreate = async (req, res) => {
+
+  let name = "Speaking at Work or School - 3";
+  let audience = [ { id: 1, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }];
+
+  try {
+    const interactionSetting = await interactionSettings.create({
+      name,
+      audience
+    });
+    res.status(201).json(interactionSetting);
+  } catch (err) {
+
+    console.log(err);
+
+    res.status(201).json("Error!");
+  }
+
+};
 
 
 // TODO - remove these once Edit / Create is completed...
+
+
+
+
+
 const routineTestDataSet = [
   {
     "id": "5d8a75730d35bc728c96e777",
