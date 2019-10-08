@@ -6,6 +6,7 @@ export default () => next => action => {
   } else if (action.type === LOGOUT) {
     localStorage.removeItem('token');
     localStorage.removeItem('routines');
+    localStorage.removeItem('interactionSettings');
   }
   next(action);
 };

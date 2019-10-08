@@ -1,4 +1,4 @@
-import { login, signup, getRoutineSettings } from '../util/api';
+import { login, signup, getRoutineSettings, getInteractionSettings } from '../util/api';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -22,6 +22,15 @@ export const attemptLogin = (username, password) => async dispatch => {
     }
     console.log("Fetched Routines: ", JSON.stringify(routines));
     localStorage.setItem('routines', JSON.stringify(routines));
+
+    // Fetch User Routines Settings
+    const interactionSettings = await getInteractionSettings();
+    let settings = [];
+    for (let i = 0; i < interactionSettings.data.length; i++) {
+      settings.push(interactionSettings.data[i].attributes);
+    }
+    console.log("Fetched Interaction Settings: ", JSON.stringify(settings));
+    localStorage.setItem('interactionSettings', JSON.stringify(settings));
 
 
     // Fetch User Interaction Settings

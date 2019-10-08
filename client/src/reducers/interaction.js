@@ -22,7 +22,7 @@ export default (state = initialState, action) => {
       return { ...state, isFetching: false };
 
     case FETCH_INTERACTION_SETTINGS_REQUEST:
-      return { ...state, isFetching: true, newInteraction: null };
+      return { ...state, isFetching: true };
     case FETCH_INTERACTION_SETTINGS_SUCCESS:
       return { ...state, isFetching: false, settings: action.interactionSettings };
     case FETCH_INTERACTION_SETTINGS_ERROR:

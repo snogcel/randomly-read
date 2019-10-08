@@ -1,4 +1,4 @@
-import { createInteraction, getInteractions } from "../util/api";
+import {createInteraction, getInteractions, getInteractionSettings} from "../util/api";
 
 export const CREATE_INTERACTION_REQUEST = 'CREATE_INTERACTION_REQUEST';
 export const CREATE_INTERACTION_SUCCESS = 'CREATE_INTERACTION_SUCCESS';
@@ -52,25 +52,10 @@ const fetchInteractionSettingsError = error => ({ type: FETCH_INTERACTION_SETTIN
 export const fetchInteractionSettings = () => async dispatch => {
   dispatch(fetchInteractionSettingsRequest);
   try {
-
-    // const posts = await getPosts(category);
-
-    // return as JSON API
-
-    console.log("-fetching interaction settings-");
-
-    const interactionSettings = [{
-      "audience": [ { id: 1, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }],
-      "name": "Speaking at Work or School",
-      "id": "5d962412a3f6d6a220d2e8d6"
-    },{
-      "audience": [ { id: 2, name: "Family or Friend" }, { id: 2, name: "Classmate or Colleague" }, { id: 3, name: "Authority Figure" }, { id: 4, name: "Service Worker" }, { id: 5, name: "No Relationship" }],
-      "name": "Speaking at Work or School 2",
-      "id": "5d962412a3f6d6a220d2e8d6"
-    }];
-
+    const interactionSettings = JSON.parse(localStorage.getItem('interactionSettings'));
     dispatch(fetchInteractionSettingsSuccess(interactionSettings));
   } catch (error) {
+    console.log("-attempting settings fetch (fail)-");
     dispatch(fetchInteractionSettingsError(error));
   }
 };

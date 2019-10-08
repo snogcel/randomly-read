@@ -51,7 +51,7 @@ export default function InteractionForm(props) {
   const [value, setValue] = React.useState('');
 
   const [state, setState] = React.useState({
-    audience: '',
+    audience: "",
     intention: false,
     applied: false,
     ease: 0
@@ -63,7 +63,7 @@ export default function InteractionForm(props) {
     props.action(state);
 
     let defaultState = {
-      audience: '',
+      audience: "",
       intention: false,
       applied: false,
       ease: 0
@@ -91,14 +91,14 @@ export default function InteractionForm(props) {
     <div>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
         <FormControl component="fieldset" className={classes.formControl}>
-            <FormLabel component="legend">{ props.options.name }</FormLabel>
+          <FormLabel component="legend"><h2>{ props.options.name }</h2><br /></FormLabel>
             <RadioGroup aria-label="audience" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
               {  props.options.audience.map((item) => (
                 <FormControlLabel
                 value={item.name}
                 control={<Radio color="primary" />}
                 label={item.name}
-                labelPlacement="start"
+
                 />
                 )) }
             </RadioGroup>
@@ -123,8 +123,8 @@ export default function InteractionForm(props) {
         <Slider
           value={state.ease}
           aria-labelledby="ease"
-          step={null}
-          valueLabelDisplay="off"
+          step={5}
+          valueLabelDisplay="auto"
           marks={ease}
           onChange={handleSliderChange('ease', value)}
         />

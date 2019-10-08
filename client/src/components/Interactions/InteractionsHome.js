@@ -59,7 +59,7 @@ class InteractionsHome extends React.Component {
         { id: 3, name: "Easier", value: 75 },
         { id: 4, name: "Easy", value: 100 }
       ],
-      options: [],
+      options: null,
       selectedOption: {}
     };
 
@@ -72,11 +72,10 @@ class InteractionsHome extends React.Component {
   prepareInteractionForm(){
 
     this.props.fetchInteractionSettings();
+
     this.props.fetchInteractions();
 
     let options = store.getState().interaction;
-
-    console.log("-fetched settings: ", options.settings);
 
     this.setState({
       options: options.settings,
@@ -103,8 +102,6 @@ class InteractionsHome extends React.Component {
 
   render() {
 
-    // if (this.props.isFetching) return <LoadingIndicatorBox />;
-
     let items = store.getState().interaction.items;
 
     return (
@@ -114,11 +111,9 @@ class InteractionsHome extends React.Component {
 
           <Grid item xs={12} sm={3}>
 
-            <Button onClick={() => { this.buttonHandler(this.state.options[0]) }}> Default </Button>
-
-            <br /><br />
-
-            <Button onClick={() => { this.buttonHandler(this.state.options[1]) }}> Default 2 </Button>
+            {  this.state.options.map((item) => (
+              <Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button>
+            )) }
 
           </Grid>
 
@@ -128,12 +123,16 @@ class InteractionsHome extends React.Component {
 
           </Grid>
 
-          <Grid item xs={12} sm={3}>
+        </Grid>
+
+        <br /><br />
+
+        <Grid container spacing={24}>
+          <Grid item xs={24} sm={24}>
 
             {JSON.stringify(items)}
 
           </Grid>
-
         </Grid>
       </div>
 
