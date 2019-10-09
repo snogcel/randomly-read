@@ -40,7 +40,7 @@ const Home = () => (
         )}
       />
 
-      <Route exact path='/' component={RRLayout} />
+      <Route exact path='/' component={PostListContainer} />
 
       <Route
         exact

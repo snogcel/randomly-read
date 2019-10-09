@@ -33,6 +33,7 @@ const Header = ({ user, logout }) => (
     <HeaderLogo />
     {user ? (
       <>
+        <HeaderNavLink to='/randomlyread'>Randomly Read</HeaderNavLink>
         <HeaderNavLink to='/interactions'>Daily Interaction Log</HeaderNavLink>
         <HeaderUsername username={user.username} />
         <HeaderNavLink as='span' onClick={logout}>log out</HeaderNavLink>
