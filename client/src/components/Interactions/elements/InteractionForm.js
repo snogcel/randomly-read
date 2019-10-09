@@ -101,7 +101,7 @@ export default function InteractionForm(props) {
 
         <FormControlLabel
           control={ <Switch checked={state.intention} onChange={handleSwitchChange('intention')} value="intention" color="primary" /> }
-          label="Remembered to speak with Intention"
+          label="Remembered your Intention"
         />
 
         <br /><br /><br />

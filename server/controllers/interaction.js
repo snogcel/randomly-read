@@ -31,7 +31,7 @@ exports.create = async (req, res, next) => {
 exports.list = async (req, res) => {
   const author = req.user.id;
   const a_id = new ObjectId(author);
-  const interactions =  await Interaction.find({"author":a_id});
+  const interactions =  await Interaction.find({"author":a_id,"createdAt":{$gt:new Date(Date.now() - (12 * 60* 60 * 1000))}});
   res.json(interactions);
 };
 

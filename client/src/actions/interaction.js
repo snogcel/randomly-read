@@ -29,7 +29,7 @@ const fetchInteractionsRequest = { type: FETCH_INTERACTIONS_REQUEST };
 const fetchInteractionsSuccess = interactions => ({ type: FETCH_INTERACTIONS_SUCCESS, interactions });
 const fetchInteractionsError = error => ({ type: FETCH_INTERACTIONS_ERROR, error });
 
-export const fetchInteractions = filter => async (dispatch, getState) => {
+export const fetchInteractions = () => async (dispatch, getState) => {
   dispatch(fetchInteractionsRequest);
   try {
     const { token } = getState().auth;

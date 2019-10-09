@@ -13,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { getRoutineSettings } from '../../util/api';
 import InteractionForm from './elements/InteractionForm';
+import InteractionTable from './elements/InteractionTable';
 
 import Button from '@material-ui/core/Button';
 import store from "../../store";
@@ -112,7 +113,7 @@ class InteractionsHome extends React.Component {
           <Grid item xs={12} sm={3}>
 
             {  this.state.options.map((item) => (
-              <Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button>
+              <div><Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button></div>
             )) }
 
           </Grid>
@@ -128,9 +129,14 @@ class InteractionsHome extends React.Component {
         <br /><br />
 
         <Grid container spacing={24}>
-          <Grid item xs={24} sm={24}>
 
-            {JSON.stringify(items)}
+          <Grid item xs={12} sm={3}>
+
+          </Grid>
+
+          <Grid item xs={12} sm={6}>
+
+            <InteractionTable interactions={items}/>
 
           </Grid>
         </Grid>
