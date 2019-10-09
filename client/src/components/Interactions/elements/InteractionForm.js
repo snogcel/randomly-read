@@ -52,19 +52,21 @@ export default function InteractionForm(props) {
 
   const handleSubmit = event => {
 
-    // pass form submission back to InteractionsHome
-    props.action(state);
+    if (!state.audience) {
+      alert("Who did you speak with?")
+    } else {
+      props.action(state);  // pass form submission back to InteractionsHome
 
-    let defaultState = {
-      audience: "",
-      intention: false,
-      applied: false,
-      ease: 0
-    };
+      let defaultState = {
+        audience: "",
+        intention: false,
+        applied: false,
+        ease: 0
+      };
 
-    // reset form state
-    setState( defaultState );
-
+      // reset form state
+      setState( defaultState );
+    }
   };
 
   const handleRadioGroupChange = name => event => {
