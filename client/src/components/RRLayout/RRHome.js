@@ -52,6 +52,7 @@ const RRHome = props => {
           <Grid item xs={12} sm={3}>
 
             <div className={classes.sideColumn}>
+
               <ExerciseHistoryContainer />
               
             </div>
@@ -66,42 +67,16 @@ const RRHome = props => {
 
           </Grid>
 
-         
-
           <Grid item xs={12} sm={3}>
+
             <div className={classes.sideColumn}>
 
-              <Card elevation="1" className={classes.sideColumn}>
-                <CardContent>
-                  <Typography
-                  component={'span'}
-                    align="center"
-                    className={classes.sideTitle}
-                    color="textSecondary"
-                  >
-
-                    <TimerContainer />
-
-                  </Typography>
-                </CardContent>
-              </Card>
-              <br />
-              <br />
-              <Card elevation="1" className={classes.sideColumn}>
-                <CardContent>
-                  <Typography
-                  component={'span'}
-                    align="center"
-                    className={classes.sideTitle}
-                    color="textSecondary"
-                  >
-                    routine selector
-                  </Typography>
-                </CardContent>
-              </Card>
+              <TimerContainer />
 
             </div>
+
           </Grid>
+
 
         </Grid>
       </div>

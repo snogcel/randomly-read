@@ -31,21 +31,15 @@ const Wrapper = styled.header`
 const Header = ({ user, logout }) => (
   <Wrapper>
     <HeaderLogo />
-    <HeaderDarkButtonContainer />
     {user ? (
       <>
+        <HeaderNavLink to='/interactions'>Daily Interaction Log</HeaderNavLink>
         <HeaderUsername username={user.username} />
-        <HeaderNavLink as='span' onClick={logout}>
-          log out
-        </HeaderNavLink>
-        <HeaderNavLink to='/randomlyread'>RR</HeaderNavLink>
-        <HeaderNavLink to='/fluencyreport'>Fluency Report</HeaderNavLink>
+        <HeaderNavLink as='span' onClick={logout}>log out</HeaderNavLink>
       </>
     ) : (
       <>
         <HeaderNavLink to='/login'>log in</HeaderNavLink>
-        <HeaderNavLink to='/signup'>sign up</HeaderNavLink>
-        <HeaderNavLink to='/randomlyread'>RR</HeaderNavLink>
       </>
     )}
   </Wrapper>
