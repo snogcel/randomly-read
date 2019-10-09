@@ -38,17 +38,24 @@ router.get('/admin/users', admin.users); // TODO - add auth token
 router.get('/admin/users/:id', admin.user); // TODO - add auth token
 router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
 
+// Routine Administration
 router.post('/admin/routines', admin.createRoutine); // TODO - add auth token
 router.get('/admin/routines', admin.routines); // TODO - add auth token
 router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
 router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token
 router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token
 
+// Routine Settings
+router.get('/settings/routines', jwtAuth, routine.settings);
+
 // Interactions
 router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
 router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
 
 // Interaction Settings
+router.get('/settings/interactions', jwtAuth, interaction.settings);
+
+// Interaction Administration
 router.post('/admin/interactionSettings', admin.createInteractionSetting); // TODO - add auth token
 router.get('/admin/interactionSettings', admin.interactionSettings); // TODO - add auth token
 router.get('/admin/interactionSettings/:id', admin.interactionSetting); // TODO - add auth token

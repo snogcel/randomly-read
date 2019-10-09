@@ -126,12 +126,12 @@ export async function getInteractions (token) {
   return await methods.get('interaction', token)
 }
 
-export async function getInteractionSettings() {
+export async function getInteractionSettings(token) {
   console.log("-fetching interaction settings-");
-  return await methods.get('admin/interactionSettings');
+  return await methods.get('settings/interactions', token);
 }
 
-export async function getRoutineSettings () {
+export async function getRoutineSettings (token) {
   console.log("-fetching routines-");
-  return await methods.get('admin/routines')
+  return await methods.get('settings/routines', token)
 }

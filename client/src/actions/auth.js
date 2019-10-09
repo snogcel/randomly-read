@@ -15,7 +15,7 @@ export const attemptLogin = (username, password) => async dispatch => {
     console.log("User Token: ", token);
 
     // Fetch User Routines Settings
-    const routineData = await getRoutineSettings(); // store in localStorage
+    const routineData = await getRoutineSettings(token); // store in localStorage
     let routines = [];
     for (let i = 0; i < routineData.data.length; i++) {
       routines.push(routineData.data[i].attributes);
@@ -24,7 +24,7 @@ export const attemptLogin = (username, password) => async dispatch => {
     localStorage.setItem('routines', JSON.stringify(routines));
 
     // Fetch User Routines Settings
-    const interactionSettings = await getInteractionSettings();
+    const interactionSettings = await getInteractionSettings(token);
     let settings = [];
     for (let i = 0; i < interactionSettings.data.length; i++) {
       settings.push(interactionSettings.data[i].attributes);
