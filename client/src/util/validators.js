@@ -14,6 +14,9 @@ export const checkValidChars = value =>
 export const checkValidAddressChars = value =>
   /^[a-zA-Z0-9_ .#-]+$/.test(value) ? undefined : 'contains invalid characters';
 
+export const checkValidEmailChars = value =>
+  /^[a-zA-Z0-9_ .@]+$/.test(value) ? undefined : 'contains invalid characters';
+
 export const checkIfTrimmed = value =>
   value.trim() === value ? undefined : 'cannot start or end with whitespace';
 
@@ -30,6 +33,7 @@ const max = len => value => checkMaxLength(value, len);
 const min = len => value => checkMinLength(value, len);
 const validChars = value => checkValidChars(value);
 const validAddressChars = value => checkValidAddressChars(value);
+const validEmailChars = value => checkValidEmailChars(value);
 const trimmed = value => checkIfTrimmed(value);
 
 export const required = value => (value ? undefined : 'required');
@@ -42,6 +46,7 @@ export const passwordValidator = [required, min(8), max(72)];
 
 export const firstNameValidator = [required, max(32), validChars, trimmed];
 export const lastNameValidator = [required, max(32), validChars, trimmed];
+export const emailValidator = [required, max(128), validEmailChars, trimmed];
 export const addressValidator = [required, max(128), validAddressChars, trimmed];
 export const cityValidator = [required, max(128), validAddressChars, trimmed];
 export const stateProvinceValidator = [required, max(64), validChars, trimmed];

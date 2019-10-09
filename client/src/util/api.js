@@ -72,8 +72,8 @@ export async function login (username, password) {
   return json.token;
 }
 
-export async function signup (username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) {
-  const json = await methods.post('register', { username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
+export async function signup (username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) {
+  const json = await methods.post('register', { username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
   return json.token;
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import Form from '../shared/form/Form';
 import renderField from '../shared/form/renderField';
-import { usernameValidator, passwordValidator, firstNameValidator, lastNameValidator, addressValidator, cityValidator, stateProvinceValidator, postalCodeValidator, countryValidator, genderValidator, ageValidator } from '../../util/validators';
+import { usernameValidator, passwordValidator, emailValidator, firstNameValidator, lastNameValidator, addressValidator, cityValidator, stateProvinceValidator, postalCodeValidator, countryValidator, genderValidator, ageValidator } from '../../util/validators';
 import SubmitButton from '../shared/form/SubmitButton';
 
 class SignupForm extends React.Component {
@@ -18,8 +18,8 @@ class SignupForm extends React.Component {
     if (this.props.token) this.props.history.push('/');
   }
 
-  onSubmit = ({ username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age }) => {
-    this.props.attemptSignup(username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age);
+  onSubmit = ({ username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age }) => {
+    this.props.attemptSignup(username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age);
   };
 
   render() {
@@ -34,6 +34,13 @@ class SignupForm extends React.Component {
           type='text'
           component={renderField}
           validate={usernameValidator}
+        />
+        <Field
+          name='email'
+          label='email'
+          type='text'
+          component={renderField}
+          validate={emailValidator}
         />
         <Field
           name='firstName'

@@ -32,7 +32,6 @@ export const attemptLogin = (username, password) => async dispatch => {
     console.log("Fetched Interaction Settings: ", JSON.stringify(settings));
     localStorage.setItem('interactionSettings', JSON.stringify(settings));
 
-
     // Fetch User Interaction Settings
 
     dispatch(loginSuccess(token));
@@ -49,10 +48,10 @@ const signupRequest = { type: SIGNUP_REQUEST };
 const signupSuccess = token => ({ type: SIGNUP_SUCCESS, token });
 const signupError = error => ({ type: SIGNUP_ERROR, error });
 
-export const attemptSignup = (username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) => async dispatch => {
+export const attemptSignup = (username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) => async dispatch => {
   dispatch(signupRequest);
   try {
-    const token = await signup(username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age);
+    const token = await signup(username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age);
     dispatch(signupSuccess(token));
   } catch (error) {
     dispatch(signupError(error));
