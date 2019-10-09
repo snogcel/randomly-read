@@ -11,12 +11,9 @@ import Slider from '@material-ui/lab/Slider';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
-import Grid from "../../RRLayout/WordHistory";
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles(theme => ({
-  formControl: {
-    margin: theme.spacing(3),
-  },
   root: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -27,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
+  },
+  submit: {
+    textAlign: 'center'
   }
 }));
 
@@ -83,46 +83,58 @@ export default function InteractionForm(props) {
   return (
     <div>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
-        <FormControl component="fieldset" className={classes.formControl}>
-          <FormLabel component="legend"><h2>{ props.options.name }</h2><br /></FormLabel>
-            <RadioGroup aria-label="audience" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
-              {  props.options.audience.map((item) => (
-                <FormControlLabel
-                value={item}
-                control={<Radio color="primary" />}
-                label={item}
+        <Grid container>
 
-                />
-                )) }
-            </RadioGroup>
-        </FormControl>
+          <Grid item xs={12}><FormLabel component="legend"><h2>{ props.options.name }</h2><br /></FormLabel></Grid>
 
-        <br /><br />
+          <Grid item xs={3}>
+            <FormControl component="fieldset" className={classes.formControl}>
+                <RadioGroup aria-label="audience" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
+                  {  props.options.audience.map((item) => (
+                    <FormControlLabel
+                    value={item}
+                    control={<Radio color="primary" />}
+                    label={item}
 
-        <FormControlLabel
-          control={ <Switch checked={state.intention} onChange={handleSwitchChange('intention')} value="intention" color="primary" /> }
-          label="Remembered your Intention"
-        />
+                    />
+                    )) }
+                </RadioGroup>
+            </FormControl>
+          </Grid>
 
-        <br /><br /><br />
+          <Grid item xs={6}>
 
-        <FormControlLabel
-          control={ <Switch checked={state.applied} onChange={handleSwitchChange('applied')} value="applied" color="primary" /> }
-          label="Spoke with Intention"
-        />
+            <FormControlLabel
+              control={ <Switch checked={state.intention} onChange={handleSwitchChange('intention')} value="intention" color="primary" /> }
+              label="Remembered your Intention"
+            />
 
-        <br /><br /><br />
+            <br /><br />
 
-        <Slider
-          value={state.ease}
-          aria-labelledby="ease"
-          step={5}
-          valueLabelDisplay="auto"
-          marks={ease}
-          onChange={handleSliderChange('ease', value)}
-        />
+            <FormControlLabel
+              control={ <Switch checked={state.applied} onChange={handleSwitchChange('applied')} value="applied" color="primary" /> }
+              label="Spoke with Intention"
+            />
 
-        <Button type="submit">Submit!</Button>
+            <br /><br />
+
+            <Slider
+              value={state.ease}
+              aria-labelledby="ease"
+              step={5}
+              valueLabelDisplay="auto"
+              marks={ease}
+              onChange={handleSliderChange('ease', value)}
+            />
+          </Grid>
+
+          <Grid item xs={12} className={classes.submit}>
+
+            <Button type="submit">Submit!</Button>
+
+          </Grid>
+
+        </Grid>
       </form>
     </div>
   );

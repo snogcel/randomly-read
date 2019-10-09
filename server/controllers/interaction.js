@@ -67,7 +67,7 @@ exports.create = async (req, res, next) => {
 exports.list = async (req, res) => {
   const author = req.user.id;
   const a_id = new ObjectId(author);
-  const interactions =  await Interaction.find({"author":a_id,"createdAt":{$gt:new Date(Date.now() - (12 * 60* 60 * 1000))}});
+  const interactions =  await Interaction.find({"author":a_id,"createdAt":{$gt:new Date(Date.now() - (12 * 60* 60 * 1000))}}).sort({"createdAt":-1});
   res.json(interactions);
 };
 
@@ -109,8 +109,23 @@ exports.settings = async (req, res) => {
 
 };
 
+exports.delete = async (req, res) => {
+  const interaction = req.params.id;
+  const o_id = new ObjectId(interaction);
 
+  let response = {};
 
+  await Interaction.remove({"_id": o_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error deleting data"};
+      res.json(response);
+    } else {
+      res.json({ message: 'success' });
+    }
+
+  });
+};
 
 // TODO - remove
 

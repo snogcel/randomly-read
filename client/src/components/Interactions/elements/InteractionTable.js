@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import FormControlLabel from "./InteractionForm";
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -41,7 +41,7 @@ export default function InteractionTable(props) {
     const rows = [];
 
     interactions.map((item) => (
-      rows.push({ "setting": item.setting, "audience": item.audience, "intention": (item.intention ? "Yes" : "No"), "applied": (item.applied ? "Yes" : "No"), "ease": item.ease, "createdAt": item.createdAt, "updatedAt": item.updatedAt })
+      rows.push({ "id": item.id, "setting": item.setting, "audience": item.audience, "intention": (item.intention ? "Yes" : "No"), "applied": (item.applied ? "Yes" : "No"), "ease": item.ease, "createdAt":  new Date(item.createdAt).toDateString(), "updatedAt": item.updatedAt })
     ));
 
     return rows;
@@ -56,9 +56,10 @@ export default function InteractionTable(props) {
           <TableRow>
             <TableCell>Setting</TableCell>
             <TableCell align="center">Audience</TableCell>
-            <TableCell align="center">Remembered your Intention</TableCell>
-            <TableCell align="center">Spoke with Intention</TableCell>
+            <TableCell align="center">Intention</TableCell>
+            <TableCell align="center">Spoke w/ Intention</TableCell>
             <TableCell align="center">Ease of Speech</TableCell>
+            <TableCell align="center"></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -71,6 +72,7 @@ export default function InteractionTable(props) {
               <TableCell align="center">{row.intention}</TableCell>
               <TableCell align="center">{row.applied}</TableCell>
               <TableCell align="center">{row.ease}</TableCell>
+              <TableCell align="center"><Button onClick={(e) => { e.preventDefault(); props.action(row.id); }}>Delete</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>

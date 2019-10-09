@@ -121,6 +121,10 @@ export async function createInteraction (body, token) {
   return await methods.post('interaction', body, token)
 }
 
+export async function deleteInteraction (id, token) {
+  return await methods.delete(`interaction/${id}`, token);
+}
+
 export async function getInteractions (token) {
   console.log("-fetching interactions-");
   return await methods.get('interaction', token)

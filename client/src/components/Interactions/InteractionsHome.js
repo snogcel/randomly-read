@@ -47,6 +47,7 @@ class InteractionsHome extends React.Component {
 
     this.buttonHandler = this.buttonHandler.bind(this);
     this.interactionHandler = this.interactionHandler.bind(this);
+    this.removeInteractionHandler = this.removeInteractionHandler.bind(this);
 
     this.state = {
       intention: [
@@ -97,6 +98,10 @@ class InteractionsHome extends React.Component {
     this.props.fetchInteractions({});
   }
 
+  removeInteractionHandler(id) {
+    this.props.attemptDeleteInteraction(id);
+  }
+
   componentDidMount() {
 
   }
@@ -108,9 +113,9 @@ class InteractionsHome extends React.Component {
     return (
 
       <div>
-        <Grid container spacing={24}>
+        <Grid container>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
 
             {  this.state.options.map((item) => (
               <div><Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button></div>
@@ -118,7 +123,7 @@ class InteractionsHome extends React.Component {
 
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={10}>
 
             <InteractionForm options={this.state.selectedOption} action={this.interactionHandler}/>
 
@@ -130,13 +135,13 @@ class InteractionsHome extends React.Component {
 
         <Grid container spacing={24}>
 
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
 
           </Grid>
 
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={8}>
 
-            <InteractionTable interactions={items}/>
+            <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
 
           </Grid>
         </Grid>

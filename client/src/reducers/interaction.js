@@ -7,11 +7,15 @@ import {
   FETCH_INTERACTIONS_ERROR,
   CREATE_INTERACTION_REQUEST,
   CREATE_INTERACTION_SUCCESS,
-  CREATE_INTERACTION_ERROR
+  CREATE_INTERACTION_ERROR,
+  DELETE_INTERACTION_REQUEST,
+  DELETE_INTERACTION_SUCCESS,
+  DELETE_INTERACTION_ERROR
 } from '../actions/interaction';
 
 const initialState = { isFetching: false, settings: [], items: [] };
 
+let items;
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_INTERACTIONS_REQUEST:
@@ -34,6 +38,14 @@ export default (state = initialState, action) => {
       return { ...state, isFetching: false, newInteraction: action.interaction };
     case CREATE_INTERACTION_ERROR:
       return { ...state, isFetching: false, error: action.error };
+
+    case DELETE_INTERACTION_REQUEST:
+      return { ...state, isDeleting: true };
+    case DELETE_INTERACTION_SUCCESS:
+      items = state.items.filter(i => i.id !== action.interaction);
+      return { ...state, isDeleting: false, items, post: null };
+    case DELETE_INTERACTION_ERROR:
+      return { ...state, isDeleting: false };
 
     default:
       return state;

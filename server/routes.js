@@ -51,6 +51,7 @@ router.get('/settings/routines', jwtAuth, routine.settings);
 // Interactions
 router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
 router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
+router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete);
 
 // Interaction Settings
 router.get('/settings/interactions', jwtAuth, interaction.settings);

@@ -1,4 +1,4 @@
-import {createInteraction, getInteractions, getInteractionSettings} from "../util/api";
+import {createInteraction, deleteInteraction, getInteractions, getInteractionSettings} from "../util/api";
 
 export const CREATE_INTERACTION_REQUEST = 'CREATE_INTERACTION_REQUEST';
 export const CREATE_INTERACTION_SUCCESS = 'CREATE_INTERACTION_SUCCESS';
@@ -17,6 +17,26 @@ export const attemptCreateInteraction = interaction => async (dispatch, getState
   } catch (error) {
     dispatch(createInteractionError(error));
 
+  }
+};
+
+
+export const DELETE_INTERACTION_REQUEST = 'DELETE_INTERACTION_REQUEST';
+export const DELETE_INTERACTION_SUCCESS = 'DELETE_INTERACTION_SUCCESS';
+export const DELETE_INTERACTION_ERROR = 'DELETE_INTERACTION_ERROR';
+
+const deleteInteractionRequest = { type: DELETE_INTERACTION_REQUEST };
+const deleteInteractionSuccess = interaction => ({ type: DELETE_INTERACTION_SUCCESS, interaction });
+const deleteInteractionError = error => ({ type: DELETE_INTERACTION_ERROR, error });
+
+export const attemptDeleteInteraction = id => async (dispatch, getState) => {
+  dispatch(deleteInteractionRequest);
+  try {
+    const { token } = getState().auth;
+    await deleteInteraction(id, token);
+    dispatch(deleteInteractionSuccess(id));
+  } catch (error) {
+    dispatch(deleteInteractionError(error));
   }
 };
 
