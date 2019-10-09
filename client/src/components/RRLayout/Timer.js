@@ -461,26 +461,25 @@ class Timer extends React.Component {
     return(
 
       <Grid>
+        <div className="RoutineSelector">
+          <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
+        </div>
+
+        <br /><br />
+
         <div className="TimerControls">
           {start}
           {resume}
           {stop}
           {reset}
-          <div className="RangeContainer">
-            <Range range={rangeVal} updateRange={this.updateRange}/>
-          </div>
         </div>
 
         <br /><br />
-        <div className="RoutineSelector">
-                    <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
-                </div>
-                <br /><br />
-                <Typography variant="h6">({ms(this.state.time, {compact: true})})</Typography>
-                <br /><br />
 
-               {/*  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{currentExercise}</Typography> */}
-                {/* <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{completeExerciseStack}</Typography> */}
+        {/* <div className="RangeContainer"> <Range range={rangeVal} updateRange={this.updateRange}/> </div> */}
+        {/*  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{currentExercise}</Typography> */}
+        {/* <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{completeExerciseStack}</Typography> */}
+
       </Grid>
 
 
