@@ -70,7 +70,7 @@ router.get('/admin/testInteractionSetting', admin.interactionSettingsTestCreate)
 module.exports = app => {
   app.use('/api', router);
 
-  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+  app.use('/graphql', jwtAuth, graphqlExpress((req) => ({ schema, context: {user: req.user} })));
 
   app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 

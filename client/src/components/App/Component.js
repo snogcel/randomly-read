@@ -12,19 +12,40 @@ import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
 import CreatePostFormContainer from '../CreatePostForm/Container';
 import Home from '../Home';
-import ApolloClient from 'apollo-boost';
+import ApolloClient from 'apollo-client';
+
+import { HttpLink } from 'apollo-link-http';
+import { ApolloLink } from 'apollo-link';
+import { InMemoryCache as Cache } from 'apollo-cache-inmemory';
+
 import { ApolloProvider } from 'react-apollo';
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
 import Interactions from '../Interactions/InteractionsHomeContainer';
 
-const client = new ApolloClient({
-  uri: `http://dev.snogcel.com:8080/graphql`
-});
+const AuthLink = (operation, next) => {
+  const token = localStorage.getItem('token');
 
-client.defaultOptions.query = {
-  fetchPolicy: "no-cache"
+  operation.setContext(context => ({
+    ...context,
+    headers: {
+      ...context.headers,
+      Authorization: `Bearer ${token}`,
+    },
+  }));
+
+  return next(operation);
 };
+
+const link = ApolloLink.from([
+  AuthLink,
+  new HttpLink({ uri: 'http://dev.snogcel.com:8080/graphql' }),
+]);
+
+const client = new ApolloClient({
+  link,
+  cache: new Cache().restore({}),
+});
 
 const App = props => (
   <MuiThemeProvider theme={MuiTheme}>
