@@ -72,8 +72,8 @@ export async function login (username, password) {
   return json.token;
 }
 
-export async function signup (username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) {
-  const json = await methods.post('register', { username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
+export async function signup (username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) {
+  const json = await methods.post('register', { username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
   return json.token;
 }
 
@@ -118,14 +118,24 @@ export async function castVote (id, vote, token) {
 }
 
 export async function createInteraction (body, token) {
-  return await methods.post('interactions', body, token)
+  return await methods.post('interaction', body, token)
 }
 
-export async function getInteractions () {
-  return await methods.get('interactions')
+export async function deleteInteraction (id, token) {
+  return await methods.delete(`interaction/${id}`, token);
 }
 
-export async function getRoutineSettings () {
+export async function getInteractions (token) {
+  console.log("-fetching interactions-");
+  return await methods.get('interaction', token)
+}
+
+export async function getInteractionSettings(token) {
+  console.log("-fetching interaction settings-");
+  return await methods.get('settings/interactions', token);
+}
+
+export async function getRoutineSettings (token) {
   console.log("-fetching routines-");
-  return await methods.get('admin/routines')
+  return await methods.get('settings/routines', token)
 }

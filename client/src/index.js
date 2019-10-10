@@ -13,6 +13,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-console.log("Store: ", store.getState())
 
 serviceWorker.unregister();

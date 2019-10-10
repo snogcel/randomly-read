@@ -6,7 +6,7 @@ import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
-
+import RRLayout from '../RRLayout/RRHomeContainer';
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,9 +40,8 @@ const Home = () => (
         )}
       />
 
-      <br />
-
       <Route exact path='/' component={PostListContainer} />
+
       <Route
         exact
         path='/a/:category'
@@ -65,7 +64,7 @@ const Home = () => (
         )}
       />
     </HomeMainSection>
-    <Route component={SidebarContainer} />
+
   </Wrapper>
 );
 

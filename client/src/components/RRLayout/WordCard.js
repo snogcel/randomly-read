@@ -244,15 +244,13 @@ class WordCard extends React.Component  {
             </CardContent>
           </Card>
 
-          <br />
-
-          { VowelCheckboxes.map((item, i) => (
+          {/* VowelCheckboxes.map((item, i) => (
              <>
 
                <VowelCheckbox action={this.handleChange} value={{name: item.name, displayName: item.label, selectedVowel: this.props.vowel}} />
 
              </>
-          )) }
+          )) */}
 
         </div>
 

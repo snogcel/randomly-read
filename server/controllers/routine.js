@@ -1,54 +1,86 @@
 const { body, validationResult } = require('express-validator/check');
+const ObjectId = require('mongodb').ObjectId;
 const Routine = require('../models/routine');
-
-const name = "Vowel Specific - ɪ";
-
-const subroutine = [
-      {
-        "rangeVal": 5,
-        "repetitions": 10,
-        "isIntermission": false,
-        "mode": "Word",
-        "vowels": ["IH"],
-        "consonants": ["B","D","G","P","T","K"],
-        "syllables": ["1","2","3","4","5"],
-      },
-      {
-        "rangeVal": 5,
-        "repetitions": 1,
-        "isIntermission": true,
-        "intermissionText": "relax",
-      },
-      {
-        "rangeVal": 5,
-        "repetitions": 10,
-        "isIntermission": false,
-        "mode": "Word",
-        "vowels": ["IH"],
-        "consonants": ["B","D","G","P","T","K"],
-        "syllables": ["1","2","3","4","5"],
-      }
-    ];
+const User = require('../models/user');
 
 
-// list all routines
-exports.all = async (req, res) => {
+// TODO - move to Utils
+function transformRoutineSet(data, type) {
 
-  let response = {};
+  let result = [];
 
-  await Routine.find({}, function(err, data) {
+  // iterate through data
+  for (var i = 0; i < data.length; i++) {
+
+    let id = data[i]._id;
+
+    let attributes = data[i];
+    // delete attributes.id; // TODO - revisit this once mongo db is live
+
+    // format into JSONAPI
+    let dataSet = {
+      "id": id,
+      "attributes": attributes
+    };
+
+    result.push(dataSet);
+  }
+
+  return {
+    "type": type,
+    "error": false,
+    "message": "OK",
+    "data": result,
+    "meta": {
+      "total": result.length
+    }
+  }
+
+}
+
+exports.settings = async (req, res) => {
+  const author = req.user.id;
+  const a_id = new ObjectId(author);
+
+  let assigned = [];
+
+  // fetch user by ID
+  await User.findOne({"_id": a_id}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
     } else {
-      response = transformDataSet(data, "users");
+      let obj = JSON.parse(JSON.stringify(data));
+      assigned = obj.routines;
     }
 
   });
 
-  res.json(response);
+  let response = {};
+
+  Routine.find({
+    '_id': {$in: assigned}
+  }, function (err, data) {
+
+    if (err) {
+      response = {"error": true, "message": "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformRoutineSet(data, "routines");
+      res.json(response);
+    }
+
+  });
 
 };
+
+
+
+
+
+
+
 
 exports.testCreate = async (req, res) => {
 

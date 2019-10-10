@@ -5,6 +5,7 @@ const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
 const routine = require('./controllers/routine');
+const interaction = require('./controllers/interaction');
 const interactions = require('./controllers/interactions');
 const comments = require('./controllers/comments');
 const { jwtAuth, postAuth, commentAuth, interactionAuth } = require('./auth');
@@ -37,13 +38,34 @@ router.get('/admin/users', admin.users); // TODO - add auth token
 router.get('/admin/users/:id', admin.user); // TODO - add auth token
 router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
 
+// Routine Administration
 router.post('/admin/routines', admin.createRoutine); // TODO - add auth token
 router.get('/admin/routines', admin.routines); // TODO - add auth token
 router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
 router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token
 router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token
 
+// Routine Settings
+router.get('/settings/routines', jwtAuth, routine.settings);
+
+// Interactions
+router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
+router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
+router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete);
+
+// Interaction Settings
+router.get('/settings/interactions', jwtAuth, interaction.settings);
+
+// Interaction Administration
+router.post('/admin/interactionSettings', admin.createInteractionSetting); // TODO - add auth token
+router.get('/admin/interactionSettings', admin.interactionSettings); // TODO - add auth token
+router.get('/admin/interactionSettings/:id', admin.interactionSetting); // TODO - add auth token
+router.patch('/admin/interactionSettings/:id', admin.updateInteractionSetting); // TODO - add auth token
+router.delete('/admin/interactionSettings/:id', admin.deleteInteractionSetting); // TODO - add auth token
+
+// Test Routes
 router.get('/admin/testRoutine', routine.testCreate);
+router.get('/admin/testInteractionSetting', admin.interactionSettingsTestCreate);
 
 module.exports = app => {
   app.use('/api', router);

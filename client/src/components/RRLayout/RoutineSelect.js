@@ -34,20 +34,25 @@ const styles = theme => ({
 
 class RoutineSelect extends React.Component {
     constructor(props) {
-        super(props);
-        this.state = {
-            Routine: ""
-        };
+      super(props);
 
-        this.handleChange = this.handleChange.bind(this);
+      this.handleChange = this.handleChange.bind(this);
 
-        this.options = [];
+      this.options = [];
 
-        Routines = JSON.parse(localStorage.getItem('routines'));
+      Routines = JSON.parse(localStorage.getItem('routines'));
 
-        for (let i = 0; i < Routines.length; i++) {
-          this.options.push({ value: Routines[i].name });
-        }
+      for (let i = 0; i < Routines.length; i++) {
+        this.options.push({ value: Routines[i].name });
+      }
+
+      let selectedRoutine = Routines[0];
+
+      this.state = {
+        Routine: selectedRoutine.name
+      };
+
+      this.props.action(selectedRoutine); // pass mode update back to QueryManager
 
     }
 
@@ -103,23 +108,6 @@ class RoutineSelect extends React.Component {
           }
         }
 
-        /* let obj = {
-            duration: 39,
-            rangeVal: 13,
-            map: 'randomly',
-            mode: 'Word',
-            limit: 1,
-            vowels: ["EY"],
-            consonants: [
-                ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-                ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-                ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"]
-            ],
-            templates: [],
-            syllables: ["2"],
-            repetitions: 3
-        };
- */
         this.props.action(selectedRoutine); // pass mode update back to QueryManager
     }
 
@@ -130,32 +118,14 @@ class RoutineSelect extends React.Component {
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150}}>
-                 <InputLabel >Select Routine</InputLabel>
+                   
                   <Select
                   classes={{select: theme === true ? classes.select : undefined}}
                   value={this.state.Routine}
                   onChange={this.handleChange}
                   className={theme === true ? classes.routine : undefined}
-                  inputProps={{
-                    style: {
-                        color: 'red'
-                    },
-                    classes: {
-                        icon: theme === true ? classes.icon : undefined
-                    }
-
-
-                }}
                   >
-
-                 <MenuItem value={""}>
-                 <em>None</em>
-                 </MenuItem>
-                {this.options.map((item, i) => (
-
-                <MenuItem value={item.value}>{item.value}</MenuItem>
-
-                ))}
+                    { this.options.map((item, i) => ( <MenuItem value={item.value}>{item.value}</MenuItem> )) }
 
                   </Select>
                   </FormControl>

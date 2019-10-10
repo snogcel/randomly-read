@@ -88,6 +88,8 @@ const styles = theme => ({
   },
   historyTitle: {
     fontSize: 35,
+    textAlign: "center",
+    color: "#666666"
   },
   subtitle: {
     fontSize: 20

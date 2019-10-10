@@ -1,4 +1,4 @@
-import { login, signup, getRoutineSettings } from '../util/api';
+import { login, signup, getRoutineSettings, getInteractionSettings } from '../util/api';
 
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -15,7 +15,7 @@ export const attemptLogin = (username, password) => async dispatch => {
     console.log("User Token: ", token);
 
     // Fetch User Routines Settings
-    const routineData = await getRoutineSettings(); // store in localStorage
+    const routineData = await getRoutineSettings(token); // store in localStorage
     let routines = [];
     for (let i = 0; i < routineData.data.length; i++) {
       routines.push(routineData.data[i].attributes);
@@ -23,6 +23,14 @@ export const attemptLogin = (username, password) => async dispatch => {
     console.log("Fetched Routines: ", JSON.stringify(routines));
     localStorage.setItem('routines', JSON.stringify(routines));
 
+    // Fetch User Routines Settings
+    const interactionSettings = await getInteractionSettings(token);
+    let settings = [];
+    for (let i = 0; i < interactionSettings.data.length; i++) {
+      settings.push(interactionSettings.data[i].attributes);
+    }
+    console.log("Fetched Interaction Settings: ", JSON.stringify(settings));
+    localStorage.setItem('interactionSettings', JSON.stringify(settings));
 
     // Fetch User Interaction Settings
 
@@ -40,10 +48,10 @@ const signupRequest = { type: SIGNUP_REQUEST };
 const signupSuccess = token => ({ type: SIGNUP_SUCCESS, token });
 const signupError = error => ({ type: SIGNUP_ERROR, error });
 
-export const attemptSignup = (username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) => async dispatch => {
+export const attemptSignup = (username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age) => async dispatch => {
   dispatch(signupRequest);
   try {
-    const token = await signup(username, password, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age);
+    const token = await signup(username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age);
     dispatch(signupSuccess(token));
   } catch (error) {
     dispatch(signupError(error));

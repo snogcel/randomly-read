@@ -18,7 +18,7 @@ function WordHistory(props) {
   const {classes} = props;
 
   if (typeof props.word.word !== "undefined" && props.word.word) {
-    words.push(props.word.word);
+    words.unshift(props.word.word);
   }
 
   return (
@@ -31,9 +31,7 @@ function WordHistory(props) {
                 <Typography className={classes.historyTitle} color="textPrimary" variant="h3">{item}</Typography>
               </CardContent>
             </Card>
-            <br /><br />
           </Grid>
-
         )) }
       </Grid>
     </React.Fragment>
