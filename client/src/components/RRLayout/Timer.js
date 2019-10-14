@@ -137,7 +137,7 @@ class Timer extends React.Component {
     exercise.duration = duration; // calculation exercise duration
     exercise.templates = []; // for future functionality
     exercise.limit = 1; // for future functionality
-    exercise.map = "randomly";
+    (exercise.mode === "word") ? exercise.map = "randomly" : exercise.map = "default";
 
     if (exercise.isIntermission) {
       exercise.consonants = [];
