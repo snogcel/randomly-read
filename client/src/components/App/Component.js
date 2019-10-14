@@ -37,9 +37,16 @@ const AuthLink = (operation, next) => {
   return next(operation);
 };
 
+const baseUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'http://dev.snogcel.com:8080/graphql'
+    : `https://api.stuttered.net/graphql`;
+
+console.log(process.env.NODE_ENV);
+
 const link = ApolloLink.from([
   AuthLink,
-  new HttpLink({ uri: 'https://api.stuttered.net/graphql' }),
+  new HttpLink({ uri: baseUrl }),
 ]);
 
 const client = new ApolloClient({
