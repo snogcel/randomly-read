@@ -39,7 +39,7 @@ const AuthLink = (operation, next) => {
 
 const link = ApolloLink.from([
   AuthLink,
-  new HttpLink({ uri: 'http://dev.snogcel.com:8080/graphql' }),
+  new HttpLink({ uri: 'https://api.stuttered.net/graphql' }),
 ]);
 
 const client = new ApolloClient({
