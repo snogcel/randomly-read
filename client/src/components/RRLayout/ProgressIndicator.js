@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import LinearProgress from "@material-ui/core/LinearProgress";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { styles } from '../../themeHandler';
 
 function ProgressIndicator(props) {
@@ -13,26 +10,58 @@ function ProgressIndicator(props) {
   // props.completed =
   // props.total
 
-  let status = props.completed + ' of ' + props.total + ' Exercises Completed';
+  // let status = props.completed + ' of ' + props.total + ' Exercises Completed';
 
- // let timeLeft = props.timeLeft;
+  // let timeLeft = props.timeLeft;
+
+
+  /*
+
+  React.useEffect(() => {
+
+    function progress() {
+      setCompleted(prevCompleted => (prevCompleted >= 99 ? 0 : prevCompleted + 33));
+    }
+
+    const timer = setInterval(progress, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+
+  }, []);
+
+  */
+
+  // const classes = useStyles();
 
   const {classes} = props;
 
+  console.log(props);
+
+  let range = props.range;
+
+  let timeLeft = (parseInt(range) - parseInt(props.timeLeft)) || 0;
+
+  let increment = 100 / parseInt(range) || 0;
+  let total = (increment * parseInt(range)) || 0;
+
+  /*
+  console.log("total: ", total);
+  console.log("increment: ", increment);
+  console.log("timeLeft: ", timeLeft);
+  */
+
+  let value = (total - (increment * (range - timeLeft)));
+
   return (
-      <div className={classes.column}>
+    <div className={classes.column}>
+      <CircularProgress variant="static" value={value}/>
+    </div>
+  );
 
-        {status}
-        <br></br>
-
-       {props.currentExerciseNumber !== null ? props.timeLeft : ''}
-
-      </div>
-      );
-  }
-
+}
 
 const ProgressIndicatorWrapped = withStyles(styles)(ProgressIndicator);
-
 
 export default ProgressIndicatorWrapped;

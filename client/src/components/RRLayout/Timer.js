@@ -33,8 +33,6 @@ class Timer extends React.Component {
   constructor(props){
     super(props);
 
-    // TODO - remove "test" from state
-
     this.state = {
       time: 0,
       timeLeft: 0,
@@ -42,7 +40,6 @@ class Timer extends React.Component {
       start: 0,
       lastUpdated: -1,
       rangeVal: 3,
-      test: "test"
     };
 
     this.routineSelectHandler = this.routineSelectHandler.bind(this);
@@ -52,7 +49,7 @@ class Timer extends React.Component {
     this.resumeTimer = this.resumeTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.resetTimerAndQuery = this.resetTimerAndQuery.bind(this);
-    this.resetTimerQueryAndEH = this.resetTimerQueryAndEH.bind(this)
+    this.resetTimerQueryAndEH = this.resetTimerQueryAndEH.bind(this); // ??
     this.exerciseStack = [];
     this.exercisePointer = null;
     this.count = 0;
@@ -82,13 +79,12 @@ class Timer extends React.Component {
 
     if(this.isEmpty(routine)) {
 
-      this.setState({test: "None"}); // TODO: remove?
-
       this.props.addExercise([]);
       this.props.addExerciseNumber(null);
       this.props.addWord([]);
 
     }
+
     else {
 
       for (let i = 0; i < routine.subroutine.length; i++) {
@@ -255,11 +251,11 @@ class Timer extends React.Component {
     }
 
     if(this.props.currentExerciseNumber !== null && this.props.currentExerciseNumber !== this.exercisePointer) {
-      this.exercisePointer = this.props.currentExerciseNumber
+      this.exercisePointer = this.props.currentExerciseNumber;
       this.setExercise(this.exerciseStack[this.exercisePointer]);
     }
 
-    if ((prevState.time - this.state.lastUpdated) > (this.state.rangeVal * 1000)) {
+    if (((prevState.time - this.state.lastUpdated) > (this.state.rangeVal * 1000)) && (prevState.isOn)) {
 
       let routineKeys = this.currentRoutine.keys();
 
@@ -284,8 +280,23 @@ class Timer extends React.Component {
 
       let nextAction = this.currentRoutine.get(currentKey);
 
+      if (!nextAction && (this.exercisePointer === (this.exerciseStack.length - 1))) {
+
+        console.log("-end of exercise stack reached!");
+
+        this.setState({timeLeft: null});
+
+        this.props.updatetimeLeft(null) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
+
+        console.log(this.props.timeLeft);
+
+        this.stopTimer();
+
+      }
 
       if (!nextAction && (this.exerciseStack.length > 0) && (this.exercisePointer < (this.exerciseStack.length - 1))) {
+
+        // Check if end of exercise stack
 
         this.count++;
         if(this.exerciseStack[this.exercisePointer].map !== 'intermission') this.completed++;
@@ -318,22 +329,21 @@ class Timer extends React.Component {
       }
 
 
-    } else {
+    } else if (prevState.isOn) {
 
       this.timeLeftLastUpdated++;
 
-      if (this.timeLeftLastUpdated > 25) {
+      if (this.timeLeftLastUpdated > 10) {
 
         this.timeLeftLastUpdated = 0;
 
         let timeLeft = (Math.round(((this.state.rangeVal * 1000) - (prevState.time - this.state.lastUpdated))/1000)); // Math.ceil() was rounding up and increase the range + 1, round() returns the exact range selected
 
         if (timeLeft !== this.state.timeLeft) {
+
           this.setState({
             timeLeft: timeLeft
           });
-
-          // console.log(timeLeft); // TODO - pass this back to ProgressIndicator
 
           this.props.updatetimeLeft(timeLeft) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
 
@@ -452,7 +462,7 @@ class Timer extends React.Component {
       <Button className={classes.button} onClick={this.startTimer} disabled={isDisabled} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
       null : <Button className={classes.button} onClick={this.stopTimer} size="medium" variant="contained" color={"primary"} ><b>Pause</b></Button>;
-    let resume = (this.state.time === 0 || this.state.isOn) ?
+    let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
       null : <Button className={classes.button} onClick={this.resumeTimer} size="medium" variant="contained" color={"primary"} ><b>Resume</b></Button>;
     let reset = (this.state.time === 0 || this.state.isOn) ?
       null : <Button className={classes.button} onClick={this.resetTimerQueryAndEH} size="small" variant="contained" color={"primary"} ><b>Reset</b></Button>;

@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Timer from './Timer';
-import {addRoutineVowel} from '../../actions/word';
 import {addWord} from '../../actions/word';
 import {removeConsonant} from '../../actions/word';
 import {setMode} from '../../actions/word';
@@ -14,8 +13,12 @@ import {setModalOpen} from '../../actions/exerciseHistory';
 import {setRange} from '../../actions/exerciseHistory';
 import {updatetimeLeft} from '../../actions/exerciseHistory';
 
+import {addConsonant} from '../../actions/word'
+import {setLimit} from '../../actions/word'
+import {addRoutineVowel} from '../../actions/word';
+import {setIntermissionText} from '../../actions/word';
+
 const mapStateToProps = state => ({
-  
   currentExercise: state.exerciseHistory.currentExercise,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
   isPaused: state.exerciseHistory.isPaused,
@@ -64,13 +67,20 @@ const mapDispatchToProps = dispatch => ({
     updatetimeLeft: (timeLeft) => {
       dispatch(updatetimeLeft(timeLeft))
     },
-
-
+    addConsonant: (consonant) => {
+      dispatch(addConsonant(consonant))
+    },
+    setLimit: (limit) => {
+      dispatch(setLimit(limit))
+    },
+    setIntermissionText: (text) => {
+      dispatch(setIntermissionText(text))
+    }
   });
 
-    const SecondTimerContainer = connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(Timer);
-      
-      export default SecondTimerContainer;
+const SecondTimerContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Timer);
+
+export default SecondTimerContainer;

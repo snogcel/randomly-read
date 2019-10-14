@@ -13,11 +13,16 @@ let words = [];
  */
 function WordHistory(props) {
 
-  if(props.word.length === 0) words = [];
+  if(props.word.length === 0) {
+    console.log("- zero word length detected -");
+    words.splice(0);
+  }
+
+  console.log(props.word);
 
   const {classes} = props;
 
-  if (typeof props.word.word !== "undefined" && props.word.word) {
+  if (typeof props.word.word !== "undefined" && props.word.word && props.word.length !== 0) {
     words.unshift(props.word.word);
   }
 

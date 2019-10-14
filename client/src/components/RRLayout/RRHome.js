@@ -3,6 +3,7 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import WordCardContainer from './WordCardContainer';
 import TimerContainer from './TimerContainer';
+import SecondTimerContainer from './SecondTimerContainer';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';

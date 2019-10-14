@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
+
+import Timer from './RRComponent';
+
 import {addConsonant} from '../../actions/word'
 import {addSyllables} from '../../actions/word'
 import {setLimit} from '../../actions/word'
 import {setMode} from '../../actions/word'
-import Timer from './RRComponent';
 import {addRoutineVowel} from '../../actions/word';
 import {setIntermissionText} from '../../actions/word';
-
 
 const mapStateToProps = state => ({
     
@@ -28,10 +29,10 @@ const mapStateToProps = state => ({
     },
     setMode: (mode) => {
     dispatch(setMode(mode))
-  },
-  setIntermissionText: (text) => {
-    dispatch(setIntermissionText(text))
-  }
+    },
+    setIntermissionText: (text) => {
+      dispatch(setIntermissionText(text))
+    }
   });
 
   const TimerContainer = connect(
