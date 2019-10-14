@@ -67,6 +67,7 @@ class ExerciseHistory extends React.Component {
     return(
 
         <List>
+		<br /><br /><br /><br />
           {(this.props.currentExercise) ? this.props.currentExercise.map((item, i) => (
            this.props.currentExercise[i].mode === 'Word' || this.props.currentExercise[i].mode === 'Sentence' ? (
           <ListItem dense className = {classes.listItem}>
@@ -75,7 +76,7 @@ class ExerciseHistory extends React.Component {
              </ListItemIcon>
             <ListItemText
               primary={[
-                <Typography component={'span'} inline variant="body1" color="textPrimary" className={classes.repetitions}>
+                <Typography component={'span'} variant="body1" color="textPrimary" className={classes.repetitions}>
                 <b>{item.repetitions}</b>
                 </Typography>,
                 <Typography
@@ -87,14 +88,12 @@ class ExerciseHistory extends React.Component {
                 >
                   {this.props.currentExercise[i].mode === 'Word' ? 'words with' : 'sentences with'}
                 </Typography>,
-                <Typography inline variant="h6" color="textSecondary" className={classes.vowel}>
+                <Typography variant="h6" color="textSecondary" className={classes.vowel}>
                   {item.vowels.toString()}
                 </Typography>
               ]}
               secondary= {
-              <Typography component={'span'}>
-              "bet, dress, net, head..."
-            </Typography>
+              <Typography></Typography>
             }
             />
             </ListItem>

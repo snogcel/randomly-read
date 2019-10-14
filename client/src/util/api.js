@@ -1,7 +1,7 @@
 const baseUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://dev.snogcel.com:8080/api'
-    : `https://${window.location.hostname}/api`;
+    : `https://api.stuttered.net/api`;
 
 const methods = {
   get: async function (endpoint, token = null) {

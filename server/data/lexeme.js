@@ -1,6 +1,6 @@
 const Post = require('../models/post');
 
-const Lexeme = function(data) {
+const Lexeme = function(data, id) {
 
   let dataValues = data[0].dataValues;
 
@@ -20,7 +20,7 @@ const Lexeme = function(data) {
   if (this.type === 'adj') this.category = 'adjectives';
   if (this.type === 'adv') this.category = 'adverbs';
 
-  this.author = '5ccf8c65debb7576d5bdd451';
+  this.author = id;
 
 };
 
@@ -35,7 +35,7 @@ Lexeme.prototype.submitPost = function() {
     title: this.lexeme,
     author: this.author,
     category: this.category,
-    text: JSON.stringify(this.wordsXsensesXsynsets),
+    text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "]",
     consonant: this.consonant,
     vowel: this.vowel,
     syllables: this.syllables

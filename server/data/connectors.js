@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const database = new Sequelize('wordnet','root',')XBnps7{L>wVquWn', {
+const database = new Sequelize('words','stuttered','E]]q2u6xGPUvy[\?', {
     host: 'localhost',
     port: 3306,
     dialect: 'mysql',

@@ -5,10 +5,12 @@ const Lexeme = require('./lexeme');
 
 const resolvers = {
     Query: {
-        words(_, args) {
+        words(_, args, req) {
             let filter = {};
             let limit = 1; // default
             let location = "initial"; // default
+
+            const id = req.user.id;
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -32,14 +34,14 @@ const resolvers = {
 
                       let queryResult = data;
 
-                      let lexeme = new Lexeme(queryResult);
+                      let lexeme = new Lexeme(queryResult, id);
 
                       lexeme.submitPost().then(function(doc) {
 
                         // TODO - handle empty doc
                         queryResult[0].dataValues.id = doc._id;
 
-                        console.log(queryResult);
+                        // console.log(queryResult);
 
                         resolve(queryResult);
 
@@ -59,7 +61,7 @@ const resolvers = {
 
             // Default Templates
             let templates = [
-		"the {{ noun }} is {{ adjective }}",
+		            "the {{ noun }} is {{ adjective }}",
                 "{{ adjective }} {{ noun }}",
                 "{{ an_adjective }} {{ noun }}"
             ];
