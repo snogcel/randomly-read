@@ -1,21 +1,6 @@
 import React from 'react';
 import Timer from './SecondTimerContainer';
 
-/* const Wrapper = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin: 0 10vw;
-
-  @media (max-width: 1024px) {
-    margin: 0 5vw;
-  }
-
-  @media (max-width: 768px) {
-    display: block;
-    margin: 0;
-  }
-`; */
-
 class RandomlyRead extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +34,6 @@ class RandomlyRead extends React.Component {
       return lastProps.filter(function(x) { return !newSet.has(x); });
     }
 
-
     // Handle Consonants
     let newConsonants = options.consonant;
     let removedConsonants = difference(consonant, newConsonants);
@@ -58,8 +42,8 @@ class RandomlyRead extends React.Component {
     // this.consonantCheckboxes.current.setMany(newConsonants);
 
     // Handle Vowels
-  //  let newVowels = options.vowel;
-   // let removedVowels = difference(vowel, newVowels);
+    // let newVowels = options.vowel;
+    // let removedVowels = difference(vowel, newVowels);
     // this.vowelCheckboxes.current.unsetMany(removedVowels);
     // this.vowelCheckboxes.current.setMany(newVowels);
 
@@ -87,12 +71,14 @@ class RandomlyRead extends React.Component {
     templates = options.templates;
     syllables = options.syllables;
 
-    this.props.addRoutineVowel(options.vowel);
-    this.props.addConsonant(options.consonant);
-    this.props.addSyllables(options.syllables);
-    this.props.setLimit(limitText);
-    this.props.setMode(mode);
-    this.props.setIntermissionText(options.intermissionText)
+    // passes updated variables to redux
+    console.log("- passing updated variables to redux..");
+    this.props.addRoutineVowel(options.vowel); // pass to TimerContainer
+    this.props.addConsonant(options.consonant); // pass to TimerContainer
+    this.props.addSyllables(options.syllables); // pass to TimerContainer
+    this.props.setLimit(limitText); // pass to TimerContainer
+    this.props.setMode(mode); // pass to TimerContainer
+    this.props.setIntermissionText(options.intermissionText); // pass to TimerContainer
 
     if (this.state.mode === "Intermission") refresh = false;
 

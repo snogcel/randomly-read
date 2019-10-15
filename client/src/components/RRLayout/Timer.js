@@ -10,8 +10,6 @@ import RoutineSelectContainer from './RoutineSelect'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
-import { getRoutineSettings } from '../../util/api';
-
 const styles = theme => ({
   button: {
     "&:disabled": {
