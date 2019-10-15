@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { styles } from '../../themeHandler';
+import Grid from "./RRHome";
 
 function ProgressIndicator(props) {
 
@@ -37,7 +38,9 @@ function ProgressIndicator(props) {
 
   const {classes} = props;
 
-  console.log(props);
+  console.log("isPaused: ", props.isPaused);
+  console.log("range: ", props.range);
+  console.log("timeLeft: ", props.timeLeft);
 
   let range = props.range;
 
@@ -56,7 +59,17 @@ function ProgressIndicator(props) {
 
   return (
     <div className={classes.column}>
-      <CircularProgress variant="static" value={value}/>
+
+      {!props.isPaused ? (
+        <>
+          <CircularProgress variant="static" value={value}/>
+        </>
+      ) : (
+        <>
+
+        </>
+      )}
+
     </div>
   );
 

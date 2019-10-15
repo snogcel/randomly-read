@@ -1,43 +1,84 @@
 import { connect } from 'react-redux';
 
-import Timer from './RRComponent';
-// import Timer from './Timer';
+import Timer from './Timer';
 
+import {addWord} from '../../actions/word';
+import {removeConsonant} from '../../actions/word';
+import {setMode} from '../../actions/word';
+import {addSyllables} from '../../actions/word';
 import {addConsonant} from '../../actions/word'
-import {addSyllables} from '../../actions/word'
 import {setLimit} from '../../actions/word'
-import {setMode} from '../../actions/word'
 import {addRoutineVowel} from '../../actions/word';
 import {setIntermissionText} from '../../actions/word';
 
-const mapStateToProps = state => ({
+import {addExercise} from '../../actions/exerciseHistory'
+import {addExerciseNumber} from '../../actions/exerciseHistory'
+import {setExercisePause} from '../../actions/exerciseHistory';
 
+import {updateCompleted} from '../../actions/exerciseHistory'; // TODO - remove
+import {updateTotal} from '../../actions/exerciseHistory'; // TODO - remove
+import {setModalOpen} from '../../actions/exerciseHistory'; // TODO - remove
+
+import {setRange} from '../../actions/exerciseHistory';
+import {updateTimeLeft} from '../../actions/exerciseHistory';
+
+const mapStateToProps = state => ({
+  currentExercise: state.exerciseHistory.currentExercise,
+  currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
+  isPaused: state.exerciseHistory.isPaused,
+  completed: state.exerciseHistory.completed,
+  total: state.exerciseHistory.total,
+  isModalOpen: state.exerciseHistory.isModalOpen
 });
 
 const mapDispatchToProps = dispatch => ({
-  addRoutineVowel: (vowel) => {
-    console.log("addRoutineVowel: ", vowel);
-    dispatch(addRoutineVowel(vowel))
+  addWord: (word) => {
+    dispatch(addWord(word))
   },
-  addConsonant: (consonant) => {
-    console.log("addConsonant: ", consonant);
-    dispatch(addConsonant(consonant))
+  addRoutineVowel: (vowel) => {
+    dispatch(addRoutineVowel(vowel)) // pass through to TimerContainer
+  },
+  removeConsonant: () => {
+    dispatch(removeConsonant())
   },
   addSyllables: (syllables) => {
-    console.log("addSyllables: ", syllables);
-    dispatch(addSyllables(syllables))
-  },
-  setLimit: (limit) => {
-    console.log("setLimit: ", limit);
-    dispatch(setLimit(limit))
+    dispatch(addSyllables(syllables)) // pass through to TimerContainer
   },
   setMode: (mode) => {
-    console.log("setMode: ", mode);
-    dispatch(setMode(mode))
+    dispatch(setMode(mode)) // pass through to TimerContainer
+  },
+  addExercise: (exercise) => {
+    dispatch(addExercise(exercise))
+  },
+  addExerciseNumber: (exerciseNum) => {
+    dispatch(addExerciseNumber(exerciseNum))
+  },
+  setExercisePause: (pause) => {
+    dispatch(setExercisePause(pause))
+  },
+  setModalOpen: (bool) => {
+    dispatch(setModalOpen(bool))
+  },
+  setRange: (value) => {
+    dispatch(setRange(value))
+  },
+  updateCompleted: (completed) => {
+    dispatch(updateCompleted(completed))
+  },
+  updateTotal: (total) => {
+    dispatch(updateTotal(total))
+  },
+  updateTimeLeft: (timeLeft) => {
+    dispatch(updateTimeLeft(timeLeft))
+  },
+  addConsonant: (consonant) => {
+    dispatch(addConsonant(consonant)) // pass through to TimerContainer
+  },
+  setLimit: (limit) => {
+    dispatch(setLimit(limit)) // pass through to TimerContainer
   },
   setIntermissionText: (text) => {
-    console.log("setIntermissionText: ", text);
-    dispatch(setIntermissionText(text))
+    dispatch(setIntermissionText(text)) // pass through to TimerContainer
   }
 });
 

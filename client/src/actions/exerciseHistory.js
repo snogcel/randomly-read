@@ -50,7 +50,7 @@ export function setRange(text) {
     }
 }
 
-export function updatetimeLeft(text) {
+export function updateTimeLeft(text) {
     return {
         type: UPDATE_TIMELEFT, text
     }
