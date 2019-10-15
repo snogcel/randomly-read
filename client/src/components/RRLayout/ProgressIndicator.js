@@ -6,41 +6,7 @@ import Grid from "./RRHome";
 
 function ProgressIndicator(props) {
 
-  // props.range == the current interval between words
-  // props.currentExerciseNumber =
-  // props.completed =
-  // props.total
-
-  // let status = props.completed + ' of ' + props.total + ' Exercises Completed';
-
-  // let timeLeft = props.timeLeft;
-
-
-  /*
-
-  React.useEffect(() => {
-
-    function progress() {
-      setCompleted(prevCompleted => (prevCompleted >= 99 ? 0 : prevCompleted + 33));
-    }
-
-    const timer = setInterval(progress, 1000);
-
-    return () => {
-      clearInterval(timer);
-    };
-
-  }, []);
-
-  */
-
-  // const classes = useStyles();
-
   const {classes} = props;
-
-  console.log("isPaused: ", props.isPaused);
-  console.log("range: ", props.range);
-  console.log("timeLeft: ", props.timeLeft);
 
   let range = props.range;
 
@@ -49,12 +15,6 @@ function ProgressIndicator(props) {
   let increment = 100 / parseInt(range) || 0;
   let total = (increment * parseInt(range)) || 0;
 
-  /*
-  console.log("total: ", total);
-  console.log("increment: ", increment);
-  console.log("timeLeft: ", timeLeft);
-  */
-
   let value = (total - (increment * (range - timeLeft)));
 
   return (
@@ -62,7 +22,7 @@ function ProgressIndicator(props) {
 
       {!props.isPaused ? (
         <>
-          <CircularProgress variant="static" value={value}/>
+          <CircularProgress variant="static" value={value} color="secondary" />
         </>
       ) : (
         <>

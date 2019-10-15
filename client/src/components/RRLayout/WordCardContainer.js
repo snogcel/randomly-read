@@ -6,7 +6,7 @@ import {removeVowel} from '../../actions/word'
 import {removeWord} from '../../actions/word'
 import {addRoutineVowel} from '../../actions/word'
 import {setModalOpen} from '../../actions/exerciseHistory';
-
+import {addQueryResult} from '../../actions/exerciseHistory'
 
 const mapStateToProps = state => ({
   text: state.word.text,
@@ -31,13 +31,15 @@ const mapDispatchToProps = dispatch => ({
     dispatch(removeVowel(vowel))
   },
   removeWord: (word) => {
-  dispatch(removeWord(word))
+    dispatch(removeWord(word))
   },
   setModalOpen: (bool) => {
     dispatch(setModalOpen(bool))
   },
+  addQueryResult: (word) => {
+    dispatch(addQueryResult(word))
+  },
 });
-
 
 const WordCardContainer = connect(
   mapStateToProps,

@@ -56,11 +56,8 @@ class Timer extends React.Component {
     this.resetTimerAndQuery = this.resetTimerAndQuery.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
 
-    // this.resetTimerQueryAndEH = this.resetTimerQueryAndEH.bind(this); // ??
-
     this.exerciseStack = [];
     this.exercisePointer = null;
-    this.count = 0;
     this.completed = 0;
     this.total = 0;
     this.timeLeftLastUpdated = 0;
@@ -89,7 +86,6 @@ class Timer extends React.Component {
 
       this.props.addExercise([]);
       this.props.addExerciseNumber(null);
-      this.props.addWord([]);
 
     } else {
 
@@ -102,14 +98,9 @@ class Timer extends React.Component {
       // add current exercise to props and state
       this.props.addExercise(this.exerciseStack);
       this.setExercise(this.exerciseStack[this.exercisePointer]);
+      this.props.addExerciseNumber(this.exercisePointer);
 
-      // add current timer value to props and state
-      // this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
-      // this.props.setRange(this.exerciseStack[this.exercisePointer].rangeVal);
-
-      this.props.addExerciseNumber(null); // TODO - delete?
       this.completed = 0; // TODO - delete?
-      this.props.addWord([]); // TODO - delete?
 
       this.stopTimer();
       this.resetTimerAndQuery();
@@ -155,7 +146,6 @@ class Timer extends React.Component {
       case 'intermission':
         this.currentRoutine = this.routineBuilder.buildIntermission(exercise);
         console.log("Exercise Map (Intermission)", this.currentRoutine);
-        this.props.addWord([]); // resetting the word array in redux to reset the WordHistory
         break;
       default:
         break;
@@ -180,37 +170,43 @@ class Timer extends React.Component {
 
   resumeTimer() {
     this.props.setExercisePause(false);
-    this.setState({
-      isOn: true,
-      start: Date.now() - this.state.time
-    });
 
-    this.timer = setInterval(() => this.setState({
-      time: Date.now() - this.state.start
-    }), 1);
+    let prevTime = this.state.time;
+    let time = Date.now();
+    let lastUpdated = this.state.lastUpdated;
 
-  }
-
-  startTimer() {
-    this.props.setRange(this.state.rangeVal)
-    this.props.setExercisePause(false)
-    this.props.addExercise(this.exerciseStack)
-    this.props.addExerciseNumber(this.exercisePointer)
-
-    this.setExercise(this.exerciseStack[this.exercisePointer]);
+    lastUpdated += (time - prevTime);
 
     this.setState({
       isOn: true,
-      time: this.state.time,
-      start: Date.now() - this.state.time,
-      lastUpdated: Date.now()
+      start: time,
+      lastUpdated: lastUpdated
     });
 
     this.timer = setInterval(() => this.setState({
       time: Date.now()
     }), 25);
 
-    // TODO - initiate routine
+  }
+
+  startTimer() {
+    this.props.setRange(this.state.rangeVal);
+    this.props.setExercisePause(false);
+    this.props.addExercise(this.exerciseStack);
+    this.props.addExerciseNumber(this.exercisePointer);
+
+    this.setExercise(this.exerciseStack[this.exercisePointer]);
+
+    this.setState({
+      isOn: true,
+      time: this.state.time,
+      start: Date.now(),
+      lastUpdated: Date.now()
+    });
+
+    this.timer = setInterval(() => this.setState({
+      time: Date.now()
+    }), 25);
 
     let routineKeys = this.currentRoutine.keys();
     let currentKey = routineKeys.next().value;
@@ -220,41 +216,28 @@ class Timer extends React.Component {
 
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-
-    // TODO - Throttle
-
-    return true;
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
 
-    /*
-    if(this.props.isModalOpen === false && this.props.currentExerciseNumber !== null) {
-      this.resumeTimer();
-      this.props.setModalOpen(null);
-    }
-    if(this.props.isModalOpen === true) {
-      this.stopTimer();
-      this.props.setModalOpen(null);
-    }
-    */
-
+    // Updates the total number of Completed Exercises in Routine
     if(this.props.completed !== this.completed && this.completed !== 0) {
-      console.log("DEBUG: update completed: ", this.completed);
       this.props.updateCompleted(this.completed);
     }
+
+    // Updates the total number of Exercises in Routine
     if(this.props.total !== this.total && this.total !== 0) {
-      console.log("DEBUG: update total: ", this.total);
       this.props.updateTotal(this.total);
     }
 
+    // Allows user to skip ahead in Exercise Set...
+    /*
     if(this.props.currentExerciseNumber !== null && this.props.currentExerciseNumber !== this.exercisePointer) {
       console.log("DEBUG: update currentExerciseNumber: ", this.props.currentExerciseNumber);
       this.exercisePointer = this.props.currentExerciseNumber;
       this.setExercise(this.exerciseStack[this.exercisePointer]);
     }
+    */
 
+    // Detects if Routine to advance to next Action
     if (((prevState.time - this.state.lastUpdated) > (this.state.rangeVal * 1000)) && (prevState.isOn)) {
 
       let routineKeys = this.currentRoutine.keys();
@@ -262,44 +245,33 @@ class Timer extends React.Component {
 
       let nextAction = this.currentRoutine.get(currentKey);
 
+      // If end of Exercise Stack is reached, stop Timer
       if (!nextAction && (this.exercisePointer === (this.exerciseStack.length - 1))) {
-
-        console.log("-end of exercise stack reached!");
-
         this.setState({timeLeft: null});
-
         this.props.updateTimeLeft(null); // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
 
-        console.log(this.props.timeLeft);
-
         this.stopTimer();
-
       }
 
+      // If no 'next Action' in Exercise, advance to next Exercise Set in Routine
       if (!nextAction && (this.exerciseStack.length > 0) && (this.exercisePointer < (this.exerciseStack.length - 1))) {
 
-        // Check if end of exercise stack
-
-        this.count++;
         if(this.exerciseStack[this.exercisePointer].map !== 'intermission') this.completed++;
 
         this.exercisePointer++;
-        this.props.addExerciseNumber(this.exercisePointer);
 
-        /*
-        console.log("Does it reach the increment? ", this.exercisePointer);
-        console.log("Exercise Stack Pointer: ", this.exercisePointer);
-        console.log("CURRENT EXERCISE: ", this.exerciseStack[this.exercisePointer]);
-        */
+        this.props.addExerciseNumber(this.exercisePointer);
 
         this.setExercise(this.exerciseStack[this.exercisePointer]);
 
         routineKeys = this.currentRoutine.keys();
+
         currentKey = routineKeys.next().value;
 
         nextAction = this.currentRoutine.get(currentKey);
       }
 
+      // Proceed to 'next Action' in Exercise
       if (nextAction) {
 
         this.timerHandler(nextAction);
@@ -308,36 +280,28 @@ class Timer extends React.Component {
         this.setState({
           lastUpdated: Date.now()
         });
-      }
 
+      }
 
     } else if (prevState.isOn) {
 
-      this.timeLeftLastUpdated++;
+      // Handle Progress Indicator / timeLeft
 
-      if (this.timeLeftLastUpdated > 1) {
+      let timeLeft = (Math.round(((this.state.rangeVal * 1000) - (prevState.time - this.state.lastUpdated))/1000)); // Math.ceil() was rounding up and increase the range + 1, round() returns the exact range selected
 
-        this.timeLeftLastUpdated = 0;
+      if (timeLeft > this.state.rangeVal) timeLeft = this.state.rangeVal; // edge cases where timeLeft > rangeVal
 
-        let timeLeft = (Math.round(((this.state.rangeVal * 1000) - (prevState.time - this.state.lastUpdated))/1000)); // Math.ceil() was rounding up and increase the range + 1, round() returns the exact range selected
+      if (timeLeft !== this.state.timeLeft) {
 
-        if (timeLeft > this.state.rangeVal) timeLeft = this.state.rangeVal; // edge cases where timeLeft > rangeVal
+        this.setState({
+          timeLeft: timeLeft
+        });
 
-        if (timeLeft !== this.state.timeLeft) {
-
-          this.setState({
-            timeLeft: timeLeft
-          });
-
-          this.props.updateTimeLeft(timeLeft) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
-
-        }
+        this.props.updateTimeLeft(timeLeft) // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
 
       }
 
     }
-
-
 
   }
 
@@ -360,6 +324,9 @@ class Timer extends React.Component {
     this.props.addSyllables([1])
     this.props.setMode('Word');
 
+    // Clear Query History
+    this.props.clearQueryResults();
+
   }
 
   resetTimer() {
@@ -375,34 +342,10 @@ class Timer extends React.Component {
     this.props.addSyllables([1]);
     this.props.setMode('Word');
 
-  }
+    // Clear Query History
+    this.props.clearQueryResults();
 
-  /*
-  resetTimerQueryAndEH() {
-
-    this.updateRange(this.exerciseStack[this.exercisePointer].rangeVal);
-    this.completed = 0;
-    this.props.updateCompleted(this.completed); // what does this do?
-    this.exercisePointer = 0;
-    this.completed = 0;
-    // this.setState({time: 0, isOn: false})
-    this.setState({isOn: false})
-    this.props.setRange(0);
-    this.props.addWord([])
-    this.props.addRoutineVowel(null);
-    this.props.removeConsonant();
-    this.props.addSyllables([1])
-    this.props.setMode('Word');
-    this.resetEH();
   }
-
-  resetEH() {
-    if(this.props.currentExercise.length >= 0) {
-      this.props.addExercise([])
-      this.props.addExerciseNumber(null)
-    }
-  }
-  */
 
   timerHandler(options) {
     let mode = this.state.mode;
@@ -489,62 +432,8 @@ class Timer extends React.Component {
 
     const { classes } = this.props;
 
-    const { rangeVal } = this.state;
-
-    let currentExercise = null;
-
-    if(this.exerciseStack.length === 0) {
-      currentExercise = null;
-    }
-
-
-    if (this.exerciseStack[this.exercisePointer]) {
-      currentExercise =
-        <div className='CurrentRoutineContainer'>
-          <label>&gt; Duration: </label><span>{((this.exerciseStack[this.exercisePointer].duration))} seconds</span> ({this.exerciseStack[this.exercisePointer].rangeVal} seconds x {this.exerciseStack[this.exercisePointer].repetitions} {this.exerciseStack[this.exercisePointer].mode})<br />
-          <br />
-        </div>;
-
-    }
-    let completeExerciseStack = [];
-
-    let current = this.exercisePointer;
-    let completed = 0;
-    this.total = 0;
-
-    if (this.exerciseStack && this.exerciseStack.length > 0) {
-
-      let className = 'RoutineContainer';
-
-      for (let i = 0; i < this.exerciseStack.length; i++) {
-
-        if (i === current) {
-          className = 'CurrentRoutineContainer';
-        } else {
-          className = 'RoutineContainer';
-        }
-
-        if (this.exerciseStack[i].mode === 'Word' || this.exerciseStack[i].mode === 'Sentence') {
-          this.total++;
-          if (i < current) completed++;
-
-          completeExerciseStack.push(
-            <div className={className}>
-              <label>Duration: </label><span>{((this.exerciseStack[i].duration))} seconds</span> ({this.exerciseStack[i].rangeVal} seconds x {this.exerciseStack[i].repetitions} {this.exerciseStack[i].mode})<br />
-              <br />
-            </div>
-          )
-
-        }
-
-      }
-
-    }
-
-    let status = this.completed + ' of ' + this.total + ' Exercises Completed';
-    let isDisabled = currentExercise === null ? true : false;
     let start = (this.state.time === 0) ?
-      <Button className={classes.button} onClick={this.startTimer} disabled={isDisabled} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
+      <Button className={classes.button} onClick={this.startTimer} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
       null : <Button className={classes.button} onClick={this.stopTimer} size="medium" variant="contained" color={"primary"} ><b>Pause</b></Button>;
     let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
@@ -552,32 +441,19 @@ class Timer extends React.Component {
     let reset = (this.state.time === 0 || this.state.isOn) ?
       null : <Button className={classes.button} onClick={this.resetTimer} size="small" variant="contained" color={"primary"} ><b>Reset</b></Button>;
 
-
-    return(
-
+    return (
       <Grid>
         <div className="RoutineSelector">
           <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
         </div>
-
         <br /><br />
-
         <div className="TimerControls">
           {start}
           {resume}
           {stop}
           {reset}
         </div>
-
-        <br /><br />
-
-        {/* <div className="RangeContainer"> <Range range={rangeVal} updateRange={this.updateRange}/> </div> */}
-        {/*  <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{currentExercise}</Typography> */}
-        {/* <Typography style={{color: this.props.dark === true ? 'white' : 'black'}} variant="h6">{completeExerciseStack}</Typography> */}
-
       </Grid>
-
-
     )
   }
 }

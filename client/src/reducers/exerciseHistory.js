@@ -6,37 +6,44 @@ import {UPDATE_TOTAL} from '../actions/exerciseHistory';
 import {MODAL_OPEN} from '../actions/exerciseHistory';
 import {SET_RANGE} from '../actions/exerciseHistory';
 import {UPDATE_TIMELEFT} from '../actions/exerciseHistory';
+import {ADD_QUERY_RESULT} from '../actions/exerciseHistory';
+import {CLEAR_QUERY_RESULTS} from '../actions/exerciseHistory';
 
 const initialState = {
     currentExercise: [],
     currentExerciseNumber: null,
+    exerciseResults: [],
     isPaused: true,
     isModalOpen: null,
     range: 0,
     completed: 0,
     total: 0,
     timeLeft: null,
-}
+};
 
 export default (state = initialState, action) => {
     switch (action.type) {
-        case ADD_EXERCISE:
-        return {...state, currentExercise: action.text}
-        case ADD_EXERCISE_NUMBER:
-        return {...state, currentExerciseNumber: action.text}
-        case EXERCISE_PAUSE:
-        return {...state, isPaused: action.text}
-        case MODAL_OPEN:
-        return {...state, isModalOpen: action.text}
-        case SET_RANGE:
-        return {...state, range: action.text}
-        case UPDATE_COMPLETED:
-        return {...state, completed: action.text}
-        case UPDATE_TOTAL:
-        return {...state, total: action.text}
-        case UPDATE_TIMELEFT:
-        return {...state, timeLeft: action.text}
-        default: 
+      case ADD_EXERCISE:
+        return {...state, currentExercise: action.text};
+      case ADD_EXERCISE_NUMBER:
+        return {...state, currentExerciseNumber: action.text};
+      case ADD_QUERY_RESULT:
+        return {...state, exerciseResults: [...state.exerciseResults, action.text]};
+      case CLEAR_QUERY_RESULTS:
+        return {...state, exerciseResults: []};
+      case EXERCISE_PAUSE:
+        return {...state, isPaused: action.text};
+      case MODAL_OPEN:
+        return {...state, isModalOpen: action.text};
+      case SET_RANGE:
+        return {...state, range: action.text};
+      case UPDATE_COMPLETED:
+        return {...state, completed: action.text};
+      case UPDATE_TOTAL:
+        return {...state, total: action.text};
+      case UPDATE_TIMELEFT:
+        return {...state, timeLeft: action.text};
+      default:
         return state;
     }
 }

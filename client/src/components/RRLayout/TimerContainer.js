@@ -15,12 +15,14 @@ import {addExercise} from '../../actions/exerciseHistory'
 import {addExerciseNumber} from '../../actions/exerciseHistory'
 import {setExercisePause} from '../../actions/exerciseHistory';
 
-import {updateCompleted} from '../../actions/exerciseHistory'; // TODO - remove
-import {updateTotal} from '../../actions/exerciseHistory'; // TODO - remove
-import {setModalOpen} from '../../actions/exerciseHistory'; // TODO - remove
+import {updateCompleted} from '../../actions/exerciseHistory'; // TODO - remove?
+import {updateTotal} from '../../actions/exerciseHistory'; // TODO - remove?
+import {setModalOpen} from '../../actions/exerciseHistory'; // TODO - remove?
 
 import {setRange} from '../../actions/exerciseHistory';
 import {updateTimeLeft} from '../../actions/exerciseHistory';
+
+import {clearQueryResults} from '../../actions/exerciseHistory';
 
 const mapStateToProps = state => ({
   currentExercise: state.exerciseHistory.currentExercise,
@@ -79,7 +81,10 @@ const mapDispatchToProps = dispatch => ({
   },
   setIntermissionText: (text) => {
     dispatch(setIntermissionText(text)) // pass through to TimerContainer
-  }
+  },
+  clearQueryResults: () => {
+    dispatch(clearQueryResults())
+  },
 });
 
 const TimerContainer = connect(
