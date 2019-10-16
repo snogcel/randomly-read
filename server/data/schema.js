@@ -19,6 +19,8 @@ type Word {
   stress: Int
   syllables: Int
   wordsXsensesXsynsets: [definitions]
+  score: Int
+  votes: String
 }
 
 type Sentence {

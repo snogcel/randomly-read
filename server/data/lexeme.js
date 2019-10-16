@@ -56,7 +56,7 @@ Lexeme.prototype.submitPost = function() {
 
        */
 
-      return Post.findOne({title:lexeme}).exec();
+      return Post.findOne({title:lexeme}).lean().exec();
 
     } else {
       throw err;

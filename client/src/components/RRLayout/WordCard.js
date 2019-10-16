@@ -113,6 +113,9 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                        id
+                        votes
+                        score
                         cmudict_id
                         lexeme
                         wordsXsensesXsynsets {
@@ -127,6 +130,9 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                        id
+                        votes
+                        score
                         cmudict_id
                         lexeme
                         wordsXsensesXsynsets {
