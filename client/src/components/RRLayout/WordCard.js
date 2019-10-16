@@ -224,7 +224,7 @@ class WordCard extends React.Component  {
                       }
 
                       if (this.result !== data.words[0].lexeme && this.fetching) { // if new result, store and display
-                        this.result = data.words[0].lexeme;
+                        this.result = data.words[0].lexeme; // assign word to result
                         this.fetching = false;
                         this.props.addQueryResult(this.result);
                       }
@@ -235,7 +235,7 @@ class WordCard extends React.Component  {
                       }
 
                       if (this.result !== data.sentences[0].result && this.fetching) { // if new result, store and display
-                        this.result = data.sentences[0].result;
+                        this.result = data.sentences[0].result; // assign sentence to result
                         this.fetching = false;
                         this.props.addQueryResult(this.result);
                       }

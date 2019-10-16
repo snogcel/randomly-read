@@ -33,6 +33,8 @@ function WordHistory(props) {
 
   const {classes} = props;
 
+  console.log(props.exerciseResults);
+
   return (
     <React.Fragment>
       <Grid spacing={8}>

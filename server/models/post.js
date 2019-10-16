@@ -86,12 +86,12 @@ postSchema.pre(/^find/, function () {
 });
 
 postSchema.pre('save', function (next) {
-  this.wasNew = this.isNew;
+  // this.wasNew = this.isNew;
   next();
 });
 
 postSchema.post('save', function (doc, next) {
-  if (this.wasNew) this.vote(this.author._id, 1);
+  // if (this.wasNew) this.vote(this.author._id, 1);
   doc
     .populate('author')
     .populate('comments.author')

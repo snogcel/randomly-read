@@ -38,7 +38,7 @@ Lexeme.prototype.submitPost = function() {
     text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "]",
     consonant: this.consonant,
     vowel: this.vowel,
-    syllables: this.syllables
+    syllables: this.syllables,
   }).then(null, function(err) {
     if (err.code === 11000) {
 
