@@ -327,6 +327,9 @@ class Timer extends React.Component {
     // Clear Query History
     this.props.clearQueryResults();
 
+    // Reset Current Exercise
+    this.props.updateCompleted(0);
+
   }
 
   resetTimer() {
@@ -344,6 +347,9 @@ class Timer extends React.Component {
 
     // Clear Query History
     this.props.clearQueryResults();
+
+    // Reset Current Exercise
+    this.props.updateCompleted(0);
 
   }
 
@@ -431,6 +437,32 @@ class Timer extends React.Component {
   render() {
 
     const { classes } = this.props;
+
+    const { rangeVal } = this.state;
+
+    let currentExercise = null;
+
+    if(this.exerciseStack.length === 0) {
+      currentExercise = null;
+    }
+
+    let current = this.exercisePointer;
+    let completed = 0;
+
+    this.total = 0;
+
+    if (this.exerciseStack && this.exerciseStack.length > 0) {
+
+      for (let i = 0; i < this.exerciseStack.length; i++) {
+
+        if (this.exerciseStack[i].mode === 'Word' || this.exerciseStack[i].mode === 'Sentence') {
+          this.total++;
+          if (i < current) completed++;
+        }
+
+      }
+
+    }
 
     let start = (this.state.time === 0) ?
       <Button className={classes.button} onClick={this.startTimer} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
