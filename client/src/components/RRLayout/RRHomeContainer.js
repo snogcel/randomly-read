@@ -1,8 +1,12 @@
 import { connect } from 'react-redux';
+import { compose } from 'redux';
+import withAuth from '../../util/withAuth';
 import RRHome from './RRHome'
 
-const mapStateToProps = () => ({});
+const enhance = compose(
+  withAuth
+);
 
-const RRHomeContainer = connect(mapStateToProps)(RRHome);
+const RRHomeContainer = enhance(RRHome);
 
 export default RRHomeContainer;

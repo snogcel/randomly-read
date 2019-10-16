@@ -1,38 +1,53 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import LinearProgress from "@material-ui/core/LinearProgress";
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { styles } from '../../themeHandler';
+import { Typography } from '@material-ui/core';
+import Grid from "./RRHome";
 
 function ProgressIndicator(props) {
 
-  // props.range == the current interval between words
-  // props.currentExerciseNumber =
-  // props.completed =
-  // props.total
-
-  let status = props.completed + ' of ' + props.total + ' Exercises Completed';
-
- // let timeLeft = props.timeLeft;
-
   const {classes} = props;
 
-  return (
-      <div className={classes.column}>
+  console.log(props);
 
-        {status}
-        <br></br>
+  let status = null;
 
-       {props.currentExerciseNumber !== null ? props.timeLeft : ''}
-
-      </div>
-      );
+  if (typeof props.currentExercise !== "undefined" && typeof props.currentExerciseNumber !== "undefined" && props.currentExerciseNumber !== null) {
+    if (!props.currentExercise[props.currentExerciseNumber].isIntermission) {
+      status = 'Exercise ' + (parseInt(props.completed) + 1) + ' of ' + props.total;
+    }
   }
 
+  let range = props.range;
+
+  let timeLeft = (parseInt(range) - parseInt(props.timeLeft)) || 0;
+
+  let increment = 100 / parseInt(range) || 0;
+  let total = (increment * parseInt(range)) || 0;
+
+  let value = (total - (increment * (range - timeLeft)));
+
+  return (
+    <div className={classes.column}>
+
+      {!props.isPaused ? (
+        <>
+          <CircularProgress variant="static" value={value} color="secondary" />
+          <br />
+          <Typography color="secondary">{status}</Typography>
+        </>
+      ) : (
+        <>
+
+        </>
+      )}
+
+    </div>
+  );
+
+}
 
 const ProgressIndicatorWrapped = withStyles(styles)(ProgressIndicator);
-
 
 export default ProgressIndicatorWrapped;

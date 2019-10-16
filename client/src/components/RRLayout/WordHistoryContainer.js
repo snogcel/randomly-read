@@ -2,7 +2,9 @@ import { connect } from 'react-redux';
 import WordHistory from './WordHistory'
 
 const mapStateToProps = state => ({
-  word: state.word.text
+  currentExercise: state.exerciseHistory.currentExercise,
+  currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
+  exerciseResults: state.exerciseHistory.exerciseResults
 });
 
 const mapDispatchToProps = dispatch => ({

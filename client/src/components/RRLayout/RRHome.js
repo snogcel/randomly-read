@@ -15,6 +15,9 @@ import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import ExerciseHistoryContainer from './ExerciseHistoryContainer';
 import ProgressIndicator from './ProgressIndicatorContainer'
 import WordHistory from './WordHistoryContainer'
+
+import LoginFormContainer from '../LoginForm/Container';
+
 //import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 
 const styles = theme => ({
@@ -42,48 +45,44 @@ const styles = theme => ({
 
 const RRHome = props => {
 
-  const {classes} = props;
+  const {classes, user} = props;
 
   return (
 
       <div className={classes.root}>
-        <Grid container spacing={24}>
 
-          <Grid item xs={12} sm={3}>
+        {user ? (
+          <>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={3}>
+                <div className={classes.sideColumn}>
+                  <ExerciseHistoryContainer />
+                </div>
+              </Grid>
 
-            <div className={classes.sideColumn}>
+              <Grid item xs={12} sm={6}>
+                <WordCardContainer />
+                <ProgressIndicator />
+                <WordHistory />
+              </Grid>
 
-              <ExerciseHistoryContainer />
-              
-            </div>
+              <Grid item xs={12} sm={3}>
+                <div className={classes.sideColumn}>
+                  <TimerContainer />
+                </div>
+              </Grid>
 
-          </Grid>
+            </Grid>
+          </>
+        ) : (
+          <>
+            <LoginFormContainer/>
+          </>
+        )}
 
-          <Grid item xs={12} sm={6}>
-
-            <WordCardContainer />
-            <ProgressIndicator />
-            <WordHistory />
-
-          </Grid>
-
-          <Grid item xs={12} sm={3}>
-
-            <div className={classes.sideColumn}>
-
-              <TimerContainer />
-
-            </div>
-
-          </Grid>
-
-
-        </Grid>
       </div>
-    
-  )}
 
-
+  )};
 
 const RRHomeWrapped = withStyles(styles)(RRHome);
 

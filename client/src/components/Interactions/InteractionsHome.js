@@ -18,6 +18,8 @@ import InteractionTable from './elements/InteractionTable';
 import Button from '@material-ui/core/Button';
 import store from "../../store";
 
+import LoginFormContainer from '../LoginForm/Container';
+
 const styles = theme => ({
   root: {
     flexGrow: 1,
@@ -68,7 +70,7 @@ class InteractionsHome extends React.Component {
   }
 
   componentWillMount() {
-    this.prepareInteractionForm();
+    if (typeof this.props.user !== "undefined") this.prepareInteractionForm();
   }
 
   prepareInteractionForm(){
@@ -108,43 +110,55 @@ class InteractionsHome extends React.Component {
 
   render() {
 
+    const { user } = this.props;
+
     let items = store.getState().interaction.items;
 
     return (
 
       <div>
-        <Grid container>
 
-          <Grid item xs={12} sm={2}>
+        {user ? (
+          <>
+            <Grid container>
 
-            {  this.state.options.map((item) => (
-              <div><Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button></div>
-            )) }
+              <Grid item xs={12} sm={2}>
 
-          </Grid>
+                {  this.state.options.map((item) => (
+                  <div><Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button></div>
+                )) }
 
-          <Grid item xs={12} sm={10}>
+              </Grid>
 
-            <InteractionForm options={this.state.selectedOption} action={this.interactionHandler}/>
+              <Grid item xs={12} sm={10}>
 
-          </Grid>
+                <InteractionForm options={this.state.selectedOption} action={this.interactionHandler}/>
 
-        </Grid>
+              </Grid>
 
-        <br /><br />
+            </Grid>
 
-        <Grid container spacing={24}>
+            <br /><br />
 
-          <Grid item xs={12} sm={2}>
+            <Grid container spacing={24}>
 
-          </Grid>
+              <Grid item xs={12} sm={2}>
 
-          <Grid item xs={12} sm={8}>
+              </Grid>
 
-            <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+              <Grid item xs={12} sm={8}>
 
-          </Grid>
-        </Grid>
+                <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+
+              </Grid>
+            </Grid>
+          </>
+        ) : (
+          <>
+            <LoginFormContainer/>
+          </>
+        )}
+
       </div>
 
     )

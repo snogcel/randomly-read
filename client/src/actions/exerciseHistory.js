@@ -6,6 +6,8 @@ export const UPDATE_COMPLETED = 'UPDATE_COMPLETED';
 export const UPDATE_TOTAL = 'UPDATE_TOTAL';
 export const SET_RANGE = 'SET_RANGE';
 export const UPDATE_TIMELEFT = 'UPDATE_TIMELEFT';
+export const ADD_QUERY_RESULT = 'ADD_QUERY_RESULT';
+export const CLEAR_QUERY_RESULTS = 'CLEAR_QUERY_RESULTS';
 
 export function addExercise(text) {
     return {
@@ -50,18 +52,20 @@ export function setRange(text) {
     }
 }
 
-export function updatetimeLeft(text) {
+export function updateTimeLeft(text) {
     return {
         type: UPDATE_TIMELEFT, text
     }
 }
 
+export function addQueryResult(text) {
+    return {
+        type: ADD_QUERY_RESULT, text
+    }
+}
 
-
-
-
-
-
-
-
-
+export function clearQueryResults() {
+    return {
+        type: CLEAR_QUERY_RESULTS
+    }
+}
