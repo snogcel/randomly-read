@@ -42,7 +42,7 @@ function WordHistory(props) {
           <Grid item xs={12}>
             <Card square elevation="0" style={{backgroundColor: 'transparent'}}>
               <CardContent>
-                <Typography className={classes.historyTitle} color="textPrimary" variant="h3">{item}</Typography>
+                <Typography className={classes.historyTitle} color="textPrimary" variant="h3">{item.title}</Typography>
               </CardContent>
             </Card>
           </Grid>

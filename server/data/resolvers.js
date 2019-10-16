@@ -40,8 +40,8 @@ const resolvers = {
 
                         // TODO - handle empty doc
                         queryResult[0].dataValues.id = doc._id; // mongo id of post
-                        queryResult[0].votes = doc.votes.toString(); // mongo id of post
-                        queryResult[0].score = doc.score; // mongo id of post
+                        queryResult[0].votes = doc.votes;
+                        queryResult[0].score = doc.score;
 
                         resolve(queryResult);
 

@@ -114,7 +114,10 @@ class WordCard extends React.Component  {
                 {
                     words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
                         id
-                        votes
+                        votes {
+                          user
+                          vote
+                        }
                         score
                         cmudict_id
                         lexeme
@@ -131,7 +134,10 @@ class WordCard extends React.Component  {
                 {
                     words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
                         id
-                        votes
+                        votes {
+                          user
+                          vote
+                        }
                         score
                         cmudict_id
                         lexeme
@@ -225,8 +231,20 @@ class WordCard extends React.Component  {
 
                       if (this.result !== data.words[0].lexeme && this.fetching) { // if new result, store and display
                         this.result = data.words[0].lexeme; // assign word to result
+
+                        let fetched = {
+                          id: data.words[0].id,
+                          title: data.words[0].lexeme,
+                          score: data.words[0].score,
+                          votes: data.words[0].votes,
+                          comments: [],
+                          type: "text"
+                        };
+
+                        console.log(fetched);
+
                         this.fetching = false;
-                        this.props.addQueryResult(this.result);
+                        this.props.addQueryResult(fetched);
                       }
                     } else if (this.props.mode === 'Sentence' && data.sentences.length > 0) { // if we are fetching sentences...
 
@@ -236,6 +254,9 @@ class WordCard extends React.Component  {
 
                       if (this.result !== data.sentences[0].result && this.fetching) { // if new result, store and display
                         this.result = data.sentences[0].result; // assign sentence to result
+
+                        console.log(data.sentences[0]);
+
                         this.fetching = false;
                         this.props.addQueryResult(this.result);
                       }

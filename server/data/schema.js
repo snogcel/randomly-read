@@ -20,7 +20,12 @@ type Word {
   syllables: Int
   wordsXsensesXsynsets: [definitions]
   score: Int
-  votes: String
+  votes: [votes]
+}
+
+type votes {
+  user: String
+  vote: Int
 }
 
 type Sentence {
