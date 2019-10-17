@@ -65,9 +65,13 @@ const RRHome = props => {
               <Grid item xs={12} sm={6}>
                 <WordCardContainer />
                 <ProgressIndicator />
-                <WordHistory />
 
                 <WordHistoryList />
+
+                <br /><br /><br />
+
+                <WordHistory />
+
               </Grid>
 
               <Grid item xs={12} sm={3}>

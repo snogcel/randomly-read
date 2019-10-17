@@ -4,18 +4,12 @@ import WordHistoryListItem from './Item';
 import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
 import Empty from '../shared/Empty';
 
-const List = styled.ul`
-  list-style: none;
-  border: 1px solid ${props => props.theme.border};
-  border-radius: 2px;
-
-  @media (max-width: 768px) {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-  }
-`;
+import { withStyles } from "@material-ui/core/styles";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import { styles } from '../../themeHandler';
 
 class WordHistoryList extends React.Component {
   loadPosts = () => {
@@ -38,15 +32,22 @@ class WordHistoryList extends React.Component {
 
   mapPosts = () =>
     this.props.posts.map((post, index) => (
-      <WordHistoryListItem key={index} {...post} />
+      <Grid item xs={12}><WordHistoryListItem key={index} {...post} /></Grid>
     ));
 
   render() {
+
+    const {classes} = this.props;
+
     if (this.props.isFetching) return <LoadingIndicatorBox />;
     if (!this.props.posts || this.props.posts.length === 0) return <Empty />;
     console.log(this.props.posts);
-    return <List>{this.mapPosts()}</List>;
+
+    return <Grid container className={classes.root} spacing={2}>{this.mapPosts()}</Grid>;
+
   }
 }
 
-export default WordHistoryList;
+const WordHistoryListWrapped = withStyles(styles)(WordHistoryList);
+
+export default WordHistoryListWrapped;
