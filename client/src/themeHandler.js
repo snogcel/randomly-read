@@ -92,11 +92,11 @@ const styles = theme => ({
   },
   historyTitleUpvote: {
     fontSize: 35,
-    color: "#6F0377"
+    color: "#8A0C93"
   },
   historyTitleDownvote: {
     fontSize: 35,
-    color: "#2e70ff"
+    color: "#2f8eed"
   },
   subtitle: {
     fontSize: 20
