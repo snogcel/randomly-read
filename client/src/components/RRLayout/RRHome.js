@@ -58,13 +58,13 @@ const RRHome = props => {
         {user ? (
           <>
             <Grid container spacing={24}>
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12} sm={2}>
                 <div className={classes.sideColumn}>
                   <ExerciseHistoryContainer />
                 </div>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={8}>
                 <WordCardContainer />
                 <ProgressIndicator />
 
@@ -76,7 +76,7 @@ const RRHome = props => {
 
               </Grid>
 
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12} sm={2}>
                 <div className={classes.sideColumn}>
                   <TimerContainer />
                 </div>

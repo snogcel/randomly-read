@@ -15,12 +15,6 @@ const WordHistory = function({ id, votes, score, comments, full, title, type, ..
       sentence.push(<PostVoteContainer id={title[i].id} votes={title[i].votes} score={title[i].score} title={title[i].title}/>);
     }
 
-    /*
-
-
-
-     */
-
     return (
       <Grid container spacing={1} justify="center">
         {sentence}

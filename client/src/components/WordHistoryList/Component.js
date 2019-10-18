@@ -13,22 +13,12 @@ import { styles } from '../../themeHandler';
 
 class WordHistoryList extends React.Component {
 
-  loadPosts = () => {
-    const { username, category } = this.props;
-    if (username) return this.props.fetchProfile(username);
-    return this.props.fetchPosts(category);
-  };
-
   componentDidMount() {
-    this.loadPosts();
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      this.props.category !== prevProps.category ||
-      this.props.username !== prevProps.username
-    )
-      this.loadPosts();
+
   }
 
   mapPosts = (posts) =>
@@ -36,20 +26,13 @@ class WordHistoryList extends React.Component {
       <Grid item xs={12}><WordHistoryListItem key={post.time} {...post} /></Grid>
     ));
 
-  mapWords(posts) {
-
-    posts.map((post, index) => (
-      <Grid item xs={12}><WordHistoryListItem key={index} {...post} /></Grid>
-    ));
-
-  }
-
   render() {
 
     const {classes} = this.props;
 
-    if (this.props.isFetching) return <LoadingIndicatorBox />;
-    if (!this.props.posts || this.props.posts.length === 0) return <Empty />;
+    console.log(this.props.posts);
+
+    if (!this.props.posts || this.props.posts.length === 0) return null;
 
     let exerciseResults = this.props.posts || [];
     let currentExercise = [{ isIntermission: false }];
@@ -65,12 +48,12 @@ class WordHistoryList extends React.Component {
 
     // only show complete array if intermission is true, otherwise trim the last (current) fetched word
     if (typeof currentExercise[currentExerciseNumber] !== "undefined" && currentExercise[currentExerciseNumber].isIntermission === true) {
-      exerciseResults = this.props.posts.slice(0).reverse();
+      exerciseResults = this.props.posts.slice(0);
     } else {
-      exerciseResults = this.props.posts.slice(0, -1).reverse();
+      exerciseResults = this.props.posts.slice(0, -1);
     }
 
-    return <Grid container className={classes.root} spacing={2}>{this.mapPosts(exerciseResults)}</Grid>;
+    return <Grid container direction="column-reverse" className={classes.root} spacing={2}>{this.mapPosts(exerciseResults)}</Grid>;
 
   }
 }

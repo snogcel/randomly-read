@@ -51,6 +51,9 @@ class PostVote extends React.Component {
         didDownvote: didVote === -1
       });
     } else if (this.props.token !== nextProps.token && !nextProps.token) {
+
+      console.log("-is this the problem?");
+
       this.setState({
         didVote: false,
         didUpvote: false,

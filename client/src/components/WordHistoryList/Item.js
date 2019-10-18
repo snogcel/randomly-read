@@ -4,7 +4,7 @@ import WordHistory from '../WordHistory';
 
 const WordHistoryListItem = props => (
   <React.Fragment>
-    <WordHistory {...props} />
+      <WordHistory {...props} />
   </React.Fragment>
 );
 

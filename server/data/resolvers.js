@@ -68,14 +68,26 @@ const resolvers = {
             const id = req.user.id; // get user id
 
             // Default Templates
+          /*
 
-            //
-            //
+              "the {{ noun }} is {{ adjective }}",
+              "{{ adjective }} {{ noun }}",
+              "{{ an_adjective }} {{ noun }}",
+              "{{ an_adjective }} {{ noun_animal }}",
+
+
+              "the {{ adjective }} {{ noun_artifact }}",
+              "the {{ noun }} in {{ noun_location }}",
+
+           */
 
             let templates = [
               "the {{ noun }} is {{ adjective }}",
+              "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
-              "{{ adjective }} {{ noun }}"
+              "{{ an_adjective }} {{ noun_animal }}",
+              "the {{ adjective }} {{ noun_artifact }}",
+              "the {{ noun }} in {{ noun_location }}",
             ];
 
             // Parse Parameters
@@ -108,11 +120,11 @@ const resolvers = {
 
                       let noun = [];
                       let filteredNouns = {
-                          animal: [],
-                          location: [],
-                          person: [],
-                          food: [],
-                          artifact: []
+                        animal: [],
+                        location: [],
+                        person: [],
+                        food: [],
+                        artifact: []
                       };
                       let adj = [];
 
@@ -125,7 +137,11 @@ const resolvers = {
                           }
 
                           // TODO - remove and return to default Sentencer? leaving out of Lexeme parsing for now.
-                          if (filteredNouns.hasOwnProperty(data[i].subtype)) filteredNouns[data[i].subtype].push(data[i].lexeme); // sort nouns into subtype
+                          if (filteredNouns.hasOwnProperty(data[i].subtype)) {
+                            filteredNouns[data[i].subtype].push(data[i].lexeme);
+                          } // sort nouns into subtype
+
+                          // console.log(filteredNounsData);
 
                           if (data[i].type === 'adj') { // sort adjectives
                             adj.push(data[i].lexeme);
@@ -174,21 +190,9 @@ const resolvers = {
 
                                   promises.push(new Promise((resolve, reject) => { lexemes[i].submitPost().then(function (doc) {
 
-                                    console.log(i);
-
-
-                                    // TODO - handle empty doc
-                                    queryResult[0].dataValues.id = doc._id; // mongo id of post
-                                    queryResult[0].votes = doc.votes;
-                                    queryResult[0].score = doc.score;
-
                                     lexemes[i].id = doc._id;
                                     lexemes[i].votes = doc.votes;
                                     lexemes[i].score = doc.score;
-
-                                    console.log(lexemes[i]);
-
-                                    // console.log(queryResult[0]);
 
                                     result[i] = lexemes[i];
                                     resolve();
@@ -210,8 +214,6 @@ const resolvers = {
                                   // format into basic JSON Object
 
                                   promises.push(new Promise((resolve, reject) => {
-
-                                    console.log(i);
 
                                     let obj = { lexeme: text[i] };
 
@@ -240,16 +242,7 @@ const resolvers = {
                     Promise.all(promises)
                       .then(() => {
 
-
-
-                        // console.log(sentences);
-                        // resolve(sentences);
-
-                        console.log(result);
-
-                        let obj = {
-                          words: result
-                        };
+                        let obj = { words: result };
 
                         console.log(obj);
 
