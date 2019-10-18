@@ -64,4 +64,44 @@ Lexeme.prototype.submitPost = function() {
   });
 };
 
+Lexeme.prototype.submitPostAsync = function() {
+
+  let lexeme = this.lexeme;
+
+  console.log("writing to mongodb: ", lexeme);
+
+  return Post.create({
+    cmudict_id: this.cmudict_id,
+    title: this.lexeme,
+    author: this.author,
+    category: this.category,
+    text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "]",
+    consonant: this.consonant,
+    vowel: this.vowel,
+    syllables: this.syllables,
+  }).then(null, function(err) {
+    if (err.code === 11000) {
+
+      console.log("fetching: ", lexeme);
+
+      /*
+
+      // TODO - increment view count using something like the following:
+
+      const post = await Post.findByIdAndUpdate(
+        req.post.id,
+        { $inc: { views: 1 } },
+        { new: true }
+      );
+
+       */
+
+      return Post.findOne({title:lexeme}).lean().exec();
+
+    } else {
+      throw err;
+    }
+  });
+};
+
 module.exports = Lexeme;

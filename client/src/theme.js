@@ -2,7 +2,7 @@ const constants = {
   error: '#f5222d',
   vote: '#b6b6b6',
   upvote: '#8A0C93',
-  downvote: '#2f8eed'
+  downvote: '#C70E4C'
 };
 
 const dark = {

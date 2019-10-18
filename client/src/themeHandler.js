@@ -96,7 +96,7 @@ const styles = theme => ({
   },
   historyTitleDownvote: {
     fontSize: 35,
-    color: "#2f8eed"
+    color: "#C70E4C"
   },
   subtitle: {
     fontSize: 20

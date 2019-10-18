@@ -10,7 +10,7 @@ const resolvers = {
             let limit = 1; // default
             let location = "initial"; // default
 
-            const id = req.user.id;
+            const id = req.user.id; // get user id
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -43,7 +43,13 @@ const resolvers = {
                         queryResult[0].votes = doc.votes;
                         queryResult[0].score = doc.score;
 
-                        resolve(queryResult);
+                        lexeme.id = doc._id;
+                        lexeme.votes = doc.votes;
+                        lexeme.score = doc.score;
+
+                        console.log(queryResult);
+
+                        resolve(lexeme);
 
                       }, function(err) { reject(err); });
 
@@ -53,17 +59,23 @@ const resolvers = {
 
             return fetchData();
         },
-        sentences(_, args) {
+        sentences(_, args, req) {
             let filter = {};
             let limit = 1; // default
             let dataLimit = 250; // fixed to 250 for querying words
             let location = "initial"; // default
 
+            const id = req.user.id; // get user id
+
             // Default Templates
+
+            //
+            //
+
             let templates = [
-		            "the {{ noun }} is {{ adjective }}",
-                "{{ adjective }} {{ noun }}",
-                "{{ an_adjective }} {{ noun }}"
+              "the {{ noun }} is {{ adjective }}",
+              "{{ an_adjective }} {{ noun }}",
+              "{{ adjective }} {{ noun }}"
             ];
 
             // Parse Parameters
@@ -89,8 +101,10 @@ const resolvers = {
             // Fetch Query Data and Build Sentences
             let buildSentence = () => {
               return new Promise((resolve, reject) => {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: dataLimit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
 
-                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: dataLimit }).then(function(data) {
+                      let nounData = [];
+                      let adjData = [];
 
                       let noun = [];
                       let filteredNouns = {
@@ -104,9 +118,19 @@ const resolvers = {
 
                       // populate noun and adjective arrays for Sentencer
                       for (let i = 0; i < data.length; i++) {
-                          if (data[i].type === 'noun') noun.push(data[i].lexeme); // sort nouns
+
+                          if (data[i].type === 'noun') { // sort nouns
+                            noun.push(data[i].lexeme);
+                            nounData.push(data[i]); // create parallel nounStack for Lexeme creation
+                          }
+
+                          // TODO - remove and return to default Sentencer? leaving out of Lexeme parsing for now.
                           if (filteredNouns.hasOwnProperty(data[i].subtype)) filteredNouns[data[i].subtype].push(data[i].lexeme); // sort nouns into subtype
-                          if (data[i].type === 'adj') adj.push(data[i].lexeme);
+
+                          if (data[i].type === 'adj') { // sort adjectives
+                            adj.push(data[i].lexeme);
+                            adjData.push(data[i]); // create parallel adjStack for Lexeme creation
+                          }
                       }
 
                       // create new instance of Sentencer
@@ -121,6 +145,10 @@ const resolvers = {
 
                       // generate sentences
                       let sentences = [];
+                      let queryResult = []; // used for parsing noun / adj data
+                      let result = []; // array for holding generated sentence
+                      let lexemes = [];
+                      let promises = [];
 
                       for (let i = 0; i < limit; i++) {
                           let template = templates[Math.floor(Math.random()*templates.length)];
@@ -130,14 +158,77 @@ const resolvers = {
                           let text = sentence.split(" ");
                           let textLength = text.length;
                           let formatted = "";
+
                           for (let i = 0; i < textLength; i++) {
-                              if (noun.indexOf(text[i]) > -1 || adj.indexOf(text[i]) > -1) { // if word is in our filtered noun or adjective list...
+
+                              let nounIndex = noun.indexOf(text[i]);
+                              let adjIndex = adj.indexOf(text[i]);
+
+                              if (nounIndex > -1 || adjIndex > -1) { // if word is in our filtered noun or adjective list...
+
+                                  // create new lexeme
+                                  if (nounIndex > -1) queryResult[0] = nounData[nounIndex];
+                                  if (adjIndex > -1) queryResult[0] = adjData[adjIndex];
+
+                                  lexemes[i] = new Lexeme(queryResult, id);
+
+                                  promises.push(new Promise((resolve, reject) => { lexemes[i].submitPost().then(function (doc) {
+
+                                    console.log(i);
+
+
+                                    // TODO - handle empty doc
+                                    queryResult[0].dataValues.id = doc._id; // mongo id of post
+                                    queryResult[0].votes = doc.votes;
+                                    queryResult[0].score = doc.score;
+
+                                    lexemes[i].id = doc._id;
+                                    lexemes[i].votes = doc.votes;
+                                    lexemes[i].score = doc.score;
+
+                                    console.log(lexemes[i]);
+
+                                    // console.log(queryResult[0]);
+
+                                    result[i] = lexemes[i];
+                                    resolve();
+
+                                  }, function (err) {
+
+                                    reject(err);
+
+                                  })}));
+
+                                  // submit new post
+
+                                  // add to formatted data array
+
                                   formatted += '<span>'+text[i]+'</span>';
+
                               } else {
+
+                                  // format into basic JSON Object
+
+                                  promises.push(new Promise((resolve, reject) => {
+
+                                    console.log(i);
+
+                                    let obj = { lexeme: text[i] };
+
+                                    result[i] = obj;
+                                    resolve();
+
+                                  }));
+
+                                  // add to formatted data array
+
                                   formatted += text[i];
+
                               }
+
                               if (i !== (textLength-1)) formatted += ' ';
                           }
+
 
                           sentences.push({
                               result: sentence,
@@ -146,7 +237,28 @@ const resolvers = {
                           });
                       }
 
-                      resolve(sentences);
+                    Promise.all(promises)
+                      .then(() => {
+
+
+
+                        // console.log(sentences);
+                        // resolve(sentences);
+
+                        console.log(result);
+
+                        let obj = {
+                          words: result
+                        };
+
+                        console.log(obj);
+
+                        resolve(obj);
+
+                      })
+                      .catch((e) => {
+                        // handle errors here
+                      });
 
                   });
               });

@@ -92,8 +92,16 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
-                        result
-                        formatted                   
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          cmudict_id
+                          lexeme
+                        }                       
                     }
                 }
                 `;
@@ -101,8 +109,16 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
-                        result
-                        formatted                  
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          cmudict_id
+                          lexeme
+                        }
                     }
                 }
                 `;
@@ -224,19 +240,19 @@ class WordCard extends React.Component  {
 
 
                     // check if word is a repeat...
-                    if (this.props.mode === 'Word' && data.words.length > 0) {
-                      if (this.result === data.words[0].lexeme && this.fetching){ // if repeat word, refetch
+                    if (this.props.mode === 'Word' && data.words) {
+                      if (this.result === data.words.lexeme && this.fetching){ // if repeat word, refetch
                         refetch();
                       }
 
-                      if (this.result !== data.words[0].lexeme && this.fetching) { // if new result, store and display
-                        this.result = data.words[0].lexeme; // assign word to result
+                      if (this.result !== data.words.lexeme && this.fetching) { // if new result, store and display
+                        this.result = data.words.lexeme; // assign word to result
 
                         let fetched = {
-                          id: data.words[0].id,
-                          title: data.words[0].lexeme,
-                          score: data.words[0].score,
-                          votes: data.words[0].votes,
+                          id: data.words.id,
+                          title: data.words.lexeme,
+                          score: data.words.score,
+                          votes: data.words.votes,
                           comments: [],
                           type: "text"
                         };
