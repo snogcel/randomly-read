@@ -4,6 +4,8 @@ import WordHistoryList from './Component';
 
 export const mapStateToProps = state => ({
   posts: state.exerciseHistory.exerciseResults,
+  currentExercise: state.exerciseHistory.currentExercise,
+  currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
   isFetching: state.posts.isFetching
 });
 

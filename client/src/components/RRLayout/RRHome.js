@@ -49,6 +49,8 @@ const RRHome = props => {
 
   const {classes, user} = props;
 
+  // <WordHistory />
+
   return (
 
       <div className={classes.root}>
@@ -70,7 +72,7 @@ const RRHome = props => {
 
                 <br /><br /><br />
 
-                <WordHistory />
+
 
               </Grid>
 

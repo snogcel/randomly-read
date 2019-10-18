@@ -123,33 +123,46 @@ class PostVote extends React.Component {
 
     if (this.state.score > 0) title = classes.historyTitleUpvote;
     if (this.state.score < 0) title = classes.historyTitleDownvote;
+    if (this.props.id === null) title = classes.historyTitleNovote;
 
-    return (
+    if (this.props.id) {
 
-        <Grid container spacing={2} justify="center">
-
-          <Grid item className={classes.wordHistoryWrapper}>
-              <PostVoteUpvote
-                canVote={!!this.props.token}
-                didVote={this.state.didUpvote}
-                onClick={this.upvote}
-              />
-              <Typography
-                className={title}
-                color="textPrimary"
-                variant="h3">
-                {this.state.title}
-              </Typography>
-              <PostVoteDownvote
-                canVote={!!this.props.token}
-                didVote={this.state.didDownvote}
-                onClick={this.downvote}
-              />
-          </Grid>
-
+      return (
+        <Grid item className={classes.wordHistoryWrapper}>
+          <PostVoteUpvote
+            canVote={!!this.props.token}
+            didVote={this.state.didUpvote}
+            onClick={this.upvote}
+          />
+          <Typography
+            className={title}
+            color="textPrimary"
+            variant="h3">
+            {this.state.title}
+          </Typography>
+          <PostVoteDownvote
+            canVote={!!this.props.token}
+            didVote={this.state.didDownvote}
+            onClick={this.downvote}
+          />
         </Grid>
+      );
 
-    );
+    } else {
+
+      return (
+        <Grid item className={classes.wordHistoryWrapper}>
+          <Typography
+            className={title}
+            color="textPrimary"
+            variant="h3">
+            {this.state.title}
+          </Typography>
+        </Grid>
+      );
+
+    }
+
   }
 }
 

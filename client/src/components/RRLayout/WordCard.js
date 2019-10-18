@@ -254,7 +254,8 @@ class WordCard extends React.Component  {
                           score: data.words.score,
                           votes: data.words.votes,
                           comments: [],
-                          type: "text"
+                          type: "text",
+                          time: Date.now()
                         };
 
                         console.log(fetched);
@@ -262,19 +263,48 @@ class WordCard extends React.Component  {
                         this.fetching = false;
                         this.props.addQueryResult(fetched);
                       }
-                    } else if (this.props.mode === 'Sentence' && data.sentences.length > 0) { // if we are fetching sentences...
+                    } else if (this.props.mode === 'Sentence' && data.sentences.words.length > 0) { // if we are fetching sentences
 
-                      if (this.result === data.sentences[0].result && this.fetching){ // if repeat sentence, refetch
+                      // build result
+                      let result = "";
+
+                      for (let i = 0; i < data.sentences.words.length; i++) {
+                        result += data.sentences.words[i].lexeme;
+                        if (i < (data.sentences.words.length - 1)) result += " ";
+                      }
+
+                      if (this.result === result && this.fetching){ // if repeat sentence, refetch
                         refetch();
                       }
 
-                      if (this.result !== data.sentences[0].result && this.fetching) { // if new result, store and display
-                        this.result = data.sentences[0].result; // assign sentence to result
-
-                        console.log(data.sentences[0]);
+                      if (this.result !== result && this.fetching) { // if new result, store and display
+                        this.result = result; // assign newly generated sentence to result
 
                         this.fetching = false;
-                        this.props.addQueryResult(this.result);
+
+                        // parse for WordHistory
+                        let fetched = [];
+                        for (let i = 0; i < data.sentences.words.length; i++) {
+                          fetched.push({
+                            id: data.sentences.words[i].id,
+                            title: data.sentences.words[i].lexeme,
+                            score: data.sentences.words[i].score,
+                            votes: data.sentences.words[i].votes,
+                            comments: [],
+                            type: "text"
+                          })
+                        }
+
+                        this.props.addQueryResult({
+                          "id": null,
+                          "title": fetched,
+                          "score": null,
+                          "votes": null,
+                          "comments": [],
+                          "type": "sentence",
+                          "time": Date.now()
+                        });
+
                       }
                     }
                   }

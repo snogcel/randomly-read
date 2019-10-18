@@ -90,6 +90,11 @@ const styles = theme => ({
     fontSize: 35,
     color: "#666666"
   },
+  historyTitleNovote: {
+    fontSize: 35,
+    color: "#666666",
+    marginTop: "22px"
+  },
   historyTitleUpvote: {
     fontSize: 35,
     color: "#8A0C93"
