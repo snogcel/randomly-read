@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
 import RoutineBuilder from './RoutineBuilder';
-import { attemptCreateInteraction, attemptDeleteInteraction, fetchInteractions, fetchInteractionSettings } from '../../actions/interaction';
+import { updateVowels, addConsonant, removeConsonant } from '../../actions/routineBuilder';
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
 
 const mapStateToProps = state => ({
+  vowels: state.routineBuilder.vowels,
+  consonants: state.routineBuilder.consonants,
   isFetching: state.interaction.isFetching
 });
 
-const mapDispatchToProps = { attemptCreateInteraction, attemptDeleteInteraction, fetchInteractions, fetchInteractionSettings }; // TODO - replace with relevant actions
+const mapDispatchToProps = { updateVowels, addConsonant, removeConsonant }; // TODO - replace with relevant actions
 
 const enhance = compose(
   withAuth,
