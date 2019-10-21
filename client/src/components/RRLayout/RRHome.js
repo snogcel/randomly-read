@@ -16,6 +16,8 @@ import ExerciseHistoryContainer from './ExerciseHistoryContainer';
 import ProgressIndicator from './ProgressIndicatorContainer'
 import WordHistory from './WordHistoryContainer'
 
+import WordHistoryList from '../WordHistoryList/Container';
+
 import LoginFormContainer from '../LoginForm/Container';
 
 //import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
@@ -47,6 +49,8 @@ const RRHome = props => {
 
   const {classes, user} = props;
 
+  // <WordHistory />
+
   return (
 
       <div className={classes.root}>
@@ -54,19 +58,25 @@ const RRHome = props => {
         {user ? (
           <>
             <Grid container spacing={24}>
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12} sm={2}>
                 <div className={classes.sideColumn}>
                   <ExerciseHistoryContainer />
                 </div>
               </Grid>
 
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={8}>
                 <WordCardContainer />
                 <ProgressIndicator />
-                <WordHistory />
+
+                <WordHistoryList />
+
+                <br /><br /><br />
+
+
+
               </Grid>
 
-              <Grid item xs={12} sm={3}>
+              <Grid item xs={12} sm={2}>
                 <div className={classes.sideColumn}>
                   <TimerContainer />
                 </div>

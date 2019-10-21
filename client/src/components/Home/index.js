@@ -23,22 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Home = () => (
-  <Wrapper>
-    <HomeMainSection>
-
-      <Route component={CategoryMenuContainer} />
-
-      <Route
-        exact
-        path='/u/:randomlyread'
-        render={() => (
-           <div>
-         {/*  <WordCardContainer />
-          <TimerContainer /> */}
-          </div> 
-        )}
-      />
+/*
 
       <Route exact path='/' component={PostListContainer} />
 
@@ -63,9 +48,17 @@ const Home = () => (
           <PostDetailContainer id={match.params.post} history={history} />
         )}
       />
-    </HomeMainSection>
 
-  </Wrapper>
+ */
+
+const Home = () => (
+
+  <HomeMainSection>
+
+    <Route exact path='/' component={RRLayout} />
+
+  </HomeMainSection>
+
 );
 
 export default Home;

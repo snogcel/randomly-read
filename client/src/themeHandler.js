@@ -88,8 +88,20 @@ const styles = theme => ({
   },
   historyTitle: {
     fontSize: 35,
-    textAlign: "center",
     color: "#666666"
+  },
+  historyTitleNovote: {
+    fontSize: 35,
+    color: "#666666",
+    marginTop: "22px"
+  },
+  historyTitleUpvote: {
+    fontSize: 35,
+    color: "#8A0C93"
+  },
+  historyTitleDownvote: {
+    fontSize: 35,
+    color: "#C70E4C"
   },
   subtitle: {
     fontSize: 20
@@ -142,6 +154,9 @@ const styles = theme => ({
   },
   resetContainer: {
     padding: theme.spacing.unit * 3
+  },
+  wordHistoryWrapper: {
+    textAlign: "center",
   }
 });
 

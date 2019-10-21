@@ -92,8 +92,16 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
-                        result
-                        formatted                   
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          cmudict_id
+                          lexeme
+                        }                       
                     }
                 }
                 `;
@@ -101,8 +109,16 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
-                        result
-                        formatted                  
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          cmudict_id
+                          lexeme
+                        }
                     }
                 }
                 `;
@@ -113,6 +129,12 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
                         cmudict_id
                         lexeme
                         wordsXsensesXsynsets {
@@ -127,6 +149,12 @@ class WordCard extends React.Component  {
                 return gql`
                 {
                     words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
                         cmudict_id
                         lexeme
                         wordsXsensesXsynsets {
@@ -212,26 +240,71 @@ class WordCard extends React.Component  {
 
 
                     // check if word is a repeat...
-                    if (this.props.mode === 'Word' && data.words.length > 0) {
-                      if (this.result === data.words[0].lexeme && this.fetching){ // if repeat word, refetch
+                    if (this.props.mode === 'Word' && data.words) {
+                      if (this.result === data.words.lexeme && this.fetching){ // if repeat word, refetch
                         refetch();
                       }
 
-                      if (this.result !== data.words[0].lexeme && this.fetching) { // if new result, store and display
-                        this.result = data.words[0].lexeme;
-                        this.fetching = false;
-                        this.props.addQueryResult(this.result);
-                      }
-                    } else if (this.props.mode === 'Sentence' && data.sentences.length > 0) { // if we are fetching sentences...
+                      if (this.result !== data.words.lexeme && this.fetching) { // if new result, store and display
+                        this.result = data.words.lexeme; // assign word to result
 
-                      if (this.result === data.sentences[0].result && this.fetching){ // if repeat sentence, refetch
+                        let fetched = {
+                          id: data.words.id,
+                          title: data.words.lexeme,
+                          score: data.words.score,
+                          votes: data.words.votes,
+                          comments: [],
+                          type: "text",
+                          time: Date.now()
+                        };
+
+                        console.log(fetched);
+
+                        this.fetching = false;
+                        this.props.addQueryResult(fetched);
+                      }
+                    } else if (this.props.mode === 'Sentence' && data.sentences.words.length > 0) { // if we are fetching sentences
+
+                      // build result
+                      let result = "";
+
+                      for (let i = 0; i < data.sentences.words.length; i++) {
+                        result += data.sentences.words[i].lexeme;
+                        if (i < (data.sentences.words.length - 1)) result += " ";
+                      }
+
+                      if (this.result === result && this.fetching){ // if repeat sentence, refetch
                         refetch();
                       }
 
-                      if (this.result !== data.sentences[0].result && this.fetching) { // if new result, store and display
-                        this.result = data.sentences[0].result;
+                      if (this.result !== result && this.fetching) { // if new result, store and display
+                        this.result = result; // assign newly generated sentence to result
+
                         this.fetching = false;
-                        this.props.addQueryResult(this.result);
+
+                        // parse for WordHistory
+                        let fetched = [];
+                        for (let i = 0; i < data.sentences.words.length; i++) {
+                          fetched.push({
+                            id: data.sentences.words[i].id,
+                            title: data.sentences.words[i].lexeme,
+                            score: data.sentences.words[i].score,
+                            votes: data.sentences.words[i].votes,
+                            comments: [],
+                            type: "text"
+                          })
+                        }
+
+                        this.props.addQueryResult({
+                          "id": null,
+                          "title": fetched,
+                          "score": null,
+                          "votes": null,
+                          "comments": [],
+                          "type": "sentence",
+                          "time": Date.now()
+                        });
+
                       }
                     }
                   }
