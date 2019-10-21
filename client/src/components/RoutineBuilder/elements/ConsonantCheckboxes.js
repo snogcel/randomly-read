@@ -13,11 +13,8 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   formControl: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(3),
   },
-  formControlLabel: {
-    margin: theme.spacing(1)
-  }
 }));
 
 export default function CheckboxesGroup(props) {

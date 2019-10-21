@@ -11,10 +11,26 @@ import store from "../../store";
 
 import LoginFormContainer from '../LoginForm/Container';
 
+import ModeSelect from './elements/ModeSelect';
+import DurationInput from './elements/DurationInput';
+import RepetitionInput from './elements/RepetitionInput';
+import SyllableSelect from './elements/SyllableSelect';
+import PositionSelect from './elements/PositionSelect';
+
 import VowelSelect from './elements/VowelSelect';
 import ConsonantCheckboxes from './elements/ConsonantCheckboxes';
 
 import { styles } from '../../themeHandler';
+
+// TODO - set up constants for all form options, for now these are stored in each element.
+
+const defaultSyllables = [
+  { id: "1", name: "1 Syllable"},
+  { id: "2", name: "2 Syllables"},
+  { id: "3", name: "3 Syllables"},
+  { id: "4", name: "4 Syllables"},
+  { id: "5", name: "5 Syllables"}
+];
 
 const availableVowels = [
   { id: "AA", name: "ɑ"},
@@ -101,6 +117,11 @@ class RoutineBuilder extends React.Component {
 
     this.vowelHandler = this.vowelHandler.bind(this);
     this.consonantHandler = this.consonantHandler.bind(this);
+    this.modeHandler = this.modeHandler.bind(this);
+    this.positionHandler = this.positionHandler.bind(this);
+    this.rangeValHandler = this.rangeValHandler.bind(this);
+    this.repetitionHandler = this.repetitionHandler.bind(this);
+    this.syllableHandler = this.syllableHandler.bind(this);
 
   }
 
@@ -146,6 +167,19 @@ class RoutineBuilder extends React.Component {
     this.props.updateVowels(vowelArr); // pass to redux
   }
 
+  syllableHandler(syllables) {
+    let syllableArr = [];
+
+    for (let i = 0; i < syllables.length; i++) {
+      let obj = defaultSyllables.find(o => o.name === syllables[i]);
+      if (obj) syllableArr.push(obj.id);
+    }
+
+    console.log(syllableArr);
+
+    this.props.updateSyllables(syllableArr); // pass to redux
+  }
+
   parseVowels(vowels) {
     let vowelArr = [];
 
@@ -168,29 +202,102 @@ class RoutineBuilder extends React.Component {
     return vowelArr.concat(defaultConsonants);
   }
 
+  modeHandler(mode) {
+    this.props.updateMode(mode);
+  }
+
+  positionHandler(mode) {
+    this.props.updateMode(mode);
+  }
+
+  rangeValHandler(rangeVal) {
+    this.props.updateRangeVal(rangeVal);
+  }
+
+  repetitionHandler(repetitions) {
+    this.props.updateRepetitions(repetitions);
+  }
+
   render() {
 
     const { user } = this.props;
-    const { vowels, consonants } = this.props;
+    const { vowels, consonants, mode, position, rangeVal, repetitions, syllables } = this.props;
+    const { classes } = this.props;
 
     console.log("vowels: ", vowels);
     console.log("consonants: ", consonants);
+    console.log("mode: ", mode);
+    console.log("position: ", position);
+    console.log("rangeVal: ", rangeVal);
+    console.log("repetitions: ", repetitions);
+    console.log("syllables: ", syllables);
 
-    let vowelArr = this.parseVowels(vowels);
-    let consonantObj = this.parseConsonants(consonants);
-    let consonantCheckboxOptions = this.parseConsonantCheckboxOptions(vowels);
+    let vowelArr = this.parseVowels(vowels); // convert routine format into MUI format
+    let consonantObj = this.parseConsonants(consonants); // convert routine format into MUI format
+    let consonantCheckboxOptions = this.parseConsonantCheckboxOptions(vowels); // display available consonants + vowels
 
 
+    // TODO - User
+    // TODO - Routine Name
+    // TODO - Edit Name
+
+
+    // TODO - parse Mode
+
+    // TODO - parse Position
+
+    // TODO - parse rangeVal <-- use slider?
+
+    // TODO - parse repetitions <-- use slider?
+
+    // TODO - parse syllables
+
+
+    // TODO - handle Intermission Mode
+    // TODO - IntermissionText
+
+
+    // TODO - Display Exercise Steps (table)
+    // TODO - Preview Exercise Step
+
+    // TODO - Copy, Delete, Add Steps
+
+    
     return (
 
-      <Grid container>
+      <Grid className={classes.root} container>
 
         {user ? (
           <>
 
-            <VowelSelect action={this.vowelHandler} vowels={vowelArr} />
+            <Grid item>
+              <ModeSelect action={this.modeHandler} />
+            </Grid>
 
-            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+            <Grid item>
+              <VowelSelect action={this.vowelHandler} vowels={vowelArr} />
+            </Grid>
+
+            <Grid item>
+              <DurationInput action={this.rangeValHandler} />
+            </Grid>
+
+            <Grid item>
+              <RepetitionInput action={this.repetitionHandler} />
+            </Grid>
+
+            <Grid item>
+              <SyllableSelect action={this.syllableHandler} />
+            </Grid>
+
+            <Grid item>
+              <PositionSelect action={this.positionHandler} />
+            </Grid>
+
+            <Grid item>
+              <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+            </Grid>
+
 
           </>
         ) : (
