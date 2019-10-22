@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Router, Route, Switch } from 'react-router-dom';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import theme from '../../theme'; // TODO - remove
 import { MuiTheme } from '../../themeHandler';
 import history from '../../util/history';

@@ -20,17 +20,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const positions = [
-  { id: "initial", name: "Opening"},
-  { id: "medial", name: "Middle"},
-  { id: "final", name: "Closing"},
-];
-
 export default function PositionSelect(props) {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    position: ''
-  });
+  const [values, setValues] = React.useState(props.position);
 
   const handleChange = event => {
     setValues(oldValues => ({
@@ -45,6 +37,7 @@ export default function PositionSelect(props) {
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="mode-input">Position</InputLabel>
         <Select
+          defaultValue={props.position}
           value={values.position}
           onChange={handleChange}
           inputProps={{
@@ -52,7 +45,7 @@ export default function PositionSelect(props) {
             id: 'position-input',
           }}
         >
-          {positions.map(position => (
+          {props.options.map(position => (
             <MenuItem key={position.id} value={position.id}>{position.name}</MenuItem>
           ))}
         </Select>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import RoutineBuilder from './RoutineBuilder';
-import { updateVowels, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition } from '../../actions/routineBuilder';
+import { updateVowels, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission } from '../../actions/routineBuilder';
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
 
@@ -12,10 +12,12 @@ const mapStateToProps = state => ({
   repetitions: state.routineBuilder.repetitions,
   syllables: state.routineBuilder.syllables,
   position: state.routineBuilder.position,
+  intermissionText: state.routineBuilder.intermissionText,
+  isIntermission: state.routineBuilder.isIntermission,
   isFetching: state.interaction.isFetching
 });
 
-const mapDispatchToProps = { updateVowels, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition }; // TODO - replace with relevant actions
+const mapDispatchToProps = { updateVowels, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission }; // TODO - replace with relevant actions
 
 const enhance = compose(
   withAuth,

@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,6 +18,13 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(1),
     minWidth: 175,
     maxWidth: 300,
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
   },
   noLabel: {
     marginTop: theme.spacing(3),
@@ -37,17 +45,17 @@ const MenuProps = {
 // TODO - import
 
 const syllables = [
-  { id: "1", name: "1 Syllable"},
-  { id: "2", name: "2 Syllables"},
-  { id: "3", name: "3 Syllables"},
-  { id: "4", name: "4 Syllables"},
-  { id: "5", name: "5 Syllables"}
+  { id: "1", name: "One"},
+  { id: "2", name: "Two"},
+  { id: "3", name: "Three"},
+  { id: "4", name: "Four"},
+  { id: "5", name: "Five"}
 ];
 
 export default function SyllableSelect(props) {
   const classes = useStyles();
   const theme = useTheme();
-  const [selectedSyllables, setSyllable] = React.useState([]);
+  const [selectedSyllables, setSyllable] = React.useState(props.syllables);
 
   const handleChange = event => {
     setSyllable(event.target.value); // record to internal state
@@ -57,20 +65,28 @@ export default function SyllableSelect(props) {
   return (
     <div className={classes.root}>
 
+
+
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="select-multiple-checkbox">Syllables</InputLabel>
+        <InputLabel htmlFor="select-multiple-chip-syllables">Syllables</InputLabel>
         <Select
           multiple
+          defaultValue={props.syllables}
           value={selectedSyllables}
           onChange={handleChange}
-          input={<Input id="select-multiple-checkbox" />}
-          renderValue={selected => selected.join(', ')}
+          input={<Input id="select-multiple-chip-syllables" />}
+          renderValue={selected => (
+            <div className={classes.chips}>
+              {selected.map(value => (
+                <Chip key={value} label={value} className={classes.chip} />
+              ))}
+            </div>
+          )}
           MenuProps={MenuProps}
         >
           {syllables.map(syllable => (
             <MenuItem key={syllable.id} value={syllable.name}>
-              <Checkbox checked={selectedSyllables.indexOf(syllable.name) > -1} />
-              <ListItemText primary={syllable.name} />
+              {syllable.name}
             </MenuItem>
           ))}
         </Select>

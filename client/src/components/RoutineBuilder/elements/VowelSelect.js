@@ -7,6 +7,7 @@ import FormControl from '@material-ui/core/FormControl';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
+import Chip from '@material-ui/core/Chip';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,8 +16,15 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 175,
     maxWidth: 300,
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
   },
   noLabel: {
     marginTop: theme.spacing(3),
@@ -29,29 +37,10 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
+      width: 175,
     },
   },
 };
-
-// TODO - import
-
-const vowels = [
-  { id: "AA", name: "ɑ"},
-  { id: "AE", name: "æ"},
-  { id: "AH", name: "ʌ"},
-  { id: "AO", name: "ɔ"},
-  { id: "AW", name: "aʊ"},
-  { id: "AY", name: "aɪ"},
-  { id: "EH", name: "ɛ"},
-  { id: "ER", name: "ɝ"},
-  { id: "EY", name: "eɪ"},
-  { id: "IH", name: "ɪ"},
-  { id: "IY", name: "i"},
-  { id: "OW", name: "oʊ"},
-  { id: "OY", name: "ɔɪ"},
-  { id: "UW", name: "u"}
-];
 
 export default function VowelSelect(props) {
   const classes = useStyles();
@@ -67,19 +56,24 @@ export default function VowelSelect(props) {
     <div className={classes.root}>
 
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="select-multiple-checkbox">Vowel</InputLabel>
+        <InputLabel htmlFor="select-multiple-chip-vowel">Vowels</InputLabel>
         <Select
           multiple
           value={selectedVowels}
           onChange={handleChange}
-          input={<Input id="select-multiple-checkbox" />}
-          renderValue={selected => selected.join(', ')}
+          input={<Input id="select-multiple-chip-vowel" />}
+          renderValue={selected => (
+            <div className={classes.chips}>
+              {selected.map(vowel => (
+                <Chip key={vowel} label={vowel} className={classes.chip} />
+              ))}
+            </div>
+          )}
           MenuProps={MenuProps}
         >
-          {vowels.map(vowel => (
+          {props.options.map(vowel => (
             <MenuItem key={vowel.id} value={vowel.name}>
-              <Checkbox checked={selectedVowels.indexOf(vowel.name) > -1} />
-              <ListItemText primary={vowel.name} />
+              {vowel.name}
             </MenuItem>
           ))}
         </Select>

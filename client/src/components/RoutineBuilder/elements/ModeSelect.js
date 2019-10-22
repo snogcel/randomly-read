@@ -20,17 +20,9 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const modes = [
-  { id: "word", name: "Word"},
-  { id: "sentence", name: "Sentence"},
-  { id: "intermission", name: "Intermission"},
-];
-
 export default function ModeSelect(props) {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    mode: ''
-  });
+  const [values, setValues] = React.useState(props.mode);
 
   const handleChange = event => {
     setValues(oldValues => ({
@@ -45,6 +37,7 @@ export default function ModeSelect(props) {
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="mode-input">Mode</InputLabel>
         <Select
+          defaultValue={props.mode}
           value={values.mode}
           onChange={handleChange}
           inputProps={{
@@ -52,7 +45,7 @@ export default function ModeSelect(props) {
             id: 'mode-input',
           }}
         >
-          {modes.map(mode => (
+          {props.options.map(mode => (
             <MenuItem key={mode.id} value={mode.id}>{mode.name}</MenuItem>
           ))}
         </Select>

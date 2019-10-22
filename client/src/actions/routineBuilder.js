@@ -6,6 +6,8 @@ export const UPDATE_RANGEVAL = 'UPDATE_RANGEVAL';
 export const UPDATE_REPETITIONS = 'UPDATE_REPETITIONS';
 export const UPDATE_SYLLABLES = 'UPDATE_SYLLABLES';
 export const UPDATE_POSITION = 'UPDATE_POSITION';
+export const UPDATE_INTERMISSION_TEXT = 'UPDATE_INTERMISSION_TEXT';
+export const UPDATE_IS_INTERMISSION = 'UPDATE_IS_INTERMISSION';
 
 export function updateVowels(vowelArr) {
   return {
@@ -52,5 +54,17 @@ export function updateSyllables(syllables) {
 export function updatePosition(position) {
   return {
     type: UPDATE_POSITION, position
+  }
+}
+
+export function updateIntermissionText(intermissionText) {
+  return {
+    type: UPDATE_INTERMISSION_TEXT, intermissionText
+  }
+}
+
+export function updateIsIntermission(isIntermission) {
+  return {
+    type: UPDATE_IS_INTERMISSION, isIntermission
   }
 }
