@@ -29,14 +29,14 @@ export default function DurationSlider(props) {
   };
 
   let unit = "second";
-  if (state.duration > 1) unit = "seconds";
+  if (props.duration.duration > 1) unit = "seconds";
 
   return (
     <div className={classes.root}>
-      <InputLabel htmlFor="discrete-slider-duration" className={classes.slider}>Display for {state.duration} {unit}</InputLabel>
+      <InputLabel htmlFor="discrete-slider-duration" className={classes.slider}>Display for {props.duration.duration} {unit}</InputLabel>
       <Slider
         defaultValue={props.duration}
-        value={state.duration}
+        value={props.duration.duration}
         aria-labelledby="discrete-slider-duration"
         valueLabelDisplay="auto"
         step={1}

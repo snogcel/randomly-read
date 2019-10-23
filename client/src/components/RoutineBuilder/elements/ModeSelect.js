@@ -38,7 +38,7 @@ export default function ModeSelect(props) {
         <InputLabel htmlFor="mode-input">Mode</InputLabel>
         <Select
           defaultValue={props.mode}
-          value={values.mode}
+          value={props.mode.mode}
           onChange={handleChange}
           inputProps={{
             name: 'mode',

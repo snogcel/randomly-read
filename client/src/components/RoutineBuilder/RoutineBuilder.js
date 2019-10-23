@@ -11,21 +11,26 @@ import store from "../../store";
 
 import LoginFormContainer from '../LoginForm/Container';
 
-import ModeSelect from './elements/ModeSelect';
 import DurationInput from './elements/DurationInput'; // TODO - remove
 import RepetitionInput from './elements/RepetitionInput'; // TODO - remove
+
+import InsertButton from './elements/InsertButton';
+import UpdateButton from './elements/UpdateButton';
+import DeleteButton from './elements/DeleteButton';
+
+import StepList from './elements/StepList';
+
+import ModeSelect from './elements/ModeSelect';
 import SyllableSelect from './elements/SyllableSelect';
 import PositionSelect from './elements/PositionSelect';
-
 import DurationSlider from './elements/DurationSlider';
 import RepetitionSlider from './elements/RepetitionSlider';
-
 import VowelSelect from './elements/VowelSelect';
 import ConsonantCheckboxes from './elements/ConsonantCheckboxes';
-
 import IntermissionText from './elements/IntermissionText';
 
 import { styles } from '../../themeHandler';
+
 
 // TODO - set up constants for all form options, for now these are stored in each element.
 
@@ -132,6 +137,15 @@ class RoutineBuilder extends React.Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      index: 0
+    };
+
+    this.insertHandler = this.insertHandler.bind(this);
+    this.updateHandler = this.updateHandler.bind(this);
+    this.deleteHandler = this.deleteHandler.bind(this);
+    this.stepListHandler = this.stepListHandler.bind(this);
+
     this.vowelHandler = this.vowelHandler.bind(this);
     this.consonantHandler = this.consonantHandler.bind(this);
     this.modeHandler = this.modeHandler.bind(this);
@@ -213,6 +227,143 @@ class RoutineBuilder extends React.Component {
     this.props.updateIntermissionText(intermissionText);
   }
 
+  insertHandler() {
+    let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+
+    let step = {
+      "index": Date.now(),
+      "rangeVal": rangeVal,
+      "repetitions": repetitions,
+      "mode": mode,
+      "isIntermission": isIntermission
+    };
+
+    if (isIntermission) {
+      step.intermissionText = intermissionText;
+    } else {
+      step.vowels = vowels;
+      step.consonants = consonants;
+      step.syllables = syllables;
+      step.position = position;
+    }
+
+    this.setState({ "index": step.index });
+    this.props.insertStep(step);
+  }
+
+  deleteHandler() {
+
+    let index = this.state.index;
+
+    console.log("- delete handler: ", index);
+
+    if (index > 0 && this.props.routine.length > 0) {
+
+      let depth = 0;
+
+      // determine depth in routine stack
+      for (let i = 0; i < this.props.routine.length; i++) {
+        if (index === this.props.routine[i].index) {
+          depth = i;
+        }
+      }
+
+      if (depth > 0 ) {
+
+        depth--;
+        this.stepListHandler(this.props.routine[depth].index);
+
+      } else if (depth === 0 && this.props.routine.length > 1) {
+
+        depth++;
+        this.stepListHandler(this.props.routine[depth].index);
+
+      } else {
+
+        // TODO - reset form ?
+        this.setState({"index": 0});
+
+      }
+
+      // remove routine from redux
+      this.props.removeStep(index);
+
+    }
+
+  }
+
+  stepListHandler(index) {
+
+    if (index > 0) {
+
+      let routine = {};
+
+      for (let i = 0; i < this.props.routine.length; i++) {
+        if (index === this.props.routine[i].index) {
+           routine = this.props.routine[i];
+        }
+      }
+
+      let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = routine;
+
+      this.props.updateIndex(index);
+      this.props.updateRangeVal(rangeVal);
+      this.props.updateRepetitions(repetitions);
+      this.props.updateMode(mode);
+      this.props.updateIsIntermission(isIntermission);
+
+      if (isIntermission) {
+        this.props.updateIntermissionText(intermissionText);
+      } else {
+        this.props.updateVowels(vowels);
+        this.props.updateConsonants(consonants);
+        this.props.updateSyllables(syllables);
+        this.props.updatePosition(position);
+      }
+
+      this.setState({ "index": index });
+    }
+
+  }
+
+  updateHandler() {
+    if (this.props.routine.length > 0) {
+
+      let index = this.state.index;
+      let routineStack = this.props.routine;
+
+      let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+
+      for (let i = 0; i < routineStack.length; i++) {
+        if (index === routineStack[i].index) {
+
+          let step = {
+            "index": routineStack[i].index,
+            "rangeVal": rangeVal,
+            "repetitions": repetitions,
+            "mode": mode,
+            "isIntermission": isIntermission
+          };
+
+          if (isIntermission) {
+            step.intermissionText = intermissionText;
+          } else {
+            step.vowels = vowels;
+            step.consonants = consonants;
+            step.syllables = syllables;
+            step.position = position;
+          }
+
+          routineStack[i] = step;
+
+        }
+      }
+
+      this.props.updateStep(routineStack);
+      this.stepListHandler(index);
+    }
+  }
+
   parseSyllables(syllables) {
     let syllablesArr = [];
 
@@ -246,11 +397,13 @@ class RoutineBuilder extends React.Component {
 
   parseDuration(duration) {
     let durationObj = { duration: parseInt(duration) };
+
     return durationObj;
   }
 
   parseRepetition(repetition) {
     let repetitionObj = { repetition: parseInt(repetition) };
+
     return repetitionObj;
   }
 
@@ -265,6 +418,7 @@ class RoutineBuilder extends React.Component {
 
   parseIntermissionText(intermissionText) {
     let intermissionObj = { intermissionText: intermissionText };
+
     return intermissionObj;
   }
 
@@ -280,10 +434,47 @@ class RoutineBuilder extends React.Component {
   }
 
   parseConsonants(consonants) {
-    let consonantObj = {};
+    let consonantObj = {
+      "AA": false,
+      "AE": false,
+      "AH": false,
+      "AO": false,
+      "AW": false,
+      "AY": false,
+      "EH": false,
+      "ER": false,
+      "EY": false,
+      "IH": false,
+      "IY": false,
+      "OW": false,
+      "OY": false,
+      "UW": false,
+      "B": false,
+      "CH": false,
+      "D": false,
+      "F": false,
+      "G": false,
+      "HH": false,
+      "JH": false,
+      "K": false,
+      "L": false,
+      "M": false,
+      "N": false,
+      "P": false,
+      "R": false,
+      "S": false,
+      "SH": false,
+      "T": false,
+      "TH": false,
+      "V": false,
+      "W": false,
+      "Y": false,
+      "Z": false
+    };
 
     for (let i = 0; i < consonants.length; i++) {
       let obj = availableConsonants.find(o => o.id = consonants[i]);
+
       if (obj) consonantObj[obj.id] = true;
     }
 
@@ -293,9 +484,10 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+    const { routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
+    /*
     console.log("vowels: ", vowels);
     console.log("consonants: ", consonants);
     console.log("mode: ", mode);
@@ -305,6 +497,10 @@ class RoutineBuilder extends React.Component {
     console.log("syllables: ", syllables);
     console.log("intermissionText", intermissionText);
     console.log("isIntermission", isIntermission);
+    */
+
+    console.log("current index: ", this.state.index);
+    console.log("routine: ", routine);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -315,7 +511,6 @@ class RoutineBuilder extends React.Component {
     let durationObj = this.parseDuration(rangeVal);
     let repetitionObj = this.parseRepetition(repetitions);
     let intermissionTextObj = this.parseIntermissionText(intermissionText);
-
 
     // TODO - User
     // TODO - Routine Name
@@ -331,73 +526,136 @@ class RoutineBuilder extends React.Component {
 
     return (
 
-      <Grid className={classes.root} spacing={0}>
+      <Grid className={classes.root}>
 
         {user ? (
           <>
 
-            <Grid item xs={12}>
+            <Grid container spacing={2}>
 
-              <Grid container spacing={2}>
+              <Grid item xs={3}>
 
-                <Grid item>
-                  <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
-                </Grid>
+                <Grid container spacing={0}>
 
-                <Grid item>
-                  <DurationSlider action={this.rangeValHandler} duration={durationObj} />
-                </Grid>
+                  <Grid item xs={12}>
 
-                {!isIntermission ? (
-                  <>
+                    <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
 
-                  <Grid item>
-                    <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
                   </Grid>
 
-                  </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
-
-              </Grid>
-
-            </Grid>
-
-            <Grid item xs={12}>
-
-              <Grid container spacing={2}>
-
-                {!isIntermission ? (
-                  <>
-
-                  <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
-
-                  <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
-
-                  <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
-
-                  </> ) : ( <> </> )}
-
-              </Grid>
-
-            </Grid>
-
-            <Grid item xs={12} >
-
-              <Grid container spacing={2}>
-
-                <Grid item>
-                {!isIntermission ? (
-                  <>
-                  <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
-                  </> ) : ( <> </> )}
-
                 </Grid>
 
               </Grid>
 
 
+              <Grid item xs={9}>
+
+                <Grid container spacing={0}>
+
+                  <Grid item xs={12}>
+
+                    <Grid container spacing={2}>
+
+                      <Grid item>
+                        <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
+                      </Grid>
+
+                      <Grid item>
+                        <DurationSlider action={this.rangeValHandler} duration={durationObj} />
+                      </Grid>
+
+                      {!isIntermission ? (
+                        <>
+
+                          <Grid item>
+                            <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
+                          </Grid>
+
+                        </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+
+                    </Grid>
+
+                  </Grid>
+
+                  <Grid item xs={12}>
+
+                    <Grid container spacing={2}>
+
+                      {!isIntermission ? (
+                        <>
+
+                          <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
+
+                          <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
+
+                          <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
+
+                        </> ) : ( <> </> )}
+
+                    </Grid>
+
+                  </Grid>
+
+                  <Grid item xs={12}>
+
+                    <Grid container spacing={2}>
+
+                      <Grid item>
+                        {!isIntermission ? (
+                          <>
+                            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+                          </> ) : ( <> </> )}
+
+                      </Grid>
+
+                    </Grid>
+
+
+                  </Grid>
+
+                  <Grid item xs={12}>
+
+                    <Grid container spacing={2}>
+
+                      <Grid item>
+
+                        <br />
+
+                        <InsertButton action={this.insertHandler} />
+
+                      </Grid>
+
+                      <Grid item>
+
+                        <br />
+
+                        {(this.state.index > 0) ? (
+                          <>
+                            <UpdateButton action={this.updateHandler} />
+                          </> ) : ( <> </> )}
+
+                      </Grid>
+
+                      <Grid item>
+
+                        <br />
+
+                        {(this.state.index > 0) ? (
+                          <>
+                            <DeleteButton action={this.deleteHandler} />
+                          </> ) : ( <> </> )}
+
+                      </Grid>
+
+                    </Grid>
+
+                  </Grid>
+
+                </Grid>
+
+              </Grid>
+
             </Grid>
-
-
 
           </>
         ) : (

@@ -35,6 +35,8 @@ export default function CheckboxesGroup(props) {
     props.action(name, event.target.checked); // pass to redux
   };
 
+  console.log(props.consonants);
+
   return (
     <div>
       <FormControl component="fieldset" className={classes.formControl}>
@@ -44,7 +46,7 @@ export default function CheckboxesGroup(props) {
           {props.options.map(consonant => (
             <FormControlLabel
             className={classes.formControlLabel}
-            control={<Checkbox disableRipple key={consonant.id} checked={state[consonant.id]} onChange={handleChange(consonant.id)} value={consonant.name} />}
+            control={<Checkbox disableRipple key={consonant.id} checked={props.consonants[consonant.id]} onChange={handleChange(consonant.id)} value={consonant.name} />}
             label={consonant.name}
             labelPlacement="top"
             />

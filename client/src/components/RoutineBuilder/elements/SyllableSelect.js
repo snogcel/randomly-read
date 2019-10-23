@@ -72,7 +72,7 @@ export default function SyllableSelect(props) {
         <Select
           multiple
           defaultValue={props.syllables}
-          value={selectedSyllables}
+          value={props.syllables}
           onChange={handleChange}
           input={<Input id="select-multiple-chip-syllables" />}
           renderValue={selected => (

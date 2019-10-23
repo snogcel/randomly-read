@@ -38,7 +38,7 @@ export default function PositionSelect(props) {
         <InputLabel htmlFor="mode-input">Position</InputLabel>
         <Select
           defaultValue={props.position}
-          value={values.position}
+          value={props.position.position}
           onChange={handleChange}
           inputProps={{
             name: 'position',

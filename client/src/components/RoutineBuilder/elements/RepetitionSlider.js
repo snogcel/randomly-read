@@ -29,14 +29,14 @@ export default function RepetitionSlider(props) {
   };
 
   let unit = "time";
-  if (state.repetition > 1) unit = "times";
+  if (props.repetitions.repetition > 1) unit = "times";
 
   return (
     <div className={classes.root}>
-      <InputLabel htmlFor="discrete-slider-duration" className={classes.slider}>Repeat {state.repetition} {unit}</InputLabel>
+      <InputLabel htmlFor="discrete-slider-duration" className={classes.slider}>Repeat {props.repetitions.repetition} {unit}</InputLabel>
       <Slider
         defaultValue={props.repetitions}
-        value={state.repetition}
+        value={props.repetitions.repetition}
         aria-labelledby="discrete-slider-duration"
         valueLabelDisplay="auto"
         step={1}

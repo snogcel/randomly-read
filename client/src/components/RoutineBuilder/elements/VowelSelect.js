@@ -59,7 +59,7 @@ export default function VowelSelect(props) {
         <InputLabel htmlFor="select-multiple-chip-vowel">Vowels</InputLabel>
         <Select
           multiple
-          value={selectedVowels}
+          value={props.vowels}
           onChange={handleChange}
           input={<Input id="select-multiple-chip-vowel" />}
           renderValue={selected => (
