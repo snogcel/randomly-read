@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
 import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 
@@ -10,6 +11,10 @@ const useStyles = makeStyles(theme => ({
   margin: {
     height: theme.spacing(3),
   },
+  slider: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 export default function RepetitionSlider(props) {
@@ -28,9 +33,7 @@ export default function RepetitionSlider(props) {
 
   return (
     <div className={classes.root}>
-      <Typography id="discrete-slider-duration" gutterBottom>
-        Repeat {state.repetition} {unit}
-      </Typography>
+      <InputLabel htmlFor="discrete-slider-duration" className={classes.slider}>Repeat {state.repetition} {unit}</InputLabel>
       <Slider
         defaultValue={props.repetitions}
         value={state.repetition}

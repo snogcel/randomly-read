@@ -30,11 +30,11 @@ import { styles } from '../../themeHandler';
 // TODO - set up constants for all form options, for now these are stored in each element.
 
 const availableSyllables = [
-  { id: "1", name: "One"},
-  { id: "2", name: "Two"},
-  { id: "3", name: "Three"},
-  { id: "4", name: "Four"},
-  { id: "5", name: "Five"}
+  { id: "1", name: "1"},
+  { id: "2", name: "2"},
+  { id: "3", name: "3"},
+  { id: "4", name: "4"},
+  { id: "5", name: "5"}
 ];
 
 const availableVowels = [
@@ -328,45 +328,76 @@ class RoutineBuilder extends React.Component {
 
     // TODO - Copy, Delete, Add Steps
 
-    
+
     return (
 
-      <Grid className={classes.root} spacing={5} container>
+      <Grid className={classes.root} spacing={0}>
 
         {user ? (
           <>
 
-            <Grid item>
-              <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
+            <Grid item xs={12}>
+
+              <Grid container spacing={2}>
+
+                <Grid item>
+                  <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
+                </Grid>
+
+                <Grid item>
+                  <DurationSlider action={this.rangeValHandler} duration={durationObj} />
+                </Grid>
+
+                {!isIntermission ? (
+                  <>
+
+                  <Grid item>
+                    <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
+                  </Grid>
+
+                  </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+
+              </Grid>
+
             </Grid>
 
-            <Grid item>
-              <PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} />
+            <Grid item xs={12}>
+
+              <Grid container spacing={2}>
+
+                {!isIntermission ? (
+                  <>
+
+                  <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
+
+                  <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
+
+                  <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
+
+                  </> ) : ( <> </> )}
+
+              </Grid>
+
             </Grid>
 
-            <Grid item>
-              <SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} />
+            <Grid item xs={12} >
+
+              <Grid container spacing={2}>
+
+                <Grid item>
+                {!isIntermission ? (
+                  <>
+                  <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+                  </> ) : ( <> </> )}
+
+                </Grid>
+
+              </Grid>
+
+
             </Grid>
 
-            <Grid item>
-              <DurationSlider action={this.rangeValHandler} duration={durationObj} />
-            </Grid>
 
-            <Grid item>
-              <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
-            </Grid>
-
-            <Grid item>
-              <VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} />
-            </Grid>
-
-            <Grid item>
-              <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
-            </Grid>
-
-            <Grid item>
-              <IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} />
-            </Grid>
 
           </>
         ) : (

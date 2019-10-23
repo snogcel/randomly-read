@@ -16,8 +16,8 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 175,
-    maxWidth: 300,
+    minWidth: 120,
+    maxWidth: 240,
   },
   chips: {
     display: 'flex',
@@ -45,11 +45,11 @@ const MenuProps = {
 // TODO - import
 
 const syllables = [
-  { id: "1", name: "One"},
-  { id: "2", name: "Two"},
-  { id: "3", name: "Three"},
-  { id: "4", name: "Four"},
-  { id: "5", name: "Five"}
+  { id: "1", name: "1"},
+  { id: "2", name: "2"},
+  { id: "3", name: "3"},
+  { id: "4", name: "4"},
+  { id: "5", name: "5"}
 ];
 
 export default function SyllableSelect(props) {

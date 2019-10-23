@@ -13,8 +13,16 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
   },
   formControl: {
-    margin: theme.spacing(3),
+    margin: theme.spacing(0),
+    marginTop: theme.spacing(0)
   },
+  formLabel: {
+    margin: theme.spacing(1),
+  },
+  formControlLabel: {
+    marginLeft: 0,
+    marginRight: 0
+  }
 }));
 
 export default function CheckboxesGroup(props) {
@@ -30,11 +38,13 @@ export default function CheckboxesGroup(props) {
   return (
     <div>
       <FormControl component="fieldset" className={classes.formControl}>
+        <FormLabel component="legend" className={classes.formLabel}>Consonants</FormLabel>
         <FormGroup row="true">
 
           {props.options.map(consonant => (
             <FormControlLabel
-            control={<Checkbox key={consonant.id} checked={state[consonant.id]} onChange={handleChange(consonant.id)} value={consonant.name} />}
+            className={classes.formControlLabel}
+            control={<Checkbox disableRipple key={consonant.id} checked={state[consonant.id]} onChange={handleChange(consonant.id)} value={consonant.name} />}
             label={consonant.name}
             labelPlacement="top"
             />

@@ -38,7 +38,6 @@ export default function IntermissionText(props) {
         style={{ margin: 8 }}
         fullWidth
         margin="normal"
-        variant="outlined"
         InputLabelProps={{
           shrink: true,
         }}

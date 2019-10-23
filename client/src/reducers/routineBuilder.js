@@ -15,7 +15,7 @@ const initialState = {
   mode: 'word',
   rangeVal: 5,
   repetitions: 10,
-  syllables: [],
+  syllables: ["1","2","3"],
   position: 'initial',
   intermissionText: '',
   isIntermission: false
