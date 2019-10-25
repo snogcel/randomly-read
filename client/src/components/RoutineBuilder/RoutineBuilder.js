@@ -20,6 +20,8 @@ import DeleteButton from './elements/DeleteButton';
 
 import StepList from './elements/StepList';
 
+import RoutinesSelect from './elements/RoutinesSelect';
+import RoutineName from './elements/RoutineName';
 import ModeSelect from './elements/ModeSelect';
 import SyllableSelect from './elements/SyllableSelect';
 import PositionSelect from './elements/PositionSelect';
@@ -35,11 +37,11 @@ import { styles } from '../../themeHandler';
 // TODO - set up constants for all form options, for now these are stored in each element.
 
 const availableSyllables = [
-  { id: "1", name: "1"},
-  { id: "2", name: "2"},
-  { id: "3", name: "3"},
-  { id: "4", name: "4"},
-  { id: "5", name: "5"}
+  { id: 1, name: "1"},
+  { id: 2, name: "2"},
+  { id: 3, name: "3"},
+  { id: 4, name: "4"},
+  { id: 5, name: "5"}
 ];
 
 const availableVowels = [
@@ -145,7 +147,9 @@ class RoutineBuilder extends React.Component {
     this.updateHandler = this.updateHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
     this.stepListHandler = this.stepListHandler.bind(this);
+    this.routineSelectHandler = this.routineSelectHandler.bind(this);
 
+    this.nameHandler = this.nameHandler.bind(this);
     this.vowelHandler = this.vowelHandler.bind(this);
     this.consonantHandler = this.consonantHandler.bind(this);
     this.modeHandler = this.modeHandler.bind(this);
@@ -162,7 +166,7 @@ class RoutineBuilder extends React.Component {
   }
 
   prepareRoutineBuilder(){
-
+    this.props.fetchRoutines();
   }
 
   componentDidMount() {
@@ -175,6 +179,10 @@ class RoutineBuilder extends React.Component {
     } else {
       this.props.removeConsonant(consonant); // remove consonant from state
     }
+  }
+
+  nameHandler(name) {
+    this.props.updateName(name); // pass to redux
   }
 
   vowelHandler(vowels) {
@@ -255,8 +263,6 @@ class RoutineBuilder extends React.Component {
 
     let index = this.state.index;
 
-    console.log("- delete handler: ", index);
-
     if (index > 0 && this.props.routine.length > 0) {
 
       let depth = 0;
@@ -268,9 +274,14 @@ class RoutineBuilder extends React.Component {
         }
       }
 
-      if (depth > 0 ) {
+      if (depth === (this.props.routine.length - 1)) {
 
         depth--;
+        this.stepListHandler(this.props.routine[depth].index);
+
+      } else if (depth > 0 ) {
+
+        depth++;
         this.stepListHandler(this.props.routine[depth].index);
 
       } else if (depth === 0 && this.props.routine.length > 1) {
@@ -290,6 +301,14 @@ class RoutineBuilder extends React.Component {
 
     }
 
+  }
+
+  resetForm() {
+
+  }
+
+  resetStepList() {
+    this.props.resetStepList();
   }
 
   stepListHandler(index) {
@@ -364,6 +383,77 @@ class RoutineBuilder extends React.Component {
     }
   }
 
+  routineSelectHandler(id) {
+
+    this.resetStepList();
+
+    for (let i = 0; i < this.props.availableRoutines.length; i++) {
+      if (id === this.props.availableRoutines[i].attributes.id) {
+
+        // set id
+        this.props.updateId(this.props.availableRoutines[i].attributes.id);
+
+        // set name
+        this.props.updateName(this.props.availableRoutines[i].attributes.name);
+
+        // iterate through subroutines
+        for (let j = 0; j < this.props.availableRoutines[i].attributes.subroutine.length; j++) {
+
+          let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props.availableRoutines[i].attributes.subroutine[j];
+
+          let step = {
+            "index": (Date.now() + j),
+            "rangeVal": rangeVal,
+            "repetitions": repetitions,
+            "mode": mode.toLowerCase()
+          };
+
+          if (mode === "intermission") {
+            step.isIntermission = true;
+          } else {
+            step.isIntermission = false;
+          }
+
+          if (isIntermission) {
+            step.intermissionText = intermissionText;
+          } else {
+            step.vowels = vowels;
+            step.consonants = consonants;
+            step.syllables = syllables;
+            step.position = position;
+          }
+
+          if (typeof step.position === "undefined") step.position = "initial"; // TODO - remove
+
+          // display first step in Routine Builder
+          if (j ===0 ) {
+
+            this.setState({ "index": step.index });
+
+            this.props.updateIndex(step.index);
+            this.props.updateRangeVal(step.rangeVal);
+            this.props.updateRepetitions(step.repetitions);
+            this.props.updateMode(step.mode);
+            this.props.updateIsIntermission(step.isIntermission);
+
+            if (step.isIntermission) {
+              this.props.updateIntermissionText(step.intermissionText);
+            } else {
+              this.props.updateVowels(step.vowels);
+              this.props.updateConsonants(step.consonants);
+              this.props.updateSyllables(step.syllables);
+              this.props.updatePosition(step.position);
+            }
+          }
+
+          this.props.insertStep(step); // add step to routine stack
+
+        }
+
+      }
+    }
+  }
+
   parseSyllables(syllables) {
     let syllablesArr = [];
 
@@ -414,6 +504,34 @@ class RoutineBuilder extends React.Component {
     if (obj) positionObj.position = obj.id;
 
     return positionObj;
+  }
+
+  parseAvailableRoutines(routines) {
+    let availableRoutines = [];
+
+    for (let i = 0; i < routines.length; i++) {
+      availableRoutines.push({
+        "id": routines[i].attributes.id,
+        "name": routines[i].attributes.name
+      });
+    }
+
+    return availableRoutines;
+  }
+
+  parseSelectedRoutine(name, availableRoutines) {
+    let selectedRoutineObj = { "routine": '' };
+
+    let obj = availableRoutines.find(o => o.name === name);
+    if (obj) selectedRoutineObj.routine = obj.id;
+
+    return selectedRoutineObj;
+  }
+
+  parseName(name) {
+    let nameObj = { name: name };
+
+    return nameObj;
   }
 
   parseIntermissionText(intermissionText) {
@@ -484,7 +602,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+    const { name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
     /*
@@ -497,10 +615,20 @@ class RoutineBuilder extends React.Component {
     console.log("syllables: ", syllables);
     console.log("intermissionText", intermissionText);
     console.log("isIntermission", isIntermission);
-    */
+
+    console.log(availableRoutines);
 
     console.log("current index: ", this.state.index);
     console.log("routine: ", routine);
+    */
+
+    let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
+    console.log("available routines", this.props.availableRoutines);
+
+    let nameObj = this.parseName(name);
+    let selectedRoutineObj = this.parseSelectedRoutine(name, availableRoutines);
+
+    // console.log(selectedRoutineObj);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -539,6 +667,12 @@ class RoutineBuilder extends React.Component {
 
                   <Grid item xs={12}>
 
+                    <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj}/>
+
+                  </Grid>
+
+                  <Grid item xs={12}>
+
                     <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
 
                   </Grid>
@@ -551,6 +685,12 @@ class RoutineBuilder extends React.Component {
               <Grid item xs={9}>
 
                 <Grid container spacing={0}>
+
+                  <Grid item xs={12}>
+
+                    <RoutineName action={this.nameHandler} name={nameObj} />
+
+                  </Grid>
 
                   <Grid item xs={12}>
 

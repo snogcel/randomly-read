@@ -1,9 +1,16 @@
-export const UPDATE_INDEX = 'UPDATE_INDEX';
+import { getRoutines } from '../util/api';
 
+export const FETCH_ROUTINES_REQUEST = 'FETCH_POSTS_REQUEST';
+export const FETCH_ROUTINES_SUCCESS = 'FETCH_ROUTINES_SUCCESS';
+export const FETCH_ROUTINES_ERROR = 'FETCH_ROUTINES_ERROR';
+
+export const RESET_STEP_LIST = 'RESET_STEP_LIST';
+export const UPDATE_NAME = 'UPDATE_NAME';
+export const UPDATE_ID = 'UPDATE_ID';
+export const UPDATE_INDEX = 'UPDATE_INDEX';
 export const INSERT_STEP = 'INSERT_STEP';
 export const REMOVE_STEP = 'REMOVE_STEP';
 export const UPDATE_STEP = 'UPDATE_STEP';
-
 export const UPDATE_VOWELS = 'UPDATE_VOWELS';
 export const UPDATE_CONSONANTS = 'UPDATE_CONSONANTS';
 export const ADD_CONSONANT = 'ADD_CONSONANT';
@@ -15,6 +22,38 @@ export const UPDATE_SYLLABLES = 'UPDATE_SYLLABLES';
 export const UPDATE_POSITION = 'UPDATE_POSITION';
 export const UPDATE_INTERMISSION_TEXT = 'UPDATE_INTERMISSION_TEXT';
 export const UPDATE_IS_INTERMISSION = 'UPDATE_IS_INTERMISSION';
+
+const fetchRoutinesRequest = { type: FETCH_ROUTINES_REQUEST };
+const fetchRoutinesSuccess = routines => ({ type: FETCH_ROUTINES_SUCCESS, routines });
+const fetchRoutinesError = error => ({ type: FETCH_ROUTINES_ERROR, error });
+
+export const fetchRoutines = () => async dispatch => {
+  dispatch(fetchRoutinesRequest);
+  try {
+    const routines = await getRoutines();
+    dispatch(fetchRoutinesSuccess(routines.data));
+  } catch (error) {
+    dispatch(fetchRoutinesError(error));
+  }
+};
+
+export function resetStepList() {
+  return {
+    type: RESET_STEP_LIST
+  }
+}
+
+export function updateName(name) {
+  return {
+    type: UPDATE_NAME, name
+  }
+}
+
+export function updateId(id) {
+  return {
+    type: UPDATE_ID, id
+  }
+}
 
 export function updateIndex(index) {
   return {

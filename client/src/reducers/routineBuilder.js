@@ -1,9 +1,11 @@
-import {UPDATE_INDEX} from '../actions/routineBuilder';
-
 import {INSERT_STEP} from '../actions/routineBuilder';
 import {UPDATE_STEP} from '../actions/routineBuilder';
 import {REMOVE_STEP} from '../actions/routineBuilder';
 
+import {RESET_STEP_LIST} from '../actions/routineBuilder';
+import {UPDATE_NAME} from '../actions/routineBuilder';
+import {UPDATE_ID} from '../actions/routineBuilder';
+import {UPDATE_INDEX} from '../actions/routineBuilder';
 import {UPDATE_VOWELS} from '../actions/routineBuilder';
 import {UPDATE_CONSONANTS} from '../actions/routineBuilder';
 import {ADD_CONSONANT} from '../actions/routineBuilder';
@@ -16,7 +18,15 @@ import {UPDATE_POSITION} from '../actions/routineBuilder';
 import {UPDATE_INTERMISSION_TEXT} from '../actions/routineBuilder';
 import {UPDATE_IS_INTERMISSION} from '../actions/routineBuilder';
 
+import {FETCH_ROUTINES_REQUEST} from '../actions/routineBuilder';
+import {FETCH_ROUTINES_SUCCESS} from '../actions/routineBuilder';
+import {FETCH_ROUTINES_ERROR} from '../actions/routineBuilder';
+
+let availableRoutines;
 const initialState = {
+  availableRoutines: [],
+  name: '',
+  id: 0,
   routine: [],
   index: 0,
   vowels: [],
@@ -24,7 +34,7 @@ const initialState = {
   mode: 'word',
   rangeVal: 5,
   repetitions: 10,
-  syllables: ["1","2","3"],
+  syllables: [1,2,3],
   position: 'initial',
   intermissionText: '',
   isIntermission: false
@@ -32,16 +42,29 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case FETCH_ROUTINES_REQUEST:
+      return { ...state, isFetching: true, routine: [], newRoutine: null };
+    case FETCH_ROUTINES_SUCCESS:
+      return { ...state, isFetching: false, availableRoutines: action.routines };
+    case FETCH_ROUTINES_ERROR:
+      return { ...state, isFetching: false };
+
+    case RESET_STEP_LIST:
+      return { ...initialState, availableRoutines: state.availableRoutines };
+
+    case UPDATE_NAME:
+      return {...state, name: action.name};
+    case UPDATE_ID:
+      return {...state, id: action.id};
     case UPDATE_INDEX:
       return {...state, index: action.index};
-
     case INSERT_STEP:
       return {...state, routine:  [...state.routine, action.step]};
     case REMOVE_STEP:
       return {...state, routine: state.routine.filter(item => action.index !== item.index)};
     case UPDATE_STEP:
       return {...state, routine: action.routineArr};
-
     case UPDATE_VOWELS:
       return {...state, vowels: action.vowelArr};
     case UPDATE_CONSONANTS:

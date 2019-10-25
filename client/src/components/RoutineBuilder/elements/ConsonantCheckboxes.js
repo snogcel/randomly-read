@@ -35,8 +35,6 @@ export default function CheckboxesGroup(props) {
     props.action(name, event.target.checked); // pass to redux
   };
 
-  console.log(props.consonants);
-
   return (
     <div>
       <FormControl component="fieldset" className={classes.formControl}>
