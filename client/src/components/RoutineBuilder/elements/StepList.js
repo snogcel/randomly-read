@@ -110,53 +110,61 @@ export default function StepList(props) {
           console.log("current step: ", step);
 
           let mode = availableModes.find(o => o.id === step.mode);
-          let plural = false;
-          if (step.repetitions > 1) plural = true;
 
           let listItemText = "";
-
-          if (plural) {
-            listItemText += step.repetitions + " " + step.mode + "s";
-          } else {
-            listItemText += step.repetitions + " " + step.mode;
-          }
-
-          if (step.vowels.length > 0) {
-            let vowels = "";
-            for (let i = 0; i < step.vowels.length; i++) {
-
-              let vowel = availableConsonants.find(o => o.id === step.vowels[i]);
-              vowels += vowel.name;
-              if (i < (step.vowels.length - 2)) {
-                vowels += ", ";
-              } else if (i < (step.vowels.length - 1)) {
-                vowels += " and ";
-              }
-
-            }
-            listItemText += " focused on " + vowels;
-          }
-
           let subHeaderText = "";
 
-          if (step.position === "initial") subHeaderText += "that start with ";
-          if (step.position === "medial") subHeaderText += "that contain ";
-          if (step.position === "final") subHeaderText += "that end with ";
+          if (!step.isIntermission) {
 
-          if (step.consonants.length > 0) {
-            let consonants = "";
-            for (let i = 0; i < step.consonants.length; i++) {
+            let plural = false;
+            if (step.repetitions > 1) plural = true;
 
-              let consonant = availableConsonants.find(o => o.id === step.consonants[i]);
-              consonants += consonant.name;
-              if (i < (step.consonants.length - 2)) {
-                consonants += ", ";
-              } else if (i < (step.consonants.length - 1)) {
-                consonants += " and ";
-              }
-
+            if (plural) {
+              listItemText += step.repetitions + " " + step.mode + "s";
+            } else {
+              listItemText += step.repetitions + " " + step.mode;
             }
-            subHeaderText += consonants;
+
+            if (step.vowels.length > 0) {
+              let vowels = "";
+              for (let i = 0; i < step.vowels.length; i++) {
+
+                let vowel = availableConsonants.find(o => o.id === step.vowels[i]);
+                vowels += vowel.name;
+                if (i < (step.vowels.length - 2)) {
+                  vowels += ", ";
+                } else if (i < (step.vowels.length - 1)) {
+                  vowels += " and ";
+                }
+              }
+              listItemText += " focused on " + vowels;
+            }
+
+            if (step.position === "initial") subHeaderText += "that start with ";
+            if (step.position === "medial") subHeaderText += "that contain ";
+            if (step.position === "final") subHeaderText += "that end with ";
+
+            if (step.consonants.length > 0) {
+              let consonants = "";
+              for (let i = 0; i < step.consonants.length; i++) {
+
+                let consonant = availableConsonants.find(o => o.id === step.consonants[i]);
+                consonants += consonant.name;
+                if (i < (step.consonants.length - 2)) {
+                  consonants += ", ";
+                } else if (i < (step.consonants.length - 1)) {
+                  consonants += " and ";
+                }
+
+              }
+              subHeaderText += consonants;
+            }
+
+          } else {
+
+            listItemText += "Intermission for " + step.rangeVal + " seconds"
+            subHeaderText += step.intermissionText;
+
           }
 
           return(

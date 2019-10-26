@@ -11,13 +11,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function InsertButton(props) {
+export default function ResetButton(props) {
   const classes = useStyles();
 
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="contained" color="primary" className={classes.button}>
-        Insert Step
+      <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
+        Reset Form
       </Button>
     </div>
   );

@@ -1,10 +1,15 @@
-import { getRoutines } from '../util/api';
+import { getRoutines, updateRoutine } from '../util/api';
 
 export const FETCH_ROUTINES_REQUEST = 'FETCH_POSTS_REQUEST';
 export const FETCH_ROUTINES_SUCCESS = 'FETCH_ROUTINES_SUCCESS';
 export const FETCH_ROUTINES_ERROR = 'FETCH_ROUTINES_ERROR';
 
+export const UPDATE_ROUTINE_REQUEST = 'UPDATE_ROUTINES_REQUEST';
+export const UPDATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINES_SUCCESS';
+export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINES_ERROR';
+
 export const RESET_STEP_LIST = 'RESET_STEP_LIST';
+export const RESET_FORM = 'RESET_FORM';
 export const UPDATE_NAME = 'UPDATE_NAME';
 export const UPDATE_ID = 'UPDATE_ID';
 export const UPDATE_INDEX = 'UPDATE_INDEX';
@@ -37,9 +42,30 @@ export const fetchRoutines = () => async dispatch => {
   }
 };
 
+const updateRoutineRequest = { type: UPDATE_ROUTINE_REQUEST };
+const updateRoutineSuccess = updatedRoutine => ({ type: UPDATE_ROUTINE_SUCCESS, updatedRoutine });
+const updateRoutineError = error => ({ type: UPDATE_ROUTINE_ERROR, error });
+
+export const attemptUpdateRoutine = (id, routine) => async (dispatch, getState) => {
+  dispatch(updateRoutineRequest);
+  try {
+    const { token } = getState().auth;
+    const updatedRoutine = await updateRoutine(id, routine, token);
+    dispatch(updateRoutineSuccess(updatedRoutine));
+  } catch (error) {
+    dispatch(updateRoutineError(error));
+  }
+};
+
 export function resetStepList() {
   return {
     type: RESET_STEP_LIST
+  }
+}
+
+export function resetForm() {
+  return {
+    type: RESET_FORM
   }
 }
 

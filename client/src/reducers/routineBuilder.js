@@ -1,8 +1,9 @@
 import {INSERT_STEP} from '../actions/routineBuilder';
 import {UPDATE_STEP} from '../actions/routineBuilder';
 import {REMOVE_STEP} from '../actions/routineBuilder';
-
 import {RESET_STEP_LIST} from '../actions/routineBuilder';
+
+import {RESET_FORM} from '../actions/routineBuilder';
 import {UPDATE_NAME} from '../actions/routineBuilder';
 import {UPDATE_ID} from '../actions/routineBuilder';
 import {UPDATE_INDEX} from '../actions/routineBuilder';
@@ -21,6 +22,11 @@ import {UPDATE_IS_INTERMISSION} from '../actions/routineBuilder';
 import {FETCH_ROUTINES_REQUEST} from '../actions/routineBuilder';
 import {FETCH_ROUTINES_SUCCESS} from '../actions/routineBuilder';
 import {FETCH_ROUTINES_ERROR} from '../actions/routineBuilder';
+
+import {UPDATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
+import {UPDATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
+import {UPDATE_ROUTINE_ERROR} from '../actions/routineBuilder';
+
 
 let availableRoutines;
 const initialState = {
@@ -50,9 +56,27 @@ export default (state = initialState, action) => {
     case FETCH_ROUTINES_ERROR:
       return { ...state, isFetching: false };
 
+    case UPDATE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case UPDATE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false,
+        routine: action.updatedRoutine.data.attributes.subroutine,
+        availableRoutines: state.availableRoutines.map(item =>
+          item.id === action.updatedRoutine.data.id ? { ...availableRoutines, id: action.updatedRoutine.data.id, attributes: action.updatedRoutine.data.attributes } : item
+        ),
+        name: action.updatedRoutine.data.attributes.name };
+    case UPDATE_ROUTINE_ERROR:
+      return { ...state, isFetching: false, error: action.error };
+
     case RESET_STEP_LIST:
       return { ...initialState, availableRoutines: state.availableRoutines };
-
+    case RESET_FORM:
+      return { ...initialState,
+        availableRoutines: state.availableRoutines,
+        routine: state.routine,
+        name: state.name,
+        id: state.id
+      };
     case UPDATE_NAME:
       return {...state, name: action.name};
     case UPDATE_ID:

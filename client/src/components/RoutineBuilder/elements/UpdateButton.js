@@ -17,7 +17,7 @@ export default function UpdateButton(props) {
   return (
     <div>
       <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
-        Update
+        Update Step
       </Button>
     </div>
   );

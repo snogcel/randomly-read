@@ -11,13 +11,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function InsertButton(props) {
+export default function SaveButton(props) {
   const classes = useStyles();
 
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="contained" color="primary" className={classes.button}>
-        Insert Step
+      <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
+        Save Routine
       </Button>
     </div>
   );

@@ -20,6 +20,32 @@ const methods = {
     return json;
   },
 
+  patch: async function (endpoint, body, token = null) {
+    const options = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(token && { Authorization: `Bearer ${token}` })
+      },
+      body: JSON.stringify(body)
+    };
+
+    const response = await fetch(`${baseUrl}/${endpoint}`, options);
+    const json = await response.json();
+
+    if (!response.ok) {
+      if (response.status === 422) {
+        json.errors.forEach(error => {
+          throw Error(`${error.param} ${error.msg}`);
+        });
+      }
+
+      throw Error(json.message);
+    }
+
+    return json;
+  },
+
   post: async function (endpoint, body, token = null) {
     const options = {
       method: 'POST',
@@ -143,4 +169,8 @@ export async function getRoutineSettings (token) {
 export async function getRoutines (token) {
   console.log("-fetching routines-");
   return await methods.get('admin/routines', token)
+}
+
+export async function updateRoutine (id, body, token) {
+  return await methods.patch(`admin/routines/${id}`, body, token)
 }

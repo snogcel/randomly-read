@@ -14,9 +14,11 @@ import LoginFormContainer from '../LoginForm/Container';
 import DurationInput from './elements/DurationInput'; // TODO - remove
 import RepetitionInput from './elements/RepetitionInput'; // TODO - remove
 
+import ResetButton from './elements/ResetButton';
 import InsertButton from './elements/InsertButton';
 import UpdateButton from './elements/UpdateButton';
 import DeleteButton from './elements/DeleteButton';
+import SaveButton from './elements/SaveButton';
 
 import StepList from './elements/StepList';
 
@@ -143,6 +145,9 @@ class RoutineBuilder extends React.Component {
       index: 0
     };
 
+    this.saveHandler = this.saveHandler.bind(this);
+
+    this.resetHandler = this.resetHandler.bind(this);
     this.insertHandler = this.insertHandler.bind(this);
     this.updateHandler = this.updateHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
@@ -171,6 +176,30 @@ class RoutineBuilder extends React.Component {
 
   componentDidMount() {
 
+  }
+
+  saveHandler() {
+
+    let id = this.props.id;
+    let name = this.props.name;
+    let routine = this.props.routine;
+
+    let body = {
+      "data": {
+        "id": id,
+        "attributes": {
+          "id": id,
+          "name": name,
+          "subroutine": routine
+        }
+      }
+    };
+
+    console.log(body);
+
+    this.props.attemptUpdateRoutine(id, body);
+
+    // this.props.fetchRoutines();
   }
 
   consonantHandler(consonant, value) {
@@ -274,7 +303,7 @@ class RoutineBuilder extends React.Component {
         }
       }
 
-      if (depth === (this.props.routine.length - 1)) {
+      if (depth === (this.props.routine.length - 1) && depth !== 0) { // if deleting from end of StepList
 
         depth--;
         this.stepListHandler(this.props.routine[depth].index);
@@ -282,7 +311,7 @@ class RoutineBuilder extends React.Component {
       } else if (depth > 0 ) {
 
         depth++;
-        this.stepListHandler(this.props.routine[depth].index);
+        this.stepListHandler(this.props.routine[depth].index); // advance to next StepList
 
       } else if (depth === 0 && this.props.routine.length > 1) {
 
@@ -291,8 +320,7 @@ class RoutineBuilder extends React.Component {
 
       } else {
 
-        // TODO - reset form ?
-        this.setState({"index": 0});
+        this.resetStepList();
 
       }
 
@@ -303,8 +331,8 @@ class RoutineBuilder extends React.Component {
 
   }
 
-  resetForm() {
-
+  resetHandler() {
+    this.props.resetForm();
   }
 
   resetStepList() {
@@ -507,7 +535,7 @@ class RoutineBuilder extends React.Component {
   }
 
   parseAvailableRoutines(routines) {
-    let availableRoutines = [];
+    let availableRoutines = [ { id: 0, name: "New Custom Routine..." } ];
 
     for (let i = 0; i < routines.length; i++) {
       availableRoutines.push({
@@ -519,10 +547,10 @@ class RoutineBuilder extends React.Component {
     return availableRoutines;
   }
 
-  parseSelectedRoutine(name, availableRoutines) {
+  parseSelectedRoutine(id, availableRoutines) {
     let selectedRoutineObj = { "routine": '' };
 
-    let obj = availableRoutines.find(o => o.name === name);
+    let obj = availableRoutines.find(o => o.id === id);
     if (obj) selectedRoutineObj.routine = obj.id;
 
     return selectedRoutineObj;
@@ -622,11 +650,13 @@ class RoutineBuilder extends React.Component {
     console.log("routine: ", routine);
     */
 
+    console.log("current routine id: ", id);
+
     let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
     console.log("available routines", this.props.availableRoutines);
 
     let nameObj = this.parseName(name);
-    let selectedRoutineObj = this.parseSelectedRoutine(name, availableRoutines);
+    let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
     // console.log(selectedRoutineObj);
 
@@ -686,9 +716,15 @@ class RoutineBuilder extends React.Component {
 
                 <Grid container spacing={0}>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={6}>
 
                     <RoutineName action={this.nameHandler} name={nameObj} />
+
+                  </Grid>
+
+                  <Grid item xs={6}>
+
+                    <SaveButton action={this.saveHandler} />
 
                   </Grid>
 
@@ -765,25 +801,31 @@ class RoutineBuilder extends React.Component {
 
                       </Grid>
 
-                      <Grid item>
-
-                        <br />
-
                         {(this.state.index > 0) ? (
                           <>
+                          <Grid item>
+
+                            <br />
                             <UpdateButton action={this.updateHandler} />
+                          </Grid>
                           </> ) : ( <> </> )}
 
-                      </Grid>
+
+                        {(this.state.index > 0) ? (
+                          <>
+                          <Grid item>
+
+                            <br />
+                            <DeleteButton action={this.deleteHandler} />
+
+                          </Grid>
+                          </> ) : ( <> </> )}
 
                       <Grid item>
 
                         <br />
 
-                        {(this.state.index > 0) ? (
-                          <>
-                            <DeleteButton action={this.deleteHandler} />
-                          </> ) : ( <> </> )}
+                        <ResetButton action={this.resetHandler} />
 
                       </Grid>
 
