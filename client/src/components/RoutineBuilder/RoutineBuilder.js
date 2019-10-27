@@ -244,7 +244,7 @@ class RoutineBuilder extends React.Component {
   modeHandler(mode) {
     this.props.updateMode(mode);
 
-    if (mode === "intermission") {
+    if (mode === "Intermission") {
       this.props.updateIsIntermission(true);
     } else {
       this.props.updateIsIntermission(false);
@@ -439,7 +439,7 @@ class RoutineBuilder extends React.Component {
             "mode": mode
           };
 
-          if (mode === "intermission") {
+          if (mode === "Intermission") {
             step.isIntermission = true;
           } else {
             step.isIntermission = false;
