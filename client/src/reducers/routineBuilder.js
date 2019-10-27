@@ -43,7 +43,8 @@ const initialState = {
   syllables: [1,2,3],
   position: 'initial',
   intermissionText: '',
-  isIntermission: false
+  isIntermission: false,
+  isFetching: false
 };
 
 export default (state = initialState, action) => {
