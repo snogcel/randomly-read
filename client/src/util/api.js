@@ -168,7 +168,7 @@ export async function getRoutineSettings (token) {
 
 export async function getRoutines (token) {
   console.log("-fetching routines-");
-  return await methods.get('admin/routines', token)
+  return await methods.get('settings/routines', token)
 }
 
 export async function updateRoutine (id, body, token) {

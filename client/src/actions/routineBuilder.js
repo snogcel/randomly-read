@@ -32,10 +32,11 @@ const fetchRoutinesRequest = { type: FETCH_ROUTINES_REQUEST };
 const fetchRoutinesSuccess = routines => ({ type: FETCH_ROUTINES_SUCCESS, routines });
 const fetchRoutinesError = error => ({ type: FETCH_ROUTINES_ERROR, error });
 
-export const fetchRoutines = () => async dispatch => {
+export const fetchRoutines = () => async (dispatch, getState) => {
   dispatch(fetchRoutinesRequest);
   try {
-    const routines = await getRoutines();
+    const { token } = getState().auth;
+    const routines = await getRoutines(token);
     dispatch(fetchRoutinesSuccess(routines.data));
   } catch (error) {
     dispatch(fetchRoutinesError(error));
