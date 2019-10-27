@@ -14,6 +14,9 @@ import LoginFormContainer from '../LoginForm/Container';
 import DurationInput from './elements/DurationInput'; // TODO - remove
 import RepetitionInput from './elements/RepetitionInput'; // TODO - remove
 
+import NewRoutineButton from './elements/NewRoutineButton';
+import DeleteRoutineButton from './elements/DeleteRoutineButton';
+
 import ResetButton from './elements/ResetButton';
 import InsertButton from './elements/InsertButton';
 import UpdateButton from './elements/UpdateButton';
@@ -126,9 +129,9 @@ const defaultConsonants = [
 ];
 
 const availableModes = [
-  { id: "word", name: "Word"},
-  { id: "sentence", name: "Sentence"},
-  { id: "intermission", name: "Intermission"},
+  { id: "Word", name: "Word"},
+  { id: "Sentence", name: "Sentence"},
+  { id: "Intermission", name: "Intermission"},
 ];
 
 const availablePositions = [
@@ -433,7 +436,7 @@ class RoutineBuilder extends React.Component {
             "index": (Date.now() + j),
             "rangeVal": rangeVal,
             "repetitions": repetitions,
-            "mode": mode.toLowerCase()
+            "mode": mode
           };
 
           if (mode === "intermission") {
@@ -535,13 +538,18 @@ class RoutineBuilder extends React.Component {
   }
 
   parseAvailableRoutines(routines) {
-    let availableRoutines = [ { id: 0, name: "New Custom Routine..." } ];
+    let availableRoutines = [];
 
     for (let i = 0; i < routines.length; i++) {
       availableRoutines.push({
         "id": routines[i].attributes.id,
         "name": routines[i].attributes.name
       });
+    }
+
+    // display first routine from list by default
+    if(typeof availableRoutines[0] !== "undefined" && this.props.id === 0) {
+      this.routineSelectHandler(availableRoutines[0].id);
     }
 
     return availableRoutines;
@@ -658,7 +666,7 @@ class RoutineBuilder extends React.Component {
     let nameObj = this.parseName(name);
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
-    // console.log(selectedRoutineObj);
+    console.log(selectedRoutineObj);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -695,9 +703,21 @@ class RoutineBuilder extends React.Component {
 
                 <Grid container spacing={0}>
 
-                  <Grid item xs={12}>
+                  <Grid item xs={8}>
 
                     <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj}/>
+
+                  </Grid>
+
+                  <Grid item xs={2} justify="center">
+
+                    <NewRoutineButton/>
+
+                  </Grid>
+
+                  <Grid item xs={2} justify="center">
+
+                    <DeleteRoutineButton/>
 
                   </Grid>
 

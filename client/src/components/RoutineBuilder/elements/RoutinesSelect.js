@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 240,
+    minWidth: 200,
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -33,11 +33,14 @@ export default function RoutinesSelect(props) {
     props.action(event.target.value); // pass to redux
   };
 
+  console.log(props.options);
+
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="routine-input">Routines</InputLabel>
+        <InputLabel htmlFor="routine-input">Available Routines</InputLabel>
         <Select
+          defaultValue={props.options[0]}
           value={props.routine.routine}
           onChange={handleChange}
           inputProps={{
