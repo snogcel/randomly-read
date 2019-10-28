@@ -3,6 +3,8 @@ import {UPDATE_STEP} from '../actions/routineBuilder';
 import {REMOVE_STEP} from '../actions/routineBuilder';
 import {RESET_STEP_LIST} from '../actions/routineBuilder';
 
+import {UPDATE_USER_ID} from '../actions/routineBuilder';
+
 import {RESET_FORM} from '../actions/routineBuilder';
 import {UPDATE_NAME} from '../actions/routineBuilder';
 import {UPDATE_ID} from '../actions/routineBuilder';
@@ -27,9 +29,14 @@ import {UPDATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
 import {UPDATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
 import {UPDATE_ROUTINE_ERROR} from '../actions/routineBuilder';
 
+import {FETCH_USERS_REQUEST} from '../actions/routineBuilder';
+import {FETCH_USERS_SUCCESS} from '../actions/routineBuilder';
+import {FETCH_USERS_ERROR} from '../actions/routineBuilder';
 
 let availableRoutines;
 const initialState = {
+  availableUsers: [],
+  userId: 0,
   availableRoutines: [],
   name: '',
   id: 0,
@@ -50,6 +57,13 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
+    case FETCH_USERS_REQUEST:
+      return { ...state, isFetching: true, };
+    case FETCH_USERS_SUCCESS:
+      return { ...state, isFetching: false, availableUsers: action.users };
+    case FETCH_USERS_ERROR:
+      return { ...state, isFetching: false };
+
     case FETCH_ROUTINES_REQUEST:
       return { ...state, isFetching: true, routine: [], newRoutine: null };
     case FETCH_ROUTINES_SUCCESS:
@@ -68,6 +82,9 @@ export default (state = initialState, action) => {
         name: action.updatedRoutine.data.attributes.name };
     case UPDATE_ROUTINE_ERROR:
       return { ...state, isFetching: false, error: action.error };
+
+    case UPDATE_USER_ID:
+      return {...state, userId: action.userId};
 
     case RESET_STEP_LIST:
       return { ...initialState, availableRoutines: state.availableRoutines };

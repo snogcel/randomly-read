@@ -1,4 +1,8 @@
-import { getRoutines, updateRoutine } from '../util/api';
+import { getRoutines, updateRoutine, getUsers } from '../util/api';
+
+export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
+export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
 
 export const FETCH_ROUTINES_REQUEST = 'FETCH_POSTS_REQUEST';
 export const FETCH_ROUTINES_SUCCESS = 'FETCH_ROUTINES_SUCCESS';
@@ -7,6 +11,8 @@ export const FETCH_ROUTINES_ERROR = 'FETCH_ROUTINES_ERROR';
 export const UPDATE_ROUTINE_REQUEST = 'UPDATE_ROUTINES_REQUEST';
 export const UPDATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINES_SUCCESS';
 export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINES_ERROR';
+
+export const UPDATE_USER_ID = 'UPDATE_USER_ID';
 
 export const RESET_STEP_LIST = 'RESET_STEP_LIST';
 export const RESET_FORM = 'RESET_FORM';
@@ -27,6 +33,21 @@ export const UPDATE_SYLLABLES = 'UPDATE_SYLLABLES';
 export const UPDATE_POSITION = 'UPDATE_POSITION';
 export const UPDATE_INTERMISSION_TEXT = 'UPDATE_INTERMISSION_TEXT';
 export const UPDATE_IS_INTERMISSION = 'UPDATE_IS_INTERMISSION';
+
+const fetchUsersRequest = { type: FETCH_USERS_REQUEST };
+const fetchUsersSuccess = users => ({ type: FETCH_USERS_SUCCESS, users });
+const fetchUsersError = error => ({ type: FETCH_USERS_ERROR, error });
+
+export const fetchUsers = () => async (dispatch, getState) => {
+  dispatch(fetchUsersRequest);
+  try {
+    const { token } = getState().auth;
+    const users = await getUsers(token);
+    dispatch(fetchUsersSuccess(users.data));
+  } catch (error) {
+    dispatch(fetchUsersError(error));
+  }
+};
 
 const fetchRoutinesRequest = { type: FETCH_ROUTINES_REQUEST };
 const fetchRoutinesSuccess = routines => ({ type: FETCH_ROUTINES_SUCCESS, routines });
@@ -57,6 +78,12 @@ export const attemptUpdateRoutine = (id, routine) => async (dispatch, getState) 
     dispatch(updateRoutineError(error));
   }
 };
+
+export function updateUserId(userId) {
+  return {
+    type: UPDATE_USER_ID, userId
+  }
+}
 
 export function resetStepList() {
   return {

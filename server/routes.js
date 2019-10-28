@@ -5,8 +5,9 @@ const users = require('./controllers/users');
 const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
 const routine = require('./controllers/routine');
+const superuser = require('./controllers/superuser');
 const interaction = require('./controllers/interaction');
-const interactions = require('./controllers/interactions');
+const interactions = require('./controllers/interactions'); // TODO - Remove
 const comments = require('./controllers/comments');
 const { jwtAuth, postAuth, commentAuth, interactionAuth } = require('./auth');
 const router = require('express').Router();
@@ -27,34 +28,43 @@ router.get('/user/:user', posts.listByUser);
 router.param('comment', comments.load);
 router.post('/post/:post', [jwtAuth, comments.validate], comments.create);
 router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
-router.post('/interactions', [jwtAuth, interactionAuth], interactions.create);
-router.get('/interactions', interactions.list);
-router.get('/interactions/day', interactions.listby24hrs);
-router.get('/interactions/week', interactions.listbyWeek);
-router.get('/interactions/month', interactions.listbyMonth);
-router.get('/interactions/3months', interactions.listby3Months);
+
+
+router.post('/interactions', [jwtAuth, interactionAuth], interactions.create);  // TODO - Remove
+router.get('/interactions', interactions.list);  // TODO - Remove
+router.get('/interactions/day', interactions.listby24hrs); // TODO - Remove
+router.get('/interactions/week', interactions.listbyWeek); // TODO - Remove
+router.get('/interactions/month', interactions.listbyMonth); // TODO - Remove
+router.get('/interactions/3months', interactions.listby3Months); // TODO - Remove
 
 // User Administration
-router.post('/admin/users', admin.createUser); // TODO - add auth token
-router.get('/admin/users', admin.users); // TODO - add auth token
-router.get('/admin/users/:id', admin.user); // TODO - add auth token
-router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
+router.post('/admin/users', admin.createUser); // TODO - add auth token?
+router.get('/admin/users', admin.users); // TODO - add auth token?
+router.get('/admin/users/:id', admin.user); // TODO - add auth token?
+router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token?
 
 // Superuser Administration
-router.post('/admin/superusers', admin.createSuperUser); // TODO - add auth token
+router.post('/admin/superusers', admin.createSuperUser); // TODO - add auth token + can probably just user standard user function?
 router.get('/admin/superusers', admin.superUsers); // TODO - add auth token
-router.get('/admin/superusers/:id', admin.superUser); // TODO - add auth token
-router.patch('/admin/superusers/:id', admin.updateSuperUser); // TODO - add auth token
+router.get('/admin/superusers/:id', admin.superUser); // TODO - add auth token + can probably just user standard user function?
+router.patch('/admin/superusers/:id', admin.updateSuperUser); // TODO - add auth token + can probably just user standard user function?
 
 // Routine Administration
-router.post('/admin/routines', admin.createRoutine); // TODO - add auth token
-router.get('/admin/routines', admin.routines); // TODO - add auth token
-router.get('/admin/routines/:id', admin.routine); // TODO - add auth token
-router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token
-router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token
+router.post('/admin/routines', admin.createRoutine); // TODO - add auth token?
+router.get('/admin/routines', admin.routines); // TODO - add auth token?
+router.get('/admin/routines/:id', admin.routine); // TODO - add auth token?
+router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token?
+router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token?
+
+
+
+// Superuser Functions
+router.get('/superuser/users', jwtAuth, superuser.users); // get client users
+
+
 
 // Routine Settings
-router.get('/settings/routines', jwtAuth, routine.settings);
+router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings
 
 // Interactions
 router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
@@ -62,7 +72,9 @@ router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
 router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete);
 
 // Interaction Settings
-router.get('/settings/interactions', jwtAuth, interaction.settings);
+router.get('/settings/interactions', jwtAuth, interaction.settings); // fetch current user interaction settings
+
+
 
 // Interaction Administration
 router.post('/admin/interactionSettings', admin.createInteractionSetting); // TODO - add auth token

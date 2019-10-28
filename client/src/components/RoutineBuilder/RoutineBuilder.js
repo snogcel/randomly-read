@@ -25,6 +25,7 @@ import SaveButton from './elements/SaveButton';
 
 import StepList from './elements/StepList';
 
+import UserSelect from './elements/UserSelect';
 import RoutinesSelect from './elements/RoutinesSelect';
 import RoutineName from './elements/RoutineName';
 import ModeSelect from './elements/ModeSelect';
@@ -156,6 +157,7 @@ class RoutineBuilder extends React.Component {
     this.deleteHandler = this.deleteHandler.bind(this);
     this.stepListHandler = this.stepListHandler.bind(this);
     this.routineSelectHandler = this.routineSelectHandler.bind(this);
+    this.userSelectHandler = this.userSelectHandler.bind(this);
 
     this.nameHandler = this.nameHandler.bind(this);
     this.vowelHandler = this.vowelHandler.bind(this);
@@ -174,6 +176,7 @@ class RoutineBuilder extends React.Component {
   }
 
   prepareRoutineBuilder(){
+    this.props.fetchUsers();
     this.props.fetchRoutines();
     if (this.props.id !== 0) this.routineSelectHandler(this.props.id);
   }
@@ -486,6 +489,17 @@ class RoutineBuilder extends React.Component {
     }
   }
 
+  userSelectHandler(id) {
+    for (let i = 0; i < this.props.availableUsers.length; i++) {
+      if (id === this.props.availableUsers[i].attributes.id) {
+
+        // set user id
+        this.props.updateUserId(this.props.availableUsers[i].attributes.id);
+
+      }
+    }
+  }
+
   parseSyllables(syllables) {
     let syllablesArr = [];
 
@@ -565,6 +579,33 @@ class RoutineBuilder extends React.Component {
     return selectedRoutineObj;
   }
 
+  parseAvailableUsers(users) {
+    let availableUsers = [];
+
+    for (let i = 0; i < users.length; i++) {
+      availableUsers.push({
+        "id": users[i].attributes.id,
+        "name": users[i].attributes.firstName + " " + users[i].attributes.lastName
+      });
+    }
+
+    // display first routine from list by default
+    if(typeof availableUsers[0] !== "undefined" && this.props.userId === 0) {
+      this.userSelectHandler(availableUsers[0].id);
+    }
+
+    return availableUsers;
+  }
+
+  parseSelectedUser(id, availableUsers) {
+    let selectedUserObj = { "user": '' };
+
+    let obj = availableUsers.find(o => o.id === id);
+    if (obj) selectedUserObj.user = obj.id;
+
+    return selectedUserObj;
+  }
+
   parseName(name) {
     let nameObj = { name: name };
 
@@ -639,7 +680,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+    const { userId, name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
     /*
@@ -659,15 +700,22 @@ class RoutineBuilder extends React.Component {
     console.log("routine: ", routine);
     */
 
-    console.log("current routine id: ", id);
+    console.log("current userId: ", userId);
+
+    // console.log("current routine id: ", id);
+
+    let availableUsers = this.parseAvailableUsers(this.props.availableUsers);
+    let selectedUserObj = this.parseSelectedUser(userId, availableUsers);
 
     let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
-    console.log("available routines", this.props.availableRoutines);
-
-    let nameObj = this.parseName(name);
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
-    console.log(selectedRoutineObj);
+    console.log("available users", availableUsers);
+
+    let nameObj = this.parseName(name);
+
+
+    // console.log(selectedRoutineObj);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -706,7 +754,9 @@ class RoutineBuilder extends React.Component {
 
                   <Grid item xs={8}>
 
-                    <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj}/>
+                    <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+
+                    <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
 
                   </Grid>
 
