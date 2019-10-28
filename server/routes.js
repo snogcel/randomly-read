@@ -34,9 +34,17 @@ router.get('/interactions/week', interactions.listbyWeek);
 router.get('/interactions/month', interactions.listbyMonth);
 router.get('/interactions/3months', interactions.listby3Months);
 
+// User Administration
+router.post('/admin/users', admin.createUser); // TODO - add auth token
 router.get('/admin/users', admin.users); // TODO - add auth token
 router.get('/admin/users/:id', admin.user); // TODO - add auth token
 router.patch('/admin/users/:id', admin.updateUser); // TODO - add auth token
+
+// Superuser Administration
+router.post('/admin/superusers', admin.createSuperUser); // TODO - add auth token
+router.get('/admin/superusers', admin.superUsers); // TODO - add auth token
+router.get('/admin/superusers/:id', admin.superUser); // TODO - add auth token
+router.patch('/admin/superusers/:id', admin.updateSuperUser); // TODO - add auth token
 
 // Routine Administration
 router.post('/admin/routines', admin.createRoutine); // TODO - add auth token

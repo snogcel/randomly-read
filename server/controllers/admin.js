@@ -126,7 +126,9 @@ exports.users = async (req, res) => {
 
   let response = {};
 
-  await User.find({}, function(err, data) {
+  await User.find({
+    'superuser': {$in: [false, undefined]}
+  }, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
@@ -187,6 +189,137 @@ exports.updateUser = async (req, res) => {
 
   res.json(response);
 
+};
+
+
+// create user
+exports.createUser = async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    let response = {};
+    let attributes = req.body.data.attributes;
+
+    await User.create(attributes, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : err};
+        res.json(response);
+      } else {
+        response = transformRoutine(data, "routines");
+        res.json(response);
+      }
+
+    });
+
+  } catch (err) {
+    return res.status(422).json(err);
+  }
+};
+
+
+// list all superusers
+exports.superUsers = async (req, res) => {
+
+  let response = {};
+
+  await User.find({"superuser": true}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+    } else {
+      response = transformDataSet(data, "users");
+    }
+
+  });
+
+  res.json(response);
+
+};
+
+
+// list specific superUser -- TODO remove?
+exports.superUser = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  await User.findOne({"_id":o_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+    } else {
+      response = transformData(data, "user");
+    }
+
+  });
+
+  res.json(response);
+
+};
+
+
+// update specific user -- TODO remove?
+exports.updateSuperUser = async (req, res) => {
+
+  const id = req.params.id;
+  const o_id = new ObjectId(id);
+
+  let response = {};
+
+  let attributes = req.body.data.attributes;
+  delete attributes.id;
+
+  await User.findOneAndUpdate({"_id":o_id}, attributes, {new: true}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+    } else {
+      response = transformData(data, "user");
+    }
+
+  });
+
+  res.json(response);
+
+};
+
+
+// create user -- TODO remove?
+exports.createSuperUser = async (req, res) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    let response = {};
+    let attributes = req.body.data.attributes;
+
+    await User.create(attributes, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : err};
+        res.json(response);
+      } else {
+        response = transformRoutine(data, "routines");
+        res.json(response);
+      }
+
+    });
+
+  } catch (err) {
+    return res.status(422).json(err);
+  }
 };
 
 
