@@ -109,7 +109,10 @@ export default function StepList(props) {
 
           console.log("current step: ", step);
 
-          let mode = availableModes.find(o => o.id === step.mode);
+          let mode = availableModes.find(o => o.name === step.mode);
+
+          // backwards compatibility for randomly-read-dev
+          if (typeof mode === "undefined") step.isIntermission = true;
 
           let listItemText = "";
           let subHeaderText = "";
