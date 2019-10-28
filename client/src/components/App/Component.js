@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { Router, Route, Switch } from 'react-router-dom';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider'
+import { MuiThemeProvider } from '@material-ui/core/styles'
 import theme from '../../theme'; // TODO - remove
 import { MuiTheme } from '../../themeHandler';
 import history from '../../util/history';
@@ -22,6 +22,7 @@ import { ApolloProvider } from 'react-apollo';
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
 import Interactions from '../Interactions/InteractionsHomeContainer';
+import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
 
 const AuthLink = (operation, next) => {
   const token = localStorage.getItem('token');
@@ -68,6 +69,7 @@ const App = props => (
               <Route path='/RandomlyRead' component={RRHomeContainer} />
               <Route path='/FluencyReport' component={FluencyReport} />
               <Route path='/Interactions' component={Interactions} />
+              <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/' component={Home} />
             </Switch>
           </>

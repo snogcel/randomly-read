@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import React from 'react';
 import ms from 'pretty-ms';
 import Grid from '@material-ui/core/Grid';
-import RoutineSelectContainer from './RoutineSelect'
+import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 

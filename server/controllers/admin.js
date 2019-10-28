@@ -175,7 +175,7 @@ exports.updateUser = async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes.id;
 
-  await User.findOneAndUpdate({"_id":o_id}, attributes, function(err, data) {
+  await User.findOneAndUpdate({"_id":o_id}, attributes, {new: true}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
@@ -273,13 +273,21 @@ exports.updateRoutine = async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes.id;
 
-  await Routine.findOneAndUpdate({"_id":o_id}, attributes, function(err, data) {
+  console.log(attributes);
+
+  await Routine.findOneAndUpdate({"_id":o_id}, attributes, {new: true}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
+
+      // console.log(data);
+
       response = transformRoutine(data, "routines");
+
+      console.log(response);
+
       res.json(response);
     }
 
@@ -422,7 +430,7 @@ exports.updateInteractionSetting = async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes.id;
 
-  await interactionSettings.findOneAndUpdate({"_id":o_id}, attributes, function(err, data) {
+  await interactionSettings.findOneAndUpdate({"_id":o_id}, attributes, {new: true}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};

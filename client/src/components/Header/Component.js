@@ -33,7 +33,8 @@ const Header = ({ user, logout }) => (
     <HeaderLogo />
     {user ? (
       <>
-        <HeaderNavLink to='/interactions'>Interactions</HeaderNavLink>
+        <HeaderNavLink to='/Interactions'>Interactions</HeaderNavLink>
+        <HeaderNavLink to='/RoutineBuilder'>Routine Builder</HeaderNavLink>
         <HeaderNavLink as='span' onClick={logout}>Log Out</HeaderNavLink>
       </>
     ) : (

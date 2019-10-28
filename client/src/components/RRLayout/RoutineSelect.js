@@ -38,76 +38,36 @@ class RoutineSelect extends React.Component {
 
       this.handleChange = this.handleChange.bind(this);
 
-      this.options = [];
+    }
 
-      Routines = JSON.parse(localStorage.getItem('routines'));
+    componentWillMount() {
+      if (typeof this.props.user !== "undefined") this.prepareRoutineSelect();
+    }
 
-      for (let i = 0; i < Routines.length; i++) {
-        this.options.push({ value: Routines[i].name });
-      }
-
-      let selectedRoutine = Routines[0];
-
-      this.state = {
-        Routine: selectedRoutine.name
-      };
-
-      this.props.action(selectedRoutine); // pass mode update back to QueryManager
-
+    prepareRoutineSelect(){
+      this.props.fetchAssignedRoutines();
     }
 
     componentDidMount() {
 
     }
 
-    insertRoutine(key, exercise) {
-        console.log(key);
-
-        for (let i = 0; i < Routines.length; i++) {
-            if (key === Routines[i].name) {
-
-                if (!Routines[i].subroutine || Routines[i].subroutine[0].consonants === null) {
-
-                    console.log("Initializing: ", exercise);
-
-                    Routines[i].subroutine[0] = exercise;
-
-                } else {
-
-                    console.log("Inserting: ", exercise);
-
-                    Routines[i].subroutine.push(exercise);
-
-                }
-
-            }
-        }
-
-        let selectedRoutine = {};
-
-        for (let i = 0; i < Routines.length; i++) {
-            if (key === Routines[i].name) {
-                selectedRoutine = Routines[i];
-            }
-        }
-
-        this.props.action(selectedRoutine); // pass mode update back to QueryManager
-
-    }
-
     handleChange(e) {
-        this.setState({Routine: e.target.value})
+        this.setState({Routine: e.target.value});
 
         let selectedRoutine = {};
 
         if(e.target.value !== "") {
-          for (let i = 0; i < Routines.length; i++) {
-              if (e.target.value === Routines[i].name) {
-                  selectedRoutine = Routines[i];
+          for (let i = 0; i < this.props.availableRoutines.length; i++) {
+              if (e.target.value === this.props.availableRoutines[i].attributes.id) {
+                  selectedRoutine = this.props.availableRoutines[i].attributes;
               }
           }
         }
 
+        this.props.updateId(selectedRoutine.id);
+        this.props.updateName(selectedRoutine.name);
+        this.props.updateActiveRoutine(selectedRoutine);
         this.props.action(selectedRoutine); // pass mode update back to QueryManager
     }
 
@@ -115,17 +75,26 @@ class RoutineSelect extends React.Component {
         const { classes } = this.props;
         const { theme } = this.props;
 
+        // set default select option
+        if (typeof this.props.availableRoutines[0] !== "undefined" && this.props.id === 0) {
+          this.props.updateId(this.props.availableRoutines[0].attributes.id);
+          this.props.updateName(this.props.availableRoutines[0].attributes.name);
+          this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
+          this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
+        }
+
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150}}>
-                   
+
                   <Select
                   classes={{select: theme === true ? classes.select : undefined}}
-                  value={this.state.Routine}
+                  defaultValue={this.props.id}
+                  value={this.props.id}
                   onChange={this.handleChange}
                   className={theme === true ? classes.routine : undefined}
                   >
-                    { this.options.map((item, i) => ( <MenuItem value={item.value}>{item.value}</MenuItem> )) }
+                    { this.props.availableRoutines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
 
                   </Select>
                   </FormControl>
