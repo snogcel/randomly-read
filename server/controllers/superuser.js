@@ -1,9 +1,10 @@
 const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
+const Routine = require('../models/routine');
 const User = require('../models/user');
 
 // TODO - move to Utils
-function transformUserSet(data, type) {
+function transformDataSet(data, type) {
 
   let result = [];
 
@@ -36,14 +37,13 @@ function transformUserSet(data, type) {
 }
 
 exports.users = async (req, res) => {
-  const author = req.user.id;
-  const a_id = new ObjectId(author);
+  const superuser = req.user.id;
+  const s_id = new ObjectId(superuser);
 
-  let superuser = {};
   let clients = [];
 
   // fetch superuser by ID
-  await User.findOne({"_id": a_id}, function(err, data) {
+  await User.findOne({"_id": s_id}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
@@ -55,7 +55,7 @@ exports.users = async (req, res) => {
 
   });
 
-  console.log(clients);
+  clients.unshift(superuser); // include superuser in result
 
   let response = {};
 
@@ -68,7 +68,45 @@ exports.users = async (req, res) => {
       response = {"error": true, "message": "Error fetching data"};
       res.json(response);
     } else {
-      response = transformUserSet(data, "users");
+      response = transformDataSet(data, "users");
+      res.json(response);
+    }
+
+  });
+
+};
+
+exports.routines = async (req, res) => {
+  const superuser = req.user.id;
+  const id = req.params.id;
+  const u_id = new ObjectId(id);
+
+  let assigned = [];
+
+  // fetch user by ID
+  await User.findOne({"_id": u_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      let obj = JSON.parse(JSON.stringify(data));
+      assigned = obj.routines;
+    }
+
+  });
+
+  let response = {};
+
+  Routine.find({
+    '_id': {$in: assigned}
+  }, function (err, data) {
+
+    if (err) {
+      response = {"error": true, "message": "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformDataSet(data, "routines");
       res.json(response);
     }
 

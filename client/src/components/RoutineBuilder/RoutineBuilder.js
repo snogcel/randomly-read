@@ -177,8 +177,7 @@ class RoutineBuilder extends React.Component {
 
   prepareRoutineBuilder(){
     this.props.fetchUsers();
-    this.props.fetchRoutines();
-    if (this.props.id !== 0) this.routineSelectHandler(this.props.id);
+    // if (this.props.id !== 0) this.routineSelectHandler(this.props.id);
   }
 
   componentDidMount() {
@@ -496,6 +495,9 @@ class RoutineBuilder extends React.Component {
         // set user id
         this.props.updateUserId(this.props.availableUsers[i].attributes.id);
 
+        this.props.fetchRoutines(this.props.availableUsers[i].attributes.id);
+
+        this.resetStepList();
       }
     }
   }
@@ -564,7 +566,7 @@ class RoutineBuilder extends React.Component {
 
     // display first routine from list by default
     if(typeof availableRoutines[0] !== "undefined" && this.props.id === 0) {
-      this.routineSelectHandler(availableRoutines[0].id);
+      // this.routineSelectHandler(availableRoutines[0].id);
     }
 
     return availableRoutines;
@@ -580,7 +582,7 @@ class RoutineBuilder extends React.Component {
   }
 
   parseAvailableUsers(users) {
-    let availableUsers = [];
+    let availableUsers = [ ]; // list superuser first
 
     for (let i = 0; i < users.length; i++) {
       availableUsers.push({
@@ -589,7 +591,7 @@ class RoutineBuilder extends React.Component {
       });
     }
 
-    // display first routine from list by default
+    // display first user from list by default
     if(typeof availableUsers[0] !== "undefined" && this.props.userId === 0) {
       this.userSelectHandler(availableUsers[0].id);
     }
@@ -710,10 +712,9 @@ class RoutineBuilder extends React.Component {
     let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
-    console.log("available users", availableUsers);
+    console.log("available routines", this.props.availableRoutines);
 
     let nameObj = this.parseName(name);
-
 
     // console.log(selectedRoutineObj);
 
@@ -752,9 +753,13 @@ class RoutineBuilder extends React.Component {
 
                 <Grid container spacing={0}>
 
-                  <Grid item xs={8}>
+                  <Grid item xs={12}>
 
                     <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+
+                  </Grid>
+
+                  <Grid item xs={8}>
 
                     <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
 

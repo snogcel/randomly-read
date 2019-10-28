@@ -1,4 +1,4 @@
-import { getRoutines, updateRoutine, getUsers } from '../util/api';
+import { getUserRoutines, updateRoutine, getUsers } from '../util/api';
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
@@ -53,11 +53,11 @@ const fetchRoutinesRequest = { type: FETCH_ROUTINES_REQUEST };
 const fetchRoutinesSuccess = routines => ({ type: FETCH_ROUTINES_SUCCESS, routines });
 const fetchRoutinesError = error => ({ type: FETCH_ROUTINES_ERROR, error });
 
-export const fetchRoutines = () => async (dispatch, getState) => {
+export const fetchRoutines = (userId) => async (dispatch, getState) => {
   dispatch(fetchRoutinesRequest);
   try {
     const { token } = getState().auth;
-    const routines = await getRoutines(token);
+    const routines = await getUserRoutines(userId, token);
     dispatch(fetchRoutinesSuccess(routines.data));
   } catch (error) {
     dispatch(fetchRoutinesError(error));

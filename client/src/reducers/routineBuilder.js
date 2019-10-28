@@ -87,10 +87,16 @@ export default (state = initialState, action) => {
       return {...state, userId: action.userId};
 
     case RESET_STEP_LIST:
-      return { ...initialState, availableRoutines: state.availableRoutines };
+      return { ...initialState,
+        availableRoutines: state.availableRoutines,
+        availableUsers: state.availableUsers,
+        userId: state.userId,
+      };
     case RESET_FORM:
       return { ...initialState,
         availableRoutines: state.availableRoutines,
+        availableUsers: state.availableUsers,
+        userId: state.userId,
         routine: state.routine,
         name: state.name,
         id: state.id
@@ -102,7 +108,7 @@ export default (state = initialState, action) => {
     case UPDATE_INDEX:
       return {...state, index: action.index};
     case INSERT_STEP:
-      return {...state, routine:  [...state.routine, action.step]};
+      return {...state, routine: [...state.routine, action.step]};
     case REMOVE_STEP:
       return {...state, routine: state.routine.filter(item => action.index !== item.index)};
     case UPDATE_STEP:
@@ -112,7 +118,7 @@ export default (state = initialState, action) => {
     case UPDATE_CONSONANTS:
       return {...state, consonants: action.consonantArr};
     case ADD_CONSONANT:
-      return {...state, consonants:  [...state.consonants, action.consonant]};
+      return {...state, consonants: [...state.consonants, action.consonant]};
     case REMOVE_CONSONANT:
       return {...state, consonants: state.consonants.filter(item => action.consonant !== item)};
     case UPDATE_MODE:

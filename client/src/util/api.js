@@ -179,3 +179,8 @@ export async function getUsers (token) {
   console.log("-fetching client users-");
   return await methods.get('superuser/users', token)
 }
+
+export async function getUserRoutines (id, token) {
+  console.log("-fetching routines-");
+  return await methods.get(`superuser/routines/${id}`, token)
+}
