@@ -175,6 +175,7 @@ class RoutineBuilder extends React.Component {
 
   prepareRoutineBuilder(){
     this.props.fetchRoutines();
+    if (this.props.id !== 0) this.routineSelectHandler(this.props.id);
   }
 
   componentDidMount() {
