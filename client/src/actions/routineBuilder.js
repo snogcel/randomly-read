@@ -14,6 +14,7 @@ export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINES_ERROR';
 
 export const UPDATE_USER_ID = 'UPDATE_USER_ID';
 
+export const RESET = 'RESET';
 export const RESET_STEP_LIST = 'RESET_STEP_LIST';
 export const RESET_FORM = 'RESET_FORM';
 export const UPDATE_NAME = 'UPDATE_NAME';
@@ -82,6 +83,12 @@ export const attemptUpdateRoutine = (id, routine) => async (dispatch, getState) 
 export function updateUserId(userId) {
   return {
     type: UPDATE_USER_ID, userId
+  }
+}
+
+export function resetRoutineBuilder() {
+  return {
+    type: RESET
   }
 }
 

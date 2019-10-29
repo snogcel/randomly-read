@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import RoutineBuilder from './RoutineBuilder';
-import { fetchRoutines, attemptUpdateRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep } from '../../actions/routineBuilder';
+import { resetRoutineBuilder, fetchRoutines, attemptUpdateRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep } from '../../actions/routineBuilder';
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
 
@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
   isFetching: state.routineBuilder.isFetching
 });
 
-const mapDispatchToProps = { fetchRoutines, attemptUpdateRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions
+const mapDispatchToProps = { resetRoutineBuilder, fetchRoutines, attemptUpdateRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions
 
 const enhance = compose(
   withAuth,

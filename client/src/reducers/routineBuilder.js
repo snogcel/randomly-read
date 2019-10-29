@@ -5,6 +5,7 @@ import {RESET_STEP_LIST} from '../actions/routineBuilder';
 
 import {UPDATE_USER_ID} from '../actions/routineBuilder';
 
+import {RESET} from '../actions/routineBuilder';
 import {RESET_FORM} from '../actions/routineBuilder';
 import {UPDATE_NAME} from '../actions/routineBuilder';
 import {UPDATE_ID} from '../actions/routineBuilder';
@@ -85,6 +86,9 @@ export default (state = initialState, action) => {
 
     case UPDATE_USER_ID:
       return {...state, userId: action.userId};
+
+    case RESET:
+      return { ...initialState };
 
     case RESET_STEP_LIST:
       return { ...initialState,

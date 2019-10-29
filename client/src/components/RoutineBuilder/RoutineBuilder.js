@@ -39,7 +39,6 @@ import IntermissionText from './elements/IntermissionText';
 
 import { styles } from '../../themeHandler';
 
-
 // TODO - set up constants for all form options, for now these are stored in each element.
 
 const availableSyllables = [
@@ -172,12 +171,15 @@ class RoutineBuilder extends React.Component {
   }
 
   componentWillMount() {
+
+    this.props.resetRoutineBuilder();
+
     if (typeof this.props.user !== "undefined") this.prepareRoutineBuilder();
+
   }
 
   prepareRoutineBuilder(){
     this.props.fetchUsers();
-    // if (this.props.id !== 0) this.routineSelectHandler(this.props.id);
   }
 
   componentDidMount() {
@@ -223,9 +225,13 @@ class RoutineBuilder extends React.Component {
   vowelHandler(vowels) {
     let vowelArr = [];
 
-    for (let i = 0; i < vowels.length; i++) {
-      let obj = availableVowels.find(o => o.name === vowels[i]);
-      if (obj) vowelArr.push(obj.id);
+    if (typeof vowels !== "undefined") {
+
+      for (let i = 0; i < vowels.length; i++) {
+        let obj = availableVowels.find(o => o.name === vowels[i]);
+        if (obj) vowelArr.push(obj.id);
+      }
+
     }
 
     this.props.updateVowels(vowelArr); // pass to redux
@@ -234,12 +240,14 @@ class RoutineBuilder extends React.Component {
   syllableHandler(syllables) {
     let syllableArr = [];
 
-    for (let i = 0; i < syllables.length; i++) {
-      let obj = availableSyllables.find(o => o.name === syllables[i]);
-      if (obj) syllableArr.push(obj.id);
-    }
+    if (typeof syllables !== "undefined") {
 
-    console.log(syllableArr);
+      for (let i = 0; i < syllables.length; i++) {
+        let obj = availableSyllables.find(o => o.name === syllables[i]);
+        if (obj) syllableArr.push(obj.id);
+      }
+
+    }
 
     this.props.updateSyllables(syllableArr); // pass to redux
   }
@@ -505,9 +513,13 @@ class RoutineBuilder extends React.Component {
   parseSyllables(syllables) {
     let syllablesArr = [];
 
-    for (let i = 0; i < syllables.length; i++) {
-      let obj = availableSyllables.find(o => o.id === syllables[i]);
-      if (obj) syllablesArr.push(obj.name);
+    if (typeof syllables !== "undefined") {
+
+      for (let i = 0; i < syllables.length; i++) {
+        let obj = availableSyllables.find(o => o.id === syllables[i]);
+        if (obj) syllablesArr.push(obj.name);
+      }
+
     }
 
     return syllablesArr;
@@ -516,9 +528,13 @@ class RoutineBuilder extends React.Component {
   parseVowels(vowels) {
     let vowelArr = [];
 
-    for (let i = 0; i < vowels.length; i++) {
-      let obj = availableVowels.find(o => o.id === vowels[i]);
-      if (obj) vowelArr.push(obj.name);
+    if (typeof vowels !== "undefined") {
+
+      for (let i = 0; i < vowels.length; i++) {
+        let obj = availableVowels.find(o => o.id === vowels[i]);
+        if (obj) vowelArr.push(obj.name);
+      }
+
     }
 
     return vowelArr;
@@ -557,16 +573,20 @@ class RoutineBuilder extends React.Component {
   parseAvailableRoutines(routines) {
     let availableRoutines = [];
 
-    for (let i = 0; i < routines.length; i++) {
-      availableRoutines.push({
-        "id": routines[i].attributes.id,
-        "name": routines[i].attributes.name
-      });
-    }
+    if (typeof routines !== "undefined") {
 
-    // display first routine from list by default
-    if(typeof availableRoutines[0] !== "undefined" && this.props.id === 0) {
-      // this.routineSelectHandler(availableRoutines[0].id);
+      for (let i = 0; i < routines.length; i++) {
+        availableRoutines.push({
+          "id": routines[i].attributes.id,
+          "name": routines[i].attributes.name
+        });
+      }
+
+      // display first routine from list by default
+      if(typeof availableRoutines[0] !== "undefined" && this.props.id === 0) {
+        // this.routineSelectHandler(availableRoutines[0].id);
+      }
+
     }
 
     return availableRoutines;
@@ -584,16 +604,20 @@ class RoutineBuilder extends React.Component {
   parseAvailableUsers(users) {
     let availableUsers = [ ]; // list superuser first
 
-    for (let i = 0; i < users.length; i++) {
-      availableUsers.push({
-        "id": users[i].attributes.id,
-        "name": users[i].attributes.firstName + " " + users[i].attributes.lastName
-      });
-    }
+    if (typeof users !== "undefined") {
 
-    // display first user from list by default
-    if(typeof availableUsers[0] !== "undefined" && this.props.userId === 0) {
-      this.userSelectHandler(availableUsers[0].id);
+      for (let i = 0; i < users.length; i++) {
+        availableUsers.push({
+          "id": users[i].attributes.id,
+          "name": users[i].attributes.firstName + " " + users[i].attributes.lastName
+        });
+      }
+
+      // display first user from list by default
+      if(typeof availableUsers[0] !== "undefined" && this.props.userId === 0) {
+        this.userSelectHandler(availableUsers[0].id);
+      }
+
     }
 
     return availableUsers;
@@ -623,9 +647,13 @@ class RoutineBuilder extends React.Component {
   parseConsonantCheckboxOptions(vowels) {
     let vowelArr = [];
 
-    for (let i = 0; i < vowels.length; i++) {
-      let obj = availableVowels.find(o => o.id === vowels[i]);
-      if (obj) vowelArr.push(obj);
+    if (typeof vowels !== "undefined") {
+
+      for (let i = 0; i < vowels.length; i++) {
+        let obj = availableVowels.find(o => o.id === vowels[i]);
+        if (obj) vowelArr.push(obj);
+      }
+
     }
 
     return vowelArr.concat(defaultConsonants);
@@ -670,10 +698,14 @@ class RoutineBuilder extends React.Component {
       "Z": false
     };
 
-    for (let i = 0; i < consonants.length; i++) {
-      let obj = availableConsonants.find(o => o.id = consonants[i]);
+    if (typeof consonants !== "undefined") {
 
-      if (obj) consonantObj[obj.id] = true;
+      for (let i = 0; i < consonants.length; i++) {
+        let obj = availableConsonants.find(o => o.id = consonants[i]);
+
+        if (obj) consonantObj[obj.id] = true;
+      }
+
     }
 
     return consonantObj;
@@ -916,11 +948,7 @@ class RoutineBuilder extends React.Component {
             </Grid>
 
           </>
-        ) : (
-          <>
-            <LoginFormContainer />
-          </>
-        )}
+        ) : ( this.props.history.push("/login") )}
 
       </Grid>
 

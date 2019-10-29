@@ -71,41 +71,20 @@ export default function StepList(props) {
     props.action(index); // fetch selected Routine Step
   };
 
-  /*
+  let routine = [];
 
-    <List component="nav" aria-label="main mailbox folders">
-        <ListItem
-          button
-          selected={selectedIndex === 0}
-          onClick={event => handleListItemClick(event, 0)}
-        >
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem
-          button
-          selected={selectedIndex === 1}
-          onClick={event => handleListItemClick(event, 1)}
-        >
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem>
-      </List>
+  if (typeof props.routine !== "undefined") {
 
-      <Divider />
+    routine = props.routine;
 
-   */
+  }
 
   return (
     <div className={classes.root}>
 
       <List component="nav" aria-label="routine steps">
 
-        {props.routine.map(function(step) {
+        {routine.map(function(step) {
 
           console.log("current step: ", step);
 

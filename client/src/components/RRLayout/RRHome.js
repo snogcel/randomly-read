@@ -84,11 +84,7 @@ const RRHome = props => {
 
             </Grid>
           </>
-        ) : (
-          <>
-            <LoginFormContainer/>
-          </>
-        )}
+        ) : ( props.history.push("/login") )}
 
       </div>
 
