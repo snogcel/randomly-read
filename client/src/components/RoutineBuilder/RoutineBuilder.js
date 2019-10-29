@@ -206,6 +206,8 @@ class RoutineBuilder extends React.Component {
     console.log(body);
 
     this.props.attemptUpdateRoutine(id, body);
+    this.props.resetWordCard(); // reset Word Card
+    this.props.resetRoutineSelect(); // reset Routine Selector
 
     // this.props.fetchRoutines();
   }

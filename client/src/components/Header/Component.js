@@ -34,6 +34,7 @@ const Header = ({ user, logout }) => (
     {user ? (
       <>
         <HeaderNavLink to='/Interactions'>Interactions</HeaderNavLink>
+        <HeaderNavLink to='/RandomlyRead'>Randomly Read</HeaderNavLink>
         <HeaderNavLink to='/RoutineBuilder'>Routine Builder</HeaderNavLink>
         <HeaderNavLink as='span' onClick={logout}>Log Out</HeaderNavLink>
       </>
