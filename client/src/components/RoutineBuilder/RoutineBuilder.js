@@ -787,11 +787,15 @@ class RoutineBuilder extends React.Component {
 
                 <Grid container spacing={0}>
 
-                  <Grid item xs={12}>
+                  {user.superuser ? (
+                    <>
+                    <Grid item xs={12}>
 
-                    <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+                      <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
 
-                  </Grid>
+                    </Grid>
+                    </> ) : ( null )
+                  }
 
                   <Grid item xs={8}>
 
