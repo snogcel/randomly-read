@@ -10,20 +10,7 @@ import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
-  button: {
-    "&:disabled": {
-      backgroundColor: "#d3d3d3",
-      color: '#7d7d7d'
-    },
-    "&:hover": {
-      backgroundColor: "#2d90e5"
-    },
-      backgroundColor: '#33a0ff',
-
-
-  }
-});
+import { styles } from '../../themeHandler';
 
 class Timer extends React.Component {
   constructor(props){
@@ -469,26 +456,32 @@ class Timer extends React.Component {
     }
 
     let start = (this.state.time === 0) ?
-      <Button className={classes.button} onClick={this.startTimer} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
+      <Button onClick={this.startTimer} size="small" variant="outlined" color={"default"} ><b>Start</b></Button> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null : <Button className={classes.button} onClick={this.stopTimer} size="medium" variant="contained" color={"primary"} ><b>Pause</b></Button>;
+      null : <Button onClick={this.stopTimer} size="small" variant="outlined" color={"default"} ><b>Pause</b></Button>;
     let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
-      null : <Button className={classes.button} onClick={this.resumeTimer} size="medium" variant="contained" color={"primary"} ><b>Resume</b></Button>;
+      null : <Button onClick={this.resumeTimer} size="small" variant="outlined" color={"default"} ><b>Resume</b></Button>;
     let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <Button className={classes.button} onClick={this.resetTimer} size="small" variant="contained" color={"primary"} ><b>Reset</b></Button>;
+      null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
 
     return (
-      <Grid>
-        <div className="RoutineSelector">
-          <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
-        </div>
-        <br /><br />
-        <div className="TimerControls">
-          {start}
-          {resume}
-          {stop}
-          {reset}
-        </div>
+      <Grid container spacing={2}>
+
+        <Grid item>
+          <div className={classes.RoutineSelector}>
+            <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
+          </div>
+        </Grid>
+
+        <Grid item>
+          <div className={classes.TimerControls}>
+            {start}
+            {resume}
+            {stop}
+            {reset}
+          </div>
+        </Grid>
+
       </Grid>
     )
   }

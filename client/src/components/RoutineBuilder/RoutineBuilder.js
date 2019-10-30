@@ -848,7 +848,7 @@ class RoutineBuilder extends React.Component {
         {user ? (
           <>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={0}>
 
               <Grid item xs={3}>
 
@@ -896,7 +896,7 @@ class RoutineBuilder extends React.Component {
               {(id !== 0) ? (
                 <>
 
-                <Grid item xs={9}>
+                <Grid item xs={8}>
 
                   <Grid container spacing={0}>
 

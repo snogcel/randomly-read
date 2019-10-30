@@ -20,30 +20,10 @@ import WordHistoryList from '../WordHistoryList/Container';
 
 import LoginFormContainer from '../LoginForm/Container';
 
+import { styles } from '../../themeHandler';
+
 //import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    padding: 25
-  },
-  column: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideColumn: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideTitle: {
-    fontSize: 18
-  },
-  exerciseHeadline: {
-    margin: "0.25em"
-  },
-});
 
 const RRHome = props => {
 
@@ -57,29 +37,30 @@ const RRHome = props => {
 
         {user ? (
           <>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={2}>
-                <div className={classes.sideColumn}>
-                  <ExerciseHistoryContainer />
-                </div>
+            <Grid container spacing={0}>
+
+              <Grid item xs={3}>
+
+                <TimerContainer />
+
+                <ExerciseHistoryContainer />
+
               </Grid>
 
-              <Grid item xs={12} sm={8}>
+              <Grid item xs={7}>
+
                 <WordCardContainer />
-                <ProgressIndicator />
 
                 <WordHistoryList />
 
-                <br /><br /><br />
-
-
-
               </Grid>
 
-              <Grid item xs={12} sm={2}>
-                <div className={classes.sideColumn}>
-                  <TimerContainer />
-                </div>
+              <Grid item xs={2}>
+
+                <br />
+
+                <ProgressIndicator />
+
               </Grid>
 
             </Grid>
