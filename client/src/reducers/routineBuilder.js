@@ -30,6 +30,10 @@ import {UPDATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
 import {UPDATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
 import {UPDATE_ROUTINE_ERROR} from '../actions/routineBuilder';
 
+import {CREATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
+import {CREATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
+import {CREATE_ROUTINE_ERROR} from '../actions/routineBuilder';
+
 import {FETCH_USERS_REQUEST} from '../actions/routineBuilder';
 import {FETCH_USERS_SUCCESS} from '../actions/routineBuilder';
 import {FETCH_USERS_ERROR} from '../actions/routineBuilder';
@@ -45,7 +49,7 @@ const initialState = {
   index: 0,
   vowels: [],
   consonants: [],
-  mode: 'word',
+  mode: 'Word',
   rangeVal: 5,
   repetitions: 10,
   syllables: [1,2,3],
@@ -83,6 +87,13 @@ export default (state = initialState, action) => {
         name: action.updatedRoutine.data.attributes.name };
     case UPDATE_ROUTINE_ERROR:
       return { ...state, isFetching: false, error: action.error };
+
+    case CREATE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case CREATE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false, id: action.newRoutine.id, name: action.newRoutine.name };
+    case CREATE_ROUTINE_ERROR:
+      return { ...state, isFetching: false };
 
     case UPDATE_USER_ID:
       return {...state, userId: action.userId};

@@ -40,7 +40,6 @@ import IntermissionText from './elements/IntermissionText';
 import { styles } from '../../themeHandler';
 
 // TODO - set up constants for all form options, for now these are stored in each element.
-
 const availableSyllables = [
   { id: 1, name: "1"},
   { id: 2, name: "2"},
@@ -150,6 +149,7 @@ class RoutineBuilder extends React.Component {
 
     this.saveHandler = this.saveHandler.bind(this);
 
+    this.createHandler = this.createHandler.bind(this);
     this.resetHandler = this.resetHandler.bind(this);
     this.insertHandler = this.insertHandler.bind(this);
     this.updateHandler = this.updateHandler.bind(this);
@@ -186,6 +186,19 @@ class RoutineBuilder extends React.Component {
 
   }
 
+  createHandler(routineName) {
+
+    if (routineName.length > 0 && this.props.userId !== 0) {
+
+      let userId = this.props.userId;
+      this.props.attemptCreateRoutine(userId, routineName);
+      this.props.fetchRoutines(userId);
+      this.resetHandler();
+
+    }
+
+  };
+
   saveHandler() {
 
     let id = this.props.id;
@@ -202,8 +215,6 @@ class RoutineBuilder extends React.Component {
         }
       }
     };
-
-    console.log(body);
 
     this.props.attemptUpdateRoutine(id, body);
     this.props.resetWordCard(); // reset Word Card
@@ -336,7 +347,7 @@ class RoutineBuilder extends React.Component {
 
       } else {
 
-        this.resetStepList();
+        // this.resetStepList();
 
       }
 
@@ -805,7 +816,7 @@ class RoutineBuilder extends React.Component {
 
                   <Grid item xs={2} justify="center">
 
-                    <NewRoutineButton/>
+                    <NewRoutineButton action={this.createHandler} />
 
                   </Grid>
 

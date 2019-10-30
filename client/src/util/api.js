@@ -184,3 +184,7 @@ export async function getUserRoutines (id, token) {
   console.log("-fetching routines-");
   return await methods.get(`superuser/routines/${id}`, token)
 }
+
+export async function createRoutine (userId, routineName, token) {
+  return await methods.post('superuser/routines', { userId, routineName }, token);
+}

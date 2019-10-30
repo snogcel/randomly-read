@@ -113,3 +113,64 @@ exports.routines = async (req, res) => {
   });
 
 };
+
+exports.createRoutine = async (req, res, next) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+    const { userId, routineName } = req.body;
+    const u_id = new ObjectId(userId);
+
+    let routines = [];
+    let subRoutine = [];
+
+    console.log("userId: ", userId);
+    console.log("routineName: ", routineName);
+
+    // Create Routine
+    Routine.create({
+      "name": routineName,
+      "subroutine": subRoutine
+    }, function (err, data) {
+      if (err) {
+        next(err);
+      } else {
+
+        const routineId = data._id;
+
+        // Find Related User
+        User.findOne({"_id": u_id}, function(err, data) {
+
+          if(err) {
+            next(err);
+          } else {
+            let obj = JSON.parse(JSON.stringify(data));
+            obj.routines.push(routineId); // add new routine to routines array
+
+            // Add to Related User Routines array
+            User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+
+              if(err) {
+                next();
+              } else {
+                res.status(201).json({ "id": routineId, "name": routineName });
+              }
+
+            });
+
+          }
+        });
+
+      }
+
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+};

@@ -61,7 +61,7 @@ router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth to
 // Superuser Functions
 router.get('/superuser/users', jwtAuth, superuser.users); // get client users
 router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
-
+router.post('/superuser/routines', jwtAuth, superuser.createRoutine);
 
 // Routine Settings
 router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings

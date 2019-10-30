@@ -1,16 +1,20 @@
-import { getUserRoutines, updateRoutine, getUsers } from '../util/api';
+import { getUserRoutines, updateRoutine, createRoutine, getUsers } from '../util/api';
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
 
-export const FETCH_ROUTINES_REQUEST = 'FETCH_POSTS_REQUEST';
+export const FETCH_ROUTINES_REQUEST = 'FETCH_ROUTINES_REQUEST';
 export const FETCH_ROUTINES_SUCCESS = 'FETCH_ROUTINES_SUCCESS';
 export const FETCH_ROUTINES_ERROR = 'FETCH_ROUTINES_ERROR';
 
-export const UPDATE_ROUTINE_REQUEST = 'UPDATE_ROUTINES_REQUEST';
-export const UPDATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINES_SUCCESS';
-export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINES_ERROR';
+export const UPDATE_ROUTINE_REQUEST = 'UPDATE_ROUTINE_REQUEST';
+export const UPDATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
+export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
+
+export const CREATE_ROUTINE_REQUEST = 'CREATE_ROUTINE_REQUEST';
+export const CREATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
+export const CREATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
 
 export const UPDATE_USER_ID = 'UPDATE_USER_ID';
 
@@ -77,6 +81,22 @@ export const attemptUpdateRoutine = (id, routine) => async (dispatch, getState) 
     dispatch(updateRoutineSuccess(updatedRoutine));
   } catch (error) {
     dispatch(updateRoutineError(error));
+  }
+};
+
+const createRoutineRequest = { type: CREATE_ROUTINE_REQUEST };
+const createRoutineSuccess = newRoutine => ({ type: CREATE_ROUTINE_SUCCESS, newRoutine });
+const createRoutineError = error => ({ type: CREATE_ROUTINE_ERROR, error });
+
+export const attemptCreateRoutine = (userId, routineName) => async (dispatch, getState) => {
+  dispatch(createRoutineRequest);
+  try {
+    const { token } = getState().auth;
+    const newRoutine = await createRoutine(userId, routineName, token);
+    dispatch(createRoutineSuccess(newRoutine));
+    return newRoutine.id;
+  } catch (error) {
+    dispatch(createRoutineError(error));
   }
 };
 
