@@ -16,6 +16,8 @@ import LoginFormContainer from '../LoginForm/Container';
 import DurationInput from './elements/DurationInput'; // TODO - remove
 import RepetitionInput from './elements/RepetitionInput'; // TODO - remove
 
+import Empty from '../shared/Empty';
+
 import NewRoutineButton from './elements/NewRoutineButton';
 import DeleteRoutineButton from './elements/DeleteRoutineButton';
 
@@ -1017,7 +1019,7 @@ class RoutineBuilder extends React.Component {
 
                       <Grid item xs={12} justify="center">
 
-
+                        
 
                       </Grid>
 
