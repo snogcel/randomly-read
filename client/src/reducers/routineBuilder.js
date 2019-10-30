@@ -60,6 +60,7 @@ const initialState = {
   position: 'initial',
   intermissionText: '',
   isIntermission: false,
+  lastUpdated: null,
   isFetching: false
 };
 
@@ -69,9 +70,21 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
+      return { ...state, isFetching: false, routine: initialState.routine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
     case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
+
+    case UPDATE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case UPDATE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false,
+        routine: action.updatedRoutine.data.attributes.subroutine,
+        availableRoutines: state.availableRoutines.map(item =>
+          item.id === action.updatedRoutine.data.id ? { ...availableRoutines, id: action.updatedRoutine.data.id, attributes: action.updatedRoutine.data.attributes } : item
+        ),
+        name: action.updatedRoutine.data.attributes.name };
+    case UPDATE_ROUTINE_ERROR:
+      return { ...state, isFetching: false, error: action.error };
 
     case DELETE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
@@ -93,18 +106,6 @@ export default (state = initialState, action) => {
       return { ...state, isFetching: false, availableRoutines: action.routines };
     case FETCH_ROUTINES_ERROR:
       return { ...state, isFetching: false };
-
-    case UPDATE_ROUTINE_REQUEST:
-      return { ...state, isFetching: true };
-    case UPDATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false,
-        routine: action.updatedRoutine.data.attributes.subroutine,
-        availableRoutines: state.availableRoutines.map(item =>
-          item.id === action.updatedRoutine.data.id ? { ...availableRoutines, id: action.updatedRoutine.data.id, attributes: action.updatedRoutine.data.attributes } : item
-        ),
-        name: action.updatedRoutine.data.attributes.name };
-    case UPDATE_ROUTINE_ERROR:
-      return { ...state, isFetching: false, error: action.error };
 
     case UPDATE_USER_ID:
       return {...state, userId: action.userId};
@@ -128,17 +129,17 @@ export default (state = initialState, action) => {
         id: state.id
       };
     case UPDATE_NAME:
-      return {...state, name: action.name};
+      return {...state, lastUpdated: Date.now(), name: action.name};
     case UPDATE_ID:
       return {...state, id: action.id};
     case UPDATE_INDEX:
       return {...state, index: action.index};
     case INSERT_STEP:
-      return {...state, routine: [...state.routine, action.step]};
+      return {...state, lastUpdated: Date.now(), routine: [...state.routine, action.step]};
     case REMOVE_STEP:
-      return {...state, routine: state.routine.filter(item => action.index !== item.index)};
+      return {...state, lastUpdated: Date.now(), routine: state.routine.filter(item => action.index !== item.index)};
     case UPDATE_STEP:
-      return {...state, routine: action.routineArr};
+      return {...state, lastUpdated: Date.now(), routine: action.routineArr};
     case UPDATE_VOWELS:
       return {...state, vowels: action.vowelArr};
     case UPDATE_CONSONANTS:

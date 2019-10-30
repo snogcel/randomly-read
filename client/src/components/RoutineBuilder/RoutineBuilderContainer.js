@@ -24,7 +24,9 @@ const mapStateToProps = state => ({
   position: state.routineBuilder.position,
   intermissionText: state.routineBuilder.intermissionText,
   isIntermission: state.routineBuilder.isIntermission,
-  isFetching: state.routineBuilder.isFetching
+  lastUpdated: state.routineBuilder.lastUpdated,
+  isFetching: state.routineBuilder.isFetching,
+  isFetchingRoutines: state.routineSelect.isFetchingRoutines
 });
 
 const mapDispatchToProps = { resetRoutineBuilder, resetRoutineSelect, resetWordCard, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions

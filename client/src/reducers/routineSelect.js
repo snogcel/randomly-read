@@ -14,18 +14,18 @@ const initialState = {
   routine: [],
   id: 0,
   name: '',
-  isFetching: false
+  isFetchingRoutines: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
     case FETCH_ASSIGNED_ROUTINES_REQUEST:
-      return { ...state, isFetching: true, name: '', id: 0 };
+      return { ...state, isFetchingRoutines: true, name: '', id: 0 };
     case FETCH_ASSIGNED_ROUTINES_SUCCESS:
-      return { ...state, isFetching: false, availableRoutines: action.routines };
+      return { ...state, isFetchingRoutines: false, availableRoutines: action.routines };
     case FETCH_ASSIGNED_ROUTINES_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetchingRoutines: false };
 
     case RESET_ROUTINE_SELECT:
       return {...initialState};

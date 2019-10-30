@@ -80,8 +80,8 @@ export const attemptUpdateRoutine = (id, routine) => async (dispatch, getState) 
 };
 
 export const CREATE_ROUTINE_REQUEST = 'CREATE_ROUTINE_REQUEST';
-export const CREATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
-export const CREATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
+export const CREATE_ROUTINE_SUCCESS = 'CREATE_ROUTINE_SUCCESS';
+export const CREATE_ROUTINE_ERROR = 'CREATE_ROUTINE_ERROR';
 
 const createRoutineRequest = { type: CREATE_ROUTINE_REQUEST };
 const createRoutineSuccess = newRoutine => ({ type: CREATE_ROUTINE_SUCCESS, newRoutine });

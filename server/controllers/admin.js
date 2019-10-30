@@ -406,7 +406,7 @@ exports.updateRoutine = async (req, res) => {
   let attributes = req.body.data.attributes;
   delete attributes.id;
 
-  console.log(attributes);
+  // console.log(attributes);
 
   await Routine.findOneAndUpdate({"_id":o_id}, attributes, {new: true}, function(err, data) {
 

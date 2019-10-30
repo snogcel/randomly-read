@@ -37,7 +37,7 @@ export default function UserSelect(props) {
   // props.options == the list of superuser and clients
   // props.user == currently selected user id
 
-  console.log(props.options);
+  // console.log(props.options);
 
   return (
     <form className={classes.root} autoComplete="off">

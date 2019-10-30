@@ -2,6 +2,8 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 
+import isEqual from 'lodash.isequal';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -172,6 +174,17 @@ class RoutineBuilder extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps) {
+
+    if (prevProps.lastUpdated !== this.props.lastUpdated) {
+
+      console.log("-- auto save --");
+      if (this.props.id !== 0) this.saveHandler();
+
+    }
+
+  }
+
   componentWillMount() {
 
     this.props.resetRoutineBuilder();
@@ -194,6 +207,7 @@ class RoutineBuilder extends React.Component {
 
       let userId = this.props.userId;
       this.props.attemptCreateRoutine(userId, routineName);
+      this.resetStepList();
 
     }
 
@@ -304,7 +318,31 @@ class RoutineBuilder extends React.Component {
   }
 
   insertHandler() {
-    let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+
+    this.resetHandler();
+
+    const initialState = {
+      availableUsers: [],
+      userId: 0,
+      availableRoutines: [],
+      name: '',
+      id: 0,
+      routine: [],
+      index: 0,
+      vowels: [],
+      consonants: [],
+      mode: 'Word',
+      rangeVal: 5,
+      repetitions: 10,
+      syllables: [1,2,3],
+      position: 'initial',
+      intermissionText: '',
+      isIntermission: false,
+      lastUpdated: null,
+      isFetching: false
+    };
+
+    let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = initialState;
 
     let step = {
       "index": Date.now(),
@@ -409,6 +447,8 @@ class RoutineBuilder extends React.Component {
 
       this.setState({ "index": index });
     }
+
+    // this.saveHandler();
 
   }
 
@@ -757,9 +797,16 @@ class RoutineBuilder extends React.Component {
 
     console.log("current index: ", this.state.index);
     console.log("routine: ", routine);
-    */
 
     console.log("current userId: ", userId);
+
+    console.log("isFetching: ", this.props.isFetching);
+    console.log("routine id: ", this.props.id);
+    console.log("routine name: ", this.props.name);
+
+    console.log("available routines", this.props.availableRoutines);
+
+    */
 
     // console.log("current routine id: ", id);
 
@@ -769,15 +816,7 @@ class RoutineBuilder extends React.Component {
     let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
-    console.log("available routines", this.props.availableRoutines);
-
-    console.log("isFetching: ", this.props.isFetching);
-    console.log("routine id: ", this.props.id);
-    console.log("routine name: ", this.props.name);
-
     let nameObj = this.parseName(name);
-
-    // console.log(selectedRoutineObj);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -853,53 +892,50 @@ class RoutineBuilder extends React.Component {
               </Grid>
 
 
-              <Grid item xs={9}>
+              {(id !== 0) ? (
+                <>
 
-                <Grid container spacing={0}>
+                <Grid item xs={9}>
 
-                  <Grid item xs={6}>
+                  <Grid container spacing={0}>
 
-                    <RoutineName action={this.nameHandler} name={nameObj} />
+                    <Grid item xs={6}>
 
-                  </Grid>
+                      <RoutineName action={this.nameHandler} name={nameObj} />
 
-                  <Grid item xs={6}>
+                    </Grid>
 
-                    <SaveButton action={this.saveHandler} />
+                    <Grid item xs={12}>
 
-                  </Grid>
+                      <Grid container spacing={2}>
 
-                  <Grid item xs={12}>
+                        <Grid item>
+                          <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
+                        </Grid>
 
-                    <Grid container spacing={2}>
+                        <Grid item>
+                          <DurationSlider action={this.rangeValHandler} duration={durationObj} />
+                        </Grid>
 
-                      <Grid item>
-                        <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
-                      </Grid>
-
-                      <Grid item>
-                        <DurationSlider action={this.rangeValHandler} duration={durationObj} />
-                      </Grid>
-
-                      {!isIntermission ? (
-                        <>
+                        {!isIntermission ? (
+                          <>
 
                           <Grid item>
                             <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
                           </Grid>
 
-                        </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+                          </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+
+                      </Grid>
 
                     </Grid>
 
-                  </Grid>
+                    <Grid item xs={12}>
 
-                  <Grid item xs={12}>
+                      <Grid container spacing={2}>
 
-                    <Grid container spacing={2}>
-
-                      {!isIntermission ? (
-                        <>
+                        {!isIntermission ? (
+                          <>
 
                           <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
 
@@ -907,40 +943,40 @@ class RoutineBuilder extends React.Component {
 
                           <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
 
-                        </> ) : ( <> </> )}
-
-                    </Grid>
-
-                  </Grid>
-
-                  <Grid item xs={12}>
-
-                    <Grid container spacing={2}>
-
-                      <Grid item>
-                        {!isIntermission ? (
-                          <>
-                            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
                           </> ) : ( <> </> )}
 
                       </Grid>
 
                     </Grid>
 
+                    <Grid item xs={12}>
 
-                  </Grid>
+                      <Grid container spacing={2}>
 
-                  <Grid item xs={12}>
+                        <Grid item>
+                          {!isIntermission ? (
+                            <>
+                            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+                            </> ) : ( <> </> )}
 
-                    <Grid container spacing={2}>
-
-                      <Grid item>
-
-                        <br />
-
-                        <InsertButton action={this.insertHandler} />
+                        </Grid>
 
                       </Grid>
+
+
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                      <Grid container spacing={2}>
+
+                        <Grid item>
+
+                          <br />
+
+                          <InsertButton action={this.insertHandler} />
+
+                        </Grid>
 
                         {(this.state.index > 0) ? (
                           <>
@@ -962,11 +998,6 @@ class RoutineBuilder extends React.Component {
                           </Grid>
                           </> ) : ( <> </> )}
 
-                      <Grid item>
-
-                        <br />
-
-                        <ResetButton action={this.resetHandler} />
 
                       </Grid>
 
@@ -976,7 +1007,25 @@ class RoutineBuilder extends React.Component {
 
                 </Grid>
 
-              </Grid>
+
+                </> ) : ( <>
+
+                  <Grid item xs={9}>
+
+                    <Grid container spacing={0}>
+
+                      <Grid item xs={12} justify="center">
+
+
+
+                      </Grid>
+
+                    </Grid>
+
+                  </Grid>
+
+                </> )}
+
 
             </Grid>
 

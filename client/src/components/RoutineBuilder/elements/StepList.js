@@ -86,7 +86,7 @@ export default function StepList(props) {
 
         {routine.map(function(step) {
 
-          console.log("current step: ", step);
+          // console.log("current step: ", step);
 
           let mode = availableModes.find(o => o.name === step.mode);
 
@@ -122,11 +122,12 @@ export default function StepList(props) {
               listItemText += " focused on " + vowels;
             }
 
-            if (step.position === "initial") subHeaderText += "that start with ";
-            if (step.position === "medial") subHeaderText += "that contain ";
-            if (step.position === "final") subHeaderText += "that end with ";
-
             if (step.consonants.length > 0) {
+
+              if (step.position === "initial") subHeaderText += "that start with ";
+              if (step.position === "medial") subHeaderText += "that contain ";
+              if (step.position === "final") subHeaderText += "that end with ";
+              
               let consonants = "";
               for (let i = 0; i < step.consonants.length; i++) {
 
