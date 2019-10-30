@@ -29,7 +29,7 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #333',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3, 4),
+    padding: theme.spacing(2, 2, 2, 2),
     textAlign: 'center'
   },
   margin: {
@@ -45,6 +45,7 @@ const useStyles = makeStyles(theme => ({
   textField: {
     marginLeft: theme.spacing(0),
     marginRight: theme.spacing(0),
+    paddingLeft: theme.spacing(1)
   },
   dense: {
     marginTop: theme.spacing(2),

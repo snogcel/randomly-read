@@ -207,7 +207,7 @@ class RoutineBuilder extends React.Component {
 
       let userId = this.props.userId;
       this.props.attemptCreateRoutine(userId, routineName);
-      this.resetStepList();
+      // this.resetStepList();
 
     }
 
@@ -839,6 +839,7 @@ class RoutineBuilder extends React.Component {
 
     // TODO - Copy, Delete, Add Steps
 
+    console.log("available routines", this.props.availableRoutines);
 
     return (
 

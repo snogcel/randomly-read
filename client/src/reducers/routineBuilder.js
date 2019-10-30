@@ -70,7 +70,7 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, routine: initialState.routine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
+      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
     case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 

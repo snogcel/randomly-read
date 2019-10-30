@@ -126,7 +126,21 @@ exports.createRoutine = async (req, res, next) => {
     const u_id = new ObjectId(userId);
 
     let routines = [];
-    let subRoutine = [];
+    let subroutine = [{
+      "index": Date.now(),
+      "rangeVal": 5,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": [],
+      "syllables": [
+        1,
+        2,
+        3
+      ],
+      "position": "initial"
+    }];
 
     console.log("userId: ", userId);
     console.log("routineName: ", routineName);
@@ -134,7 +148,7 @@ exports.createRoutine = async (req, res, next) => {
     // Create Routine
     Routine.create({
       "name": routineName,
-      "subroutine": subRoutine
+      "subroutine": subroutine
     }, function (err, data) {
       if (err) {
         next(err);
@@ -171,6 +185,7 @@ exports.createRoutine = async (req, res, next) => {
 
                     response.newRoutineId = routineId;
                     response.newRoutineName = routineName;
+                    response.subroutine = subroutine;
 
                     res.status(201).json(response);
                   }
