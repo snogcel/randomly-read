@@ -93,8 +93,10 @@ export const attemptCreateRoutine = (userId, routineName) => async (dispatch, ge
   try {
     const { token } = getState().auth;
     const newRoutine = await createRoutine(userId, routineName, token);
+
+    console.log("- received data: ", newRoutine);
+
     dispatch(createRoutineSuccess(newRoutine));
-    return newRoutine.id;
   } catch (error) {
     dispatch(createRoutineError(error));
   }

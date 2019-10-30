@@ -193,7 +193,7 @@ class RoutineBuilder extends React.Component {
       let userId = this.props.userId;
       this.props.attemptCreateRoutine(userId, routineName);
       this.props.fetchRoutines(userId);
-      this.resetHandler();
+      // this.resetHandler();
 
     }
 
@@ -758,6 +758,10 @@ class RoutineBuilder extends React.Component {
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
     console.log("available routines", this.props.availableRoutines);
+
+    console.log("isFetching: ", this.props.isFetching);
+    console.log("routine id: ", this.props.id);
+    console.log("routine name: ", this.props.name);
 
     let nameObj = this.parseName(name);
 

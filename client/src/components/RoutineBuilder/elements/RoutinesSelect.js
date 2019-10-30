@@ -33,8 +33,6 @@ export default function RoutinesSelect(props) {
     props.action(event.target.value); // pass to redux
   };
 
-  console.log(props.options);
-
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>

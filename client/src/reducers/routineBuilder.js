@@ -62,6 +62,13 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
+    case CREATE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case CREATE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false, id: action.newRoutine.id, name: action.newRoutine.name };
+    case CREATE_ROUTINE_ERROR:
+      return { ...state, isFetching: false };
+
     case FETCH_USERS_REQUEST:
       return { ...state, isFetching: true, };
     case FETCH_USERS_SUCCESS:
@@ -87,13 +94,6 @@ export default (state = initialState, action) => {
         name: action.updatedRoutine.data.attributes.name };
     case UPDATE_ROUTINE_ERROR:
       return { ...state, isFetching: false, error: action.error };
-
-    case CREATE_ROUTINE_REQUEST:
-      return { ...state, isFetching: true };
-    case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, id: action.newRoutine.id, name: action.newRoutine.name };
-    case CREATE_ROUTINE_ERROR:
-      return { ...state, isFetching: false };
 
     case UPDATE_USER_ID:
       return {...state, userId: action.userId};
