@@ -13,8 +13,8 @@ import {REMOVE_CONSONANT} from '../actions/word';
 
 const initialState = {
     text: [],
-    vowel: [],
-    consonant: [],
+    vowel: null,
+    consonant: null,
     syllables: [1],
     limit: 1,
     mode: "Word",

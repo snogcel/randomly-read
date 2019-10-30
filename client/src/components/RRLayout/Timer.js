@@ -113,13 +113,15 @@ class Timer extends React.Component {
 
     console.log("Modify exerciseConfig...");
 
+    console.log(exercise);
+
     // Stub out exerciseConfig
     let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
 
     exercise.duration = duration; // calculation exercise duration
     exercise.templates = []; // for future functionality
     exercise.limit = 1; // for future functionality
-    (exercise.mode === "word") ? exercise.map = "randomly" : exercise.map = "default";
+    (exercise.mode === "Word") ? exercise.map = "randomly" : exercise.map = "default";
 
     if (exercise.isIntermission) {
       exercise.consonants = [];
@@ -319,7 +321,7 @@ class Timer extends React.Component {
 
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false})
-    this.props.addRoutineVowel(null);
+    this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();
     this.props.addSyllables([1])
     this.props.setMode('Word');
@@ -340,7 +342,7 @@ class Timer extends React.Component {
     this.setState({time: 0, isOn: false});
     this.props.addExerciseNumber(this.exercisePointer);
 
-    this.props.addRoutineVowel(null);
+    this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();
     this.props.addSyllables([1]);
     this.props.setMode('Word');
@@ -403,6 +405,8 @@ class Timer extends React.Component {
     consonant = options.consonant;
     templates = options.templates;
     syllables = options.syllables;
+
+    console.log("timer: ", options.vowel);
 
     // passes updated variables to redux
     console.log("- passing updated variables to redux..");

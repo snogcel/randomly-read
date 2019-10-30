@@ -27,6 +27,9 @@ const resolvers = {
                 if (args.location === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
+            console.log("vowel filter: ", filter.vowel);
+            console.log("consonant filter: ", filter.consonant);
+
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {
