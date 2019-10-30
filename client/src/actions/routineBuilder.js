@@ -1,23 +1,6 @@
-import { getUserRoutines, updateRoutine, createRoutine, getUsers } from '../util/api';
-
-export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
-export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
-export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
-
-export const FETCH_ROUTINES_REQUEST = 'FETCH_ROUTINES_REQUEST';
-export const FETCH_ROUTINES_SUCCESS = 'FETCH_ROUTINES_SUCCESS';
-export const FETCH_ROUTINES_ERROR = 'FETCH_ROUTINES_ERROR';
-
-export const UPDATE_ROUTINE_REQUEST = 'UPDATE_ROUTINE_REQUEST';
-export const UPDATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
-export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
-
-export const CREATE_ROUTINE_REQUEST = 'CREATE_ROUTINE_REQUEST';
-export const CREATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
-export const CREATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
+import { getUserRoutines, updateRoutine, createRoutine, deleteRoutine, getUsers } from '../util/api';
 
 export const UPDATE_USER_ID = 'UPDATE_USER_ID';
-
 export const RESET = 'RESET';
 export const RESET_STEP_LIST = 'RESET_STEP_LIST';
 export const RESET_FORM = 'RESET_FORM';
@@ -39,6 +22,10 @@ export const UPDATE_POSITION = 'UPDATE_POSITION';
 export const UPDATE_INTERMISSION_TEXT = 'UPDATE_INTERMISSION_TEXT';
 export const UPDATE_IS_INTERMISSION = 'UPDATE_IS_INTERMISSION';
 
+export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
+export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
+
 const fetchUsersRequest = { type: FETCH_USERS_REQUEST };
 const fetchUsersSuccess = users => ({ type: FETCH_USERS_SUCCESS, users });
 const fetchUsersError = error => ({ type: FETCH_USERS_ERROR, error });
@@ -53,6 +40,10 @@ export const fetchUsers = () => async (dispatch, getState) => {
     dispatch(fetchUsersError(error));
   }
 };
+
+export const FETCH_ROUTINES_REQUEST = 'FETCH_ROUTINES_REQUEST';
+export const FETCH_ROUTINES_SUCCESS = 'FETCH_ROUTINES_SUCCESS';
+export const FETCH_ROUTINES_ERROR = 'FETCH_ROUTINES_ERROR';
 
 const fetchRoutinesRequest = { type: FETCH_ROUTINES_REQUEST };
 const fetchRoutinesSuccess = routines => ({ type: FETCH_ROUTINES_SUCCESS, routines });
@@ -69,6 +60,10 @@ export const fetchRoutines = (userId) => async (dispatch, getState) => {
   }
 };
 
+export const UPDATE_ROUTINE_REQUEST = 'UPDATE_ROUTINE_REQUEST';
+export const UPDATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
+export const UPDATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
+
 const updateRoutineRequest = { type: UPDATE_ROUTINE_REQUEST };
 const updateRoutineSuccess = updatedRoutine => ({ type: UPDATE_ROUTINE_SUCCESS, updatedRoutine });
 const updateRoutineError = error => ({ type: UPDATE_ROUTINE_ERROR, error });
@@ -84,6 +79,10 @@ export const attemptUpdateRoutine = (id, routine) => async (dispatch, getState) 
   }
 };
 
+export const CREATE_ROUTINE_REQUEST = 'CREATE_ROUTINE_REQUEST';
+export const CREATE_ROUTINE_SUCCESS = 'UPDATE_ROUTINE_SUCCESS';
+export const CREATE_ROUTINE_ERROR = 'UPDATE_ROUTINE_ERROR';
+
 const createRoutineRequest = { type: CREATE_ROUTINE_REQUEST };
 const createRoutineSuccess = newRoutine => ({ type: CREATE_ROUTINE_SUCCESS, newRoutine });
 const createRoutineError = error => ({ type: CREATE_ROUTINE_ERROR, error });
@@ -93,12 +92,28 @@ export const attemptCreateRoutine = (userId, routineName) => async (dispatch, ge
   try {
     const { token } = getState().auth;
     const newRoutine = await createRoutine(userId, routineName, token);
-
-    console.log("- received data: ", newRoutine);
-
     dispatch(createRoutineSuccess(newRoutine));
   } catch (error) {
     dispatch(createRoutineError(error));
+  }
+};
+
+export const DELETE_ROUTINE_REQUEST = 'DELETE_ROUTINE_REQUEST';
+export const DELETE_ROUTINE_SUCCESS = 'DELETE_ROUTINE_SUCCESS';
+export const DELETE_ROUTINE_ERROR = 'DELETE_ROUTINE_ERROR';
+
+const deleteRoutineRequest = { type: DELETE_ROUTINE_REQUEST };
+const deleteRoutineSuccess = routineId => ({ type: DELETE_ROUTINE_SUCCESS, routineId });
+const deleteRoutineError = error => ({ type: DELETE_ROUTINE_ERROR, error });
+
+export const attemptDeleteRoutine = (userId, routineId) => async (dispatch, getState) => {
+  dispatch(deleteRoutineRequest);
+  try {
+    const { token } = getState().auth;
+    await deleteRoutine(userId, routineId, token);
+    dispatch(deleteRoutineSuccess(routineId));
+  } catch (error) {
+    dispatch(deleteRoutineError(error));
   }
 };
 

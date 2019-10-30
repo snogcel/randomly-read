@@ -57,11 +57,13 @@ router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth tok
 router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token?
 
 
-
+// TODO - implement superuser auth
 // Superuser Functions
+router.post('/superuser/routines', jwtAuth, superuser.createRoutine);
 router.get('/superuser/users', jwtAuth, superuser.users); // get client users
 router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
-router.post('/superuser/routines', jwtAuth, superuser.createRoutine);
+router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
+
 
 // Routine Settings
 router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings

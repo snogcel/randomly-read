@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import RoutineBuilder from './RoutineBuilder';
-import { resetRoutineBuilder, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep } from '../../actions/routineBuilder';
+import { resetRoutineBuilder, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep } from '../../actions/routineBuilder';
 import { resetRoutineSelect } from '../../actions/routineSelect';
 import { resetWordCard } from "../../actions/word";
 
@@ -27,7 +27,7 @@ const mapStateToProps = state => ({
   isFetching: state.routineBuilder.isFetching
 });
 
-const mapDispatchToProps = { resetRoutineBuilder, resetRoutineSelect, resetWordCard, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions
+const mapDispatchToProps = { resetRoutineBuilder, resetRoutineSelect, resetWordCard, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions
 
 const enhance = compose(
   withAuth,

@@ -34,6 +34,10 @@ import {CREATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
 import {CREATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
 import {CREATE_ROUTINE_ERROR} from '../actions/routineBuilder';
 
+import {DELETE_ROUTINE_REQUEST} from '../actions/routineBuilder';
+import {DELETE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
+import {DELETE_ROUTINE_ERROR} from '../actions/routineBuilder';
+
 import {FETCH_USERS_REQUEST} from '../actions/routineBuilder';
 import {FETCH_USERS_SUCCESS} from '../actions/routineBuilder';
 import {FETCH_USERS_ERROR} from '../actions/routineBuilder';
@@ -67,6 +71,13 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_SUCCESS:
       return { ...state, isFetching: false, id: action.newRoutine.id, name: action.newRoutine.name };
     case CREATE_ROUTINE_ERROR:
+      return { ...state, isFetching: false };
+
+    case DELETE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case DELETE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false, id: initialState.id, name: initialState.name };
+    case DELETE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 
     case FETCH_USERS_REQUEST:

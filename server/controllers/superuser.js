@@ -174,3 +174,64 @@ exports.createRoutine = async (req, res, next) => {
   }
 
 };
+
+// delete routine
+exports.deleteRoutine = async (req, res) => {
+
+  const userId = req.params.userId;
+  const u_id = new ObjectId(userId);
+
+  const routineId = req.params.routineId;
+  const o_id = new ObjectId(routineId);
+
+  console.log("userId: ", userId);
+  console.log("routineId: ", routineId);
+
+  let response = {};
+
+  // delete routine
+
+  // Find Related User
+  User.findOne({"_id": u_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error deleting data"};
+      res.json(response);
+    } else {
+      let obj = JSON.parse(JSON.stringify(data));
+      let routines = [];
+
+      for (let i = 0; i < obj.routines.length; i++) {
+        if (obj.routines[i] !== routineId) routines.push(obj.routines[i]); // remove routine from user obj
+      }
+
+      obj.routines = routines;
+
+      // Remove from Related User Routines array
+      User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+
+        if(err) {
+          response = {"error" : true, "message" : "Error deleting data"};
+          res.json(response);
+        } else {
+
+          // Delete Routine from Server
+          Routine.deleteOne({"_id":o_id}, function(err, data) {
+
+            if(err) {
+              response = {"error" : true, "message" : "Error deleting data"};
+              res.json(response);
+            } else {
+              res.json({ "id": routineId });
+            }
+
+          });
+
+        }
+
+      });
+
+    }
+  });
+
+};

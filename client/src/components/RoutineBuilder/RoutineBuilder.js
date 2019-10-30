@@ -150,6 +150,8 @@ class RoutineBuilder extends React.Component {
     this.saveHandler = this.saveHandler.bind(this);
 
     this.createHandler = this.createHandler.bind(this);
+    this.deleteRoutineHandler = this.deleteRoutineHandler.bind(this);
+
     this.resetHandler = this.resetHandler.bind(this);
     this.insertHandler = this.insertHandler.bind(this);
     this.updateHandler = this.updateHandler.bind(this);
@@ -198,6 +200,18 @@ class RoutineBuilder extends React.Component {
     }
 
   };
+
+  deleteRoutineHandler(routineId) {
+
+    if (routineId !== 0) {
+
+      let userId = this.props.userId;
+      this.props.attemptDeleteRoutine(userId, routineId);
+      this.props.fetchRoutines(userId);
+
+    }
+
+  }
 
   saveHandler() {
 
@@ -826,7 +840,7 @@ class RoutineBuilder extends React.Component {
 
                   <Grid item xs={2} justify="center">
 
-                    <DeleteRoutineButton/>
+                    <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
 
                   </Grid>
 

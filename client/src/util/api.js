@@ -188,3 +188,7 @@ export async function getUserRoutines (id, token) {
 export async function createRoutine (userId, routineName, token) {
   return await methods.post('superuser/routines', { userId, routineName }, token);
 }
+
+export async function deleteRoutine (userId, routineId, token) {
+  return await methods.delete(`superuser/routines/${userId}/${routineId}`, token);
+}
