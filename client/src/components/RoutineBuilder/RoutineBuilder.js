@@ -194,8 +194,6 @@ class RoutineBuilder extends React.Component {
 
       let userId = this.props.userId;
       this.props.attemptCreateRoutine(userId, routineName);
-      this.props.fetchRoutines(userId);
-      // this.resetHandler();
 
     }
 
@@ -207,7 +205,7 @@ class RoutineBuilder extends React.Component {
 
       let userId = this.props.userId;
       this.props.attemptDeleteRoutine(userId, routineId);
-      this.props.fetchRoutines(userId);
+      this.resetStepList();
 
     }
 

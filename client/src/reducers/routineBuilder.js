@@ -69,14 +69,14 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, id: action.newRoutine.id, name: action.newRoutine.name };
+      return { ...state, isFetching: false, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
     case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 
     case DELETE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case DELETE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, id: initialState.id, name: initialState.name };
+      return { ...state, isFetching: false, availableRoutines: action.routines, id: initialState.id, name: initialState.name };
     case DELETE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 

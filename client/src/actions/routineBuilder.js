@@ -103,15 +103,15 @@ export const DELETE_ROUTINE_SUCCESS = 'DELETE_ROUTINE_SUCCESS';
 export const DELETE_ROUTINE_ERROR = 'DELETE_ROUTINE_ERROR';
 
 const deleteRoutineRequest = { type: DELETE_ROUTINE_REQUEST };
-const deleteRoutineSuccess = routineId => ({ type: DELETE_ROUTINE_SUCCESS, routineId });
+const deleteRoutineSuccess = routines => ({ type: DELETE_ROUTINE_SUCCESS, routines });
 const deleteRoutineError = error => ({ type: DELETE_ROUTINE_ERROR, error });
 
 export const attemptDeleteRoutine = (userId, routineId) => async (dispatch, getState) => {
   dispatch(deleteRoutineRequest);
   try {
     const { token } = getState().auth;
-    await deleteRoutine(userId, routineId, token);
-    dispatch(deleteRoutineSuccess(routineId));
+    const routines = await deleteRoutine(userId, routineId, token);
+    dispatch(deleteRoutineSuccess(routines.data));
   } catch (error) {
     dispatch(deleteRoutineError(error));
   }

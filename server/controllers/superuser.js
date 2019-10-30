@@ -157,7 +157,28 @@ exports.createRoutine = async (req, res, next) => {
               if(err) {
                 next();
               } else {
-                res.status(201).json({ "id": routineId, "name": routineName });
+
+                // fetch new availableRoutines and return
+                Routine.find({
+                  '_id': {$in: obj.routines}
+                }, function (err, data) {
+
+                  if (err) {
+                    response = {"error": true, "message": "Error deleting data"};
+                    res.json(response);
+                  } else {
+                    response = transformDataSet(data, "routines");
+
+                    response.newRoutineId = routineId;
+                    response.newRoutineName = routineName;
+
+                    res.status(201).json(response);
+                  }
+
+                });
+
+                // res.status(201).json({ "id": routineId, "name": routineName });
+
               }
 
             });
@@ -222,7 +243,22 @@ exports.deleteRoutine = async (req, res) => {
               response = {"error" : true, "message" : "Error deleting data"};
               res.json(response);
             } else {
-              res.json({ "id": routineId });
+
+              // fetch new availableRoutines and return
+              Routine.find({
+                '_id': {$in: routines}
+              }, function (err, data) {
+
+                if (err) {
+                  response = {"error": true, "message": "Error deleting data"};
+                  res.json(response);
+                } else {
+                  response = transformDataSet(data, "routines");
+                  res.json(response);
+                }
+
+              });
+
             }
 
           });
