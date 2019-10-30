@@ -7,6 +7,7 @@ import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
 import RRLayout from '../RRLayout/RRHomeContainer';
+import Empty from '../shared/Empty';
 
 const Wrapper = styled.div`
   display: flex;
@@ -55,7 +56,7 @@ const Home = () => (
 
   <HomeMainSection>
 
-    <Route exact path='/' component={RRLayout} />
+    <Route exact path='/' component={Empty} />
 
   </HomeMainSection>
 
