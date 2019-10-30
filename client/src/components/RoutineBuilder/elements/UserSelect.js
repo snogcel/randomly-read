@@ -20,9 +20,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RoutinesSelect(props) {
+export default function UserSelect(props) {
   const classes = useStyles();
-  const [values, setValues] = React.useState(props.routine);
+  const [values, setValues] = React.useState({});
+  // const [values, setValues] = React.useState(props.routine);
 
   const handleChange = event => {
     setValues(oldValues => ({
@@ -33,21 +34,26 @@ export default function RoutinesSelect(props) {
     props.action(event.target.value); // pass to redux
   };
 
+  // props.options == the list of superuser and clients
+  // props.user == currently selected user id
+
+  // console.log(props.options);
+
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="routine-input">Available Routines</InputLabel>
+        <InputLabel htmlFor="routine-input">Available Users</InputLabel>
         <Select
           defaultValue={props.options[0]}
-          value={props.routine.routine}
+          value={props.user.user}
           onChange={handleChange}
           inputProps={{
-            name: 'routine',
-            id: 'routine-input',
+            name: 'user',
+            id: 'user-input',
           }}
         >
-          {props.options.map(routine => (
-            <MenuItem key={routine.id} value={routine.id}>{routine.name}</MenuItem>
+          {props.options.map(user => (
+            <MenuItem key={user.id} value={user.id}>{user.name}</MenuItem>
           ))}
         </Select>
       </FormControl>

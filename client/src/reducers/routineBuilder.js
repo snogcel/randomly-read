@@ -3,6 +3,9 @@ import {UPDATE_STEP} from '../actions/routineBuilder';
 import {REMOVE_STEP} from '../actions/routineBuilder';
 import {RESET_STEP_LIST} from '../actions/routineBuilder';
 
+import {UPDATE_USER_ID} from '../actions/routineBuilder';
+
+import {RESET} from '../actions/routineBuilder';
 import {RESET_FORM} from '../actions/routineBuilder';
 import {UPDATE_NAME} from '../actions/routineBuilder';
 import {UPDATE_ID} from '../actions/routineBuilder';
@@ -27,9 +30,22 @@ import {UPDATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
 import {UPDATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
 import {UPDATE_ROUTINE_ERROR} from '../actions/routineBuilder';
 
+import {CREATE_ROUTINE_REQUEST} from '../actions/routineBuilder';
+import {CREATE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
+import {CREATE_ROUTINE_ERROR} from '../actions/routineBuilder';
+
+import {DELETE_ROUTINE_REQUEST} from '../actions/routineBuilder';
+import {DELETE_ROUTINE_SUCCESS} from '../actions/routineBuilder';
+import {DELETE_ROUTINE_ERROR} from '../actions/routineBuilder';
+
+import {FETCH_USERS_REQUEST} from '../actions/routineBuilder';
+import {FETCH_USERS_SUCCESS} from '../actions/routineBuilder';
+import {FETCH_USERS_ERROR} from '../actions/routineBuilder';
 
 let availableRoutines;
 const initialState = {
+  availableUsers: [],
+  userId: 0,
   availableRoutines: [],
   name: '',
   id: 0,
@@ -37,24 +53,25 @@ const initialState = {
   index: 0,
   vowels: [],
   consonants: [],
-  mode: 'word',
+  mode: 'Word',
   rangeVal: 5,
   repetitions: 10,
   syllables: [1,2,3],
   position: 'initial',
   intermissionText: '',
   isIntermission: false,
+  lastUpdated: null,
   isFetching: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case FETCH_ROUTINES_REQUEST:
-      return { ...state, isFetching: true, routine: [], newRoutine: null };
-    case FETCH_ROUTINES_SUCCESS:
-      return { ...state, isFetching: false, availableRoutines: action.routines };
-    case FETCH_ROUTINES_ERROR:
+    case CREATE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case CREATE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
+    case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 
     case UPDATE_ROUTINE_REQUEST:
@@ -69,33 +86,66 @@ export default (state = initialState, action) => {
     case UPDATE_ROUTINE_ERROR:
       return { ...state, isFetching: false, error: action.error };
 
+    case DELETE_ROUTINE_REQUEST:
+      return { ...state, isFetching: true };
+    case DELETE_ROUTINE_SUCCESS:
+      return { ...state, isFetching: false, availableRoutines: action.routines, id: initialState.id, name: initialState.name };
+    case DELETE_ROUTINE_ERROR:
+      return { ...state, isFetching: false };
+
+    case FETCH_USERS_REQUEST:
+      return { ...state, isFetching: true, };
+    case FETCH_USERS_SUCCESS:
+      return { ...state, isFetching: false, availableUsers: action.users };
+    case FETCH_USERS_ERROR:
+      return { ...state, isFetching: false };
+
+    case FETCH_ROUTINES_REQUEST:
+      return { ...state, isFetching: true, routine: [], newRoutine: null };
+    case FETCH_ROUTINES_SUCCESS:
+      return { ...state, isFetching: false, availableRoutines: action.routines };
+    case FETCH_ROUTINES_ERROR:
+      return { ...state, isFetching: false };
+
+    case UPDATE_USER_ID:
+      return {...state, userId: action.userId};
+
+    case RESET:
+      return { ...initialState };
+
     case RESET_STEP_LIST:
-      return { ...initialState, availableRoutines: state.availableRoutines };
+      return { ...initialState,
+        availableRoutines: state.availableRoutines,
+        availableUsers: state.availableUsers,
+        userId: state.userId,
+      };
     case RESET_FORM:
       return { ...initialState,
         availableRoutines: state.availableRoutines,
+        availableUsers: state.availableUsers,
+        userId: state.userId,
         routine: state.routine,
         name: state.name,
         id: state.id
       };
     case UPDATE_NAME:
-      return {...state, name: action.name};
+      return {...state, lastUpdated: Date.now(), name: action.name};
     case UPDATE_ID:
       return {...state, id: action.id};
     case UPDATE_INDEX:
       return {...state, index: action.index};
     case INSERT_STEP:
-      return {...state, routine:  [...state.routine, action.step]};
+      return {...state, lastUpdated: Date.now(), routine: [...state.routine, action.step]};
     case REMOVE_STEP:
-      return {...state, routine: state.routine.filter(item => action.index !== item.index)};
+      return {...state, lastUpdated: Date.now(), routine: state.routine.filter(item => action.index !== item.index)};
     case UPDATE_STEP:
-      return {...state, routine: action.routineArr};
+      return {...state, lastUpdated: Date.now(), routine: action.routineArr};
     case UPDATE_VOWELS:
       return {...state, vowels: action.vowelArr};
     case UPDATE_CONSONANTS:
       return {...state, consonants: action.consonantArr};
     case ADD_CONSONANT:
-      return {...state, consonants:  [...state.consonants, action.consonant]};
+      return {...state, consonants: [...state.consonants, action.consonant]};
     case REMOVE_CONSONANT:
       return {...state, consonants: state.consonants.filter(item => action.consonant !== item)};
     case UPDATE_MODE:

@@ -79,16 +79,14 @@ class WordCard extends React.Component  {
 
   buildQuery() {
 
-    // if (this.fetching) return null;
-
     let vowel = JSON.stringify(this.props.vowel);
     let consonant = JSON.stringify(this.props.consonant);
-    let syllables= JSON.stringify(this.props.syllables);
+    let syllables = JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
 
     switch(this.props.mode) {
         case 'Sentence':
-            if (this.props.consonant.length > 0) {
+            if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
                 return gql`
                 {
                     sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
@@ -105,10 +103,44 @@ class WordCard extends React.Component  {
                     }
                 }
                 `;
+            } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
+              return gql`
+                {
+                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          cmudict_id
+                          lexeme
+                        }                       
+                    }
+                }
+                `;
+            } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
+              return gql`
+                {
+                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          cmudict_id
+                          lexeme
+                        }                       
+                    }
+                }
+                `;
             } else {
                 return gql`
                 {
-                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(syllables: ${syllables}, limit: ${limit}) {                    
                         words {
                           id
                           votes {
@@ -125,7 +157,7 @@ class WordCard extends React.Component  {
             }
 
         case 'Word':
-            if (this.props.consonant.length > 0) {
+            if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
                 return gql`
                 {
                     words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
@@ -145,10 +177,50 @@ class WordCard extends React.Component  {
                     }
                 }
                 `;
+            } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
+              return gql`
+                {
+                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
+                        cmudict_id
+                        lexeme
+                        wordsXsensesXsynsets {
+                          wordid
+                          pos
+                          definition
+                      }
+                    }
+                }
+                `;
+            } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
+              return gql`
+                {
+                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
+                        cmudict_id
+                        lexeme
+                        wordsXsensesXsynsets {
+                          wordid
+                          pos
+                          definition
+                      }
+                    }
+                }
+                `;
             } else {
                 return gql`
                 {
-                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(syllables: ${syllables}, limit: ${limit}) {                    
                         id
                         votes {
                           user
@@ -191,6 +263,8 @@ class WordCard extends React.Component  {
 
   render() {
     const { classes } = this.props;
+
+    if (this.props.vowel === null || this.props.consonant === null) return null;
 
     this.query = this.buildQuery();
 
@@ -339,6 +413,5 @@ WordCard.propTypes = {
 };
 
 const WordCardWrapped = withStyles(styles)(WordCard);
-
 
 export default WordCardWrapped;

@@ -71,43 +71,22 @@ export default function StepList(props) {
     props.action(index); // fetch selected Routine Step
   };
 
-  /*
+  let routine = [];
 
-    <List component="nav" aria-label="main mailbox folders">
-        <ListItem
-          button
-          selected={selectedIndex === 0}
-          onClick={event => handleListItemClick(event, 0)}
-        >
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
-          <ListItemText primary="Inbox" />
-        </ListItem>
-        <ListItem
-          button
-          selected={selectedIndex === 1}
-          onClick={event => handleListItemClick(event, 1)}
-        >
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Drafts" />
-        </ListItem>
-      </List>
+  if (typeof props.routine !== "undefined") {
 
-      <Divider />
+    routine = props.routine;
 
-   */
+  }
 
   return (
     <div className={classes.root}>
 
       <List component="nav" aria-label="routine steps">
 
-        {props.routine.map(function(step) {
+        {routine.map(function(step) {
 
-          console.log("current step: ", step);
+          // console.log("current step: ", step);
 
           let mode = availableModes.find(o => o.name === step.mode);
 
@@ -143,11 +122,12 @@ export default function StepList(props) {
               listItemText += " focused on " + vowels;
             }
 
-            if (step.position === "initial") subHeaderText += "that start with ";
-            if (step.position === "medial") subHeaderText += "that contain ";
-            if (step.position === "final") subHeaderText += "that end with ";
-
             if (step.consonants.length > 0) {
+
+              if (step.position === "initial") subHeaderText += "that start with ";
+              if (step.position === "medial") subHeaderText += "that contain ";
+              if (step.position === "final") subHeaderText += "that end with ";
+              
               let consonants = "";
               for (let i = 0; i < step.consonants.length; i++) {
 

@@ -174,3 +174,21 @@ export async function getRoutines (token) {
 export async function updateRoutine (id, body, token) {
   return await methods.patch(`admin/routines/${id}`, body, token)
 }
+
+export async function getUsers (token) {
+  console.log("-fetching client users-");
+  return await methods.get('superuser/users', token)
+}
+
+export async function getUserRoutines (id, token) {
+  console.log("-fetching routines-");
+  return await methods.get(`superuser/routines/${id}`, token)
+}
+
+export async function createRoutine (userId, routineName, token) {
+  return await methods.post('superuser/routines', { userId, routineName }, token);
+}
+
+export async function deleteRoutine (userId, routineId, token) {
+  return await methods.delete(`superuser/routines/${userId}/${routineId}`, token);
+}

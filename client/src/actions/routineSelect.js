@@ -4,6 +4,7 @@ export const FETCH_ASSIGNED_ROUTINES_REQUEST = 'FETCH_ASSIGNED_ROUTINES_REQUEST'
 export const FETCH_ASSIGNED_ROUTINES_SUCCESS = 'FETCH_ASSIGNED_ROUTINES_SUCCESS';
 export const FETCH_ASSIGNED_ROUTINES_ERROR = 'FETCH_ASSIGNED_ROUTINES_ERROR';
 
+export const RESET_ROUTINE_SELECT = 'RESET_ROUTINE_SELECT';
 export const UPDATE_ROUTINE_ID = 'UPDATE_ROUTINE_ID';
 export const UPDATE_ROUTINE_NAME = 'UPDATE_ROUTINE_NAME';
 export const UPDATE_ACTIVE_ROUTINE = 'UPDATE_ACTIVE_ROUTINE';
@@ -22,6 +23,12 @@ export const fetchAssignedRoutines = () => async (dispatch, getState) => {
     dispatch(fetchAssignedRoutinesError(error));
   }
 };
+
+export function resetRoutineSelect() {
+  return {
+    type: RESET_ROUTINE_SELECT
+  }
+}
 
 export function updateId(id) {
   return {

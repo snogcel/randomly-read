@@ -1,15 +1,21 @@
-export const ADD_VOWEL = 'ADD_VOWEL'
-export const ADD_WORD = 'ADD_WORD'
+export const RESET_WORD_CARD = 'RESET_WORD_CARD';
+export const ADD_VOWEL = 'ADD_VOWEL';
+export const ADD_WORD = 'ADD_WORD';
 export const REMOVE_VOWEL = 'REMOVE_VOWEL';
 export const REMOVE_WORD = 'REMOVE_WORD';
 export const ADD_CONSONANT = 'ADD_CONSONANT';
 export const REMOVE_CONSONANT = 'REMOVE_CONSONANT';
-export const ADD_SYLLABLES = 'ADD_SYLLABLES'; 
+export const ADD_SYLLABLES = 'ADD_SYLLABLES';
 export const SET_LIMIT = 'SET_LIMIT';
 export const SET_MODE = 'SET_MODE';
 export const ADD_ROUTINE_VOWEL = 'ADD_ROUTINE_VOWEL';
 export const ADD_INTERMISSION_TEXT = 'ADD_INTERMISSION_TEXT';
 
+export function resetWordCard() {
+  return {
+    type: RESET_WORD_CARD
+  }
+}
 
 export function addVowel(text) {
     return {

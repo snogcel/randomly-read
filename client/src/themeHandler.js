@@ -157,6 +157,12 @@ const styles = theme => ({
   },
   wordHistoryWrapper: {
     textAlign: "center",
+  },
+  RoutineSelector: {
+    paddingLeft: theme.spacing.unit * 2
+  },
+  TimerControls: {
+
   }
 });
 

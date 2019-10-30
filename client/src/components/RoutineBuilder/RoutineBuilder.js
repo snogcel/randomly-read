@@ -2,6 +2,8 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 
+import isEqual from 'lodash.isequal';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +16,8 @@ import LoginFormContainer from '../LoginForm/Container';
 import DurationInput from './elements/DurationInput'; // TODO - remove
 import RepetitionInput from './elements/RepetitionInput'; // TODO - remove
 
+import Empty from '../shared/Empty';
+
 import NewRoutineButton from './elements/NewRoutineButton';
 import DeleteRoutineButton from './elements/DeleteRoutineButton';
 
@@ -25,6 +29,7 @@ import SaveButton from './elements/SaveButton';
 
 import StepList from './elements/StepList';
 
+import UserSelect from './elements/UserSelect';
 import RoutinesSelect from './elements/RoutinesSelect';
 import RoutineName from './elements/RoutineName';
 import ModeSelect from './elements/ModeSelect';
@@ -38,9 +43,7 @@ import IntermissionText from './elements/IntermissionText';
 
 import { styles } from '../../themeHandler';
 
-
 // TODO - set up constants for all form options, for now these are stored in each element.
-
 const availableSyllables = [
   { id: 1, name: "1"},
   { id: 2, name: "2"},
@@ -150,12 +153,16 @@ class RoutineBuilder extends React.Component {
 
     this.saveHandler = this.saveHandler.bind(this);
 
+    this.createHandler = this.createHandler.bind(this);
+    this.deleteRoutineHandler = this.deleteRoutineHandler.bind(this);
+
     this.resetHandler = this.resetHandler.bind(this);
     this.insertHandler = this.insertHandler.bind(this);
     this.updateHandler = this.updateHandler.bind(this);
     this.deleteHandler = this.deleteHandler.bind(this);
     this.stepListHandler = this.stepListHandler.bind(this);
     this.routineSelectHandler = this.routineSelectHandler.bind(this);
+    this.userSelectHandler = this.userSelectHandler.bind(this);
 
     this.nameHandler = this.nameHandler.bind(this);
     this.vowelHandler = this.vowelHandler.bind(this);
@@ -169,16 +176,54 @@ class RoutineBuilder extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps) {
+
+    if (prevProps.lastUpdated !== this.props.lastUpdated) {
+
+      console.log("-- auto save --");
+      if (this.props.id !== 0) this.saveHandler();
+
+    }
+
+  }
+
   componentWillMount() {
+
+    this.props.resetRoutineBuilder();
+
     if (typeof this.props.user !== "undefined") this.prepareRoutineBuilder();
+
   }
 
   prepareRoutineBuilder(){
-    this.props.fetchRoutines();
-    if (this.props.id !== 0) this.routineSelectHandler(this.props.id);
+    this.props.fetchUsers();
   }
 
   componentDidMount() {
+
+  }
+
+  createHandler(routineName) {
+
+    if (routineName.length > 0 && this.props.userId !== 0) {
+
+      let userId = this.props.userId;
+      this.props.attemptCreateRoutine(userId, routineName);
+      // this.resetStepList();
+
+    }
+
+  };
+
+  deleteRoutineHandler(routineId) {
+
+    if (routineId !== 0) {
+
+      let userId = this.props.userId;
+      this.props.attemptDeleteRoutine(userId, routineId);
+      this.resetStepList();
+
+    }
 
   }
 
@@ -199,9 +244,9 @@ class RoutineBuilder extends React.Component {
       }
     };
 
-    console.log(body);
-
     this.props.attemptUpdateRoutine(id, body);
+    this.props.resetWordCard(); // reset Word Card
+    this.props.resetRoutineSelect(); // reset Routine Selector
 
     // this.props.fetchRoutines();
   }
@@ -221,9 +266,13 @@ class RoutineBuilder extends React.Component {
   vowelHandler(vowels) {
     let vowelArr = [];
 
-    for (let i = 0; i < vowels.length; i++) {
-      let obj = availableVowels.find(o => o.name === vowels[i]);
-      if (obj) vowelArr.push(obj.id);
+    if (typeof vowels !== "undefined") {
+
+      for (let i = 0; i < vowels.length; i++) {
+        let obj = availableVowels.find(o => o.name === vowels[i]);
+        if (obj) vowelArr.push(obj.id);
+      }
+
     }
 
     this.props.updateVowels(vowelArr); // pass to redux
@@ -232,12 +281,14 @@ class RoutineBuilder extends React.Component {
   syllableHandler(syllables) {
     let syllableArr = [];
 
-    for (let i = 0; i < syllables.length; i++) {
-      let obj = availableSyllables.find(o => o.name === syllables[i]);
-      if (obj) syllableArr.push(obj.id);
-    }
+    if (typeof syllables !== "undefined") {
 
-    console.log(syllableArr);
+      for (let i = 0; i < syllables.length; i++) {
+        let obj = availableSyllables.find(o => o.name === syllables[i]);
+        if (obj) syllableArr.push(obj.id);
+      }
+
+    }
 
     this.props.updateSyllables(syllableArr); // pass to redux
   }
@@ -269,7 +320,31 @@ class RoutineBuilder extends React.Component {
   }
 
   insertHandler() {
-    let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+
+    this.resetHandler();
+
+    const initialState = {
+      availableUsers: [],
+      userId: 0,
+      availableRoutines: [],
+      name: '',
+      id: 0,
+      routine: [],
+      index: 0,
+      vowels: [],
+      consonants: [],
+      mode: 'Word',
+      rangeVal: 5,
+      repetitions: 10,
+      syllables: [1,2,3],
+      position: 'initial',
+      intermissionText: '',
+      isIntermission: false,
+      lastUpdated: null,
+      isFetching: false
+    };
+
+    let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = initialState;
 
     let step = {
       "index": Date.now(),
@@ -324,7 +399,7 @@ class RoutineBuilder extends React.Component {
 
       } else {
 
-        this.resetStepList();
+        // this.resetStepList();
 
       }
 
@@ -374,6 +449,8 @@ class RoutineBuilder extends React.Component {
 
       this.setState({ "index": index });
     }
+
+    // this.saveHandler();
 
   }
 
@@ -486,12 +563,30 @@ class RoutineBuilder extends React.Component {
     }
   }
 
+  userSelectHandler(id) {
+    for (let i = 0; i < this.props.availableUsers.length; i++) {
+      if (id === this.props.availableUsers[i].attributes.id) {
+
+        // set user id
+        this.props.updateUserId(this.props.availableUsers[i].attributes.id);
+
+        this.props.fetchRoutines(this.props.availableUsers[i].attributes.id);
+
+        this.resetStepList();
+      }
+    }
+  }
+
   parseSyllables(syllables) {
     let syllablesArr = [];
 
-    for (let i = 0; i < syllables.length; i++) {
-      let obj = availableSyllables.find(o => o.id === syllables[i]);
-      if (obj) syllablesArr.push(obj.name);
+    if (typeof syllables !== "undefined") {
+
+      for (let i = 0; i < syllables.length; i++) {
+        let obj = availableSyllables.find(o => o.id === syllables[i]);
+        if (obj) syllablesArr.push(obj.name);
+      }
+
     }
 
     return syllablesArr;
@@ -500,9 +595,13 @@ class RoutineBuilder extends React.Component {
   parseVowels(vowels) {
     let vowelArr = [];
 
-    for (let i = 0; i < vowels.length; i++) {
-      let obj = availableVowels.find(o => o.id === vowels[i]);
-      if (obj) vowelArr.push(obj.name);
+    if (typeof vowels !== "undefined") {
+
+      for (let i = 0; i < vowels.length; i++) {
+        let obj = availableVowels.find(o => o.id === vowels[i]);
+        if (obj) vowelArr.push(obj.name);
+      }
+
     }
 
     return vowelArr;
@@ -541,16 +640,20 @@ class RoutineBuilder extends React.Component {
   parseAvailableRoutines(routines) {
     let availableRoutines = [];
 
-    for (let i = 0; i < routines.length; i++) {
-      availableRoutines.push({
-        "id": routines[i].attributes.id,
-        "name": routines[i].attributes.name
-      });
-    }
+    if (typeof routines !== "undefined") {
 
-    // display first routine from list by default
-    if(typeof availableRoutines[0] !== "undefined" && this.props.id === 0) {
-      this.routineSelectHandler(availableRoutines[0].id);
+      for (let i = 0; i < routines.length; i++) {
+        availableRoutines.push({
+          "id": routines[i].attributes.id,
+          "name": routines[i].attributes.name
+        });
+      }
+
+      // display first routine from list by default
+      if(typeof availableRoutines[0] !== "undefined" && this.props.id === 0) {
+        // this.routineSelectHandler(availableRoutines[0].id);
+      }
+
     }
 
     return availableRoutines;
@@ -563,6 +666,37 @@ class RoutineBuilder extends React.Component {
     if (obj) selectedRoutineObj.routine = obj.id;
 
     return selectedRoutineObj;
+  }
+
+  parseAvailableUsers(users) {
+    let availableUsers = [ ]; // list superuser first
+
+    if (typeof users !== "undefined") {
+
+      for (let i = 0; i < users.length; i++) {
+        availableUsers.push({
+          "id": users[i].attributes.id,
+          "name": users[i].attributes.firstName + " " + users[i].attributes.lastName
+        });
+      }
+
+      // display first user from list by default
+      if(typeof availableUsers[0] !== "undefined" && this.props.userId === 0) {
+        this.userSelectHandler(availableUsers[0].id);
+      }
+
+    }
+
+    return availableUsers;
+  }
+
+  parseSelectedUser(id, availableUsers) {
+    let selectedUserObj = { "user": '' };
+
+    let obj = availableUsers.find(o => o.id === id);
+    if (obj) selectedUserObj.user = obj.id;
+
+    return selectedUserObj;
   }
 
   parseName(name) {
@@ -580,9 +714,13 @@ class RoutineBuilder extends React.Component {
   parseConsonantCheckboxOptions(vowels) {
     let vowelArr = [];
 
-    for (let i = 0; i < vowels.length; i++) {
-      let obj = availableVowels.find(o => o.id === vowels[i]);
-      if (obj) vowelArr.push(obj);
+    if (typeof vowels !== "undefined") {
+
+      for (let i = 0; i < vowels.length; i++) {
+        let obj = availableVowels.find(o => o.id === vowels[i]);
+        if (obj) vowelArr.push(obj);
+      }
+
     }
 
     return vowelArr.concat(defaultConsonants);
@@ -627,10 +765,14 @@ class RoutineBuilder extends React.Component {
       "Z": false
     };
 
-    for (let i = 0; i < consonants.length; i++) {
-      let obj = availableConsonants.find(o => o.id = consonants[i]);
+    if (typeof consonants !== "undefined") {
 
-      if (obj) consonantObj[obj.id] = true;
+      for (let i = 0; i < consonants.length; i++) {
+        let obj = availableConsonants.find(o => o.id = consonants[i]);
+
+        if (obj) consonantObj[obj.id] = true;
+      }
+
     }
 
     return consonantObj;
@@ -639,7 +781,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+    const { userId, name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
     /*
@@ -657,17 +799,26 @@ class RoutineBuilder extends React.Component {
 
     console.log("current index: ", this.state.index);
     console.log("routine: ", routine);
-    */
 
-    console.log("current routine id: ", id);
+    console.log("current userId: ", userId);
 
-    let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
+    console.log("isFetching: ", this.props.isFetching);
+    console.log("routine id: ", this.props.id);
+    console.log("routine name: ", this.props.name);
+
     console.log("available routines", this.props.availableRoutines);
 
-    let nameObj = this.parseName(name);
+    */
+
+    // console.log("current routine id: ", id);
+
+    let availableUsers = this.parseAvailableUsers(this.props.availableUsers);
+    let selectedUserObj = this.parseSelectedUser(userId, availableUsers);
+
+    let availableRoutines = this.parseAvailableRoutines(this.props.availableRoutines); // format options from JSON API
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
-    console.log(selectedRoutineObj);
+    let nameObj = this.parseName(name);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -690,6 +841,7 @@ class RoutineBuilder extends React.Component {
 
     // TODO - Copy, Delete, Add Steps
 
+    console.log("available routines", this.props.availableRoutines);
 
     return (
 
@@ -698,27 +850,37 @@ class RoutineBuilder extends React.Component {
         {user ? (
           <>
 
-            <Grid container spacing={2}>
+            <Grid container spacing={0}>
 
               <Grid item xs={3}>
 
                 <Grid container spacing={0}>
 
+                  {user.superuser ? (
+                    <>
+                    <Grid item xs={12}>
+
+                      <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+
+                    </Grid>
+                    </> ) : ( null )
+                  }
+
                   <Grid item xs={8}>
 
-                    <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj}/>
+                    <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
 
                   </Grid>
 
                   <Grid item xs={2} justify="center">
 
-                    <NewRoutineButton/>
+                    <NewRoutineButton action={this.createHandler} />
 
                   </Grid>
 
                   <Grid item xs={2} justify="center">
 
-                    <DeleteRoutineButton/>
+                    <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
 
                   </Grid>
 
@@ -733,53 +895,50 @@ class RoutineBuilder extends React.Component {
               </Grid>
 
 
-              <Grid item xs={9}>
+              {(id !== 0) ? (
+                <>
 
-                <Grid container spacing={0}>
+                <Grid item xs={8}>
 
-                  <Grid item xs={6}>
+                  <Grid container spacing={0}>
 
-                    <RoutineName action={this.nameHandler} name={nameObj} />
+                    <Grid item xs={6}>
 
-                  </Grid>
+                      <RoutineName action={this.nameHandler} name={nameObj} />
 
-                  <Grid item xs={6}>
+                    </Grid>
 
-                    <SaveButton action={this.saveHandler} />
+                    <Grid item xs={12}>
 
-                  </Grid>
+                      <Grid container spacing={2}>
 
-                  <Grid item xs={12}>
+                        <Grid item>
+                          <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
+                        </Grid>
 
-                    <Grid container spacing={2}>
+                        <Grid item>
+                          <DurationSlider action={this.rangeValHandler} duration={durationObj} />
+                        </Grid>
 
-                      <Grid item>
-                        <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
-                      </Grid>
-
-                      <Grid item>
-                        <DurationSlider action={this.rangeValHandler} duration={durationObj} />
-                      </Grid>
-
-                      {!isIntermission ? (
-                        <>
+                        {!isIntermission ? (
+                          <>
 
                           <Grid item>
                             <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
                           </Grid>
 
-                        </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+                          </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+
+                      </Grid>
 
                     </Grid>
 
-                  </Grid>
+                    <Grid item xs={12}>
 
-                  <Grid item xs={12}>
+                      <Grid container spacing={2}>
 
-                    <Grid container spacing={2}>
-
-                      {!isIntermission ? (
-                        <>
+                        {!isIntermission ? (
+                          <>
 
                           <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
 
@@ -787,40 +946,40 @@ class RoutineBuilder extends React.Component {
 
                           <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
 
-                        </> ) : ( <> </> )}
-
-                    </Grid>
-
-                  </Grid>
-
-                  <Grid item xs={12}>
-
-                    <Grid container spacing={2}>
-
-                      <Grid item>
-                        {!isIntermission ? (
-                          <>
-                            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
                           </> ) : ( <> </> )}
 
                       </Grid>
 
                     </Grid>
 
+                    <Grid item xs={12}>
 
-                  </Grid>
+                      <Grid container spacing={2}>
 
-                  <Grid item xs={12}>
+                        <Grid item>
+                          {!isIntermission ? (
+                            <>
+                            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+                            </> ) : ( <> </> )}
 
-                    <Grid container spacing={2}>
-
-                      <Grid item>
-
-                        <br />
-
-                        <InsertButton action={this.insertHandler} />
+                        </Grid>
 
                       </Grid>
+
+
+                    </Grid>
+
+                    <Grid item xs={12}>
+
+                      <Grid container spacing={2}>
+
+                        <Grid item>
+
+                          <br />
+
+                          <InsertButton action={this.insertHandler} />
+
+                        </Grid>
 
                         {(this.state.index > 0) ? (
                           <>
@@ -842,11 +1001,6 @@ class RoutineBuilder extends React.Component {
                           </Grid>
                           </> ) : ( <> </> )}
 
-                      <Grid item>
-
-                        <br />
-
-                        <ResetButton action={this.resetHandler} />
 
                       </Grid>
 
@@ -856,16 +1010,30 @@ class RoutineBuilder extends React.Component {
 
                 </Grid>
 
-              </Grid>
+
+                </> ) : ( <>
+
+                  <Grid item xs={9}>
+
+                    <Grid container spacing={0}>
+
+                      <Grid item xs={12} justify="center">
+
+                        
+
+                      </Grid>
+
+                    </Grid>
+
+                  </Grid>
+
+                </> )}
+
 
             </Grid>
 
           </>
-        ) : (
-          <>
-            <LoginFormContainer />
-          </>
-        )}
+        ) : ( this.props.history.push("/login") )}
 
       </Grid>
 

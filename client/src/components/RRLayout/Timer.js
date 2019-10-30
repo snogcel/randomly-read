@@ -10,20 +10,7 @@ import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
-const styles = theme => ({
-  button: {
-    "&:disabled": {
-      backgroundColor: "#d3d3d3",
-      color: '#7d7d7d'
-    },
-    "&:hover": {
-      backgroundColor: "#2d90e5"
-    },
-      backgroundColor: '#33a0ff',
-
-
-  }
-});
+import { styles } from '../../themeHandler';
 
 class Timer extends React.Component {
   constructor(props){
@@ -113,13 +100,15 @@ class Timer extends React.Component {
 
     console.log("Modify exerciseConfig...");
 
+    console.log(exercise);
+
     // Stub out exerciseConfig
     let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
 
     exercise.duration = duration; // calculation exercise duration
     exercise.templates = []; // for future functionality
     exercise.limit = 1; // for future functionality
-    (exercise.mode === "word") ? exercise.map = "randomly" : exercise.map = "default";
+    (exercise.mode === "Word") ? exercise.map = "randomly" : exercise.map = "default";
 
     if (exercise.isIntermission) {
       exercise.consonants = [];
@@ -319,7 +308,7 @@ class Timer extends React.Component {
 
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false})
-    this.props.addRoutineVowel(null);
+    this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();
     this.props.addSyllables([1])
     this.props.setMode('Word');
@@ -340,7 +329,7 @@ class Timer extends React.Component {
     this.setState({time: 0, isOn: false});
     this.props.addExerciseNumber(this.exercisePointer);
 
-    this.props.addRoutineVowel(null);
+    this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();
     this.props.addSyllables([1]);
     this.props.setMode('Word');
@@ -404,6 +393,8 @@ class Timer extends React.Component {
     templates = options.templates;
     syllables = options.syllables;
 
+    console.log("timer: ", options.vowel);
+
     // passes updated variables to redux
     console.log("- passing updated variables to redux..");
     this.props.addRoutineVowel(options.vowel); // pass to TimerContainer
@@ -465,26 +456,32 @@ class Timer extends React.Component {
     }
 
     let start = (this.state.time === 0) ?
-      <Button className={classes.button} onClick={this.startTimer} size="medium" variant="contained" color={"primary"} ><b>Start Routine</b></Button> : null;
+      <Button onClick={this.startTimer} size="small" variant="outlined" color={"default"} ><b>Start</b></Button> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null : <Button className={classes.button} onClick={this.stopTimer} size="medium" variant="contained" color={"primary"} ><b>Pause</b></Button>;
+      null : <Button onClick={this.stopTimer} size="small" variant="outlined" color={"default"} ><b>Pause</b></Button>;
     let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
-      null : <Button className={classes.button} onClick={this.resumeTimer} size="medium" variant="contained" color={"primary"} ><b>Resume</b></Button>;
+      null : <Button onClick={this.resumeTimer} size="small" variant="outlined" color={"default"} ><b>Resume</b></Button>;
     let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <Button className={classes.button} onClick={this.resetTimer} size="small" variant="contained" color={"primary"} ><b>Reset</b></Button>;
+      null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
 
     return (
-      <Grid>
-        <div className="RoutineSelector">
-          <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
-        </div>
-        <br /><br />
-        <div className="TimerControls">
-          {start}
-          {resume}
-          {stop}
-          {reset}
-        </div>
+      <Grid container spacing={2}>
+
+        <Grid item>
+          <div className={classes.RoutineSelector}>
+            <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
+          </div>
+        </Grid>
+
+        <Grid item>
+          <div className={classes.TimerControls}>
+            {start}
+            {resume}
+            {stop}
+            {reset}
+          </div>
+        </Grid>
+
       </Grid>
     )
   }

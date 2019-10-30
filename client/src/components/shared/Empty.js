@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const Empty = ({ comments }) => {
-  const message = comments ? 'no comments' : "there's nothing here...";
+  const message = comments ? 'no comments' : "there's nothing here (yet)...";
   return <Wrapper comments={comments}>{message}</Wrapper>;
 };
 

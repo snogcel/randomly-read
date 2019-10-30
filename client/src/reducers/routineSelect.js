@@ -6,25 +6,29 @@ import {UPDATE_ROUTINE_ID} from '../actions/routineSelect';
 import {UPDATE_ROUTINE_NAME} from '../actions/routineSelect';
 import {UPDATE_ACTIVE_ROUTINE} from '../actions/routineSelect';
 
+import {RESET_ROUTINE_SELECT} from '../actions/routineSelect';
+
 let availableRoutines;
 const initialState = {
   availableRoutines: [],
   routine: [],
   id: 0,
   name: '',
-  isFetching: false
+  isFetchingRoutines: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
     case FETCH_ASSIGNED_ROUTINES_REQUEST:
-      return { ...state, isFetching: true, name: '', id: 0 };
+      return { ...state, isFetchingRoutines: true, name: '', id: 0 };
     case FETCH_ASSIGNED_ROUTINES_SUCCESS:
-      return { ...state, isFetching: false, availableRoutines: action.routines };
+      return { ...state, isFetchingRoutines: false, availableRoutines: action.routines };
     case FETCH_ASSIGNED_ROUTINES_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetchingRoutines: false };
 
+    case RESET_ROUTINE_SELECT:
+      return {...initialState};
     case UPDATE_ROUTINE_ID:
       return {...state, id: action.id};
     case UPDATE_ROUTINE_NAME:
