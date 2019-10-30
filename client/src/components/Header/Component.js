@@ -28,12 +28,17 @@ const Wrapper = styled.header`
   }
 `;
 
+/*
+
+<HeaderNavLink to='/Interactions'>Interactions</HeaderNavLink>
+
+ */
+
 const Header = ({ user, logout }) => (
   <Wrapper>
     <HeaderLogo />
     {user ? (
       <>
-        <HeaderNavLink to='/Interactions'>Interactions</HeaderNavLink>
         <HeaderNavLink to='/RandomlyRead'>Randomly Read</HeaderNavLink>
         <HeaderNavLink to='/RoutineBuilder'>Routine Builder</HeaderNavLink>
         <HeaderNavLink as='span' onClick={logout}>Log Out</HeaderNavLink>
