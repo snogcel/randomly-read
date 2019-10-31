@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator/check');
 const Post = require('../models/post');
 const User = require('../models/user');
+const VoteHistory = require('../models/voteHistory');
 
 exports.load = async (req, res, next, id) => {
   try {
@@ -123,16 +124,52 @@ exports.validate = [
 
 exports.upvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 1);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
   res.json(post);
 };
 
 exports.downvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, -1);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
   res.json(post);
 };
 
 exports.unvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 0);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
   res.json(post);
 };
 

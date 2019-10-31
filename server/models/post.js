@@ -17,19 +17,19 @@ commentSchema.options.toJSON.transform = (doc, ret) => {
 const postSchema = new Schema({
   cmudict_id:{ type: Number },
   title: { type: String, required: true },
-  url: { type: String },
+  url: { type: String }, // remove?
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  category: { type: String, required: true },
+  category: { type: String, required: true }, // remove?
   score: { type: Number, default: 0 },
   votes: [{ user: Schema.Types.ObjectId, vote: Number, _id: false }],
-  comments: [commentSchema],
+  comments: [commentSchema], // remove?
   created: { type: Date, default: Date.now },
-  views: { type: Number, default: 0 },
-  type: { type: String, default: 'text' },
-  text: { type: String }, // definitions
-  consonant: { type: String },
-  vowel: { type: String },
-  syllables: { type: String }
+  views: { type: Number, default: 0 }, // remove?
+  type: { type: String, default: 'text' }, // remove?
+  text: { type: String }, // remove?
+  consonant: { type: String }, // remove?
+  vowel: { type: String }, // remove?
+  syllables: { type: String } // remove?
 });
 
 postSchema.set('toJSON', { getters: true, virtuals: true });
