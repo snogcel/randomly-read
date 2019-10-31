@@ -113,13 +113,15 @@ class ExerciseHistory extends React.Component {
 
               if (step.vowels.length > 0) {
                 let vowels = "";
-                for (let i = 0; i < step.vowels.length; i++) {
+                let uniqVowels = Array.from(new Set(step.vowels));
 
-                  let vowel = availableConsonants.find(o => o.id === step.vowels[i]);
+                for (let i = 0; i < uniqVowels.length; i++) {
+
+                  let vowel = availableConsonants.find(o => o.id === uniqVowels[i]);
                   vowels += vowel.name;
-                  if (i < (step.vowels.length - 2)) {
+                  if (i < (uniqVowels.length - 2)) {
                     vowels += ", ";
-                  } else if (i < (step.vowels.length - 1)) {
+                  } else if (i < (uniqVowels.length - 1)) {
                     vowels += " and ";
                   }
                 }
@@ -133,13 +135,15 @@ class ExerciseHistory extends React.Component {
                 if (step.position === "final") subHeaderText += "that end with ";
 
                 let consonants = "";
-                for (let i = 0; i < step.consonants.length; i++) {
+                let uniqConsonants = Array.from(new Set(step.consonants));
 
-                  let consonant = availableConsonants.find(o => o.id === step.consonants[i]);
+                for (let i = 0; i < uniqConsonants.length; i++) {
+
+                  let consonant = availableConsonants.find(o => o.id === uniqConsonants[i]);
                   consonants += consonant.name;
-                  if (i < (step.consonants.length - 2)) {
+                  if (i < (uniqConsonants.length - 2)) {
                     consonants += ", ";
-                  } else if (i < (step.consonants.length - 1)) {
+                  } else if (i < (uniqConsonants.length - 1)) {
                     consonants += " and ";
                   }
 

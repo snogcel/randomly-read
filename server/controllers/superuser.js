@@ -81,6 +81,8 @@ exports.routines = async (req, res) => {
   const id = req.params.id;
   const u_id = new ObjectId(id);
 
+  // test system generated routine
+
   let assigned = [];
 
   // fetch user by ID

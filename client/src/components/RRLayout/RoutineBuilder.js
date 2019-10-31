@@ -1,5 +1,7 @@
 import Blacklist from './Blacklist';
 
+const vowelArr = ["AA","AE","AH","AO","AW","AY","EH","ER","EY","IH","IY","OW","OY","UW"];
+
 const RoutineBuilder = function() {
 
 };
@@ -89,6 +91,9 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
+      // if consonant is a vowel, replace vowel with matching vowel
+      if (vowelArr.indexOf(consonant) >= 0) vowel = consonant;
+
       verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables); // set and verify initial matched word
 
       while (!verified) {
@@ -96,6 +101,10 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
         randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
         consonant = exerciseConfig.consonants[rand];
         vowel = exerciseConfig.vowels[randVowel];
+
+        // if consonant is a vowel, replace vowel with matching vowel
+        if (vowelArr.indexOf(consonant) >= 0) vowel = consonant;
+
         verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables);
         if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
       }
