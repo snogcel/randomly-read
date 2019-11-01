@@ -19,16 +19,71 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+const availableCharacters = [
+  { id: "AA", name: "ɑ"},
+  { id: "AE", name: "æ"},
+  { id: "AH", name: "ʌ"},
+  { id: "AO", name: "ɔ"},
+  { id: "AW", name: "aʊ"},
+  { id: "AY", name: "aɪ"},
+  { id: "EH", name: "ɛ"},
+  { id: "ER", name: "ɝ"},
+  { id: "EY", name: "eɪ"},
+  { id: "IH", name: "ɪ"},
+  { id: "IY", name: "i"},
+  { id: "OW", name: "oʊ"},
+  { id: "OY", name: "ɔɪ"},
+  { id: "UW", name: "u"},
+  { id: "B", name: "b"},
+  { id: "CH", name: "tʃ"},
+  { id: "D", name: "d"},
+  { id: "F", name: "f"},
+  { id: "G", name: "g"},
+  { id: "HH", name: "h"},
+  { id: "JH", name: "dʒ"},
+  { id: "K", name: "k"},
+  { id: "L", name: "l"},
+  { id: "M", name: "m"},
+  { id: "N", name: "n"},
+  { id: "P", name: "p"},
+  { id: "R", name: "ɹ"},
+  { id: "S", name: "s"},
+  { id: "SH", name: "ʃ"},
+  { id: "T", name: "t"},
+  { id: "TH", name: "θ"},
+  { id: "V", name: "v"},
+  { id: "W", name: "w"},
+  { id: "Y", name: "j"},
+  { id: "Z", name: "Z"}
+];
+
 export default function InteractionTable(props) {
   const classes = useStyles();
 
   function parseInteractions(interactions) {
-
+    
     const rows = [];
 
-    interactions.map((item) => (
-      rows.push({ "word": item.word, "ease": item.ease, "createdAt": new Date(item.createdAt).toDateString(), "updatedAt": item.updatedAt })
-    ));
+    interactions.map(function(item) {
+
+      console.log(item.consonant);
+
+      let consonant = "N/A";
+      let vowel = "N/A";
+
+      if (item.consonant !== null) consonant = availableCharacters.find(o => o.id === item.consonant);
+      if (item.vowel !== null) vowel = availableCharacters.find(o => o.id === item.vowel);
+
+      rows.push({
+        "id": item.id,
+        "word": item.word,
+        "vowel": vowel.name,
+        "consonant": consonant.name,
+        "ease": item.ease,
+        "createdAt": new Date(item.createdAt).toDateString(),
+        "updatedAt": item.updatedAt
+      });
+    });
 
     return rows;
   }
@@ -40,7 +95,9 @@ export default function InteractionTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell align="center">Word Spoken</TableCell>
+            <TableCell align="center">Word</TableCell>
+            <TableCell align="center">Consonant</TableCell>
+            <TableCell align="center">Vowel</TableCell>
             <TableCell align="center">Ease of Speech</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
@@ -49,6 +106,8 @@ export default function InteractionTable(props) {
           {rows.map(row => (
             <TableRow key={row.createdAt}>
               <TableCell align="center">{row.word}</TableCell>
+              <TableCell align="center">{row.consonant}</TableCell>
+              <TableCell align="center">{row.vowel}</TableCell>
               <TableCell align="center">{row.ease}</TableCell>
               <TableCell align="center"><Button onClick={(e) => { e.preventDefault(); props.action(row.id); }}>Delete</Button></TableCell>
             </TableRow>

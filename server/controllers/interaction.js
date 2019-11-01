@@ -1,8 +1,14 @@
 const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const User = require('../models/user');
+const Post = require('../models/post');
 const Interaction = require('../models/interaction');
 const interactionSettings = require('../models/interactionSettings');
+const VoteHistory = require('../models/voteHistory');
+const UserHistoryInitial = require('../models/userHistoryInitial');
+
+const Word = require('../data/connectors');
+const Lexeme = require('../data/lexeme');
 
 // TODO - move to Utils
 function transformRoutineSet(data, type) {
@@ -38,6 +44,53 @@ function transformRoutineSet(data, type) {
 
 }
 
+async function attemptInteractionEntry(author, word) {
+
+  let filter = {};
+  let limit = 1; // default
+  let location = "initial"; // default
+
+  const id = author; // get user id
+
+  // Parse Parameters
+  if (typeof word !== 'undefined') filter.lexeme = word;
+
+  // Fetch Query Data
+  return new Promise((resolve, reject) => {
+    Word[location].findAll({ where: filter, limit: limit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
+
+      if (data.length === 0) {
+        resolve(null);
+      } else {
+
+        let queryResult = data;
+
+        let lexeme = new Lexeme(queryResult, id);
+
+        lexeme.score = 1;
+
+        lexeme.submitPost().then(function(doc) {
+
+          // TODO - handle empty doc
+          queryResult[0].dataValues.id = doc._id; // mongo id of post
+          queryResult[0].votes = doc.votes;
+          queryResult[0].score = doc.score;
+
+          lexeme.id = doc._id;
+          lexeme.votes = doc.votes;
+          lexeme.score = doc.score;
+
+          resolve(lexeme);
+
+        }, function(err) { resolve(null); });
+
+      }
+
+    });
+  });
+
+}
+
 exports.create = async (req, res, next) => {
 
   const result = validationResult(req);
@@ -47,14 +100,82 @@ exports.create = async (req, res, next) => {
   }
 
   try {
-    const { word, ease } = req.body;
     const author = req.user.id;
+    const ease = req.body.ease;
+    let word = req.body.word;
+    let consonant = null;
+    let vowel = null;
+    let postId = null;
+
+    // Attempt lookup in cmudict
+    let interactionEntry = await attemptInteractionEntry(author, word);
+
+    if (interactionEntry) {
+
+      word = interactionEntry.lexeme; // normal capitalization of word
+
+      let post = await Post.findById(interactionEntry.id);
+
+      postId = post.id; // include post id in response
+      consonant = post.consonant; // include consonant
+      vowel = post.vowel; // include vowel in response
+
+      if (ease <= 50 && post.score < 1) {
+        post.vote(author, 1);
+
+        // record vote
+        VoteHistory.create({
+          "author": post.author._id,
+          "title": post.title,
+          "cmudict_id": post.cmudict_id,
+          "score": post.score,
+          "consonant": post.consonant,
+          "vowel": post.vowel,
+          "syllables": post.syllables
+        });
+
+        let vowel = "vowel_"+post.vowel;
+        let consonant = "consonant_"+post.consonant;
+
+        // test for initial / medial / final and record to given User History model
+        let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+
+      }
+
+      if (ease > 50 && post.score > -1) {
+        post.vote(author, -1);
+
+        // record vote
+        VoteHistory.create({
+          "author": post.author._id,
+          "title": post.title,
+          "cmudict_id": post.cmudict_id,
+          "score": post.score,
+          "consonant": post.consonant,
+          "vowel": post.vowel,
+          "syllables": post.syllables
+        });
+
+        let vowel = "vowel_"+post.vowel;
+        let consonant = "consonant_"+post.consonant;
+
+        // test for initial / medial / final and record to given User History model
+        let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+      }
+
+    }
+
     const interaction = await Interaction.create({
       author,
+      postId,
       word,
       ease,
+      consonant,
+      vowel
     });
+
     res.status(201).json(interaction);
+
   } catch (err) {
     next(err);
   }
@@ -107,10 +228,60 @@ exports.settings = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
-  const interaction = req.params.id;
-  const o_id = new ObjectId(interaction);
+  const interactionId = req.params.id;
+  const o_id = new ObjectId(interactionId);
 
   let response = {};
+
+  let interaction = await Interaction.findById(interactionId);
+
+  let post = await Post.findById(interaction.postId);
+
+  // if post exists, remove upvote / downvote
+  if (post) {
+    if (interaction.ease <= 50) {
+      post.vote(post.author, -1); // undo vote
+
+      // record vote
+      VoteHistory.create({
+        "author": post.author._id,
+        "title": post.title,
+        "cmudict_id": post.cmudict_id,
+        "score": post.score,
+        "consonant": post.consonant,
+        "vowel": post.vowel,
+        "syllables": post.syllables
+      });
+
+      let vowel = "vowel_"+post.vowel;
+      let consonant = "consonant_"+post.consonant;
+
+      // test for initial / medial / final and record to given User History model
+      let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+
+    }
+
+    if (interaction.ease > 50) {
+      post.vote(post.author, 1); // undo vote
+
+      // record vote
+      VoteHistory.create({
+        "author": post.author._id,
+        "title": post.title,
+        "cmudict_id": post.cmudict_id,
+        "score": post.score,
+        "consonant": post.consonant,
+        "vowel": post.vowel,
+        "syllables": post.syllables
+      });
+
+      let vowel = "vowel_"+post.vowel;
+      let consonant = "consonant_"+post.consonant;
+
+      // test for initial / medial / final and record to given User History model
+      let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+    }
+  }
 
   await Interaction.remove({"_id": o_id}, function(err, data) {
 
@@ -118,6 +289,9 @@ exports.delete = async (req, res) => {
       response = {"error" : true, "message" : "Error deleting data"};
       res.json(response);
     } else {
+
+      console.log(data);
+
       res.json({ message: 'success' });
     }
 

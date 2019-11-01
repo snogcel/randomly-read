@@ -48,7 +48,6 @@ const PostContent = ({
       {...details}
     />
     {renderContent({ type, url, text, showFullPost })}
-    <PostContentDetail commentCount={commentCount} {...details} />
   </Wrapper>
 );
 

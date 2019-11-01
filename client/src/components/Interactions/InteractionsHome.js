@@ -80,7 +80,7 @@ class InteractionsHome extends React.Component {
 
   interactionHandler(interaction) {
     this.props.attemptCreateInteraction(interaction);
-    this.props.fetchInteractions({});
+    // this.props.fetchInteractions({});
   }
 
   removeInteractionHandler(id) {

@@ -35,7 +35,7 @@ export default (state = initialState, action) => {
     case CREATE_INTERACTION_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_INTERACTION_SUCCESS:
-      return { ...state, isFetching: false, newInteraction: action.interaction };
+      return { ...state, isFetching: false, items: [action.interaction, ...state.items] };
     case CREATE_INTERACTION_ERROR:
       return { ...state, isFetching: false, error: action.error };
 

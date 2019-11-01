@@ -43,52 +43,62 @@ function transformRoutineSet(data, type) {
 
 async function generateSuggestedRoutine(userHistory) {
 
-  let userHistoryObj = JSON.parse(JSON.stringify(userHistory));
+  if (userHistory === null) {
+    return { vowels: [], consonants: [] };
+  } else {
 
-  let vowelCount = [];
-  let consonantCount = [];
+    let userHistoryObj = JSON.parse(JSON.stringify(userHistory));
 
-  for (var key of Object.keys(userHistoryObj)) {
+    let vowelCount = [];
+    let consonantCount = [];
 
-    if (key.indexOf("vowel_") >= 0) {
-      if (userHistoryObj[key] > 0) vowelCount.push(userHistoryObj[key]);
-    }
+    for (var key of Object.keys(userHistoryObj)) {
 
-    if (key.indexOf("consonant_") >= 0) {
-      if (userHistoryObj[key] > 0) consonantCount.push(userHistoryObj[key]);
-    }
-
-  }
-
-  // for future use?
-  let vowelStdDev = math.std(vowelCount);
-  let consonantStdDev = math.std(consonantCount);
-
-  let vowelMean = math.mean(vowelCount);
-  let consonantMean = math.mean(consonantCount);
-
-  let vowels = [];
-  let consonants = [];
-
-  for (var key of Object.keys(userHistoryObj)) {
-
-    if (key.indexOf("vowel_") >= 0) {
-      for (let i = 0; i < userHistoryObj[key]; i++) {
-        if (userHistoryObj[key] >= vowelMean) vowels.push(key.split('_').pop());
+      if (key.indexOf("vowel_") >= 0) {
+        if (userHistoryObj[key] > 0) vowelCount.push(userHistoryObj[key]);
       }
-    }
 
-    if (key.indexOf("consonant_") >= 0) {
-      for (let i = 0; i < userHistoryObj[key]; i++) {
-        if (userHistoryObj[key] >= consonantMean) consonants.push(key.split('_').pop());
+      if (key.indexOf("consonant_") >= 0) {
+        if (userHistoryObj[key] > 0) consonantCount.push(userHistoryObj[key]);
       }
+
     }
 
-  }
+    /*
+    // for future use?
+    let vowelStdDev = math.std(vowelCount);
+    let consonantStdDev = math.std(consonantCount);
 
-  return {
-    vowels: vowels,
-    consonants: consonants
+    let vowelMean = math.mean(vowelCount);
+    let consonantMean = math.mean(consonantCount);
+    */
+
+    let vowels = [];
+    let consonants = [];
+
+    for (var key of Object.keys(userHistoryObj)) {
+
+      if (key.indexOf("vowel_") >= 0) {
+        for (let i = 0; i < userHistoryObj[key]; i++) {
+          // if (userHistoryObj[key] >= vowelMean)
+          vowels.push(key.split('_').pop());
+        }
+      }
+
+      if (key.indexOf("consonant_") >= 0) {
+        for (let i = 0; i < userHistoryObj[key]; i++) {
+          // if (userHistoryObj[key] >= consonantMean)
+          consonants.push(key.split('_').pop());
+        }
+      }
+
+    }
+
+    return {
+      vowels: vowels,
+      consonants: consonants
+    }
+
   }
 
 }
@@ -135,8 +145,6 @@ exports.settings = async (req, res) => {
   Routine.find({
     '_id': {$in: assigned}
   }, function (err, data) {
-
-
 
     // include default routines
     data.unshift({

@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const interactionSchema = new Schema({
-
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+    postId: { type: Schema.Types.ObjectId, ref: 'Post', required: false },
     word: { type: String, required: true },
     ease: { type: Number, required: true },
-
+    consonant: { type: String, required: false },
+    vowel: { type: String, required: false }
 });
 
 interactionSchema.set('timestamps', true);

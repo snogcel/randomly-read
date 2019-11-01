@@ -39,7 +39,7 @@ exports.listByCategory = async (req, res) => {
 exports.listByUser = async (req, res) => {
   const username = req.params.user;
   const author = await User.findOne({ username });
-  const posts = await Post.find({ author: author.id }).sort('-created');
+  const posts = await Post.find({ author: author.id, score: 1 }).sort('-created');
   res.json(posts);
 };
 

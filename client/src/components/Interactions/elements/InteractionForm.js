@@ -36,7 +36,6 @@ const useStyles = makeStyles(theme => ({
 
 const ease = [
   { label: "Difficult", value: 0 },
-  { label: "Easier", value: 50 },
   { label: "Easy", value: 100 }
 ];
 
@@ -47,7 +46,7 @@ export default function InteractionForm(props) {
 
   const [state, setState] = React.useState({
     word: "",
-    ease: 0
+    ease: 50
   });
 
   const handleSubmit = event => {
@@ -56,7 +55,7 @@ export default function InteractionForm(props) {
 
     let defaultState = {
       word: "",
-      ease: 0
+      ease: 50
     };
 
     // reset form state
