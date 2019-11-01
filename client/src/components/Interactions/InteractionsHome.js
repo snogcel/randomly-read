@@ -47,7 +47,6 @@ class InteractionsHome extends React.Component {
   constructor(props) {
     super(props);
 
-    this.buttonHandler = this.buttonHandler.bind(this);
     this.interactionHandler = this.interactionHandler.bind(this);
     this.removeInteractionHandler = this.removeInteractionHandler.bind(this);
 
@@ -75,27 +74,11 @@ class InteractionsHome extends React.Component {
 
   prepareInteractionForm(){
 
-    this.props.fetchInteractionSettings();
-
     this.props.fetchInteractions();
 
-    let options = store.getState().interaction;
-
-    this.setState({
-      options: options.settings,
-      selectedOption: options.settings[0]
-    });
-
-  }
-
-  buttonHandler(option) {
-    this.setState({
-      selectedOption: option
-    });
   }
 
   interactionHandler(interaction) {
-    interaction.setting = this.state.selectedOption.name; // define setting based on current state
     this.props.attemptCreateInteraction(interaction);
     this.props.fetchInteractions({});
   }
@@ -122,17 +105,9 @@ class InteractionsHome extends React.Component {
           <>
             <Grid container>
 
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} justify="center">
 
-                {  this.state.options.map((item) => (
-                  <div><Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button></div>
-                )) }
-
-              </Grid>
-
-              <Grid item xs={12} sm={10}>
-
-                <InteractionForm options={this.state.selectedOption} action={this.interactionHandler}/>
+                <InteractionForm action={this.interactionHandler}/>
 
               </Grid>
 
@@ -140,13 +115,9 @@ class InteractionsHome extends React.Component {
 
             <br /><br />
 
-            <Grid container spacing={24}>
+            <Grid container>
 
-              <Grid item xs={12} sm={2}>
-
-              </Grid>
-
-              <Grid item xs={12} sm={8}>
+              <Grid item xs={8} justify="center">
 
                 <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
 

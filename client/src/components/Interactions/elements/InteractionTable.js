@@ -19,20 +19,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-/*
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-*/
-
 export default function InteractionTable(props) {
   const classes = useStyles();
 
@@ -41,7 +27,7 @@ export default function InteractionTable(props) {
     const rows = [];
 
     interactions.map((item) => (
-      rows.push({ "id": item.id, "setting": item.setting, "audience": item.audience, "intention": (item.intention ? "Yes" : "No"), "applied": (item.applied ? "Yes" : "No"), "ease": item.ease, "createdAt":  new Date(item.createdAt).toDateString(), "updatedAt": item.updatedAt })
+      rows.push({ "word": item.word, "ease": item.ease, "createdAt": new Date(item.createdAt).toDateString(), "updatedAt": item.updatedAt })
     ));
 
     return rows;
@@ -54,10 +40,7 @@ export default function InteractionTable(props) {
       <Table className={classes.table}>
         <TableHead>
           <TableRow>
-            <TableCell>Setting</TableCell>
-            <TableCell align="center">Audience</TableCell>
-            <TableCell align="center">Intention</TableCell>
-            <TableCell align="center">Spoke w/ Intention</TableCell>
+            <TableCell align="center">Word Spoken</TableCell>
             <TableCell align="center">Ease of Speech</TableCell>
             <TableCell align="center"></TableCell>
           </TableRow>
@@ -65,12 +48,7 @@ export default function InteractionTable(props) {
         <TableBody>
           {rows.map(row => (
             <TableRow key={row.createdAt}>
-              <TableCell component="th" scope="row">
-                {row.setting}
-              </TableCell>
-              <TableCell align="center">{row.audience}</TableCell>
-              <TableCell align="center">{row.intention}</TableCell>
-              <TableCell align="center">{row.applied}</TableCell>
+              <TableCell align="center">{row.word}</TableCell>
               <TableCell align="center">{row.ease}</TableCell>
               <TableCell align="center"><Button onClick={(e) => { e.preventDefault(); props.action(row.id); }}>Delete</Button></TableCell>
             </TableRow>

@@ -4,10 +4,7 @@ const Schema = mongoose.Schema;
 const interactionSchema = new Schema({
 
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    setting: { type: String, required: true },
-    audience: { type: String, required: true },
-    intention: { type: Boolean, required: true },
-    applied: { type: Boolean, required: true },
+    word: { type: String, required: true },
     ease: { type: Number, required: true },
 
 });

@@ -47,14 +47,11 @@ exports.create = async (req, res, next) => {
   }
 
   try {
-    const { setting, audience, intention, applied, ease } = req.body;
+    const { word, ease } = req.body;
     const author = req.user.id;
     const interaction = await Interaction.create({
       author,
-      setting,
-      audience,
-      intention,
-      applied,
+      word,
       ease,
     });
     res.status(201).json(interaction);
