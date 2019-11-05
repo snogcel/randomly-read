@@ -24,6 +24,8 @@ import FluencyReport from '../RRFluencyReport/FluencyReport'
 import Interactions from '../Interactions/InteractionsHomeContainer';
 import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
 
+import Administration from '../Administration/Container.js';
+
 const AuthLink = (operation, next) => {
   const token = localStorage.getItem('token');
 
@@ -70,6 +72,7 @@ const App = props => (
               <Route path='/FluencyReport' component={FluencyReport} />
               <Route path='/Interactions' component={Interactions} />
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
+              <Route path='/Administration' component={Administration} />
               <Route path='/' component={Home} />
             </Switch>
           </>

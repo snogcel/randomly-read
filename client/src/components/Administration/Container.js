@@ -1,0 +1,32 @@
+import { connect } from 'react-redux';
+
+import Administration from './Component.js';
+import { fetchUsers, fetchUser, updateUserId, updateUsername, updateFirstName, updateLastName, updateActive, changePassword } from '../../actions/administration';
+
+import {compose} from "redux";
+import withAuth from "../../util/withAuth";
+
+const mapStateToProps = state => ({
+  availableUsers: state.administration.availableUsers,
+  selectedUserId: state.administration.selectedUserId,
+  selectedUsername: state.administration.selectedUsername,
+  selectedFirstName: state.administration.selectedFirstName,
+  selectedLastName: state.administration.selectedLastName,
+  selectedActive: state.administration.selectedActive,
+  mode: state.administration.mode,
+  isFetching: state.administration.isFetching,
+});
+
+const mapDispatchToProps = { fetchUsers, fetchUser, updateUserId, updateUsername, updateFirstName, updateLastName, updateActive, changePassword };
+
+const enhance = compose(
+  withAuth,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+);
+
+const AdministrationContainer = enhance(Administration);
+
+export default AdministrationContainer;

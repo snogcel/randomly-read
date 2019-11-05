@@ -180,6 +180,11 @@ export async function getUsers (token) {
   return await methods.get('superuser/users', token)
 }
 
+export async function getUser (id, token) {
+  console.log("-fetching user detail-");
+  return await methods.get(`superuser/users/${id}`, token)
+}
+
 export async function getUserRoutines (id, token) {
   console.log("-fetching routines-");
   return await methods.get(`superuser/routines/${id}`, token)

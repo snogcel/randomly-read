@@ -36,6 +36,29 @@ function transformDataSet(data, type) {
 
 }
 
+function transformData (data, type) {
+
+  const id = data.id;
+
+  let attributes = data;
+  delete attributes.id;
+
+  let result = {
+    "id": id,
+    "attributes": attributes
+  };
+
+  return {
+    "type": type,
+    "error": false,
+    "message": "OK",
+    "data": result,
+    "meta": {
+      "total": 1
+    }
+  }
+}
+
 exports.users = async (req, res) => {
   const superuser = req.user.id;
   const s_id = new ObjectId(superuser);
@@ -69,6 +92,31 @@ exports.users = async (req, res) => {
       res.json(response);
     } else {
       response = transformDataSet(data, "users");
+      res.json(response);
+    }
+
+  });
+
+};
+
+exports.user = async (req, res) => {
+  const superuser = req.user.id;
+  const id = req.params.id;
+  const u_id = new ObjectId(id);
+
+  let response = {};
+
+  // fetch user by ID
+  await User.findOne({"_id": u_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformData(data, "user");
+
+      console.log(response);
+
       res.json(response);
     }
 
