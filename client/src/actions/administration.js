@@ -1,4 +1,11 @@
-import {getUsers, getUser, updateUser} from "../util/api";
+import {getUsers, getUser, updateUser, createUser} from "../util/api";
+
+export const CREATE_NEW_USER = 'CREATE_NEW_USER';
+
+export const NEW_USERNAME = 'NEW_USERNAME';
+export const NEW_PASSWORD = 'NEW_PASSWORD';
+export const NEW_FIRST_NAME = 'NEW_FIRST_NAME';
+export const NEW_LAST_NAME = 'NEW_LAST_NAME';
 
 export const UPDATE_USER_ID = 'UPDATE_USER_ID';
 export const UPDATE_USERNAME = 'UPDATE_USERNAME';
@@ -67,9 +74,53 @@ export const attemptUpdateUser = (id, user) => async (dispatch, getState) => {
 };
 
 
+export const CREATE_USER_REQUEST = 'CREATE_USER_REQUEST';
+export const CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
+export const CREATE_USER_ERROR = 'CREATE_USER_ERROR';
+
+const createUserRequest = { type: CREATE_USER_REQUEST };
+const createUserSuccess = newUser => ({ type: CREATE_USER_SUCCESS, newUser });
+const createUserError = error => ({ type: CREATE_USER_ERROR, error });
+
+export const attemptCreateUser = user => async (dispatch, getState) => {
+  dispatch(createUserRequest);
+  try {
+    const { token } = getState().auth;
+    const newUser = await createUser(user, token);
+    dispatch(createUserSuccess(newUser));
+  } catch (error) {
+    dispatch(createUserError(error));
+  }
+};
+
+
 export function updateUserId(userId) {
   return {
     type: UPDATE_USER_ID, userId
+  }
+}
+
+export function updateNewUsername(username) {
+  return {
+    type: NEW_USERNAME, username
+  }
+}
+
+export function updateNewPassword(password) {
+  return {
+    type: NEW_PASSWORD, password
+  }
+}
+
+export function updateNewFirstName(firstName) {
+  return {
+    type: NEW_FIRST_NAME, firstName
+  }
+}
+
+export function updateNewLastName(lastName) {
+  return {
+    type: NEW_LAST_NAME, lastName
   }
 }
 
@@ -106,5 +157,11 @@ export function updateActive(active) {
 export function changePassword() {
   return {
     type: CHANGE_PASSWORD
+  }
+}
+
+export function createNewUser() {
+  return {
+    type: CREATE_NEW_USER
   }
 }

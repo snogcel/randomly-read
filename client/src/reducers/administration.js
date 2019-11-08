@@ -1,3 +1,8 @@
+import {NEW_USERNAME} from '../actions/administration';
+import {NEW_PASSWORD} from '../actions/administration';
+import {NEW_FIRST_NAME} from '../actions/administration';
+import {NEW_LAST_NAME} from '../actions/administration';
+
 import {UPDATE_USER_ID} from '../actions/administration';
 import {UPDATE_USERNAME} from '../actions/administration';
 import {UPDATE_FIRST_NAME} from '../actions/administration';
@@ -5,6 +10,8 @@ import {UPDATE_LAST_NAME} from '../actions/administration';
 import {UPDATE_ACTIVE} from '../actions/administration';
 import {UPDATE_PASSWORD} from '../actions/administration';
 import {CHANGE_PASSWORD} from '../actions/administration';
+
+import {CREATE_NEW_USER} from '../actions/administration';
 
 import {FETCH_USERS_REQUEST} from '../actions/administration';
 import {FETCH_USERS_SUCCESS} from '../actions/administration';
@@ -18,6 +25,10 @@ import {UPDATE_USER_REQUEST} from '../actions/administration';
 import {UPDATE_USER_SUCCESS} from '../actions/administration';
 import {UPDATE_USER_ERROR} from '../actions/administration';
 
+import {CREATE_USER_REQUEST} from '../actions/administration';
+import {CREATE_USER_SUCCESS} from '../actions/administration';
+import {CREATE_USER_ERROR} from '../actions/administration';
+
 const initialState = {
   availableUsers: [],
   availableLicenses: 5,
@@ -28,14 +39,25 @@ const initialState = {
   selectedFocus: 'initial',
   selectedActive: false,
   selectedPassword: '',
+  newUsername: '',
+  newFirstName: '',
+  newLastName: '',
+  newPassword: '',
   mode: 'view',
-  errors: [],
+  error: '',
   isFetching: false
 };
 
 let availableUsers;
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case CREATE_USER_REQUEST:
+      return { ...state, isFetching: true };
+    case CREATE_USER_SUCCESS:
+      return { ...state, isFetching: false, error: initialState.error };
+    case CREATE_USER_ERROR:
+      return { ...state, isFetching: false, error: action.error };
 
     case FETCH_USERS_REQUEST:
       return { ...state, isFetching: true, };
@@ -75,10 +97,30 @@ export default (state = initialState, action) => {
         selectedActive: action.updatedUser.attributes.isActive,
         mode: 'view' };
     case UPDATE_USER_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetching: false, error: action.error };
+
+    case CREATE_NEW_USER:
+      return {...state,
+        selectedUserId: initialState.selectedUserId,
+        selectedUsername: initialState.selectedUsername,
+        selectedFirstName: initialState.selectedFirstName,
+        selectedLastName: initialState.selectedLastName,
+        mode: 'create'};
 
     case UPDATE_USER_ID:
       return {...state, selectedUserId: action.userId, mode: 'view'};
+
+    case NEW_USERNAME:
+      return {...state, newUsername: action.username, mode: 'create'};
+
+    case NEW_PASSWORD:
+      return {...state, newPassword: action.password, mode: 'create'};
+
+    case NEW_FIRST_NAME:
+      return {...state, newFirstName: action.firstName, mode: 'create'};
+
+    case NEW_LAST_NAME:
+      return {...state, newLastName: action.lastName, mode: 'create'};
 
     case UPDATE_USERNAME:
       return {...state, selectedUsername: action.username, mode: 'edit'};

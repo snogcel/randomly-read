@@ -201,3 +201,7 @@ export async function deleteRoutine (userId, routineId, token) {
 export async function updateUser (id, body, token) {
   return await methods.patch(`superuser/users/${id}`, body, token)
 }
+
+export async function createUser (user, token) {
+  return await methods.post('superuser/users', user, token);
+}

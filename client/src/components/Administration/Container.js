@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Administration from './Component.js';
-import { fetchUsers, fetchUser, updateUserId, updateUsername, updatePassword, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser } from '../../actions/administration';
+import { createNewUser, updateNewUsername, updateNewPassword, updateNewFirstName, updateNewLastName, fetchUsers, fetchUser, updateUserId, updateUsername, updatePassword, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser, attemptCreateUser } from '../../actions/administration';
 
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
@@ -14,11 +14,16 @@ const mapStateToProps = state => ({
   selectedLastName: state.administration.selectedLastName,
   selectedActive: state.administration.selectedActive,
   selectedPassword: state.administration.selectedPassword,
+  newUsername: state.administration.newUsername,
+  newPassword: state.administration.newPassword,
+  newFirstName: state.administration.newFirstName,
+  newLastName: state.administration.newLastName,
   mode: state.administration.mode,
+  error: state.administration.error,
   isFetching: state.administration.isFetching,
 });
 
-const mapDispatchToProps = { fetchUsers, fetchUser, updateUserId, updateUsername, updatePassword, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser };
+const mapDispatchToProps = { createNewUser, updateNewUsername, updateNewPassword, updateNewFirstName, updateNewLastName, fetchUsers, fetchUser, updateUserId, updateUsername, updatePassword, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser, attemptCreateUser };
 
 const enhance = compose(
   withAuth,

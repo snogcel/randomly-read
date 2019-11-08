@@ -124,6 +124,37 @@ exports.user = async (req, res) => {
 
 };
 
+exports.createUser = async (req, res, next) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    const { username, password, firstName, lastName, isActive } = req.body;
+
+    let user = {
+      "username": username,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+      "isActive": isActive
+    };
+
+    // Create User
+    console.log(user);
+
+    // associate with superuser
+
+
+  } catch (err) {
+    next(err);
+  }
+
+};
+
 exports.updateUser = async (req, res) => {
   const superuser = req.user.id;
   const id = req.params.id;

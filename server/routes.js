@@ -70,10 +70,12 @@ router.get('/admin/testInteractionSetting', admin.interactionSettingsTestCreate)
 
 // TODO - implement superuser auth / validation
 // Superuser Functions
-router.post('/superuser/routines', jwtAuth, superuser.createRoutine);
+router.post('/superuser/users', [jwtAuth, users.validate('register')], superuser.createUser); // create new client user
 router.get('/superuser/users', jwtAuth, superuser.users); // get client users
 router.get('/superuser/users/:id', jwtAuth, superuser.user); // get client user details
 router.patch('/superuser/users/:id', jwtAuth, superuser.updateUser); // update user details
+
+router.post('/superuser/routines', jwtAuth, superuser.createRoutine); // create new routine
 router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
 router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
 
