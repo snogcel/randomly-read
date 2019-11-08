@@ -124,6 +124,40 @@ exports.user = async (req, res) => {
 
 };
 
+exports.updateUser = async (req, res) => {
+  const superuser = req.user.id;
+  const id = req.params.id;
+  const u_id = new ObjectId(id);
+
+  let response = {};
+
+  console.log(req.body);
+
+  let userObj = {
+    "firstName": req.body.firstName,
+    "lastName": req.body.lastName,
+    "isActive": req.body.isActive
+  };
+  // User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+
+  // fetch user by ID
+  await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformData(data, "user");
+
+      console.log(response);
+
+      res.json(response);
+    }
+
+  });
+
+};
+
 exports.routines = async (req, res) => {
   const superuser = req.user.id;
   const id = req.params.id;

@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Administration from './Component.js';
-import { fetchUsers, fetchUser, updateUserId, updateUsername, updateFirstName, updateLastName, updateActive, changePassword } from '../../actions/administration';
+import { fetchUsers, fetchUser, updateUserId, updateUsername, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser } from '../../actions/administration';
 
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
@@ -17,7 +17,7 @@ const mapStateToProps = state => ({
   isFetching: state.administration.isFetching,
 });
 
-const mapDispatchToProps = { fetchUsers, fetchUser, updateUserId, updateUsername, updateFirstName, updateLastName, updateActive, changePassword };
+const mapDispatchToProps = { fetchUsers, fetchUser, updateUserId, updateUsername, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser };
 
 const enhance = compose(
   withAuth,

@@ -11,12 +11,12 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SaveButton() {
+export default function SaveButton(props) {
   const classes = useStyles();
 
   return (
     <div>
-      <Button variant="contained" color="primary" className={classes.button}>Save</Button>
+      <Button onClick={() => { props.action(); }} variant="contained" color="primary" className={classes.button}>Save</Button>
     </div>
   );
 }

@@ -21,6 +21,7 @@ class Administration extends React.Component {
     super(props);
 
     this.userSelectHandler = this.userSelectHandler.bind(this);
+    this.saveHandler = this.saveHandler.bind(this);
     this.cancelHandler = this.cancelHandler.bind(this);
 
   }
@@ -38,6 +39,23 @@ class Administration extends React.Component {
   }
 
   componentDidMount() {
+
+  }
+
+  saveHandler() {
+
+    // create user update object
+    let userObj = {
+      "username": this.props.selectedUsername,
+      "firstName": this.props.selectedFirstName,
+      "lastName": this.props.selectedLastName,
+      "isActive": this.props.selectedActive
+    };
+
+    // TODO - include password if mode == 'password'
+
+
+    this.props.attemptUpdateUser(this.props.selectedUserId, userObj);
 
   }
 
@@ -173,7 +191,7 @@ class Administration extends React.Component {
                   <>
 
                   <Grid item xs={1}>
-                    <SaveButton />
+                    <SaveButton action={this.saveHandler} />
                   </Grid>
 
                   <Grid item xs={1}>

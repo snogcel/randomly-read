@@ -13,6 +13,10 @@ import {FETCH_USER_REQUEST} from '../actions/administration';
 import {FETCH_USER_SUCCESS} from '../actions/administration';
 import {FETCH_USER_ERROR} from '../actions/administration';
 
+import {UPDATE_USER_REQUEST} from '../actions/administration';
+import {UPDATE_USER_SUCCESS} from '../actions/administration';
+import {UPDATE_USER_ERROR} from '../actions/administration';
+
 const initialState = {
   availableUsers: [],
   availableLicenses: 5,
@@ -53,6 +57,23 @@ export default (state = initialState, action) => {
     case FETCH_USER_ERROR:
       return { ...state, isFetching: false };
 
+    case UPDATE_USER_REQUEST:
+      return { ...state, isFetching: true, };
+    case UPDATE_USER_SUCCESS:
+      return { ...state,
+        isFetching: false,
+        availableUsers: state.availableUsers.map(item =>
+          item.id === action.updatedUser.id ? { ...state.availableUsers, attributes: action.updatedUser.attributes } : item
+        ),
+        selectedUserId: action.updatedUser.id,
+        selectedUsername: action.updatedUser.attributes.username,
+        selectedFirstName: action.updatedUser.attributes.firstName,
+        selectedLastName: action.updatedUser.attributes.lastName,
+        selectedActive: action.updatedUser.attributes.isActive,
+        mode: 'view' };
+    case UPDATE_USER_ERROR:
+      return { ...state, isFetching: false };
+
     case UPDATE_USER_ID:
       return {...state, selectedUserId: action.userId, mode: 'view'};
 
@@ -72,6 +93,7 @@ export default (state = initialState, action) => {
       return {...state, mode: 'password'};
 
     default:
+      console.log("-default?-");
       return state;
   }
 }

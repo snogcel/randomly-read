@@ -197,3 +197,7 @@ export async function createRoutine (userId, routineName, token) {
 export async function deleteRoutine (userId, routineId, token) {
   return await methods.delete(`superuser/routines/${userId}/${routineId}`, token);
 }
+
+export async function updateUser (id, body, token) {
+  return await methods.patch(`superuser/users/${id}`, body, token)
+}

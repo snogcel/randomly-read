@@ -30,6 +30,7 @@ export default function EditUsername(props) {
   return (
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
+        disabled
         id="username-text"
         label="Username"
         style={{ margin: 8 }}

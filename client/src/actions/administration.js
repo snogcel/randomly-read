@@ -1,4 +1,4 @@
-import {getUsers, getUser} from "../util/api";
+import {getUsers, getUser, updateUser} from "../util/api";
 
 export const UPDATE_USER_ID = 'UPDATE_USER_ID';
 export const UPDATE_USERNAME = 'UPDATE_USERNAME';
@@ -44,6 +44,27 @@ export const fetchUser = (userId) => async (dispatch, getState) => {
     dispatch(fetchUserError(error));
   }
 };
+
+
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_ERROR = 'UPDATE_USER_ERROR';
+
+const updateUserRequest = { type: UPDATE_USER_REQUEST };
+const updateUserSuccess = updatedUser => ({ type: UPDATE_USER_SUCCESS, updatedUser });
+const updateUserError = error => ({ type: UPDATE_USER_ERROR, error });
+
+export const attemptUpdateUser = (id, user) => async (dispatch, getState) => {
+  dispatch(updateUserRequest);
+  try {
+    const { token } = getState().auth;
+    const updatedUser = await updateUser(id, user, token);
+    dispatch(updateUserSuccess(updatedUser.data));
+  } catch (error) {
+    dispatch(updateUserError(error));
+  }
+};
+
 
 export function updateUserId(userId) {
   return {
