@@ -53,7 +53,9 @@ class Administration extends React.Component {
     };
 
     // TODO - include password if mode == 'password'
-
+    if (this.props.mode === "password") {
+      userObj.password = this.props.selectedPassword;
+    }
 
     this.props.attemptUpdateUser(this.props.selectedUserId, userObj);
 
@@ -135,6 +137,8 @@ class Administration extends React.Component {
     let selectedLastNameObj = this.parseSelectedLastName(selectedLastName);
     let selectedActiveObj = this.parseSelectedActive(selectedActive);
 
+    console.log(this.props);
+
     return (
 
       <Grid className={classes.root}>
@@ -162,7 +166,7 @@ class Administration extends React.Component {
 
                       <ChangePassword action={this.props.changePassword} />
 
-                    </> ) : ( <> <EditPassword /> </> )}
+                    </> ) : ( <> <EditPassword action={this.props.updatePassword} /> </> )}
 
                 </Grid>
 

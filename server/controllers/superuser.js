@@ -131,20 +131,30 @@ exports.updateUser = async (req, res) => {
 
   let response = {};
 
-  console.log(req.body);
-
   let userObj = {
     "firstName": req.body.firstName,
     "lastName": req.body.lastName,
     "isActive": req.body.isActive
   };
-  // User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+
+  console.log(req.body.password);
+
+  // check if updated password included in req.body
+  if (typeof req.body.password !== "undefined") {
+
+    console.log(req.body.password);
+
+    // validate password length
+
+    // TODO - see how duplicate users is handled and use same method.
+
+  }
 
   // fetch user by ID
   await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
 
     if(err) {
-      response = {"error" : true, "message" : "Error fetching data"};
+      response = {"errors" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
       response = transformData(data, "user");

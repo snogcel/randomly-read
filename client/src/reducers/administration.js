@@ -3,6 +3,7 @@ import {UPDATE_USERNAME} from '../actions/administration';
 import {UPDATE_FIRST_NAME} from '../actions/administration';
 import {UPDATE_LAST_NAME} from '../actions/administration';
 import {UPDATE_ACTIVE} from '../actions/administration';
+import {UPDATE_PASSWORD} from '../actions/administration';
 import {CHANGE_PASSWORD} from '../actions/administration';
 
 import {FETCH_USERS_REQUEST} from '../actions/administration';
@@ -26,13 +27,13 @@ const initialState = {
   selectedUsername: '',
   selectedFocus: 'initial',
   selectedActive: false,
-  changePassword: '',
-  changePasswordConfirm: '',
+  selectedPassword: '',
   mode: 'view',
   errors: [],
   isFetching: false
 };
 
+let availableUsers;
 export default (state = initialState, action) => {
   switch (action.type) {
 
@@ -50,6 +51,7 @@ export default (state = initialState, action) => {
         isFetching: false,
         selectedUserId: action.user.id,
         selectedUsername: action.user.attributes.username,
+        selectedPassword: initialState.selectedPassword,
         selectedFirstName: action.user.attributes.firstName,
         selectedLastName: action.user.attributes.lastName,
         selectedActive: action.user.attributes.isActive,
@@ -63,10 +65,11 @@ export default (state = initialState, action) => {
       return { ...state,
         isFetching: false,
         availableUsers: state.availableUsers.map(item =>
-          item.id === action.updatedUser.id ? { ...state.availableUsers, attributes: action.updatedUser.attributes } : item
+          item.id === action.updatedUser.id ? { ...availableUsers, id: action.updatedUser.id, attributes: action.updatedUser.attributes } : item
         ),
         selectedUserId: action.updatedUser.id,
         selectedUsername: action.updatedUser.attributes.username,
+        selectedPassword: initialState.selectedPassword,
         selectedFirstName: action.updatedUser.attributes.firstName,
         selectedLastName: action.updatedUser.attributes.lastName,
         selectedActive: action.updatedUser.attributes.isActive,
@@ -79,6 +82,9 @@ export default (state = initialState, action) => {
 
     case UPDATE_USERNAME:
       return {...state, selectedUsername: action.username, mode: 'edit'};
+
+    case UPDATE_PASSWORD:
+      return {...state, selectedPassword: action.password, mode: 'password'};
 
     case UPDATE_FIRST_NAME:
       return {...state, selectedFirstName: action.firstName, mode: 'edit'};

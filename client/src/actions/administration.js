@@ -5,6 +5,7 @@ export const UPDATE_USERNAME = 'UPDATE_USERNAME';
 export const UPDATE_FIRST_NAME = 'UPDATE_FIRST_NAME';
 export const UPDATE_LAST_NAME = 'UPDATE_LAST_NAME';
 export const UPDATE_ACTIVE = 'UPDATE_ACTIVE';
+export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
@@ -75,6 +76,12 @@ export function updateUserId(userId) {
 export function updateUsername(username) {
   return {
     type: UPDATE_USERNAME, username
+  }
+}
+
+export function updatePassword(password) {
+  return {
+    type: UPDATE_PASSWORD, password
   }
 }
 
