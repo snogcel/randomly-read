@@ -53,21 +53,21 @@ export default (state = initialState, action) => {
   switch (action.type) {
 
     case CREATE_USER_REQUEST:
-      return { ...state, isFetching: true };
+      return { ...state, isFetching: true, error: initialState.error };
     case CREATE_USER_SUCCESS:
       return { ...state, isFetching: false, error: initialState.error };
     case CREATE_USER_ERROR:
       return { ...state, isFetching: false, error: action.error };
 
     case FETCH_USERS_REQUEST:
-      return { ...state, isFetching: true, };
+      return { ...state, isFetching: true, error: initialState.error };
     case FETCH_USERS_SUCCESS:
-      return { ...state, isFetching: false, availableUsers: action.users };
+      return { ...state, isFetching: false, error: initialState.error, availableUsers: action.users };
     case FETCH_USERS_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetching: false, error: action.error };
 
     case FETCH_USER_REQUEST:
-      return { ...state, isFetching: true, };
+      return { ...state, isFetching: true, error: initialState.error };
     case FETCH_USER_SUCCESS:
       return { ...state,
         isFetching: false,
@@ -77,12 +77,13 @@ export default (state = initialState, action) => {
         selectedFirstName: action.user.attributes.firstName,
         selectedLastName: action.user.attributes.lastName,
         selectedActive: action.user.attributes.isActive,
+        error: initialState.error,
         mode: 'view' };
     case FETCH_USER_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetching: false, error: action.error };
 
     case UPDATE_USER_REQUEST:
-      return { ...state, isFetching: true, };
+      return { ...state, isFetching: true, error: initialState.error };
     case UPDATE_USER_SUCCESS:
       return { ...state,
         isFetching: false,
@@ -95,6 +96,7 @@ export default (state = initialState, action) => {
         selectedFirstName: action.updatedUser.attributes.firstName,
         selectedLastName: action.updatedUser.attributes.lastName,
         selectedActive: action.updatedUser.attributes.isActive,
+        error: initialState.error,
         mode: 'view' };
     case UPDATE_USER_ERROR:
       return { ...state, isFetching: false, error: action.error };
@@ -105,6 +107,7 @@ export default (state = initialState, action) => {
         selectedUsername: initialState.selectedUsername,
         selectedFirstName: initialState.selectedFirstName,
         selectedLastName: initialState.selectedLastName,
+        error: initialState.error,
         mode: 'create'};
 
     case UPDATE_USER_ID:

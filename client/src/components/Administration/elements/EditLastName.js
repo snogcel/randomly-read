@@ -31,6 +31,8 @@ export default function EditLastName(props) {
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
         id="lastname-text"
+        error={props.error.length === 0 ? false : true }
+        helperText={props.error}
         label="Last Name"
         style={{ margin: 8 }}
         margin="normal"

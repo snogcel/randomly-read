@@ -31,6 +31,8 @@ export default function NewUsername(props) {
     <form className={classes.container} noValidate autoComplete="off">
       <TextField
         id="new-username-text"
+        error={props.error.length === 0 ? false : true }
+        helperText={props.error}
         label="Username"
         style={{ margin: 8 }}
         margin="normal"

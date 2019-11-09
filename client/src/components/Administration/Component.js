@@ -169,10 +169,62 @@ class Administration extends React.Component {
 
     // console.log(this.props);
 
-    // handle "Error: password must be at least 8 characters long"
-    // handle "Error: username already exists"
+    let errorString = this.props.error.toString();
+    let usernameError = "";
+    let passwordError = "";
+    let firstNameError = "";
+    let lastNameError = "";
 
-    console.log(this.props.error.toString());
+    console.log(errorString);
+
+    // handle validation messages -- this is good enough I guess...
+    let usernameValidation = [
+      "Error: username already exists",
+      "Error: username is required",
+      "Error: username cannot be blank",
+      "Error: username must be at most 32 characters long",
+      "Error: username cannot start or end with whitespace",
+      "Error: username contains invalid characters"
+    ];
+
+    let firstNameValidation = [
+      "Error: firstName is required",
+      "Error: firstName cannot be blank",
+      "Error: firstName must be at most 32 characters long",
+      "Error: firstName cannot start or end with whitespace",
+      "Error: firstName contains invalid characters"
+    ];
+
+    let lastNameValidation = [
+      "Error: lastName is required",
+      "Error: lastName cannot be blank",
+      "Error: lastName must be at most 32 characters long",
+      "Error: lastName cannot start or end with whitespace",
+      "Error: lastName contains invalid characters"
+    ];
+
+    let passwordValidation = [
+      "Error: password is required",
+      "Error: password cannot be blank",
+      "Error: password must be at least 8 characters long",
+      "Error: password must be at most 72 characters long"
+    ];
+
+    if (usernameValidation.indexOf(errorString) > -1) {
+      usernameError = errorString;
+    }
+
+    if (firstNameValidation.indexOf(errorString) > -1) {
+      firstNameError = errorString.replace("firstName", "First Name");
+    }
+
+    if (lastNameValidation.indexOf(errorString) > -1) {
+      lastNameError = errorString.replace("lastName", "Last Name");
+    }
+
+    if (passwordValidation.indexOf(errorString) > -1) {
+      passwordError = errorString;
+    }
 
     return (
 
@@ -209,13 +261,13 @@ class Administration extends React.Component {
 
                   <Grid item xs={2}>
 
-                    <NewUsername action={this.props.updateNewUsername} error={this.props.error.toString()} />
+                    <NewUsername action={this.props.updateNewUsername} error={usernameError} />
 
                   </Grid>
 
-                  <Grid item xs={2}>
+                  <Grid item xs={4}>
 
-                    <NewPassword action={this.props.updateNewPassword} error={this.props.error.toString()} />
+                    <NewPassword action={this.props.updateNewPassword} error={passwordError} />
 
                   </Grid>
 
@@ -225,13 +277,13 @@ class Administration extends React.Component {
 
                   <Grid item xs={2}>
 
-                    <NewFirstName action={this.props.updateNewFirstName} />
+                    <NewFirstName action={this.props.updateNewFirstName} error={firstNameError} />
 
                   </Grid>
 
                   <Grid item xs={2}>
 
-                    <NewLastName action={this.props.updateNewLastName} />
+                    <NewLastName action={this.props.updateNewLastName} error={lastNameError} />
 
                   </Grid>
 
@@ -259,14 +311,14 @@ class Administration extends React.Component {
                         <EditUsername action={this.props.updateUsername} username={selectedUsernameObj} />
                       </Grid>
 
-                      <Grid item xs={2}>
+                      <Grid item xs={4}>
 
                         {(mode === 'view' || mode === 'edit') ? (
                           <>
 
                             <ChangePassword action={this.props.changePassword} />
 
-                          </> ) : ( <> <EditPassword action={this.props.updatePassword} /> </> )}
+                          </> ) : ( <> <EditPassword action={this.props.updatePassword} error={passwordError} /> </> )}
 
                       </Grid>
 
@@ -280,11 +332,11 @@ class Administration extends React.Component {
                     <Grid container>
 
                       <Grid item xs={2}>
-                        <EditFirstName action={this.props.updateFirstName} firstname={selectedFirstNameObj} />
+                        <EditFirstName action={this.props.updateFirstName} firstname={selectedFirstNameObj} error={firstNameError} />
                       </Grid>
 
                       <Grid item xs={2}>
-                        <EditLastName action={this.props.updateLastName} lastname={selectedLastNameObj} />
+                        <EditLastName action={this.props.updateLastName} lastname={selectedLastNameObj} error={lastNameError} />
                       </Grid>
 
                       <Grid item xs={2}>

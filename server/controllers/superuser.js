@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator/check');
+const { check, body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const Routine = require('../models/routine');
 const User = require('../models/user');
@@ -148,6 +148,55 @@ exports.createUser = async (req, res, next) => {
 
     // associate with superuser
 
+  } catch (err) {
+    next(err);
+  }
+
+};
+
+exports.updateUser = async (req, res, next) => {
+
+  const result = validationResult(req);
+
+  // only validate if password is included
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    const superuser = req.user.id;
+
+    const id = req.params.id;
+    const u_id = new ObjectId(id);
+
+    let response = {};
+
+    let userObj = {
+      "firstName": req.body.firstName,
+      "lastName": req.body.lastName,
+      "isActive": req.body.isActive
+    };
+
+    // rehash new password and update
+    if (req.body.password) {
+
+    }
+
+    // fetch user by ID
+    await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
+
+      if(err) {
+        response = {"errors" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformData(data, "user");
+
+        res.status(201).json(response);
+      }
+
+    });
 
   } catch (err) {
     next(err);
@@ -155,48 +204,80 @@ exports.createUser = async (req, res, next) => {
 
 };
 
-exports.updateUser = async (req, res) => {
-  const superuser = req.user.id;
-  const id = req.params.id;
-  const u_id = new ObjectId(id);
+exports.validate = method => {
 
-  let response = {};
+  const errors = [
+    body('username')
+      .exists()
+      .withMessage('is required')
 
-  let userObj = {
-    "firstName": req.body.firstName,
-    "lastName": req.body.lastName,
-    "isActive": req.body.isActive
-  };
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
 
-  console.log(req.body.password);
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
 
-  // check if updated password included in req.body
-  if (typeof req.body.password !== "undefined") {
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
 
-    console.log(req.body.password);
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
 
-    // validate password length
+    body('firstName')
+      .exists()
+      .withMessage('is required')
 
-    // TODO - see how duplicate users is handled and use same method.
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
 
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('lastName')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('password')
+      .optional()
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ min: 8 })
+      .withMessage('must be at least 8 characters long')
+
+      .isLength({ max: 72 })
+      .withMessage('must be at most 72 characters long')
+  ];
+
+  if (method === 'register') {
+    errors.push(
+      body('username').custom(async username => {
+        const exists = await User.countDocuments({ username });
+        if (exists) throw new Error('already exists');
+      })
+    );
   }
 
-  // fetch user by ID
-  await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
-
-    if(err) {
-      response = {"errors" : true, "message" : "Error fetching data"};
-      res.json(response);
-    } else {
-      response = transformData(data, "user");
-
-      console.log(response);
-
-      res.json(response);
-    }
-
-  });
-
+  return errors;
 };
 
 exports.routines = async (req, res) => {
