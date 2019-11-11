@@ -167,7 +167,7 @@ class Administration extends React.Component {
     let selectedLastNameObj = this.parseSelectedLastName(selectedLastName);
     let selectedActiveObj = this.parseSelectedActive(selectedActive);
 
-    // console.log(this.props);
+    console.log(this.props);
 
     let errorString = this.props.error.toString();
     let usernameError = "";

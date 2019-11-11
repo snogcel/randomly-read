@@ -145,9 +145,39 @@ exports.createUser = async (req, res, next) => {
     };
 
     // Create User
-    console.log(user);
+    const newUser = await User.create({ username, password, firstName, lastName, isActive });
+    console.log(newUser._id);
 
-    // associate with superuser
+    const s_id = new ObjectId(req.user.id);
+    console.log("superuser id: ", s_id);
+
+    // fetch superuser by ID
+    await User.findOne({"_id": s_id}, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        let obj = JSON.parse(JSON.stringify(data));
+
+        let response = {};
+
+        // append new user to superuser clients array
+        obj.clients.push(newUser._id);
+
+        User.findOneAndUpdate({"_id": s_id}, obj, {new: true}, function(err, data) {
+          if(err) {
+            response = {"errors" : true, "message" : "Error fetching data"};
+            res.json(response);
+          } else {
+            response = transformData(newUser, "user");
+            res.status(201).json(response);
+          }
+        });
+
+      }
+
+    });
 
   } catch (err) {
     next(err);

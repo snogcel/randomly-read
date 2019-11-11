@@ -55,7 +55,21 @@ export default (state = initialState, action) => {
     case CREATE_USER_REQUEST:
       return { ...state, isFetching: true, error: initialState.error };
     case CREATE_USER_SUCCESS:
-      return { ...state, isFetching: false, error: initialState.error };
+      return { ...state,
+        isFetching: false,
+        availableUsers: [...state.availableUsers, action.newUser],
+        selectedUserId: action.newUser.id,
+        selectedUsername: action.newUser.attributes.username,
+        selectedPassword: initialState.selectedPassword,
+        selectedFirstName: action.newUser.attributes.firstName,
+        selectedLastName: action.newUser.attributes.lastName,
+        selectedActive: action.newUser.attributes.isActive,
+        newUsername: initialState.newUsername,
+        newFirstName: initialState.newFirstName,
+        newLastName: initialState.newLastName,
+        newPassword: initialState.newPassword,
+        error: initialState.error,
+        mode: 'view' };
     case CREATE_USER_ERROR:
       return { ...state, isFetching: false, error: action.error };
 

@@ -87,7 +87,7 @@ export const attemptCreateUser = user => async (dispatch, getState) => {
   try {
     const { token } = getState().auth;
     const newUser = await createUser(user, token);
-    dispatch(createUserSuccess(newUser));
+    dispatch(createUserSuccess(newUser.data));
   } catch (error) {
     dispatch(createUserError(error));
   }
