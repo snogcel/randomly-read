@@ -77,6 +77,10 @@ export default (state = initialState, action) => {
         selectedFirstName: action.user.attributes.firstName,
         selectedLastName: action.user.attributes.lastName,
         selectedActive: action.user.attributes.isActive,
+        newUsername: initialState.newUsername,
+        newFirstName: initialState.newFirstName,
+        newLastName: initialState.newLastName,
+        newPassword: initialState.newPassword,
         error: initialState.error,
         mode: 'view' };
     case FETCH_USER_ERROR:
@@ -107,6 +111,10 @@ export default (state = initialState, action) => {
         selectedUsername: initialState.selectedUsername,
         selectedFirstName: initialState.selectedFirstName,
         selectedLastName: initialState.selectedLastName,
+        newUsername: initialState.newUsername,
+        newFirstName: initialState.newFirstName,
+        newLastName: initialState.newLastName,
+        newPassword: initialState.newPassword,
         error: initialState.error,
         mode: 'create'};
 
