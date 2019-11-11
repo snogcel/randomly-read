@@ -166,7 +166,6 @@ export default (state = initialState, action) => {
       return {...state, mode: 'password'};
 
     default:
-      console.log("-default?-");
       return state;
   }
 }
