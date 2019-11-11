@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function UserSelect(props) {
+export default function UserSelectAdmin(props) {
   const classes = useStyles();
   const [values, setValues] = React.useState({});
 
@@ -35,22 +35,22 @@ export default function UserSelect(props) {
   };
 
   // split users list into active / inactive
-  let activeUserRoutines = [];
-  let inactiveUserRoutines = [];
+  let activeUsers = [];
+  let inactiveUsers = [];
 
   for (let i = 0; i < props.options.length; i++) {
     console.log(props.options[i]);
     if (props.options[i].isActive) {
-      activeUserRoutines.push(props.options[i]);
+      activeUsers.push(props.options[i]);
     } else {
-      inactiveUserRoutines.push(props.options[i]);
+      inactiveUsers.push(props.options[i]);
     }
   }
 
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="routine-user-input">Active Users</InputLabel>
+        <InputLabel htmlFor="admin-user-input">Active Users</InputLabel>
         <Select
           defaultValue={props.options[0]}
           value={props.user.user}
@@ -60,17 +60,14 @@ export default function UserSelect(props) {
             id: 'user-input',
           }}
         >
-
           <ListSubheader>Active Users</ListSubheader>
-          {activeUserRoutines.map(user => (
+          {activeUsers.map(user => (
             <MenuItem key={user.id} value={user.id}>{user.name}</MenuItem>
           ))}
-
           <ListSubheader>Inactive Users</ListSubheader>
-          {inactiveUserRoutines.map(user => (
+          {inactiveUsers.map(user => (
             <MenuItem key={user.id} value={user.id}>{user.name}</MenuItem>
           ))}
-
         </Select>
       </FormControl>
     </form>

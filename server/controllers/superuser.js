@@ -1,4 +1,5 @@
-const { body, validationResult } = require('express-validator/check');
+const { check, body, validationResult } = require('express-validator/check');
+const bcrypt = require('bcryptjs');
 const ObjectId = require('mongodb').ObjectId;
 const Routine = require('../models/routine');
 const User = require('../models/user');
@@ -34,6 +35,29 @@ function transformDataSet(data, type) {
     }
   }
 
+}
+
+function transformData (data, type) {
+
+  const id = data.id;
+
+  let attributes = data;
+  delete attributes.id;
+
+  let result = {
+    "id": id,
+    "attributes": attributes
+  };
+
+  return {
+    "type": type,
+    "error": false,
+    "message": "OK",
+    "data": result,
+    "meta": {
+      "total": 1
+    }
+  }
 }
 
 exports.users = async (req, res) => {
@@ -74,6 +98,215 @@ exports.users = async (req, res) => {
 
   });
 
+};
+
+exports.user = async (req, res) => {
+  const superuser = req.user.id;
+  const id = req.params.id;
+  const u_id = new ObjectId(id);
+
+  let response = {};
+
+  // fetch user by ID
+  await User.findOne({"_id": u_id}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformData(data, "user");
+
+      console.log(response);
+
+      res.json(response);
+    }
+
+  });
+
+};
+
+exports.createUser = async (req, res, next) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    const { username, password, firstName, lastName, isActive } = req.body;
+
+    let user = {
+      "username": username,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+      "isActive": isActive
+    };
+
+    // Create User
+    const newUser = await User.create({ username, password, firstName, lastName, isActive });
+    console.log(newUser._id);
+
+    const s_id = new ObjectId(req.user.id);
+    console.log("superuser id: ", s_id);
+
+    // fetch superuser by ID
+    await User.findOne({"_id": s_id}, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        let obj = JSON.parse(JSON.stringify(data));
+
+        let response = {};
+
+        // append new user to superuser clients array
+        obj.clients.push(newUser._id);
+
+        User.findOneAndUpdate({"_id": s_id}, obj, {new: true}, function(err, data) {
+          if(err) {
+            response = {"errors" : true, "message" : "Error fetching data"};
+            res.json(response);
+          } else {
+            response = transformData(newUser, "user");
+            res.status(201).json(response);
+          }
+        });
+
+      }
+
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+};
+
+exports.updateUser = async (req, res, next) => {
+
+  const result = validationResult(req);
+
+  // only validate if password is included
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    const superuser = req.user.id;
+
+    const id = req.params.id;
+    const u_id = new ObjectId(id);
+
+    let response = {};
+
+    let userObj = {
+      "firstName": req.body.firstName,
+      "lastName": req.body.lastName,
+      "isActive": req.body.isActive
+    };
+
+    // rehash new password and update
+    if (req.body.password) {
+      let password = await bcrypt.hash(req.body.password, 10);
+      userObj.password = password;
+    }
+
+    // fetch user by ID
+    await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
+      if(err) {
+        response = {"errors" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformData(data, "user");
+        res.status(201).json(response);
+      }
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+};
+
+exports.validate = method => {
+
+  const errors = [
+    body('username')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('firstName')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('lastName')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('password')
+      .optional()
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ min: 8 })
+      .withMessage('must be at least 8 characters long')
+
+      .isLength({ max: 72 })
+      .withMessage('must be at most 72 characters long')
+  ];
+
+  if (method === 'register') {
+    errors.push(
+      body('username').custom(async username => {
+        const exists = await User.countDocuments({ username });
+        if (exists) throw new Error('already exists');
+      })
+    );
+  }
+
+  return errors;
 };
 
 exports.routines = async (req, res) => {

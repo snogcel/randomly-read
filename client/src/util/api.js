@@ -180,6 +180,11 @@ export async function getUsers (token) {
   return await methods.get('superuser/users', token)
 }
 
+export async function getUser (id, token) {
+  console.log("-fetching user detail-");
+  return await methods.get(`superuser/users/${id}`, token)
+}
+
 export async function getUserRoutines (id, token) {
   console.log("-fetching routines-");
   return await methods.get(`superuser/routines/${id}`, token)
@@ -191,4 +196,12 @@ export async function createRoutine (userId, routineName, token) {
 
 export async function deleteRoutine (userId, routineId, token) {
   return await methods.delete(`superuser/routines/${userId}/${routineId}`, token);
+}
+
+export async function updateUser (id, body, token) {
+  return await methods.patch(`superuser/users/${id}`, body, token)
+}
+
+export async function createUser (user, token) {
+  return await methods.post('superuser/users', user, token);
 }
