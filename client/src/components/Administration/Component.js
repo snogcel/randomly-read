@@ -107,14 +107,15 @@ class Administration extends React.Component {
   }
 
   parseAvailableUsers(users) {
-    let availableUsers = [ ]; // list superuser first
+    let availableUsers = []; // list superuser first
 
     if (typeof users !== "undefined") {
 
       for (let i = 0; i < users.length; i++) {
         availableUsers.push({
           "id": users[i].attributes.id,
-          "name": users[i].attributes.firstName + " " + users[i].attributes.lastName
+          "name": users[i].attributes.firstName + " " + users[i].attributes.lastName,
+          "isActive": users[i].attributes.isActive
         });
       }
 
