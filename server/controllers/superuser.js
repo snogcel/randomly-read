@@ -1,4 +1,5 @@
 const { check, body, validationResult } = require('express-validator/check');
+const bcrypt = require('bcryptjs');
 const ObjectId = require('mongodb').ObjectId;
 const Routine = require('../models/routine');
 const User = require('../models/user');
@@ -181,21 +182,19 @@ exports.updateUser = async (req, res, next) => {
 
     // rehash new password and update
     if (req.body.password) {
-
+      let password = await bcrypt.hash(req.body.password, 10);
+      userObj.password = password;
     }
 
     // fetch user by ID
     await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
-
       if(err) {
         response = {"errors" : true, "message" : "Error fetching data"};
         res.json(response);
       } else {
         response = transformData(data, "user");
-
         res.status(201).json(response);
       }
-
     });
 
   } catch (err) {
