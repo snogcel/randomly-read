@@ -219,6 +219,8 @@ class RoutineBuilder extends React.Component {
 
     }
 
+    this.routinePreview.current.state.query = null; // clear preview window
+
   };
 
   deleteRoutineHandler(routineId) {
@@ -230,6 +232,8 @@ class RoutineBuilder extends React.Component {
       this.resetStepList();
 
     }
+
+    this.routinePreview.current.state.query = null; // clear preview window
 
   }
 
@@ -267,6 +271,8 @@ class RoutineBuilder extends React.Component {
     } else {
       this.props.removeConsonant(consonant); // remove consonant from state
     }
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   nameHandler(name) {
@@ -286,6 +292,8 @@ class RoutineBuilder extends React.Component {
     }
 
     this.props.updateVowels(vowelArr); // pass to redux
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   syllableHandler(syllables) {
@@ -301,6 +309,8 @@ class RoutineBuilder extends React.Component {
     }
 
     this.props.updateSyllables(syllableArr); // pass to redux
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   modeHandler(mode) {
@@ -311,22 +321,32 @@ class RoutineBuilder extends React.Component {
     } else {
       this.props.updateIsIntermission(false);
     }
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   positionHandler(position) {
     this.props.updatePosition(position);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   rangeValHandler(rangeVal) {
     this.props.updateRangeVal(rangeVal);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   repetitionHandler(repetitions) {
     this.props.updateRepetitions(repetitions);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   intermissionHandler(intermissionText) {
     this.props.updateIntermissionText(intermissionText);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   insertHandler() {
