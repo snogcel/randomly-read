@@ -79,7 +79,7 @@ exports.users = async (req, res) => {
 
   });
 
-  clients.unshift(superuser); // include superuser in result
+  // clients.unshift(superuser); // include superuser in result
 
   let response = {};
 

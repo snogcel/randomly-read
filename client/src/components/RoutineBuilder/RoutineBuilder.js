@@ -876,10 +876,6 @@ class RoutineBuilder extends React.Component {
 
     let routineStep = this.parseCurrentRoutineStep();
 
-    // TODO - Preview Exercise Step
-
-    console.log(routineStep);
-
     return (
 
       <Grid className={classes.root}>

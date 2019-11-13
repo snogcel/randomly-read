@@ -3,8 +3,8 @@ const resolvers = require('./resolvers');
 
 const typeDefs = `
 type Query {
-  words(vowel: [String], consonant: [String], type: [String], subtype: [String], syllables: [Int], location: String, limit: Int): Word
-  sentences(templates: [String], vowel: [String], consonant: [String], syllables: [Int], location: String, limit: Int): Sentence
+  words(vowel: [String], consonant: [String], type: [String], subtype: [String], syllables: [Int], position: String, limit: Int): Word
+  sentences(templates: [String], vowel: [String], consonant: [String], syllables: [Int], position: String, limit: Int): Sentence
 }
 
 type Word {

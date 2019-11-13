@@ -21,11 +21,13 @@ const resolvers = {
             if (typeof args.subtype !== 'undefined' && Array.isArray(args.subtype)) filter.subtype = args.subtype;
 
             // Assign Data Source to Query
-            if (typeof args.location !== 'undefined' && typeof args.location === 'string') {
-                if (args.location === 'initial') location = 'initial'; // maps to 'wordlist_initial'
-                if (args.location === 'medial') location = 'medial'; // maps to 'wordlist_medial'
-                if (args.location === 'final') location = 'final'; // maps to 'wordlist_final'
+            if (typeof args.position !== 'undefined' && typeof args.position === 'string') {
+                if (args.position === 'initial') location = 'initial'; // maps to 'wordlist_initial'
+                if (args.position === 'medial') location = 'medial'; // maps to 'wordlist_medial'
+                if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
+
+            console.log("location filter: ", args.position);
 
             console.log("vowel filter: ", filter.vowel);
             console.log("consonant filter: ", filter.consonant);
@@ -33,7 +35,9 @@ const resolvers = {
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
+
+                      console.log(data);
 
                       let queryResult = data;
 
@@ -50,13 +54,20 @@ const resolvers = {
                         lexeme.votes = doc.votes;
                         lexeme.score = doc.score;
 
-                        console.log(queryResult);
+                        // console.log(queryResult);
+
+                        console.log(lexeme);
 
                         resolve(lexeme);
 
                       }, function(err) { reject(err); });
 
+                  }).catch(function(err) {
+
+                    console.log(err);
+
                   });
+
               });
             };
 
@@ -107,16 +118,18 @@ const resolvers = {
             if (typeof args.templates !== 'undefined' && Array.isArray(args.templates)) templates = args.templates;
 
             // Assign Data Source to Query
-            if (typeof args.location !== 'undefined' && typeof args.location === 'string') {
-                if (args.location === 'initial') location = 'initial'; // maps to 'wordlist_initial'
-                if (args.location === 'medial') location = 'medial'; // maps to 'wordlist_medial'
-                if (args.location === 'final') location = 'final'; // maps to 'wordlist_final'
+            if (typeof args.position !== 'undefined' && typeof args.position === 'string') {
+                if (args.position === 'initial') location = 'initial'; // maps to 'wordlist_initial'
+                if (args.position === 'medial') location = 'medial'; // maps to 'wordlist_medial'
+                if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
             // Fetch Query Data and Build Sentences
             let buildSentence = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: dataLimit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: dataLimit }).then(function(data) {
+
+                      // TODO - check for empty result
 
                       let nounData = [];
                       let adjData = [];
@@ -254,7 +267,13 @@ const resolvers = {
                       })
                       .catch((e) => {
                         // handle errors here
+                        console.log(e);
+
                       });
+
+                  }).catch(function(err) {
+
+                    console.log(err);
 
                   });
               });

@@ -24,7 +24,8 @@ RoutineBuilder.prototype._buildActionBase = function(exerciseConfig) {
     consonant: [],
     templates: exerciseConfig.templates,
     syllables: exerciseConfig.syllables,
-    limit: exerciseConfig.limit
+    limit: exerciseConfig.limit,
+    position: exerciseConfig.position
   };
 
   if (exerciseConfig.intermissionText) actionBase.intermissionText = exerciseConfig.intermissionText;

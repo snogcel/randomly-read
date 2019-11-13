@@ -50,8 +50,6 @@ class RoutinePreview extends React.Component  {
 
   buildQuery() {
 
-    console.log(this.props.routineStep);
-
     let routine = this.props.routineStep;
 
     let routineStep = {};
@@ -84,19 +82,18 @@ class RoutinePreview extends React.Component  {
 
     let routineConfig = routineStep.values().next().value || {};
 
-    console.log(routineConfig);
-
     let vowel = JSON.stringify(routineConfig.vowel);
     let consonant = JSON.stringify(routineConfig.consonant);
     let syllables = JSON.stringify(routineConfig.syllables);
     let limit = parseInt(routineConfig.limit);
+    let position = JSON.stringify(routineConfig.position);
 
     switch(routineConfig.mode) {
       case 'Sentence':
         if (routineConfig.consonant.length > 0 && routineConfig.vowel.length > 0) {
           return gql`
                 {
-                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -113,7 +110,7 @@ class RoutinePreview extends React.Component  {
         } else if (routineConfig.consonant.length > 0 && !routineConfig.vowel.length > 0) {
           return gql`
                 {
-                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -130,7 +127,7 @@ class RoutinePreview extends React.Component  {
         } else if (!routineConfig.consonant.length > 0 && routineConfig.vowel.length > 0) {
           return gql`
                 {
-                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -147,7 +144,7 @@ class RoutinePreview extends React.Component  {
         } else {
           return gql`
                 {
-                    sentences(syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -167,7 +164,7 @@ class RoutinePreview extends React.Component  {
         if (routineConfig.consonant.length > 0 && routineConfig.vowel.length > 0) {
           return gql`
                 {
-                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -175,19 +172,14 @@ class RoutinePreview extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
         } else if (routineConfig.consonant.length > 0 && !routineConfig.vowel.length > 0) {
           return gql`
                 {
-                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -195,19 +187,14 @@ class RoutinePreview extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
         } else if (!routineConfig.consonant.length > 0 && routineConfig.vowel.length > 0) {
           return gql`
                 {
-                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -215,19 +202,14 @@ class RoutinePreview extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
         } else {
           return gql`
                 {
-                    words(syllables: ${syllables}, limit: ${limit}) {                    
+                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -235,12 +217,7 @@ class RoutinePreview extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
@@ -256,7 +233,7 @@ class RoutinePreview extends React.Component  {
   render() {
     const { classes } = this.props;
 
-    console.log(this.props.routineStep);
+    this.fetching = true;
 
     return (
 
@@ -264,20 +241,33 @@ class RoutinePreview extends React.Component  {
 
         <Card elevation="0" className={classes.card}>
           <CardContent>
-            { (this.state.query === null) ? '' : <Query query={this.state.query} fetchPolicy="no-cache" onCompleted={() => { this.fetching = false; }}>
+            { (this.state.query === null) ? '' : <Query query={this.state.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => { }}>
               {({ loading, error, data, refetch }) => {
 
-                if (loading) return null;
+                this.refresh = refetch;
+
+                console.log("loading: ", loading);
 
                 if (error) {
-                  return(<div>
-                    <Word value={{name: "Server Error", selectedVowel: this.props.routineStep.vowels}} />
-                  </div>);
+
+                  this.result = null;
+                  this.fetching = false;
+
+                  if (this.props.routineStep.mode === 'Word') {
+                    return(<div>
+                      <Word value={{name: "No Result Found", selectedVowel: this.props.routineStep.vowel}} />
+                    </div>);
+                  }
+
+                  if (this.props.routineStep.mode === 'Sentence') {
+                    return(<div>
+                      <Word value={{name: "No Result Found", selectedVowel: this.props.routineStep.vowel}} />
+                    </div>);
+                  }
+
                 }
 
                 if (data) {
-
-                  this.refresh = refetch;
 
                   // check if data object is empty
                   if (Object.keys(data).length === 0 && data.constructor === Object) {
@@ -286,33 +276,19 @@ class RoutinePreview extends React.Component  {
                     return null;
                   }
 
-                  if (this.props.routineStep.mode === 'Word' && typeof(data.words) === 'undefined') {
-                    this.result = null;
-
-                    return(<div>
-                      <Word value={{name: "No Result", selectedVowel: this.props.routineStep.vowel}} />
-                    </div>);
-                  }
-
-                  if (this.props.routineStep.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
-                    return(<div>
-                      <Word value={{name: "No Result", selectedVowel: this.props.routineStep.vowel}} />
-                    </div>);
-                  }
-
-
                   // check if word is a repeat...
                   if (this.props.routineStep.mode === 'Word' && data.words) {
 
-                    if (this.result === data.words.lexeme){ // if repeat word, refetch
+                    if (this.result === data.words.lexeme && this.fetching){ // if repeat word, refetch
                       refetch();
                     }
 
-                    if (this.result !== data.words.lexeme) { // if new result, store and display
+                    if (this.result !== data.words.lexeme && this.fetching) { // if new result, store and display
                       this.result = data.words.lexeme; // assign word to result
+                      this.fetching = false;
                     }
 
-                  } else if (this.props.routineStep.mode === 'Sentence' && data.sentences.words.length > 0) { // if we are fetching sentences
+                  } else if (this.props.routineStep.mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
 
                     // build result
                     let result = "";
@@ -324,9 +300,12 @@ class RoutinePreview extends React.Component  {
 
                     if (this.result !== result) { // if new result, store and display
                       this.result = result; // assign newly generated sentence to result
+                      this.fetching = false;
                     }
                   }
                 }
+
+                if (loading) return null;
 
                 return(<div>
                   <Word value={{name: this.result, selectedVowel: this.props.routineStep.vowel}} />

@@ -2,7 +2,11 @@ const Post = require('../models/post');
 
 const Lexeme = function(data, id) {
 
-  let dataValues = data[0].dataValues;
+  let dataValues = {};
+
+  if (data.length > 0) {
+    dataValues = data[0].dataValues;
+  }
 
   this.cmudict_id = dataValues.cmudict_id;
   this.wordid = dataValues.wordid;

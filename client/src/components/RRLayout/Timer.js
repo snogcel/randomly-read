@@ -28,7 +28,7 @@ class Timer extends React.Component {
       consonant: [],
       templates: [],
       syllables: [],
-      location: 'initial',
+      position: 'initial',
       limit: 1,
     };
 
@@ -346,6 +346,7 @@ class Timer extends React.Component {
     let mode = this.state.mode;
     let vowel = this.state.vowel;
     let consonant = this.state.consonant;
+    let position = this.state.position;
     let templates = this.state.templates;
     let syllables = this.state.syllables;
 
@@ -392,6 +393,7 @@ class Timer extends React.Component {
     consonant = options.consonant;
     templates = options.templates;
     syllables = options.syllables;
+    position = options.position;
 
     console.log("timer: ", options.vowel);
 
@@ -402,6 +404,7 @@ class Timer extends React.Component {
     this.props.addSyllables(options.syllables); // pass to TimerContainer
     this.props.setLimit(limitText); // pass to TimerContainer
     this.props.setMode(mode); // pass to TimerContainer
+    this.props.setPosition(position); // pass to TimerContainer
     this.props.setIntermissionText(options.intermissionText); // pass to TimerContainer
 
     if (this.state.mode === "Intermission") refresh = false;
@@ -410,6 +413,7 @@ class Timer extends React.Component {
       mode: mode,
       vowel: vowel,
       consonant: consonant,
+      position: position,
       templates: templates,
       syllables: syllables,
       limit: limitText,
