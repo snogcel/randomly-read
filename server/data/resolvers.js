@@ -165,6 +165,12 @@ const resolvers = {
                           }
                       }
 
+                      console.log("Noun List Length: ", noun.length);
+
+                      console.log("Adjective List Length: ", adj.length);
+
+                      if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
+
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;
 
@@ -268,6 +274,7 @@ const resolvers = {
                       .catch((e) => {
                         // handle errors here
                         console.log(e);
+                        reject(e);
 
                       });
 
