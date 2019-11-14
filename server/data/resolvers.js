@@ -96,13 +96,14 @@ const resolvers = {
            */
 
             let templates = [
-              "the {{ noun }} is {{ adjective }}",
+              "{{ noun }} is {{ adjective }}",
               "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
-              "{{ an_adjective }} {{ noun_animal }}",
-              "the {{ adjective }} {{ noun_artifact }}",
-              "the {{ noun }} in {{ noun_location }}",
             ];
+
+            let templateAnimal = "{{ an_adjective }} {{ noun_animal }}";
+            let templateArtifact = "the {{ adjective }} {{ noun_artifact }}";
+            let templateLocation = "{{ noun }} in {{ noun_location }}";
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -166,10 +167,18 @@ const resolvers = {
                       }
 
                       console.log("Noun List Length: ", noun.length);
-
                       console.log("Adjective List Length: ", adj.length);
+                      console.log("Filtered animal Length: ", filteredNouns["animal"].length);
+                      console.log("Filtered location Length: ", filteredNouns["location"].length);
+                      console.log("Filtered person Length: ", filteredNouns["person"].length);
+                      console.log("Filtered food Length: ", filteredNouns["food"].length);
+                      console.log("Filtered artifact Length: ", filteredNouns["artifact"].length);
 
                       if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
+
+                      if (filteredNouns["animal"].length > 0) templates.push(templateAnimal);
+                      if (filteredNouns["location"].length > 0) templates.push(templateLocation);
+                      if (filteredNouns["artifact"].length > 0) templates.push(templateArtifact);
 
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;

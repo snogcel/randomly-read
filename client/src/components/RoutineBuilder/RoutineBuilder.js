@@ -44,6 +44,8 @@ import IntermissionText from './elements/IntermissionText';
 
 import RoutinePreview from './elements/RoutinePreview';
 
+import InitialSentenceBlacklist from '../RRLayout/InitialSentenceBlacklist';
+
 import { styles } from '../../themeHandler';
 
 // TODO - set up constants for all form options, for now these are stored in each element.
@@ -755,7 +757,59 @@ class RoutineBuilder extends React.Component {
 
     }
 
-    return vowelArr.concat(defaultConsonants);
+    let consonants = vowelArr.concat(defaultConsonants);
+
+    let blacklistedConsonants = this.filterAvailableConsonants(consonants);
+
+    console.log("blacklisted consonants: ", blacklistedConsonants);
+
+    for (let i = 0; i < blacklistedConsonants.length; i++) {
+
+      consonants = consonants.filter(o => o.id !== blacklistedConsonants[i]);
+
+      /*
+      delete consonantObj[blacklistedConsonants[i]]; // remove blacklisted item
+       */
+
+    }
+
+    console.log(consonants);
+
+    return consonants;
+  }
+
+  filterAvailableConsonants(consonantArr) {
+
+    console.log("Mode: ", this.props.mode);
+    console.log("Position:", this.props.position);
+    console.log("Syllables: ", this.props.syllables);
+    console.log("Vowels: ", this.props.vowels);
+
+    let mode = this.props.mode;
+    let position = this.props.position;
+    let syllables = this.props.syllables;
+    let vowels = this.props.vowels;
+
+    let blacklist = [];
+
+    // iterate through vowel array (in cases where more than one vowel is being filtered on)
+    for (let i = 0; i < vowels.length; i++) {
+
+      // determine overlap
+      for (let j = 0; j < syllables.length; j++) {
+
+        if (j === 0 && i === 0) { // for first iteration, include full array
+          blacklist = InitialSentenceBlacklist[vowels[i]].consonants[(syllables[j] - 1)];
+        } else { // find intersection of arrays
+          blacklist = blacklist.filter(function(value) {
+            return InitialSentenceBlacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+          });
+        }
+      }
+
+    }
+
+    return blacklist;
   }
 
   parseConsonants(consonants) {
