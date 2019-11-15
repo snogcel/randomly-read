@@ -337,6 +337,7 @@ class Timer extends React.Component {
     this.props.clearQueryResults();
 
     // Reset Current Exercise
+    this.completed = 0;
     this.props.updateCompleted(0);
 
   }
@@ -358,6 +359,7 @@ class Timer extends React.Component {
     this.props.clearQueryResults();
 
     // Reset Current Exercise
+    this.completed = 0;
     this.props.updateCompleted(0);
 
   }
@@ -415,10 +417,9 @@ class Timer extends React.Component {
     syllables = options.syllables;
     position = options.position;
 
-    console.log("timer: ", options.vowel);
-
     // passes updated variables to redux
     console.log("- passing updated variables to redux..");
+    this.props.addExerciseNumber(this.exercisePointer);
     this.props.addRoutineVowel(options.vowel); // pass to TimerContainer
     this.props.addConsonant(options.consonant); // pass to TimerContainer
     this.props.addSyllables(options.syllables); // pass to TimerContainer

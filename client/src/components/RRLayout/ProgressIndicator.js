@@ -3,13 +3,15 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { styles } from '../../themeHandler';
 import { Typography } from '@material-ui/core';
+
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
+
 import Grid from "./RRHome";
 
 function ProgressIndicator(props) {
 
   const {classes} = props;
-
-  console.log(props);
 
   let status = null;
 
@@ -28,14 +30,18 @@ function ProgressIndicator(props) {
 
   let value = (total - (increment * (range - timeLeft)));
 
-  console.log(props.currentExerciseNumber);
+  const { width } = props;
+
+  let size = 36;
+
+  if (width === "md" || width === "sm" || width === "xs") size = 28;
 
   return (
     <div className={classes.column}>
 
       {(props.currentExerciseNumber !== null) ? (
         <>
-          <CircularProgress variant="static" value={value} color="secondary" />
+          <CircularProgress size={size} variant="static" value={value} color="secondary" />
           <br />
           <Typography variant="h6" color="secondary">{status}</Typography>
         </>
@@ -50,6 +56,10 @@ function ProgressIndicator(props) {
 
 }
 
+ProgressIndicator.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const ProgressIndicatorWrapped = withStyles(styles)(ProgressIndicator);
 
-export default ProgressIndicatorWrapped;
+export default withWidth()(ProgressIndicatorWrapped);
