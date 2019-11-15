@@ -325,10 +325,12 @@ class Timer extends React.Component {
     console.log("-reset timer and query-");
 
     this.exercisePointer = 0;
-    this.setState({time: 0, isOn: false})
+    this.setState({time: 0, isOn: false});
+    this.props.addExerciseNumber(null);
+
     this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();
-    this.props.addSyllables([1])
+    this.props.addSyllables([1]);
     this.props.setMode('Word');
 
     // Clear Query History
@@ -345,7 +347,7 @@ class Timer extends React.Component {
 
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false});
-    this.props.addExerciseNumber(this.exercisePointer);
+    this.props.addExerciseNumber(null);
 
     this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();

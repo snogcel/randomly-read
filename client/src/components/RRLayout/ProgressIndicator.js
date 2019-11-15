@@ -28,14 +28,16 @@ function ProgressIndicator(props) {
 
   let value = (total - (increment * (range - timeLeft)));
 
+  console.log(props.currentExerciseNumber);
+
   return (
     <div className={classes.column}>
 
-      {!props.isPaused ? (
+      {(props.currentExerciseNumber !== null) ? (
         <>
           <CircularProgress variant="static" value={value} color="secondary" />
           <br />
-          <Typography color="secondary">{status}</Typography>
+          <Typography variant="h6" color="secondary">{status}</Typography>
         </>
       ) : (
         <>
