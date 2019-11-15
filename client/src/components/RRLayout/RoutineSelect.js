@@ -85,7 +85,7 @@ class RoutineSelect extends React.Component {
 
         return (
             <React.Fragment>
-                 <FormControl style={{minWidth: 150}}>
+                 <FormControl style={{minWidth: 150}} variant="outlined">
 
                   <Select
                   classes={{select: theme === true ? classes.select : undefined}}

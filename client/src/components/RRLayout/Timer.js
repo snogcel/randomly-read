@@ -10,6 +10,24 @@ import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
+import IconButton from '@material-ui/core/IconButton';
+
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+
+
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+
+
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+
+import ReplayIcon from '@material-ui/icons/Replay';
+
+
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
+
+
+
 import { styles } from '../../themeHandler';
 
 class Timer extends React.Component {
@@ -459,17 +477,33 @@ class Timer extends React.Component {
 
     }
 
+    /*
+
     let start = (this.state.time === 0) ?
       <Button onClick={this.startTimer} size="small" variant="outlined" color={"default"} ><b>Start</b></Button> : null;
+
     let stop = (this.state.time === 0 || !this.state.isOn) ?
       null : <Button onClick={this.stopTimer} size="small" variant="outlined" color={"default"} ><b>Pause</b></Button>;
+
     let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
       null : <Button onClick={this.resumeTimer} size="small" variant="outlined" color={"default"} ><b>Resume</b></Button>;
+
     let reset = (this.state.time === 0 || this.state.isOn) ?
       null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
 
+     */
+
+    let start = (this.state.time === 0) ?
+      <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;
+    let stop = (this.state.time === 0 || !this.state.isOn) ?
+      null : <IconButton onClick={this.stopTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PauseCircleFilledIcon fontSize="large" /></IconButton>;
+    let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
+      null : <IconButton onClick={this.resumeTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton>;
+    let reset = (this.state.time === 0 || this.state.isOn) ?
+      null : <IconButton onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"}><ReplayIcon fontSize="large" /></IconButton>;
+
     return (
-      <Grid container spacing={2}>
+      <Grid container className={classes.timerControlGrid} spacing={2} justify="center">
 
         <Grid item>
           <div className={classes.RoutineSelector}>

@@ -1,11 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import pink from '@material-ui/core/colors/pink';
-import red from '@material-ui/core/colors/red';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
-
-
-const MuiTheme = createMuiTheme({
+let MuiTheme = createMuiTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -21,6 +16,8 @@ const MuiTheme = createMuiTheme({
     // error: will use the default color
   }
 });
+
+MuiTheme = responsiveFontSizes(MuiTheme);
 
 const styles = theme => ({
   root: {
@@ -60,19 +57,24 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: "none"
   },
-  card: {
+  wordGrid: {
+    alignItems: "center",
     minHeight:150,
+  },
+  timerControlGrid: {
+    alignItems: "center"
+  },
+  card: {
+    textAlign: "center",
   },
   sideCard: {
     marginBottom: 20
   },
-  title: {
-    fontSize: 72,
+  word: {
     fontWeight: "bold",
     color: "#2f8eed"
   },
   intermission: {
-    fontSize: 72,
     fontWeight: "bold",
     color: "#dba987"
   },
@@ -121,6 +123,9 @@ const styles = theme => ({
       backgroundColor: "#2d90e5"
     },
     backgroundColor: '#33a0ff',
+  },
+  iconButton: {
+    margin: theme.spacing(1)
   },
   button: {
     margin: 4,

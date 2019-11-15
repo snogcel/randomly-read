@@ -4,6 +4,11 @@ import { withStyles } from "@material-ui/core/styles";
 import WordCardContainer from './WordCardContainer';
 import TimerContainer from './TimerContainer';
 import Grid from '@material-ui/core/Grid';
+
+import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -28,8 +33,7 @@ import { styles } from '../../themeHandler';
 const RRHome = props => {
 
   const {classes, user} = props;
-
-  // <WordHistory />
+  const { width } = props;
 
   return (
 
@@ -39,27 +43,29 @@ const RRHome = props => {
           <>
             <Grid container spacing={0}>
 
-              <Grid item xs={3}>
+              <Grid item xs={12}>
 
                 <TimerContainer />
 
-                <ExerciseHistoryContainer />
-
               </Grid>
 
-              <Grid item xs={7}>
+              <Hidden lgDown>
+
+                <Grid item>
+
+                  <ExerciseHistoryContainer />
+
+                </Grid>
+
+              </Hidden>
+
+              <Grid item xs={12}>
 
                 <WordCardContainer />
 
-                <WordHistoryList />
-
-              </Grid>
-
-              <Grid item xs={2}>
-
-                <br />
-
                 <ProgressIndicator />
+
+                <WordHistoryList />
 
               </Grid>
 
@@ -71,6 +77,10 @@ const RRHome = props => {
 
   )};
 
+RRHome.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const RRHomeWrapped = withStyles(styles)(RRHome);
 
-export default RRHomeWrapped;
+export default withWidth()(RRHomeWrapped);
