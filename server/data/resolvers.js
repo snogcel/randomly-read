@@ -6,7 +6,9 @@ const Lexeme = require('./lexeme');
 const resolvers = {
     Query: {
         words(_, args, req) {
-            let filter = {};
+            let filter = {
+              syllables: [1,2,3,4,5]
+            };
             let limit = 1; // default
             let location = "initial"; // default
 
@@ -15,7 +17,7 @@ const resolvers = {
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
             if (typeof args.consonant !== 'undefined' && Array.isArray(args.consonant)) filter.consonant = args.consonant;
-            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables)) filter.syllables = args.syllables;
+            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables) && args.syllables.length !== 0) filter.syllables = args.syllables;
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
             if (typeof args.type !== 'undefined' && Array.isArray(args.type)) filter.type = args.type;
             if (typeof args.subtype !== 'undefined' && Array.isArray(args.subtype)) filter.subtype = args.subtype;
@@ -74,7 +76,9 @@ const resolvers = {
             return fetchData();
         },
         sentences(_, args, req) {
-            let filter = {};
+            let filter = {
+              syllables: [1,2,3,4,5]
+            };
             let limit = 1; // default
             let dataLimit = 250; // fixed to 250 for querying words
             let location = "initial"; // default
@@ -108,7 +112,7 @@ const resolvers = {
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
             if (typeof args.consonant !== 'undefined' && Array.isArray(args.consonant)) filter.consonant = args.consonant;
-            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables)) filter.syllables = args.syllables;
+            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables) && args.syllables.length !== 0) filter.syllables = args.syllables;
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
 
             // Apply Default Filter
