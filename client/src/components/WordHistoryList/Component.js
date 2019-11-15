@@ -53,7 +53,7 @@ class WordHistoryList extends React.Component {
       exerciseResults = this.props.posts.slice(0, -1);
     }
 
-    return <Grid container direction="column-reverse" className={classes.root} spacing={2}>{this.mapPosts(exerciseResults)}</Grid>;
+    return <Grid container className={classes.wordHistoryGrid} direction="column-reverse" spacing={2}>{this.mapPosts(exerciseResults)}</Grid>;
 
   }
 }

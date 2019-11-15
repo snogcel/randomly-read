@@ -61,6 +61,9 @@ const styles = theme => ({
     alignItems: "center",
     minHeight:150,
   },
+  wordHistoryGrid: {
+    alignItems: "center"
+  },
   timerControlGrid: {
     alignItems: "center"
   },
@@ -89,20 +92,15 @@ const styles = theme => ({
     textAlign: "center"
   },
   historyTitle: {
-    fontSize: 35,
     color: "#666666"
   },
   historyTitleNovote: {
-    fontSize: 35,
     color: "#666666",
-    marginTop: "22px"
   },
   historyTitleUpvote: {
-    fontSize: 35,
     color: "#8A0C93"
   },
   historyTitleDownvote: {
-    fontSize: 35,
     color: "#C70E4C"
   },
   subtitle: {
@@ -162,6 +160,9 @@ const styles = theme => ({
   },
   wordHistoryWrapper: {
     textAlign: "center",
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center"
   },
   RoutineSelector: {
     paddingLeft: theme.spacing.unit * 2
