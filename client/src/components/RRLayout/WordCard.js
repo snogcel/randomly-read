@@ -314,7 +314,7 @@ class WordCard extends React.Component  {
                         this.props.addQueryResult(fetched);
                       }
 
-                    } else if (this.props.routineStep.mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
+                    } else if (this.props.mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
 
                       // build result
                       let result = "";
