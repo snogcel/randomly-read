@@ -127,7 +127,7 @@ export default function StepList(props) {
               if (step.position === "initial") subHeaderText += "that start with ";
               if (step.position === "medial") subHeaderText += "that contain ";
               if (step.position === "final") subHeaderText += "that end with ";
-              
+
               let consonants = "";
               for (let i = 0; i < step.consonants.length; i++) {
 

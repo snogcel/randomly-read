@@ -12,10 +12,15 @@ let MuiTheme = createMuiTheme({
       main: '#14197E',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
-    }
+    },
+    overrides: {
+
+    },
     // error: will use the default color
   }
 });
+
+// EDEDF3
 
 MuiTheme = responsiveFontSizes(MuiTheme);
 
@@ -69,6 +74,12 @@ const styles = theme => ({
   },
   card: {
     textAlign: "center",
+  },
+  exerciseStepsCard: {
+    maxWidth: 350,
+    margin: "auto",
+    transition: "0.3s",
+    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
   },
   sideCard: {
     marginBottom: 20
@@ -169,6 +180,10 @@ const styles = theme => ({
   },
   TimerControls: {
 
+  },
+  exerciseHistoryMobile: {
+    display:'flex',
+    justifyContent:'center'
   }
 });
 

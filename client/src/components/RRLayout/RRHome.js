@@ -35,6 +35,18 @@ const RRHome = props => {
   const {classes, user} = props;
   const { width } = props;
 
+  let exerciseHistoryContainerWidth = 12;
+  let timerContainerWidth = 12;
+  let wordContainerWidth = 12;
+
+  console.log(width);
+
+  // laptop or desktop
+  if (width === "xl" || width === "lg") {
+    exerciseHistoryContainerWidth = 4;
+    timerContainerWidth = 8;
+  }
+
   return (
 
       <div className={classes.root}>
@@ -43,23 +55,15 @@ const RRHome = props => {
           <>
             <Grid container spacing={0}>
 
-              <Grid item xs={12}>
+              <Grid item xs={exerciseHistoryContainerWidth}>
 
-                <TimerContainer />
+                <ExerciseHistoryContainer />
 
               </Grid>
 
-              <Hidden lgDown>
+              <Grid item xs={timerContainerWidth}>
 
-                <Grid item>
-
-                  <ExerciseHistoryContainer />
-
-                </Grid>
-
-              </Hidden>
-
-              <Grid item xs={12}>
+                <TimerContainer />
 
                 <WordCardContainer />
 
