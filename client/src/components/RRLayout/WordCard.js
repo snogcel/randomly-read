@@ -259,8 +259,7 @@ class WordCard extends React.Component  {
       <Grid container className={classes.wordGrid} justify="center">
         <Grid item>
 
-          <Card elevation="1" className={classes.card}>
-            <CardContent>
+
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
                 {({ loading, error, data, refetch }) => {
 
@@ -367,31 +366,39 @@ class WordCard extends React.Component  {
 
                   if (this.props.mode === 'Sentence') {
 
-                    return(<div>
-                      <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
-                    </div>);
+                    return (
+                      <Card elevation="1" className={classes.card}>
+                        <CardContent>
+                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  } else if (this.props.mode === 'Word') {
+
+                    return (
+                      <Card elevation="1" className={classes.card}>
+                        <CardContent>
+                          <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
 
                   } else {
 
-                    return(<div>
-                      <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
-                    </div>);
+                    return (
+                      <Card elevation="0" className={classes.card}>
+                        <CardContent>
+                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
 
                   }
 
                   }}
                   </Query>
                 }
-            </CardContent>
-          </Card>
-
-          {/* VowelCheckboxes.map((item, i) => (
-             <>
-
-               <VowelCheckbox action={this.handleChange} value={{name: item.name, displayName: item.label, selectedVowel: this.props.vowel}} />
-
-             </>
-          )) */}
 
         </Grid>
       </Grid>
