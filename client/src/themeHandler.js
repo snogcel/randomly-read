@@ -74,12 +74,13 @@ const styles = theme => ({
   },
   card: {
     textAlign: "center",
+    backgroundColor:"#FBFBFB",
+    boxShadow: "0 4px 20px -6px rgba(0,0,0,0.15)",
   },
   exerciseStepsCard: {
-    maxWidth: 350,
+    maxWidth: 300,
     margin: "auto",
     transition: "0.3s",
-    boxShadow: "0 8px 40px -12px rgba(0,0,0,0.3)",
   },
   sideCard: {
     marginBottom: 20
@@ -103,10 +104,10 @@ const styles = theme => ({
     textAlign: "center"
   },
   historyTitle: {
-    color: "#666666"
+    color: "rgba(0, 0, 0, 0.25)"
   },
   historyTitleNovote: {
-    color: "#666666",
+    color: "rgba(0, 0, 0, 0.25)",
   },
   historyTitleUpvote: {
     color: "#8A0C93"

@@ -18,11 +18,11 @@ import { styles } from '../../themeHandler';
 
 const StyledListItem = withStyles({
   root: {
-    border: "1px solid #F9F9FE",
+    border: "1px solid #E0E0F5",
     marginTop: 10,
     marginBottom: 10,
     "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "#AFD5FA"
+      backgroundColor: "#82BBF3"
     }
   },
   selected: {}
@@ -190,13 +190,11 @@ class ExerciseHistory extends React.Component {
 
       exerciseHistoryWrapped = <React.Fragment>
 
-        <Card className={classes.exerciseStepsCard}>
-          <CardContent>
+        <div className={classes.exerciseStepsCard}>
 
             {exerciseHistory}
 
-          </CardContent>
-        </Card>
+        </div>
 
       </React.Fragment>;
 
