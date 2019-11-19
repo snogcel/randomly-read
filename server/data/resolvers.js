@@ -6,7 +6,9 @@ const Lexeme = require('./lexeme');
 const resolvers = {
     Query: {
         words(_, args, req) {
-            let filter = {};
+            let filter = {
+              syllables: [1,2,3,4,5]
+            };
             let limit = 1; // default
             let location = "initial"; // default
 
@@ -15,17 +17,19 @@ const resolvers = {
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
             if (typeof args.consonant !== 'undefined' && Array.isArray(args.consonant)) filter.consonant = args.consonant;
-            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables)) filter.syllables = args.syllables;
+            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables) && args.syllables.length !== 0) filter.syllables = args.syllables;
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
             if (typeof args.type !== 'undefined' && Array.isArray(args.type)) filter.type = args.type;
             if (typeof args.subtype !== 'undefined' && Array.isArray(args.subtype)) filter.subtype = args.subtype;
 
             // Assign Data Source to Query
-            if (typeof args.location !== 'undefined' && typeof args.location === 'string') {
-                if (args.location === 'initial') location = 'initial'; // maps to 'wordlist_initial'
-                if (args.location === 'medial') location = 'medial'; // maps to 'wordlist_medial'
-                if (args.location === 'final') location = 'final'; // maps to 'wordlist_final'
+            if (typeof args.position !== 'undefined' && typeof args.position === 'string') {
+                if (args.position === 'initial') location = 'initial'; // maps to 'wordlist_initial'
+                if (args.position === 'medial') location = 'medial'; // maps to 'wordlist_medial'
+                if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
+
+            console.log("location filter: ", args.position);
 
             console.log("vowel filter: ", filter.vowel);
             console.log("consonant filter: ", filter.consonant);
@@ -33,7 +37,9 @@ const resolvers = {
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
+
+                      console.log(data);
 
                       let queryResult = data;
 
@@ -50,20 +56,29 @@ const resolvers = {
                         lexeme.votes = doc.votes;
                         lexeme.score = doc.score;
 
-                        console.log(queryResult);
+                        // console.log(queryResult);
+
+                        console.log(lexeme);
 
                         resolve(lexeme);
 
                       }, function(err) { reject(err); });
 
+                  }).catch(function(err) {
+
+                    console.log(err);
+
                   });
+
               });
             };
 
             return fetchData();
         },
         sentences(_, args, req) {
-            let filter = {};
+            let filter = {
+              syllables: [1,2,3,4,5]
+            };
             let limit = 1; // default
             let dataLimit = 250; // fixed to 250 for querying words
             let location = "initial"; // default
@@ -85,18 +100,19 @@ const resolvers = {
            */
 
             let templates = [
-              "the {{ noun }} is {{ adjective }}",
+              "{{ noun }} is {{ adjective }}",
               "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
-              "{{ an_adjective }} {{ noun_animal }}",
-              "the {{ adjective }} {{ noun_artifact }}",
-              "the {{ noun }} in {{ noun_location }}",
             ];
+
+            let templateAnimal = "{{ an_adjective }} {{ noun_animal }}";
+            let templateArtifact = "the {{ adjective }} {{ noun_artifact }}";
+            let templateLocation = "{{ noun }} in {{ noun_location }}";
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
             if (typeof args.consonant !== 'undefined' && Array.isArray(args.consonant)) filter.consonant = args.consonant;
-            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables)) filter.syllables = args.syllables;
+            if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables) && args.syllables.length !== 0) filter.syllables = args.syllables;
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
 
             // Apply Default Filter
@@ -107,16 +123,18 @@ const resolvers = {
             if (typeof args.templates !== 'undefined' && Array.isArray(args.templates)) templates = args.templates;
 
             // Assign Data Source to Query
-            if (typeof args.location !== 'undefined' && typeof args.location === 'string') {
-                if (args.location === 'initial') location = 'initial'; // maps to 'wordlist_initial'
-                if (args.location === 'medial') location = 'medial'; // maps to 'wordlist_medial'
-                if (args.location === 'final') location = 'final'; // maps to 'wordlist_final'
+            if (typeof args.position !== 'undefined' && typeof args.position === 'string') {
+                if (args.position === 'initial') location = 'initial'; // maps to 'wordlist_initial'
+                if (args.position === 'medial') location = 'medial'; // maps to 'wordlist_medial'
+                if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
             // Fetch Query Data and Build Sentences
             let buildSentence = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: dataLimit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: dataLimit }).then(function(data) {
+
+                      // TODO - check for empty result
 
                       let nounData = [];
                       let adjData = [];
@@ -151,6 +169,20 @@ const resolvers = {
                             adjData.push(data[i]); // create parallel adjStack for Lexeme creation
                           }
                       }
+
+                      console.log("Noun List Length: ", noun.length);
+                      console.log("Adjective List Length: ", adj.length);
+                      console.log("Filtered animal Length: ", filteredNouns["animal"].length);
+                      console.log("Filtered location Length: ", filteredNouns["location"].length);
+                      console.log("Filtered person Length: ", filteredNouns["person"].length);
+                      console.log("Filtered food Length: ", filteredNouns["food"].length);
+                      console.log("Filtered artifact Length: ", filteredNouns["artifact"].length);
+
+                      if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
+
+                      if (filteredNouns["animal"].length > 0) templates.push(templateAnimal);
+                      if (filteredNouns["location"].length > 0) templates.push(templateLocation);
+                      if (filteredNouns["artifact"].length > 0) templates.push(templateArtifact);
 
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;
@@ -254,7 +286,14 @@ const resolvers = {
                       })
                       .catch((e) => {
                         // handle errors here
+                        console.log(e);
+                        reject(e);
+
                       });
+
+                  }).catch(function(err) {
+
+                    console.log(err);
 
                   });
               });

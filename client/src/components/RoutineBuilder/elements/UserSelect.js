@@ -39,7 +39,6 @@ export default function UserSelect(props) {
   let inactiveUserRoutines = [];
 
   for (let i = 0; i < props.options.length; i++) {
-    console.log(props.options[i]);
     if (props.options[i].isActive) {
       activeUserRoutines.push(props.options[i]);
     } else {

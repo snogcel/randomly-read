@@ -1,14 +1,40 @@
-import Blacklist from './Blacklist';
+import InitialSentenceBlacklist from "./InitialSentenceBlacklist";
+import MedialSentenceBlacklist from "./MedialSentenceBlacklist";
+import FinalSentenceBlacklist from "./FinalSentenceBlacklist";
+import InitialWordBlacklist from "./InitialWordBlacklist";
+import MedialWordBlacklist from "./MedialWordBlacklist";
+import FinalWordBlacklist from "./FinalWordBlacklist";
 
 const RoutineBuilder = function() {
 
 };
 
-RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, syllables) {
+RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseConfig) {
 
-  let depth = Math.min(...syllables);
+  let syllables = exerciseConfig.syllables;
+  let mode = exerciseConfig.mode;
+  let position = exerciseConfig.position;
+  let blacklist = {};
 
-  let vowelBlacklist = Blacklist[vowel].consonants[depth - 1];
+  // sentences
+  if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
+  if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
+  if (mode === "Sentence" && position === "final") blacklist = FinalSentenceBlacklist;
+
+  // words
+  if (mode === "Word" && position === "initial") blacklist = InitialWordBlacklist;
+  if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
+  if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
+
+  // TODO - synchronize this with RoutineBuilder Component
+
+  let depth = 1;
+
+  if (syllables.length !== 0) {
+    depth = Math.min(...syllables);
+  }
+
+  let vowelBlacklist = blacklist[vowel].consonants[depth - 1];
 
   if (vowelBlacklist.indexOf(consonant) > -1) {
     return false;
@@ -24,7 +50,8 @@ RoutineBuilder.prototype._buildActionBase = function(exerciseConfig) {
     consonant: [],
     templates: exerciseConfig.templates,
     syllables: exerciseConfig.syllables,
-    limit: exerciseConfig.limit
+    limit: exerciseConfig.limit,
+    position: exerciseConfig.position
   };
 
   if (exerciseConfig.intermissionText) actionBase.intermissionText = exerciseConfig.intermissionText;
@@ -89,14 +116,14 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
-      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables); // set and verify initial matched word
+      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
 
       while (!verified) {
         rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
         randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
         consonant = exerciseConfig.consonants[rand];
         vowel = exerciseConfig.vowels[randVowel];
-        verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables);
+        verified = this._verifyBlacklist(vowel, consonant, exerciseConfig);
         if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
       }
 

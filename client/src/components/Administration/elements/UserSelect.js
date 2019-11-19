@@ -39,7 +39,6 @@ export default function UserSelectAdmin(props) {
   let inactiveUsers = [];
 
   for (let i = 0; i < props.options.length; i++) {
-    console.log(props.options[i]);
     if (props.options[i].isActive) {
       activeUsers.push(props.options[i]);
     } else {

@@ -26,6 +26,7 @@ import InsertButton from './elements/InsertButton';
 import UpdateButton from './elements/UpdateButton';
 import DeleteButton from './elements/DeleteButton';
 import SaveButton from './elements/SaveButton';
+import PreviewButton from './elements/PreviewButton';
 
 import StepList from './elements/StepList';
 
@@ -40,6 +41,16 @@ import RepetitionSlider from './elements/RepetitionSlider';
 import VowelSelect from './elements/VowelSelect';
 import ConsonantCheckboxes from './elements/ConsonantCheckboxes';
 import IntermissionText from './elements/IntermissionText';
+
+import RoutinePreview from './elements/RoutinePreview';
+
+import InitialSentenceBlacklist from '../RRLayout/InitialSentenceBlacklist';
+import MedialSentenceBlacklist from '../RRLayout/MedialSentenceBlacklist';
+import FinalSentenceBlacklist from '../RRLayout/FinalSentenceBlacklist';
+
+import InitialWordBlacklist from '../RRLayout/InitialWordBlacklist';
+import MedialWordBlacklist from '../RRLayout/MedialWordBlacklist';
+import FinalWordBlacklist from '../RRLayout/FinalWordBlacklist';
 
 import { styles } from '../../themeHandler';
 
@@ -153,6 +164,7 @@ class RoutineBuilder extends React.Component {
 
     this.saveHandler = this.saveHandler.bind(this);
 
+    this.previewHandler = this.previewHandler.bind(this);
     this.createHandler = this.createHandler.bind(this);
     this.deleteRoutineHandler = this.deleteRoutineHandler.bind(this);
 
@@ -173,6 +185,8 @@ class RoutineBuilder extends React.Component {
     this.repetitionHandler = this.repetitionHandler.bind(this);
     this.syllableHandler = this.syllableHandler.bind(this);
     this.intermissionHandler = this.intermissionHandler.bind(this);
+
+    this.routinePreview = React.createRef();
 
   }
 
@@ -213,6 +227,8 @@ class RoutineBuilder extends React.Component {
 
     }
 
+    this.routinePreview.current.state.query = null; // clear preview window
+
   };
 
   deleteRoutineHandler(routineId) {
@@ -225,6 +241,12 @@ class RoutineBuilder extends React.Component {
 
     }
 
+    this.routinePreview.current.state.query = null; // clear preview window
+
+  }
+
+  previewHandler() {
+    this.routinePreview.current.refreshQuery();
   }
 
   saveHandler() {
@@ -257,6 +279,8 @@ class RoutineBuilder extends React.Component {
     } else {
       this.props.removeConsonant(consonant); // remove consonant from state
     }
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   nameHandler(name) {
@@ -276,6 +300,8 @@ class RoutineBuilder extends React.Component {
     }
 
     this.props.updateVowels(vowelArr); // pass to redux
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   syllableHandler(syllables) {
@@ -291,6 +317,8 @@ class RoutineBuilder extends React.Component {
     }
 
     this.props.updateSyllables(syllableArr); // pass to redux
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   modeHandler(mode) {
@@ -301,22 +329,32 @@ class RoutineBuilder extends React.Component {
     } else {
       this.props.updateIsIntermission(false);
     }
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   positionHandler(position) {
     this.props.updatePosition(position);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   rangeValHandler(rangeVal) {
     this.props.updateRangeVal(rangeVal);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   repetitionHandler(repetitions) {
     this.props.updateRepetitions(repetitions);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   intermissionHandler(intermissionText) {
     this.props.updateIntermissionText(intermissionText);
+
+    this.routinePreview.current.state.query = null; // clear preview window
   }
 
   insertHandler() {
@@ -448,6 +486,7 @@ class RoutineBuilder extends React.Component {
       }
 
       this.setState({ "index": index });
+      this.routinePreview.current.state.query = null;
     }
 
     // this.saveHandler();
@@ -724,7 +763,77 @@ class RoutineBuilder extends React.Component {
 
     }
 
-    return vowelArr.concat(defaultConsonants);
+    let consonants = vowelArr.concat(defaultConsonants);
+
+    let blacklistedConsonants = this.filterAvailableConsonants(consonants);
+
+    console.log("blacklisted consonants: ", blacklistedConsonants);
+
+    for (let i = 0; i < blacklistedConsonants.length; i++) {
+
+      consonants = consonants.filter(o => o.id !== blacklistedConsonants[i]);
+
+      /*
+      delete consonantObj[blacklistedConsonants[i]]; // remove blacklisted item
+       */
+
+    }
+
+    console.log(consonants);
+
+    return consonants;
+  }
+
+  filterAvailableConsonants(consonantArr) {
+
+    console.log("Mode: ", this.props.mode);
+    console.log("Position:", this.props.position);
+    console.log("Syllables: ", this.props.syllables);
+    console.log("Vowels: ", this.props.vowels);
+
+    let mode = this.props.mode;
+    let position = this.props.position;
+    let syllables = this.props.syllables;
+    let vowels = this.props.vowels;
+
+    let result = [];
+    let blacklist = {};
+
+    // apply relevant blacklist to mode + position
+
+    // sentences
+    if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
+
+    if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
+
+    if (mode === "Sentence" && position === "final") blacklist = FinalSentenceBlacklist;
+
+    // words
+    if (mode === "Word" && position === "initial") blacklist = InitialWordBlacklist;
+
+    if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
+
+    if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
+
+
+    // iterate through vowel array (in cases where more than one vowel is being filtered on)
+    for (let i = 0; i < vowels.length; i++) {
+
+      // determine overlap
+      for (let j = 0; j < syllables.length; j++) {
+
+        if (j === 0 && i === 0) { // for first iteration, include full array
+          result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
+        } else { // find intersection of arrays
+          result = result.filter(function(value) {
+            return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+          });
+        }
+      }
+
+    }
+
+    return result;
   }
 
   parseConsonants(consonants) {
@@ -779,6 +888,16 @@ class RoutineBuilder extends React.Component {
     return consonantObj;
   }
 
+  parseCurrentRoutineStep() {
+    let routineStep = {};
+
+    for (let i = 0; i < this.props.routine.length; i++) {
+      if (this.props.routine[i].index === this.props.index) routineStep = this.props.routine[i];
+    }
+
+    return routineStep;
+  }
+
   render() {
 
     const { user } = this.props;
@@ -809,6 +928,8 @@ class RoutineBuilder extends React.Component {
 
     console.log("available routines", this.props.availableRoutines);
 
+    console.log("available routines", this.props.availableRoutines);
+
     */
 
     // console.log("current routine id: ", id);
@@ -831,18 +952,7 @@ class RoutineBuilder extends React.Component {
     let repetitionObj = this.parseRepetition(repetitions);
     let intermissionTextObj = this.parseIntermissionText(intermissionText);
 
-    // TODO - User
-    // TODO - Routine Name
-    // TODO - Edit Name
-
-    // TODO - handle Intermission Mode
-
-    // TODO - Display Exercise Steps (table)
-    // TODO - Preview Exercise Step
-
-    // TODO - Copy, Delete, Add Steps
-
-    console.log("available routines", this.props.availableRoutines);
+    let routineStep = this.parseCurrentRoutineStep();
 
     return (
 
@@ -1002,6 +1112,15 @@ class RoutineBuilder extends React.Component {
                           </Grid>
                           </> ) : ( <> </> )}
 
+                        {(this.state.index > 0) ? (
+                          <>
+                            <Grid item>
+
+                              <br />
+                              <PreviewButton action={this.previewHandler} />
+
+                            </Grid>
+                          </> ) : ( <> </> )}
 
                       </Grid>
 
@@ -1030,6 +1149,11 @@ class RoutineBuilder extends React.Component {
 
                 </> )}
 
+                <Grid item xs={12}>
+
+                  <RoutinePreview routineStep={routineStep} ref={this.routinePreview}/>
+
+                </Grid>
 
             </Grid>
 
