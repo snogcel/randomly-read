@@ -157,7 +157,7 @@ class Administration extends React.Component {
   render() {
 
     const { classes } = this.props;
-
+    const { user } = this.props;
     const { selectedUserId, selectedUsername, selectedFirstName, selectedLastName, selectedActive, mode } = this.props;
 
     let availableUsers = this.parseAvailableUsers(this.props.availableUsers);
@@ -230,6 +230,9 @@ class Administration extends React.Component {
     return (
 
       <Grid className={classes.root}>
+
+        {user ? (
+          <>
 
           <Grid container spacing={0}>
 
@@ -365,6 +368,9 @@ class Administration extends React.Component {
 
 
           </Grid>
+
+          </>
+        ) : ( this.props.history.push("/login") )}
 
       </Grid>
 

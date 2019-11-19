@@ -506,7 +506,7 @@ class Timer extends React.Component {
       null : <IconButton onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"}><ReplayIcon fontSize="large" /></IconButton>;
 
     return (
-      <Grid container className={classes.timerControlGrid} spacing={2} justify="center">
+      <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
 
         <Grid item>
           <div className={classes.RoutineSelector}>
