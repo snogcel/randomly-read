@@ -45,6 +45,12 @@ import IntermissionText from './elements/IntermissionText';
 import RoutinePreview from './elements/RoutinePreview';
 
 import InitialSentenceBlacklist from '../RRLayout/InitialSentenceBlacklist';
+import MedialSentenceBlacklist from '../RRLayout/MedialSentenceBlacklist';
+import FinalSentenceBlacklist from '../RRLayout/FinalSentenceBlacklist';
+
+import InitialWordBlacklist from '../RRLayout/InitialWordBlacklist';
+import MedialWordBlacklist from '../RRLayout/MedialWordBlacklist';
+import FinalWordBlacklist from '../RRLayout/FinalWordBlacklist';
 
 import { styles } from '../../themeHandler';
 
@@ -790,7 +796,25 @@ class RoutineBuilder extends React.Component {
     let syllables = this.props.syllables;
     let vowels = this.props.vowels;
 
-    let blacklist = [];
+    let result = [];
+    let blacklist = {};
+
+    // apply relevant blacklist to mode + position
+
+    // sentences
+    if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
+
+    if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
+
+    if (mode === "Sentence" && position === "final") blacklist = FinalSentenceBlacklist;
+
+    // words
+    if (mode === "Word" && position === "initial") blacklist = InitialWordBlacklist;
+
+    if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
+
+    if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
+
 
     // iterate through vowel array (in cases where more than one vowel is being filtered on)
     for (let i = 0; i < vowels.length; i++) {
@@ -799,17 +823,17 @@ class RoutineBuilder extends React.Component {
       for (let j = 0; j < syllables.length; j++) {
 
         if (j === 0 && i === 0) { // for first iteration, include full array
-          blacklist = InitialSentenceBlacklist[vowels[i]].consonants[(syllables[j] - 1)];
+          result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
         } else { // find intersection of arrays
-          blacklist = blacklist.filter(function(value) {
-            return InitialSentenceBlacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+          result = result.filter(function(value) {
+            return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
           });
         }
       }
 
     }
 
-    return blacklist;
+    return result;
   }
 
   parseConsonants(consonants) {
