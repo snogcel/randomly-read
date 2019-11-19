@@ -40,8 +40,8 @@ const RRHome = props => {
 
   // laptop or desktop
   if (width === "xl" || width === "lg") {
-    exerciseHistoryContainerWidth = 4;
-    timerContainerWidth = 8;
+    exerciseHistoryContainerWidth = 3;
+    timerContainerWidth = 9;
   }
 
   return (
