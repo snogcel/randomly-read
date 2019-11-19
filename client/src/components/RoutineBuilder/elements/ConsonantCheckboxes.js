@@ -44,7 +44,7 @@ export default function CheckboxesGroup(props) {
           {props.options.map(consonant => (
             <FormControlLabel
             className={classes.formControlLabel}
-            control={<Checkbox disableRipple key={consonant.id} checked={props.consonants[consonant.id]} onChange={handleChange(consonant.id)} value={consonant.name} />}
+            control={<Checkbox color="primary" disableRipple key={consonant.id} checked={props.consonants[consonant.id]} onChange={handleChange(consonant.id)} value={consonant.name} />}
             label={consonant.name}
             labelPlacement="top"
             />

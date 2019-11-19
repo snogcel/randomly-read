@@ -77,10 +77,20 @@ const styles = theme => ({
     backgroundColor:"#FBFBFB",
     boxShadow: "0 4px 20px -6px rgba(0,0,0,0.15)",
   },
+  previewCard: {
+    marginTop: theme.spacing(2),
+    textAlign: "center",
+    backgroundColor:"#FBFBFB",
+  },
   exerciseStepsCard: {
     maxWidth: 300,
     margin: "auto",
     transition: "0.3s",
+  },
+  routineBuilderCard: {
+    marginTop: theme.spacing.unit * 4,
+    marginLeft: theme.spacing.unit * 4,
+    marginRight: theme.spacing.unit * 4,
   },
   sideCard: {
     marginBottom: 20

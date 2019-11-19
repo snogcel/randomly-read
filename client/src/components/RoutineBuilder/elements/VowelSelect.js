@@ -8,6 +8,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
+import InputBase from '@material-ui/core/InputBase';
+import { withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,6 +44,41 @@ const MenuProps = {
   },
 };
 
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}))(InputBase);
+
 export default function VowelSelect(props) {
   const classes = useStyles();
   const theme = useTheme();
@@ -56,16 +93,18 @@ export default function VowelSelect(props) {
     <div className={classes.root}>
 
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="select-multiple-chip-vowel">Vowels</InputLabel>
+        <InputLabel shrink={true} htmlFor="select-multiple-chip-vowel">Vowels</InputLabel>
         <Select
+          id="vowel-customized-select"
+          labelId="select-multiple-chip-vowel"
           multiple
           value={props.vowels}
           onChange={handleChange}
-          input={<Input id="select-multiple-chip-vowel" />}
+          input={<BootstrapInput id="vowel-customized-select" />}
           renderValue={selected => (
             <div className={classes.chips}>
               {selected.map(vowel => (
-                <Chip key={vowel} label={vowel} className={classes.chip} />
+                <Chip key={vowel} value={vowel} label={vowel} className={classes.chip} />
               ))}
             </div>
           )}

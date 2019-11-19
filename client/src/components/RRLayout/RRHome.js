@@ -37,9 +37,6 @@ const RRHome = props => {
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
-  let wordContainerWidth = 12;
-
-  console.log(width);
 
   // laptop or desktop
   if (width === "xl" || width === "lg") {

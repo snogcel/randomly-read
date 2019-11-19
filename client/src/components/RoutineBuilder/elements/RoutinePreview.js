@@ -237,9 +237,9 @@ class RoutinePreview extends React.Component  {
 
     return (
 
-      <div className={classes.column}>
+      <div>
 
-        <Card elevation="0" className={classes.card}>
+        <Card elevation="0" className={classes.previewCard}>
           <CardContent>
             { (this.state.query === null) ? '' : <Query query={this.state.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => { }}>
               {({ loading, error, data, refetch }) => {
