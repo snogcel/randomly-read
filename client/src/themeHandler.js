@@ -184,7 +184,9 @@ const styles = theme => ({
     textAlign: "center",
     alignItems: "center",
     display:"grid",
-    justifyItems: "center"
+    justifyItems: "center",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   RoutineSelector: {
     paddingLeft: theme.spacing.unit * 2
