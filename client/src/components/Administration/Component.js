@@ -1,6 +1,11 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
 import { styles } from '../../themeHandler';
 
@@ -21,7 +26,7 @@ import CreateButton from './elements/CreateButton';
 import SaveButton from './elements/SaveButton';
 import CancelButton from './elements/CancelButton';
 import ChangePassword from './elements/ChangePassword';
-import {updateNewLastName} from "../../actions/administration";
+
 
 class Administration extends React.Component {
   constructor(props) {
@@ -160,6 +165,17 @@ class Administration extends React.Component {
     const { user } = this.props;
     const { selectedUserId, selectedUsername, selectedFirstName, selectedLastName, selectedActive, mode } = this.props;
 
+    const { width } = this.props;
+
+    let userSelectContainerWidth = 12;
+    let userAdministrationContainerWidth = 12;
+
+    // laptop or desktop
+    if (width === "xl" || width === "lg") {
+      userSelectContainerWidth = 3;
+      userAdministrationContainerWidth = 9;
+    }
+
     let availableUsers = this.parseAvailableUsers(this.props.availableUsers);
     let selectedUserObj = this.parseSelectedUser(selectedUserId, availableUsers);
 
@@ -236,70 +252,80 @@ class Administration extends React.Component {
 
           <Grid container spacing={0}>
 
-            <Grid item xs={3}>
+            <Grid item xs={userSelectContainerWidth}>
 
-              <Grid container spacing={0}>
+              <div className={classes.userSelectCard}>
 
-                <Grid item xs={7}>
+                <Grid container spacing={0}>
 
-                  <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+                  <Grid item xs={8}>
+
+                    <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+
+                  </Grid>
+
+                  <Grid item xs={2}>
+
+                    <CreateButton action={this.props.createNewUser} />
+
+                  </Grid>
 
                 </Grid>
 
-                <Grid item xs={2}>
-
-                  <CreateButton action={this.props.createNewUser} />
-
-                </Grid>
-
-              </Grid>
+              </div>
 
             </Grid>
 
             {(mode === 'create') ? (
               <>
 
-              <Grid item xs={9}>
+              <Grid item xs={userAdministrationContainerWidth}>
 
-                <Grid container>
+                <Card className={classes.userAdminCard}>
+                  <CardContent>
 
-                  <Grid item xs={2}>
+                    <Grid container>
 
-                    <NewUsername action={this.props.updateNewUsername} error={usernameError} />
+                      <Grid item xs={2}>
 
-                  </Grid>
+                        <NewUsername action={this.props.updateNewUsername} error={usernameError} />
 
-                  <Grid item xs={4}>
+                      </Grid>
 
-                    <NewPassword action={this.props.updateNewPassword} error={passwordError} />
+                      <Grid item xs={2}>
 
-                  </Grid>
+                        <NewPassword action={this.props.updateNewPassword} error={passwordError} />
 
-                </Grid>
+                      </Grid>
 
-                <Grid container>
+                    </Grid>
 
-                  <Grid item xs={2}>
+                    <Grid container>
 
-                    <NewFirstName action={this.props.updateNewFirstName} error={firstNameError} />
+                      <Grid item xs={2}>
 
-                  </Grid>
+                        <NewFirstName action={this.props.updateNewFirstName} error={firstNameError} />
 
-                  <Grid item xs={2}>
+                      </Grid>
 
-                    <NewLastName action={this.props.updateNewLastName} error={lastNameError} />
+                      <Grid item xs={2}>
 
-                  </Grid>
+                        <NewLastName action={this.props.updateNewLastName} error={lastNameError} />
 
-                  <Grid item xs={1}>
-                    <SaveButton action={this.createNewHandler} />
-                  </Grid>
+                      </Grid>
 
-                  <Grid item xs={1}>
-                    <CancelButton action={this.cancelCreateHandler} />
-                  </Grid>
+                      <Grid item xs={1}>
+                        <SaveButton action={this.createNewHandler} />
+                      </Grid>
 
-                </Grid>
+                      <Grid item xs={1}>
+                        <CancelButton action={this.cancelCreateHandler} />
+                      </Grid>
+
+                    </Grid>
+
+                  </CardContent>
+                </Card>
 
               </Grid>
 
@@ -307,60 +333,66 @@ class Administration extends React.Component {
               </> ) : (
                 <>
 
-                  <Grid item xs={9}>
+                  <Grid item xs={userAdministrationContainerWidth}>
 
-                    <Grid container>
+                    <Card className={classes.userAdminCard}>
+                      <CardContent>
 
-                      <Grid item xs={2}>
-                        <EditUsername action={this.props.updateUsername} username={selectedUsernameObj} />
-                      </Grid>
+                        <Grid container>
 
-                      <Grid item xs={4}>
-
-                        {(mode === 'view' || mode === 'edit') ? (
-                          <>
-
-                            <ChangePassword action={this.props.changePassword} />
-
-                          </> ) : ( <> <EditPassword action={this.props.updatePassword} error={passwordError} /> </> )}
-
-                      </Grid>
-
-                      <Grid item xs={2}>
-
-                      </Grid>
-
-                    </Grid>
-
-
-                    <Grid container>
-
-                      <Grid item xs={2}>
-                        <EditFirstName action={this.props.updateFirstName} firstname={selectedFirstNameObj} error={firstNameError} />
-                      </Grid>
-
-                      <Grid item xs={2}>
-                        <EditLastName action={this.props.updateLastName} lastname={selectedLastNameObj} error={lastNameError} />
-                      </Grid>
-
-                      <Grid item xs={2}>
-                        <UserStatus action={this.props.updateActive} active={selectedActiveObj} />
-                      </Grid>
-
-                      {(mode === 'edit' || mode === 'password') ? (
-                        <>
-
-                          <Grid item xs={1}>
-                            <SaveButton action={this.saveHandler} />
+                          <Grid item xs={2}>
+                            <EditUsername action={this.props.updateUsername} username={selectedUsernameObj} />
                           </Grid>
 
-                          <Grid item xs={1}>
-                            <CancelButton action={this.cancelHandler} />
+                          <Grid item xs={2}>
+
+                            {(mode === 'view' || mode === 'edit') ? (
+                              <>
+
+                                <ChangePassword action={this.props.changePassword} />
+
+                              </> ) : ( <> <EditPassword action={this.props.updatePassword} error={passwordError} /> </> )}
+
                           </Grid>
 
-                        </> ) : ( <> </> )}
+                          <Grid item xs={2}>
 
-                    </Grid>
+                          </Grid>
+
+                        </Grid>
+
+
+                        <Grid container>
+
+                          <Grid item xs={2}>
+                            <EditFirstName action={this.props.updateFirstName} firstname={selectedFirstNameObj} error={firstNameError} />
+                          </Grid>
+
+                          <Grid item xs={2}>
+                            <EditLastName action={this.props.updateLastName} lastname={selectedLastNameObj} error={lastNameError} />
+                          </Grid>
+
+                          <Grid item xs={2}>
+                            <UserStatus action={this.props.updateActive} active={selectedActiveObj} />
+                          </Grid>
+
+                          {(mode === 'edit' || mode === 'password') ? (
+                            <>
+
+                              <Grid item xs={1}>
+                                <SaveButton action={this.saveHandler} />
+                              </Grid>
+
+                              <Grid item xs={1}>
+                                <CancelButton action={this.cancelHandler} />
+                              </Grid>
+
+                            </> ) : ( <>  </> )}
+
+                        </Grid>
+
+                      </CardContent>
+                    </Card>
 
                   </Grid>
 
@@ -380,6 +412,10 @@ class Administration extends React.Component {
 
 }
 
+Administration.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const AdministrationWrapped = withStyles(styles)(Administration);
 
-export default AdministrationWrapped;
+export default withWidth()(AdministrationWrapped);

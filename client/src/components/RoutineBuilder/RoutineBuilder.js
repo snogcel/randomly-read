@@ -952,7 +952,7 @@ class RoutineBuilder extends React.Component {
 
               <Grid item xs={exerciseContainerWidth}>
 
-                <div className={classes.exerciseStepsCard}>
+                <div className={classes.routineSelectCard}>
 
                   <Grid container spacing={0}>
 
@@ -1006,7 +1006,6 @@ class RoutineBuilder extends React.Component {
 
                   <Card className={classes.routineBuilderCard}>
                     <CardContent>
-
 
                       <Grid container spacing={0}>
 

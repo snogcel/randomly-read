@@ -87,7 +87,22 @@ const styles = theme => ({
     margin: "auto",
     transition: "0.3s",
   },
+  routineSelectCard: {
+    maxWidth: 300,
+    margin: "auto",
+    transition: "0.3s",
+  },
+  userSelectCard: {
+    maxWidth: 300,
+    margin: "auto",
+    transition: "0.3s",
+  },
   routineBuilderCard: {
+    marginTop: theme.spacing.unit * 4,
+    marginLeft: theme.spacing.unit * 4,
+    marginRight: theme.spacing.unit * 4,
+  },
+  userAdminCard: {
     marginTop: theme.spacing.unit * 4,
     marginLeft: theme.spacing.unit * 4,
     marginRight: theme.spacing.unit * 4,
