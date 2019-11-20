@@ -167,6 +167,8 @@ class Administration extends React.Component {
 
     const { width } = this.props;
 
+    console.log(width);
+
     let userSelectContainerWidth = 12;
     let userAdministrationContainerWidth = 12;
 
@@ -286,13 +288,13 @@ class Administration extends React.Component {
 
                     <Grid container>
 
-                      <Grid item xs={2}>
+                      <Grid item xs={6} sm={4} lg={2}>
 
                         <NewUsername action={this.props.updateNewUsername} error={usernameError} />
 
                       </Grid>
 
-                      <Grid item xs={2}>
+                      <Grid item xs={6} sm={4} lg={2}>
 
                         <NewPassword action={this.props.updateNewPassword} error={passwordError} />
 
@@ -302,23 +304,23 @@ class Administration extends React.Component {
 
                     <Grid container>
 
-                      <Grid item xs={2}>
+                      <Grid item xs={6} sm={4} lg={2}>
 
                         <NewFirstName action={this.props.updateNewFirstName} error={firstNameError} />
 
                       </Grid>
 
-                      <Grid item xs={2}>
+                      <Grid item xs={6} sm={4} lg={2}>
 
                         <NewLastName action={this.props.updateNewLastName} error={lastNameError} />
 
                       </Grid>
 
-                      <Grid item xs={1}>
+                      <Grid item xs={4} sm={2} lg={1}>
                         <SaveButton action={this.createNewHandler} />
                       </Grid>
 
-                      <Grid item xs={1}>
+                      <Grid item xs={4} sm={2} lg={1}>
                         <CancelButton action={this.cancelCreateHandler} />
                       </Grid>
 
@@ -340,11 +342,11 @@ class Administration extends React.Component {
 
                         <Grid container>
 
-                          <Grid item xs={2}>
+                          <Grid item xs={6} sm={4} lg={2}>
                             <EditUsername action={this.props.updateUsername} username={selectedUsernameObj} />
                           </Grid>
 
-                          <Grid item xs={2}>
+                          <Grid item xs={6} sm={4} lg={2}>
 
                             {(mode === 'view' || mode === 'edit') ? (
                               <>
@@ -355,35 +357,31 @@ class Administration extends React.Component {
 
                           </Grid>
 
-                          <Grid item xs={2}>
-
-                          </Grid>
-
                         </Grid>
 
 
                         <Grid container>
 
-                          <Grid item xs={2}>
+                          <Grid item xs={6} sm={4} lg={2}>
                             <EditFirstName action={this.props.updateFirstName} firstname={selectedFirstNameObj} error={firstNameError} />
                           </Grid>
 
-                          <Grid item xs={2}>
+                          <Grid item xs={6} sm={4} lg={2}>
                             <EditLastName action={this.props.updateLastName} lastname={selectedLastNameObj} error={lastNameError} />
                           </Grid>
 
-                          <Grid item xs={2}>
+                          <Grid item xs={12} sm={4} lg={2}>
                             <UserStatus action={this.props.updateActive} active={selectedActiveObj} />
                           </Grid>
 
                           {(mode === 'edit' || mode === 'password') ? (
                             <>
 
-                              <Grid item xs={1}>
+                              <Grid item xs={4} sm={2} lg={1}>
                                 <SaveButton action={this.saveHandler} />
                               </Grid>
 
-                              <Grid item xs={1}>
+                              <Grid item xs={4} sm={2} lg={1}>
                                 <CancelButton action={this.cancelHandler} />
                               </Grid>
 
