@@ -205,3 +205,8 @@ export async function updateUser (id, body, token) {
 export async function createUser (user, token) {
   return await methods.post('superuser/users', user, token);
 }
+
+export async function getViewHistory (id, token) {
+  console.log("-fetching view history-");
+  return await methods.get(`history/words/${id}`, token)
+}

@@ -187,8 +187,6 @@ class Administration extends React.Component {
     let selectedLastNameObj = this.parseSelectedLastName(selectedLastName);
     let selectedActiveObj = this.parseSelectedActive(selectedActive);
 
-    console.log(this.props);
-
     let errorString = this.props.error.toString();
     let usernameError = "";
     let passwordError = "";
@@ -401,7 +399,7 @@ class Administration extends React.Component {
 
                           <Grid item xs={12}>
 
-                            <ViewHistoryContainer userId={this.props.selectedUserId} />
+                            <ViewHistoryContainer userId={selectedUserId} />
 
                           </Grid>
 

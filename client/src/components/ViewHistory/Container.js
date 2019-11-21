@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-// import { fetchPosts, fetchProfile } from '../../actions/posts';
+import { fetchViewHistory } from '../../actions/viewHistory';
 import ViewHistory from './Component';
 
 export const mapStateToProps = state => ({
@@ -8,7 +8,7 @@ export const mapStateToProps = state => ({
   isFetching: state.viewHistory.isFetching
 });
 
-const mapDispatchToProps = { };
+const mapDispatchToProps = { fetchViewHistory };
 
 const ViewHistoryContainer = connect(
   mapStateToProps,

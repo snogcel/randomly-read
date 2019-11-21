@@ -6,6 +6,7 @@ const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
 const routine = require('./controllers/routine');
 const superuser = require('./controllers/superuser');
+const viewHistory = require('./controllers/viewHistory');
 const interaction = require('./controllers/interaction');
 const interactions = require('./controllers/interactions'); // TODO - Remove
 const comments = require('./controllers/comments');
@@ -78,6 +79,9 @@ router.patch('/superuser/users/:id', [jwtAuth, superuser.validate()], superuser.
 router.post('/superuser/routines', jwtAuth, superuser.createRoutine); // create new routine
 router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
 router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
+
+// Statistics
+router.get('/history/words/:id', jwtAuth, viewHistory.list); // fetch word view statistics
 
 // Routine Settings
 router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings
