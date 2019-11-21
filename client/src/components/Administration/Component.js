@@ -27,6 +27,7 @@ import SaveButton from './elements/SaveButton';
 import CancelButton from './elements/CancelButton';
 import ChangePassword from './elements/ChangePassword';
 
+import ViewHistoryContainer from '../ViewHistory/Container';
 
 class Administration extends React.Component {
   constructor(props) {
@@ -392,10 +393,27 @@ class Administration extends React.Component {
                       </CardContent>
                     </Card>
 
+
+                    <Card className={classes.userAdminCard}>
+                      <CardContent>
+
+                        <Grid container>
+
+                          <Grid item xs={12}>
+
+                            <ViewHistoryContainer userId={this.props.selectedUserId} />
+
+                          </Grid>
+
+                        </Grid>
+
+                      </CardContent>
+                    </Card>
+
+
                   </Grid>
 
                 </> )}
-
 
           </Grid>
 
