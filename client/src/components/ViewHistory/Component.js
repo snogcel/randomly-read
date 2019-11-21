@@ -4,90 +4,92 @@ import { styles } from '../../themeHandler';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
+import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
+
+const CustomTooltip = props => {
+  // we don't need to check payload[0] as there's a better prop for this purpose
+  if (!props.active) {
+    // I think returning null works based on this: http://recharts.org/en-US/examples/CustomContentOfTooltip
+    return null
+  }
+  // mutating props directly is against react's conventions
+  // so we create a new payload with the name and value fields set to what we want
+  const newPayload = [
+    {
+      // all your data which created the tooltip is located in the .payload property
+      value: props.payload[0].payload.fullDate,
+      // you can also add "unit" here if you need it
+    },
+    ...props.payload,
+  ];
+
+  // we render the default, but with our overridden payload
+  return <DefaultTooltipContent {...props} payload={newPayload} />;
+};
+
 const data = [
   {
-    name: 'Page A', pv: 2400,
+    name: 'Mon', fullDate: 'Nov 4th, 2019', words: 240,
   },
   {
-    name: 'Page B', pv: 1398,
+    name: 'Tues', fullDate: 'Nov 5th, 2019', words: 139,
   },
   {
-    name: 'Page C', pv: 9800,
+    name: 'Wed', fullDate: 'Nov 6th, 2019', words: 0,
   },
   {
-    name: 'Page D', pv: 3908,
+    name: 'Thurs', fullDate: 'Nov 7th, 2019', words: 398,
   },
   {
-    name: 'Page E', pv: 4800,
+    name: 'Fri', fullDate: 'Nov 8th, 2019', words: 480,
   },
   {
-    name: 'Page F', pv: 3800,
+    name: 'Sat', fullDate: 'Nov 9th, 2019', words: 300,
   },
   {
-    name: 'Page G', pv: 4300,
+    name: 'Sun', fullDate: 'Nov 10th, 2019', words: 400,
   },
   {
-    name: 'Page A', pv: 2400,
+    name: 'Mon', fullDate: 'Nov 11th, 2019', words: 200,
   },
   {
-    name: 'Page B', pv: 1398,
+    name: 'Tues', fullDate: 'Nov 12th, 2019', words: 198,
   },
   {
-    name: 'Page C', pv: 9800,
+    name: 'Wed', fullDate: 'Nov 13th, 2019', words: 0,
   },
   {
-    name: 'Page D', pv: 3908,
+    name: 'Thurs', fullDate: 'Nov 14th, 2019', words: 390,
   },
   {
-    name: 'Page E', pv: 4800,
+    name: 'Fri', fullDate: 'Nov 15th, 2019', words: 400,
   },
   {
-    name: 'Page F', pv: 3800,
+    name: 'Sat', fullDate: 'Nov 16th, 2019', words: 380,
   },
   {
-    name: 'Page G', pv: 4300,
+    name: 'Sun', fullDate: 'Nov 17th, 2019', words: 430,
   },
   {
-    name: 'Page A', pv: 2400,
+    name: 'Mon', fullDate: 'Nov 18th, 2019', words: 240,
   },
   {
-    name: 'Page B', pv: 1398,
+    name: 'Tues', fullDate: 'Nov 19th, 2019', words: 198,
   },
   {
-    name: 'Page C', pv: 9800,
+    name: 'Wed', fullDate: 'Nov 20th, 2019', words: 0,
   },
   {
-    name: 'Page D', pv: 3908,
+    name: 'Thurs', fullDate: 'Nov 21st, 2019', words: 308,
   },
   {
-    name: 'Page E', pv: 4800,
+    name: 'Fri', fullDate: 'Nov 22nd, 2019', words: 480,
   },
   {
-    name: 'Page F', pv: 3800,
+    name: 'Sat', fullDate: 'Nov 23rd, 2019', words: 380,
   },
   {
-    name: 'Page G', pv: 4300,
-  },
-  {
-    name: 'Page A', pv: 2400,
-  },
-  {
-    name: 'Page B', pv: 1398,
-  },
-  {
-    name: 'Page C', pv: 9800,
-  },
-  {
-    name: 'Page D', pv: 3908,
-  },
-  {
-    name: 'Page E', pv: 4800,
-  },
-  {
-    name: 'Page F', pv: 3800,
-  },
-  {
-    name: 'Page G', pv: 4300,
+    name: 'Sun', fullDate: 'Nov 24th, 2019', words: 430,
   },
 ];
 
@@ -123,8 +125,8 @@ class ViewHistory extends React.Component {
             <CartesianGrid strokeDasharray="3 3"/>
             <XAxis dataKey="name"/>
             <YAxis/>
-            <Tooltip/>
-            <Bar dataKey="pv" fill="#2f8eed" />
+            <Tooltip content={<CustomTooltip />}/>
+            <Bar dataKey="words" fill="#2f8eed" />
           </BarChart>
         </ResponsiveContainer>
 
