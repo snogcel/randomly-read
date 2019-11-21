@@ -20,6 +20,10 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
 
   let blacklist = {};
 
+  if (exerciseConfig.vowels.indexOf(consonant) > -1) { // if consonant is a vowel...
+    if (consonant !== vowel) return false; // if consonant and vowel are not the same, return false
+  }
+
   // sentences
   if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
   if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
