@@ -6,7 +6,7 @@ import {makeStyles} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
   switch: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(2)
   }
 }));
 
@@ -33,6 +33,8 @@ export default function UserStatus(props) {
           />
         }
         label="Active"
+        labelPlacement="top"
+        shrink
       />
     </FormGroup>
   );

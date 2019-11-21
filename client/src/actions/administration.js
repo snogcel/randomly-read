@@ -1,6 +1,7 @@
 import {getUsers, getUser, updateUser, createUser} from "../util/api";
 
 export const CREATE_NEW_USER = 'CREATE_NEW_USER';
+export const CANCEL_CREATE_NEW_USER = 'CANCEL_CREATE_NEW_USER';
 
 export const NEW_USERNAME = 'NEW_USERNAME';
 export const NEW_PASSWORD = 'NEW_PASSWORD';
@@ -163,5 +164,11 @@ export function changePassword() {
 export function createNewUser() {
   return {
     type: CREATE_NEW_USER
+  }
+}
+
+export function cancelCreateNewUser() {
+  return {
+    type: CANCEL_CREATE_NEW_USER
   }
 }

@@ -1,11 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import indigo from '@material-ui/core/colors/indigo';
-import pink from '@material-ui/core/colors/pink';
-import red from '@material-ui/core/colors/red';
+import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
 
-
-
-const MuiTheme = createMuiTheme({
+let MuiTheme = createMuiTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -17,10 +12,17 @@ const MuiTheme = createMuiTheme({
       main: '#14197E',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
-    }
+    },
+    overrides: {
+
+    },
     // error: will use the default color
   }
 });
+
+// EDEDF3
+
+MuiTheme = responsiveFontSizes(MuiTheme);
 
 const styles = theme => ({
   root: {
@@ -60,19 +62,59 @@ const styles = theme => ({
     padding: theme.spacing.unit * 4,
     outline: "none"
   },
-  card: {
+  wordGrid: {
+    alignItems: "center",
     minHeight:150,
+  },
+  wordHistoryGrid: {
+    alignItems: "center"
+  },
+  timerControlGrid: {
+    alignItems: "center"
+  },
+  card: {
+    textAlign: "center",
+    backgroundColor:"#FBFBFB",
+    boxShadow: "0 4px 20px -6px rgba(0,0,0,0.15)",
+  },
+  previewCard: {
+    marginTop: theme.spacing(2),
+    textAlign: "center",
+    backgroundColor:"#FBFBFB",
+  },
+  exerciseStepsCard: {
+    maxWidth: 300,
+    margin: "auto",
+    transition: "0.3s",
+  },
+  routineSelectCard: {
+    maxWidth: 300,
+    margin: "auto",
+    transition: "0.3s",
+  },
+  userSelectCard: {
+    maxWidth: 300,
+    margin: "auto",
+    transition: "0.3s",
+  },
+  routineBuilderCard: {
+    marginTop: theme.spacing.unit * 4,
+    marginLeft: theme.spacing.unit * 4,
+    marginRight: theme.spacing.unit * 4,
+  },
+  userAdminCard: {
+    marginTop: theme.spacing.unit * 4,
+    marginLeft: theme.spacing.unit * 4,
+    marginRight: theme.spacing.unit * 4,
   },
   sideCard: {
     marginBottom: 20
   },
-  title: {
-    fontSize: 72,
+  word: {
     fontWeight: "bold",
     color: "#2f8eed"
   },
   intermission: {
-    fontSize: 72,
     fontWeight: "bold",
     color: "#dba987"
   },
@@ -87,20 +129,15 @@ const styles = theme => ({
     textAlign: "center"
   },
   historyTitle: {
-    fontSize: 35,
-    color: "#666666"
+    color: "rgba(0, 0, 0, 0.25)"
   },
   historyTitleNovote: {
-    fontSize: 35,
-    color: "#666666",
-    marginTop: "22px"
+    color: "rgba(0, 0, 0, 0.25)",
   },
   historyTitleUpvote: {
-    fontSize: 35,
     color: "#8A0C93"
   },
   historyTitleDownvote: {
-    fontSize: 35,
     color: "#C70E4C"
   },
   subtitle: {
@@ -121,6 +158,9 @@ const styles = theme => ({
       backgroundColor: "#2d90e5"
     },
     backgroundColor: '#33a0ff',
+  },
+  iconButton: {
+    margin: theme.spacing(1)
   },
   button: {
     margin: 4,
@@ -157,12 +197,21 @@ const styles = theme => ({
   },
   wordHistoryWrapper: {
     textAlign: "center",
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   },
   RoutineSelector: {
     paddingLeft: theme.spacing.unit * 2
   },
   TimerControls: {
 
+  },
+  exerciseHistoryMobile: {
+    display:'flex',
+    justifyContent:'center'
   }
 });
 

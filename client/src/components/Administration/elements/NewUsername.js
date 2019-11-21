@@ -3,20 +3,65 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputBase from '@material-ui/core/InputBase';
+import InputLabel from '@material-ui/core/InputLabel';
+import { fade, withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  container: {
+  root: {
     display: 'flex',
     flexWrap: 'wrap',
   },
+  margin: {
+    margin: theme.spacing(1),
+  },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
   },
   dense: {
     marginTop: theme.spacing(2),
-  }
+  },
+  menu: {
+    width: 200,
+  },
 }));
+
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.common.white,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    width: 'auto',
+    padding: '10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}))(InputBase);
 
 export default function NewUsername(props) {
   const classes = useStyles();
@@ -28,20 +73,22 @@ export default function NewUsername(props) {
   };
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <TextField
-        id="new-username-text"
-        error={props.error.length === 0 ? false : true }
-        helperText={props.error}
-        label="Username"
-        style={{ margin: 8 }}
-        margin="normal"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        value={values.username}
-        onChange={handleChange('username')}
-      />
+    <form className={classes.root} noValidate autoComplete="off">
+      <FormControl className={classes.margin}>
+        <InputLabel shrink htmlFor="admin-new-username-input">
+          Username
+        </InputLabel>
+        <BootstrapInput
+          id="new-username-text"
+          error={props.error.length === 0 ? false : true }
+          helperText={props.error}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={values.username}
+          onChange={handleChange('username')}
+        />
+      </FormControl>
     </form>
   );
 }

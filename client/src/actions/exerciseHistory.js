@@ -21,7 +21,6 @@ export function addExerciseNumber(text) {
     }
 }
 
-
 export function setExercisePause(text) {
     return {
         type: EXERCISE_PAUSE, text

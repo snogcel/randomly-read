@@ -6,6 +6,7 @@ import theme from '../../theme'; // TODO - remove
 import { MuiTheme } from '../../themeHandler';
 import history from '../../util/history';
 import GlobalStyle from '../../globalStyle';
+import AppBarContainer from '../AppBar/Container';
 import HeaderContainer from '../Header/Container';
 import ErrorNotificationContainer from '../ErrorNotification/Container';
 import LoginFormContainer from '../LoginForm/Container';
@@ -23,7 +24,6 @@ import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
 import Interactions from '../Interactions/InteractionsHomeContainer';
 import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
-
 import Administration from '../Administration/Container.js';
 
 const AuthLink = (operation, next) => {
@@ -55,6 +55,8 @@ const client = new ApolloClient({
   cache: new Cache().restore({}),
 });
 
+// <Route component={HeaderContainer} />
+
 const App = props => (
   <MuiThemeProvider theme={MuiTheme}>
     <ApolloProvider client={client}>
@@ -62,7 +64,7 @@ const App = props => (
         <Router history={history}>
           <>
             <GlobalStyle />
-            <Route component={HeaderContainer} />
+            <Route component={AppBarContainer} />
             <Route component={ErrorNotificationContainer} />
             <Switch>
               <Route path='/login' component={LoginFormContainer} />
@@ -73,7 +75,7 @@ const App = props => (
               <Route path='/Interactions' component={Interactions} />
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/Administration' component={Administration} />
-              <Route path='/' component={Home} />
+              <Route path='/' component={RRHomeContainer} />
             </Switch>
           </>
         </Router>

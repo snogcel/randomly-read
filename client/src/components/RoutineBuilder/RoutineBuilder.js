@@ -2,6 +2,10 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 
+import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
+
 import isEqual from 'lodash.isequal';
 
 import Card from '@material-ui/core/Card';
@@ -800,6 +804,7 @@ class RoutineBuilder extends React.Component {
     let blacklist = {};
 
     // apply relevant blacklist to mode + position
+    console.log("Mode: ", mode);
 
     // sentences
     if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
@@ -815,6 +820,7 @@ class RoutineBuilder extends React.Component {
 
     if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
 
+    if (mode === "Intermission" || typeof mode === "undefined") return result;
 
     // iterate through vowel array (in cases where more than one vowel is being filtered on)
     for (let i = 0; i < vowels.length; i++) {
@@ -904,35 +910,16 @@ class RoutineBuilder extends React.Component {
     const { userId, name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
-    /*
-    console.log("vowels: ", vowels);
-    console.log("consonants: ", consonants);
-    console.log("mode: ", mode);
-    console.log("position: ", position);
-    console.log("rangeVal: ", rangeVal);
-    console.log("repetitions: ", repetitions);
-    console.log("syllables: ", syllables);
-    console.log("intermissionText", intermissionText);
-    console.log("isIntermission", isIntermission);
+    const { width } = this.props;
 
-    console.log(availableRoutines);
+    let exerciseContainerWidth = 12;
+    let routineBuilderContainerWidth = 12;
 
-    console.log("current index: ", this.state.index);
-    console.log("routine: ", routine);
-
-    console.log("current userId: ", userId);
-
-    console.log("isFetching: ", this.props.isFetching);
-    console.log("routine id: ", this.props.id);
-    console.log("routine name: ", this.props.name);
-
-    console.log("available routines", this.props.availableRoutines);
-
-    console.log("available routines", this.props.availableRoutines);
-
-    */
-
-    // console.log("current routine id: ", id);
+    // laptop or desktop
+    if (width === "xl" || width === "lg") {
+      exerciseContainerWidth = 3;
+      routineBuilderContainerWidth = 9;
+    }
 
     let availableUsers = this.parseAvailableUsers(this.props.availableUsers);
     let selectedUserObj = this.parseSelectedUser(userId, availableUsers);
@@ -963,45 +950,51 @@ class RoutineBuilder extends React.Component {
 
             <Grid container spacing={0}>
 
-              <Grid item xs={3}>
+              <Grid item xs={exerciseContainerWidth}>
 
-                <Grid container spacing={0}>
+                <div className={classes.routineSelectCard}>
 
-                  {user.superuser ? (
-                    <>
-                    <Grid item xs={12}>
+                  <Grid container spacing={0}>
 
-                      <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+                    {user.superuser ? (
+                      <>
+                      <Grid item xs={12}>
+
+                        <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+
+                      </Grid>
+                      </> ) : ( null )
+                    }
+
+                    <Grid item xs={8}>
+
+                      <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
 
                     </Grid>
-                    </> ) : ( null )
-                  }
 
-                  <Grid item xs={8}>
+                    <Grid item xs={2} justify="center">
 
-                    <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
+                      <NewRoutineButton action={this.createHandler} />
 
-                  </Grid>
+                    </Grid>
 
-                  <Grid item xs={2} justify="center">
+                    <Grid item xs={2} justify="center">
 
-                    <NewRoutineButton action={this.createHandler} />
+                      <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
 
-                  </Grid>
+                    </Grid>
 
-                  <Grid item xs={2} justify="center">
+                    <Grid item xs={12}>
 
-                    <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
+                      <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
 
-                  </Grid>
-
-                  <Grid item xs={12}>
-
-                    <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
+                    </Grid>
 
                   </Grid>
 
-                </Grid>
+                </div>
+
+
 
               </Grid>
 
@@ -1009,127 +1002,144 @@ class RoutineBuilder extends React.Component {
               {(id !== 0) ? (
                 <>
 
-                <Grid item xs={8}>
+                <Grid item xs={routineBuilderContainerWidth}>
 
-                  <Grid container spacing={0}>
+                  <Card className={classes.routineBuilderCard}>
+                    <CardContent>
 
-                    <Grid item xs={6}>
+                      <Grid container spacing={0}>
 
-                      <RoutineName action={this.nameHandler} name={nameObj} />
+                        <Grid item xs={6}>
 
-                    </Grid>
+                          <RoutineName action={this.nameHandler} name={nameObj} />
 
-                    <Grid item xs={12}>
-
-                      <Grid container spacing={2}>
-
-                        <Grid item>
-                          <ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} />
                         </Grid>
 
-                        <Grid item>
-                          <DurationSlider action={this.rangeValHandler} duration={durationObj} />
-                        </Grid>
+                        <Grid item xs={12}>
 
-                        {!isIntermission ? (
-                          <>
+                          <Grid container spacing={0}>
 
-                          <Grid item>
-                            <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
+                            {isIntermission && (
+                              <>
+                              <Grid item><ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} /></Grid>
+
+                              <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid>
+                              </>
+                            )}
+
+                            <Grid item>
+                              <DurationSlider action={this.rangeValHandler} duration={durationObj} />
+                            </Grid>
+
+                            {!isIntermission ? (
+                              <>
+
+                              <Grid item>
+                                <RepetitionSlider action={this.repetitionHandler} repetitions={repetitionObj} />
+                              </Grid>
+
+                              </> ) : ( <> </> )}
+
                           </Grid>
 
-                          </> ) : ( <> <Grid item><IntermissionText action={this.intermissionHandler} intermissionText={intermissionTextObj} /></Grid> </> )}
+                        </Grid>
 
-                      </Grid>
+                        <Grid item xs={12}>
 
-                    </Grid>
+                          <Grid container spacing={2}>
 
-                    <Grid item xs={12}>
+                            {!isIntermission ? (
+                              <>
 
-                      <Grid container spacing={2}>
+                              <Grid item><ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} /></Grid>
 
-                        {!isIntermission ? (
-                          <>
+                              <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
 
-                          <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
+                              <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
 
-                          <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
+                              <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
 
-                          <Grid item><VowelSelect action={this.vowelHandler} options={availableVowels} vowels={vowelArr} /></Grid>
+                              </> ) : ( <> </> )}
 
-                          </> ) : ( <> </> )}
-
-                      </Grid>
-
-                    </Grid>
-
-                    <Grid item xs={12}>
-
-                      <Grid container spacing={2}>
-
-                        <Grid item>
-                          {!isIntermission ? (
-                            <>
-                            <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
-                            </> ) : ( <> </> )}
+                          </Grid>
 
                         </Grid>
 
-                      </Grid>
+                        <Grid item xs={12}>
 
+                          <Grid container spacing={2}>
 
-                    </Grid>
+                            <Grid item>
+                              {!isIntermission ? (
+                                <>
+                                <ConsonantCheckboxes action={this.consonantHandler} options={consonantCheckboxOptions} consonants={consonantObj} />
+                                </> ) : ( <> </> )}
 
-                    <Grid item xs={12}>
+                            </Grid>
 
-                      <Grid container spacing={2}>
+                          </Grid>
 
-                        <Grid item>
-
-                          <br />
-
-                          <InsertButton action={this.insertHandler} />
 
                         </Grid>
 
-                        {(this.state.index > 0) ? (
-                          <>
-                          <Grid item>
+                        <Grid item xs={12}>
 
-                            <br />
-                            <UpdateButton action={this.updateHandler} />
-                          </Grid>
-                          </> ) : ( <> </> )}
+                          <Grid container spacing={2}>
 
-
-                        {(this.state.index > 0) ? (
-                          <>
-                          <Grid item>
-
-                            <br />
-                            <DeleteButton action={this.deleteHandler} />
-
-                          </Grid>
-                          </> ) : ( <> </> )}
-
-                        {(this.state.index > 0) ? (
-                          <>
                             <Grid item>
 
                               <br />
-                              <PreviewButton action={this.previewHandler} />
+
+                              <InsertButton action={this.insertHandler} />
 
                             </Grid>
-                          </> ) : ( <> </> )}
+
+                            {(this.state.index > 0) ? (
+                              <>
+                              <Grid item>
+
+                                <br />
+                                <UpdateButton action={this.updateHandler} />
+                              </Grid>
+                              </> ) : ( <> </> )}
+
+
+                            {(this.state.index > 0) ? (
+                              <>
+                              <Grid item>
+
+                                <br />
+                                <DeleteButton action={this.deleteHandler} />
+
+                              </Grid>
+                              </> ) : ( <> </> )}
+
+                            {(this.state.index > 0) ? (
+                              <>
+                                <Grid item>
+
+                                  <br />
+                                  <PreviewButton action={this.previewHandler} />
+
+                                </Grid>
+                              </> ) : ( <> </> )}
+
+                          </Grid>
+
+                        </Grid>
 
                       </Grid>
 
-                    </Grid>
+                    </CardContent>
+                  </Card>
+
+                  <Grid item xs={12}>
+
+                    <RoutinePreview routineStep={routineStep} ref={this.routinePreview}/>
 
                   </Grid>
 
                 </Grid>
-
 
                 </> ) : ( <>
 
@@ -1149,12 +1159,6 @@ class RoutineBuilder extends React.Component {
 
                 </> )}
 
-                <Grid item xs={12}>
-
-                  <RoutinePreview routineStep={routineStep} ref={this.routinePreview}/>
-
-                </Grid>
-
             </Grid>
 
           </>
@@ -1167,6 +1171,10 @@ class RoutineBuilder extends React.Component {
   }
 }
 
+RoutineBuilder.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const RoutineBuilderWrapped = withStyles(styles)(RoutineBuilder);
 
-export default RoutineBuilderWrapped;
+export default withWidth()(RoutineBuilderWrapped);

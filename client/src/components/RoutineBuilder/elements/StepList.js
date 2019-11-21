@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -13,10 +13,21 @@ import FormControlLabel from "./ConsonantCheckboxes";
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
+    maxWidth: 360
   },
 }));
+
+const StyledListItem = withStyles({
+  root: {
+    border: "1px solid #E0E0F5",
+    marginTop: 10,
+    marginBottom: 10,
+    "&$selected, &$selected:hover, &$selected:focus": {
+      backgroundColor: "#82BBF3"
+    }
+  },
+  selected: {}
+})(ListItem);
 
 const availableConsonants = [
   { id: "AA", name: "ɑ"},
@@ -127,7 +138,7 @@ export default function StepList(props) {
               if (step.position === "initial") subHeaderText += "that start with ";
               if (step.position === "medial") subHeaderText += "that contain ";
               if (step.position === "final") subHeaderText += "that end with ";
-              
+
               let consonants = "";
               for (let i = 0; i < step.consonants.length; i++) {
 
@@ -151,13 +162,13 @@ export default function StepList(props) {
           }
 
           return(
-            <ListItem
+            <StyledListItem
               button
               selected={props.index === step.index}
               onClick={event => handleListItemClick(event, step.index)}
             >
               <ListItemText primary={listItemText} secondary={subHeaderText} />
-            </ListItem>
+            </StyledListItem>
             );
 
         })}
