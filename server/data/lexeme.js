@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const ViewHistory = require('../models/viewHistory');
 
 const Lexeme = function(data, id) {
 
@@ -33,6 +34,15 @@ Lexeme.prototype.submitPost = function() {
   let lexeme = this.lexeme;
 
   console.log("writing to mongodb: ", lexeme);
+
+  ViewHistory.create({
+    "author": this.author,
+    "title": this.lexeme,
+    "cmudict_id": this.cmudict_id,
+    "consonant": this.consonant,
+    "vowel": this.vowel,
+    "syllables": this.syllables,
+  });
 
   return Post.create({
     cmudict_id: this.cmudict_id,
