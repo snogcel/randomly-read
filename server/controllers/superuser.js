@@ -79,7 +79,8 @@ exports.users = async (req, res) => {
 
   });
 
-  // clients.unshift(superuser); // include superuser in result
+  // TODO - find a better way to handle this
+  clients.unshift(superuser); // include superuser in result
 
   let response = {};
 

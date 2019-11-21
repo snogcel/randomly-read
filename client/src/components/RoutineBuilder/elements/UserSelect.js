@@ -7,6 +7,44 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+import InputBase from '@material-ui/core/InputBase';
+import { withStyles } from "@material-ui/core/styles";
+
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
+}))(InputBase);
+
 const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
@@ -49,11 +87,12 @@ export default function UserSelect(props) {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="routine-user-input">Active Users</InputLabel>
+        <InputLabel htmlFor="routine-user-input">Users</InputLabel>
         <Select
           defaultValue={props.options[0]}
           value={props.user.user}
           onChange={handleChange}
+          input={<BootstrapInput name="user" id="user-customized-select" />}
           inputProps={{
             name: 'user',
             id: 'user-input',

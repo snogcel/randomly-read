@@ -3,7 +3,7 @@ import { styles } from '../../../themeHandler';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
-class Word extends React.Component {
+class Sentence extends React.Component {
 
   constructor(props) {
     super(props);
@@ -24,13 +24,13 @@ class Word extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Typography variant="h1" className={classes.word}>
+      <Typography variant="h2" className={classes.word}>
         {this.props.value.name}
       </Typography>
     );
   }
 }
 
-const WordWrapped = withStyles(styles)(Word);
+const SentenceWrapped = withStyles(styles)(Sentence);
 
-export default WordWrapped;
+export default SentenceWrapped;

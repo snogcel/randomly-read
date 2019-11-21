@@ -7,6 +7,8 @@ import Slider from '@material-ui/core/Slider';
 const useStyles = makeStyles(theme => ({
   root: {
     width: 300,
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   margin: {
     height: theme.spacing(3),
@@ -33,7 +35,7 @@ export default function DurationSlider(props) {
 
   return (
     <div className={classes.root}>
-      <InputLabel htmlFor="discrete-slider-duration" className={classes.slider}>Display for {props.duration.duration} {unit}</InputLabel>
+      <InputLabel shrink={true} htmlFor="discrete-slider-duration" className={classes.slider}>Display for {props.duration.duration} {unit}</InputLabel>
       <Slider
         defaultValue={props.duration}
         value={props.duration.duration}

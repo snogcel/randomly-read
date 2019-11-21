@@ -12,6 +12,7 @@ import {UPDATE_PASSWORD} from '../actions/administration';
 import {CHANGE_PASSWORD} from '../actions/administration';
 
 import {CREATE_NEW_USER} from '../actions/administration';
+import {CANCEL_CREATE_NEW_USER} from '../actions/administration';
 
 import {FETCH_USERS_REQUEST} from '../actions/administration';
 import {FETCH_USERS_SUCCESS} from '../actions/administration';
@@ -131,6 +132,19 @@ export default (state = initialState, action) => {
         newPassword: initialState.newPassword,
         error: initialState.error,
         mode: 'create'};
+
+    case CANCEL_CREATE_NEW_USER:
+      return {...state,
+        selectedUserId: initialState.selectedUserId,
+        selectedUsername: initialState.selectedUsername,
+        selectedFirstName: initialState.selectedFirstName,
+        selectedLastName: initialState.selectedLastName,
+        newUsername: initialState.newUsername,
+        newFirstName: initialState.newFirstName,
+        newLastName: initialState.newLastName,
+        newPassword: initialState.newPassword,
+        error: initialState.error,
+        mode: 'view'};
 
     case UPDATE_USER_ID:
       return {...state, selectedUserId: action.userId, mode: 'view'};

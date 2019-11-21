@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,6 +19,7 @@ import { styles } from '../../themeHandler';
 
 import VowelCheckbox from './elements/VowelCheckbox';
 import Word from './elements/Word';
+import Sentence from './elements/Sentence';
 
 function getModalStyle() {
   const top = 50;
@@ -254,10 +256,9 @@ class WordCard extends React.Component  {
 
     return (
 
-        <div className={classes.column}>
+      <Grid container className={classes.wordGrid} justify="center">
+        <Grid item>
 
-          <Card elevation="0" className={classes.card}>
-            <CardContent>
               { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
                 {({ loading, error, data, refetch }) => {
 
@@ -362,25 +363,44 @@ class WordCard extends React.Component  {
 
                   if (loading) return null;
 
-                  return(<div>
-                    <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
-                  </div>);
+                  if (this.props.mode === 'Sentence') {
+
+                    return (
+                      <Card elevation="1" className={classes.card}>
+                        <CardContent>
+                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  } else if (this.props.mode === 'Word') {
+
+                    return (
+                      <Card elevation="1" className={classes.card}>
+                        <CardContent>
+                          <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  } else {
+
+                    return (
+                      <Card elevation="0" className={classes.card}>
+                        <CardContent>
+                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  }
 
                   }}
                   </Query>
                 }
-            </CardContent>
-          </Card>
 
-          {/* VowelCheckboxes.map((item, i) => (
-             <>
-
-               <VowelCheckbox action={this.handleChange} value={{name: item.name, displayName: item.label, selectedVowel: this.props.vowel}} />
-
-             </>
-          )) */}
-
-        </div>
+        </Grid>
+      </Grid>
 
     );
 

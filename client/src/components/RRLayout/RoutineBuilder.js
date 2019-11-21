@@ -14,7 +14,15 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   let syllables = exerciseConfig.syllables;
   let mode = exerciseConfig.mode;
   let position = exerciseConfig.position;
+  let vowels = exerciseConfig.vowels;
+
+  let result = [];
+
   let blacklist = {};
+
+  if (exerciseConfig.vowels.indexOf(consonant) > -1) { // if consonant is a vowel...
+    if (consonant !== vowel) return false; // if consonant and vowel are not the same, return false
+  }
 
   // sentences
   if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
@@ -26,17 +34,24 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
   if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
 
-  // TODO - synchronize this with RoutineBuilder Component
+  // iterate through vowel array (in cases where more than one vowel is being filtered on)
+  for (let i = 0; i < vowels.length; i++) {
 
-  let depth = 1;
+    // determine overlap
+    for (let j = 0; j < syllables.length; j++) {
 
-  if (syllables.length !== 0) {
-    depth = Math.min(...syllables);
+      if (j === 0 && i === 0) { // for first iteration, include full array
+        result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
+      } else { // find intersection of arrays
+        result = result.filter(function(value) {
+          return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+        });
+      }
+    }
+
   }
 
-  let vowelBlacklist = blacklist[vowel].consonants[depth - 1];
-
-  if (vowelBlacklist.indexOf(consonant) > -1) {
+  if (result.indexOf(consonant) > -1) {
     return false;
   }
 

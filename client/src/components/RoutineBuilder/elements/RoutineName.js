@@ -3,16 +3,22 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
+import FormControl from '@material-ui/core/FormControl';
+import InputBase from '@material-ui/core/InputBase';
+import InputLabel from '@material-ui/core/InputLabel';
+import { fade, withStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
-  container: {
+  root: {
     display: 'flex',
     flexWrap: 'wrap',
+  },
+  margin: {
+    margin: theme.spacing(1),
   },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    minWidth: 300
   },
   dense: {
     marginTop: theme.spacing(2),
@@ -21,6 +27,41 @@ const useStyles = makeStyles(theme => ({
     width: 200,
   },
 }));
+
+const BootstrapInput = withStyles(theme => ({
+  root: {
+    'label + &': {
+      marginTop: theme.spacing(3),
+    },
+  },
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.common.white,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    width: 'auto',
+    padding: '10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      borderColor: theme.palette.primary.main,
+    },
+  },
+}))(InputBase);
 
 export default function RoutineName(props) {
   const classes = useStyles();
@@ -32,20 +73,22 @@ export default function RoutineName(props) {
   };
 
   return (
-    <form className={classes.container} noValidate autoComplete="off">
-      <TextField
-        id="outlined-routine-name"
-        label="Routine Name"
-        className={classes.textField}
-        style={{ margin: 8 }}
-        margin="normal"
-        InputLabelProps={{
-          shrink: true,
-        }}
-        defaultValue={props.name.name}
-        value={props.name.name}
-        onChange={handleChange('name')}
-      />
+    <form className={classes.root} noValidate autoComplete="off">
+      <FormControl className={classes.margin}>
+        <InputLabel shrink htmlFor="routine-name-input">
+          Routine Name
+        </InputLabel>
+        <BootstrapInput
+          id="outlined-routine-name"
+          label="Routine Name"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          defaultValue={props.name.name}
+          value={props.name.name}
+          onChange={handleChange('name')}
+        />
+      </FormControl>
     </form>
   );
 }
