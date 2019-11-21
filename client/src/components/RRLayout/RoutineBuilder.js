@@ -14,6 +14,10 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   let syllables = exerciseConfig.syllables;
   let mode = exerciseConfig.mode;
   let position = exerciseConfig.position;
+  let vowels = exerciseConfig.vowels;
+
+  let result = [];
+
   let blacklist = {};
 
   // sentences
@@ -26,17 +30,24 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
   if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
 
-  // TODO - synchronize this with RoutineBuilder Component
+  // iterate through vowel array (in cases where more than one vowel is being filtered on)
+  for (let i = 0; i < vowels.length; i++) {
 
-  let depth = 1;
+    // determine overlap
+    for (let j = 0; j < syllables.length; j++) {
 
-  if (syllables.length !== 0) {
-    depth = Math.min(...syllables);
+      if (j === 0 && i === 0) { // for first iteration, include full array
+        result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
+      } else { // find intersection of arrays
+        result = result.filter(function(value) {
+          return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+        });
+      }
+    }
+
   }
 
-  let vowelBlacklist = blacklist[vowel].consonants[depth - 1];
-
-  if (vowelBlacklist.indexOf(consonant) > -1) {
+  if (result.indexOf(consonant) > -1) {
     return false;
   }
 
@@ -116,9 +127,14 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
+      console.log("-blacklist start...");
+
       verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
 
+      console.log("-blacklist end... ", verified);
+
       while (!verified) {
+        console.log("find new vowel + consonant combo...");
         rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
         randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
         consonant = exerciseConfig.consonants[rand];
