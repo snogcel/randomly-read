@@ -804,7 +804,6 @@ class RoutineBuilder extends React.Component {
     let blacklist = {};
 
     // apply relevant blacklist to mode + position
-    console.log("Mode: ", mode);
 
     // sentences
     if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
