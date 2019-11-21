@@ -96,7 +96,7 @@ class Administration extends React.Component {
 
   cancelCreateHandler() {
 
-    // TODO
+    this.props.cancelCreateNewUser();
 
   }
 
