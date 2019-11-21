@@ -127,14 +127,9 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
-      console.log("-blacklist start...");
-
       verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
 
-      console.log("-blacklist end... ", verified);
-
       while (!verified) {
-        console.log("find new vowel + consonant combo...");
         rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
         randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
         consonant = exerciseConfig.consonants[rand];
