@@ -1,6 +1,8 @@
 const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const ViewHistory = require('../models/viewHistory');
+const Post = require('../models/post');
+const moment = require('moment');
 
 /*
 
@@ -24,16 +26,69 @@ db.posts.aggregate([
 
  */
 
-function transformDataSet(data, type) {
+const data = [
+  {
+    name: 'Mon', fullDate: 'Nov 4th, 2019', words: 240,
+  },
+  {
+    name: 'Tues', fullDate: 'Nov 5th, 2019', words: 139,
+  },
+  {
+    name: 'Wed', fullDate: 'Nov 6th, 2019', words: 0,
+  },
+  {
+    name: 'Thurs', fullDate: 'Nov 7th, 2019', words: 398,
+  },
+  {
+    name: 'Fri', fullDate: 'Nov 8th, 2019', words: 480,
+  },
+  {
+    name: 'Sat', fullDate: 'Nov 9th, 2019', words: 300,
+  },
+  {
+    name: 'Sun', fullDate: 'Nov 10th, 2019', words: 400,
+  }
+];
+
+
+function transformViewHistory(data, range, type) {
 
   let result = [];
 
+  let resultSet = [];
+
+  let startDate = moment(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * range ));
+
+  // stub out response array
+  for (let i = 0; i <= range; i++) {
+
+    let id = startDate.format('YYYY-MM-DD');
+    let attributes = {
+      "_id": id,
+      "name": startDate.format('dd'),
+      "fullDate": startDate.format('MMM Do YYYY'),
+      "count": 0
+    };
+
+    resultSet.push(attributes);
+
+    startDate.add(1, 'day');
+
+  }
+
+  // console.log(resultSet);
+
   // iterate through data
-  for (var i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.length; i++) {
 
     let id = data[i]._id;
 
     let attributes = data[i];
+
+    let m = moment(attributes._id, 'YYYY-MM-DD');
+
+    attributes.name = m.format('dd');
+    attributes.fullDate = m.format('MMM Do YYYY');
 
     // format into JSONAPI
     let dataSet = {
@@ -41,14 +96,27 @@ function transformDataSet(data, type) {
       "attributes": attributes
     };
 
-    result.push(dataSet);
+    result.push(attributes);
+  }
+
+  // update resultData with actual data counts
+  for (let i = 0; i < result.length; i++) {
+
+    for (let j = 0; j < resultSet.length; j++) {
+
+      if (result[i]._id === resultSet[j]._id) {
+        resultSet[j].count = result[i].count;
+      }
+
+    }
+
   }
 
   return {
     "type": type,
     "error": false,
     "message": "OK",
-    "data": result,
+    "data": resultSet,
     "meta": {
       "total": result.length
     }
@@ -58,6 +126,8 @@ function transformDataSet(data, type) {
 
 exports.list = async (req, res) => {
   // const superuser = req.user.id; // TODO - remove?
+
+  let range = 6;
 
   const id = req.params.id;
   const u_id = new ObjectId(id);
@@ -69,10 +139,10 @@ exports.list = async (req, res) => {
     { $match: {
         author: u_id,
         "created": {
-          "$gte": new Date(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * 7 ))
+          "$gte": new Date(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * range ))
         }
       } },
-    { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$created" } }, count: { $sum: 1 } } },
+    { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$created", timezone: "America/New_York" } }, count: { $sum: 1 } } },
     { $sort: { _id: 1 } }
   ], function(err, data) {
 
@@ -81,7 +151,7 @@ exports.list = async (req, res) => {
       res.json(response);
     } else {
 
-      response = transformDataSet(data, "ViewHistory");
+      response = transformViewHistory(data, range, "ViewHistory");
       res.json(response);
 
     }

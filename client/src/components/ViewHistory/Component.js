@@ -69,16 +69,20 @@ class ViewHistory extends React.Component {
 
   render() {
 
+    let dataSet = this.props.dataSet || [];
+
+    console.log(dataSet);
+
     return (
       <div>
 
         <ResponsiveContainer width='100%' height={300}>
-          <BarChart data={data} margin={{top: 20, right: 20, left: 20, bottom: 5}}>
-            <CartesianGrid strokeDasharray="3 3"/>
+          <BarChart data={dataSet} margin={{top: 20, right: 20, left: 20, bottom: 5}}>
+            <CartesianGrid strokeDasharray="1 1"/>
             <XAxis dataKey="name"/>
             <YAxis/>
             <Tooltip content={<CustomTooltip />}/>
-            <Bar dataKey="words" fill="#2f8eed" />
+            <Bar dataKey="count" fill="#2f8eed" />
           </BarChart>
         </ResponsiveContainer>
 
