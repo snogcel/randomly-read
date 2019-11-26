@@ -21,30 +21,6 @@ const CustomTooltip = props => {
   return <DefaultTooltipContent {...props} payload={newPayload} />;
 };
 
-const data = [
-  {
-    name: 'Mon', fullDate: 'Nov 4th, 2019', words: 240,
-  },
-  {
-    name: 'Tues', fullDate: 'Nov 5th, 2019', words: 139,
-  },
-  {
-    name: 'Wed', fullDate: 'Nov 6th, 2019', words: 0,
-  },
-  {
-    name: 'Thurs', fullDate: 'Nov 7th, 2019', words: 398,
-  },
-  {
-    name: 'Fri', fullDate: 'Nov 8th, 2019', words: 480,
-  },
-  {
-    name: 'Sat', fullDate: 'Nov 9th, 2019', words: 300,
-  },
-  {
-    name: 'Sun', fullDate: 'Nov 10th, 2019', words: 400,
-  }
-];
-
 class ViewHistory extends React.Component {
   constructor(props) {
     super(props);
@@ -71,23 +47,25 @@ class ViewHistory extends React.Component {
 
     let dataSet = this.props.dataSet || [];
 
-    console.log(dataSet);
+    if (dataSet.length > 0) {
 
-    return (
-      <div>
+      return (
+        <div>
 
-        <ResponsiveContainer width='100%' height={300}>
-          <BarChart data={dataSet} margin={{top: 20, right: 20, left: 20, bottom: 5}}>
-            <CartesianGrid strokeDasharray="1 1"/>
-            <XAxis dataKey="name"/>
-            <YAxis/>
-            <Tooltip content={<CustomTooltip />}/>
-            <Bar dataKey="count" fill="#2f8eed" />
-          </BarChart>
-        </ResponsiveContainer>
+          <ResponsiveContainer width='100%' height={300}>
+            <BarChart data={dataSet} margin={{top: 20, right: 20, left: 20, bottom: 5}}>
+              <CartesianGrid strokeDasharray="1 1"/>
+              <XAxis dataKey="name"/>
+              <YAxis/>
+              <Tooltip content={<CustomTooltip />}/>
+              <Bar dataKey="count" fill="#2f8eed" />
+            </BarChart>
+          </ResponsiveContainer>
 
-      </div>
-    );
+        </div>
+      );
+
+    } else { return null }
 
   }
 }
