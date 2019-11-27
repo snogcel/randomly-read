@@ -52,7 +52,11 @@ exports.settings = async (req, res) => {
       res.json(response);
     } else {
       let obj = JSON.parse(JSON.stringify(data));
-      assigned = obj.routines;
+
+      for (let i = 0; i < obj.routines.length; i++) {
+        assigned.push(new ObjectId(obj.routines[i]));
+      }
+
     }
 
   });

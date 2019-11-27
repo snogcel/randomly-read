@@ -80,7 +80,7 @@ exports.users = async (req, res) => {
   });
 
   // TODO - find a better way to handle this
-  clients.unshift(superuser); // include superuser in result
+  clients.unshift(s_id); // include superuser in result
 
   let response = {};
 
@@ -94,6 +94,9 @@ exports.users = async (req, res) => {
       res.json(response);
     } else {
       response = transformDataSet(data, "users");
+
+      console.log(data);
+
       res.json(response);
     }
 
@@ -325,7 +328,11 @@ exports.routines = async (req, res) => {
       res.json(response);
     } else {
       let obj = JSON.parse(JSON.stringify(data));
-      assigned = obj.routines;
+
+      for (let i = 0; i < obj.routines.length; i++) {
+        assigned.push(new ObjectId(obj.routines[i]));
+      }
+
     }
 
   });
@@ -340,6 +347,9 @@ exports.routines = async (req, res) => {
       response = {"error": true, "message": "Error fetching data"};
       res.json(response);
     } else {
+
+      console.log(data);
+
       response = transformDataSet(data, "routines");
       res.json(response);
     }
