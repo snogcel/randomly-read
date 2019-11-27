@@ -53,13 +53,13 @@ exports.settings = async (req, res) => {
     } else {
       let obj = JSON.parse(JSON.stringify(data));
 
-      for (let i = 0; i < obj.routines.length; i++) {
-        assigned.push(new ObjectId(obj.routines[i]));
-      }
+      assigned = obj.routines;
 
     }
 
   });
+
+  console.log(assigned);
 
   let response = {};
 

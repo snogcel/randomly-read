@@ -86,6 +86,8 @@ exports.users = async (req, res) => {
   // TODO - find a better way to handle this
   clients.unshift(s_id); // include superuser in result
 
+  console.log("Clients array: ", clients);
+
   let response = {};
 
   // fetch and return users defined as "clients" of superuser
@@ -176,7 +178,7 @@ exports.createUser = async (req, res, next) => {
         for (let i = 0; i < obj.routines.length; i++) {
           routines.push(new ObjectId(obj.routines[i]));
         }
-        
+
         obj.routines = routines;
 
         // append new user to superuser clients array
