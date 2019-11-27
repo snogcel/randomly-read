@@ -38,42 +38,61 @@ function transformRoutineSet(data, type) {
 
 }
 
-exports.settings = async (req, res) => {
-  const author = req.user.id;
-  const a_id = new ObjectId(author);
+function parseUserObj (obj) {
+  let parsedObj = obj;
 
-  let assigned = [];
+  let clients = [];
+  let routines = [];
+
+  // clients
+  for (let i = 0; i < obj.clients.length; i++) {
+    clients.push(new ObjectId(obj.clients[i]));
+  }
+
+  // routines
+  for (let i = 0; i < obj.routines.length; i++) {
+    routines.push(new ObjectId(obj.routines[i]));
+  }
+
+  parsedObj.clients = clients;
+  parsedObj.routines = routines;
+
+  return parsedObj;
+}
+
+exports.settings = async (req, res) => {
+
+  const author = req.user.id;
+
+  let obj = {};
+  let parsedObj = {};
 
   // fetch user by ID
-  await User.findOne({"_id": a_id}, function(err, data) {
+  await User.findOne({"_id": new ObjectId(author)}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
-
-      assigned = obj.routines;
-
+      obj = JSON.parse(JSON.stringify(data));
     }
 
-  });
+    parsedObj = parseUserObj(obj);
+    let response = {};
 
-  console.log(assigned);
+    Routine.find({
+      '_id': {$in: parsedObj.routines}
+    }, function (err, data) {
 
-  let response = {};
+      if (err) {
+        response = {"error": true, "message": "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformRoutineSet(data, "routines");
+        res.json(response);
+      }
 
-  Routine.find({
-    '_id': {$in: assigned}
-  }, function (err, data) {
-
-    if (err) {
-      response = {"error": true, "message": "Error fetching data"};
-      res.json(response);
-    } else {
-      response = transformRoutineSet(data, "routines");
-      res.json(response);
-    }
+    });
 
   });
 

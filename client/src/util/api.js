@@ -176,7 +176,7 @@ export async function updateRoutine (id, body, token) {
 }
 
 export async function getUsers (token) {
-  console.log("-fetching client users-");
+  console.log("-fetching client users with token: ", token);
   return await methods.get('superuser/users', token)
 }
 

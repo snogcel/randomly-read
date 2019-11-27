@@ -64,12 +64,12 @@ function transformViewHistory(data, start, end, type) {
   let startDate = moment(new Date(start * 1000)).startOf("day");
   let endDate = moment(new Date(end * 1000)).startOf("day");
 
-  console.log("Start Date: ", startDate.format());
-  console.log("End Date: ", endDate.format());
+  // console.log("Start Date: ", startDate.format());
+  // console.log("End Date: ", endDate.format());
 
   let range = endDate.diff(startDate, 'days');
 
-  console.log(range);
+  // console.log(range);
 
   // stub out response array
   for (let i = 0; i <= range; i++) {
@@ -88,7 +88,7 @@ function transformViewHistory(data, start, end, type) {
 
   }
 
-  console.log(resultSet);
+  // console.log(resultSet);
 
   // iterate through data
   for (let i = 0; i < data.length; i++) {
@@ -140,7 +140,6 @@ exports.list = async (req, res) => {
   // const superuser = req.user.id; // TODO - remove?
 
   const id = req.params.id;
-  const u_id = new ObjectId(id);
 
   const startDate = req.params.start;
   const endDate = req.params.end;
@@ -150,7 +149,7 @@ exports.list = async (req, res) => {
   // fetch view history by userId -- hard coded to show last 7 days
   await ViewHistory.aggregate([
     { $match: {
-        author: u_id,
+        author: new ObjectId(id),
         "created": {
           "$gte": new Date(startDate * 1000),
           "$lte": new Date(endDate * 1000)

@@ -125,6 +125,8 @@ class Administration extends React.Component {
         });
       }
 
+      console.log("Available Users: ", availableUsers);
+
       // display first user from list by default
       if(typeof availableUsers[0] !== "undefined" && this.props.selectedUserId === null && this.props.mode !== "create") {
         this.userSelectHandler(availableUsers[0].id);
