@@ -74,7 +74,11 @@ exports.users = async (req, res) => {
       res.json(response);
     } else {
       let obj = JSON.parse(JSON.stringify(data));
-      clients = obj.clients;
+
+      for (let i = 0; i < obj.clients.length; i++) {
+        clients.push(new ObjectId(obj.clients[i]));
+      }
+
     }
 
   });
@@ -140,6 +144,8 @@ exports.createUser = async (req, res, next) => {
 
     const { username, password, firstName, lastName, isActive } = req.body;
 
+    let routines = [];
+
     let user = {
       "username": username,
       "password": password,
@@ -166,8 +172,13 @@ exports.createUser = async (req, res, next) => {
 
         let response = {};
 
+        // somewhat hacky...
+        for (let i = 0; i < obj.routines.length; i++) {
+          routines.push(new ObjectId(obj.routines[i]));
+        }
+
         // append new user to superuser clients array
-        obj.clients.push(newUser._id);
+        obj.clients.push(new ObjectId(newUser._id));
 
         User.findOneAndUpdate({"_id": s_id}, obj, {new: true}, function(err, data) {
           if(err) {
