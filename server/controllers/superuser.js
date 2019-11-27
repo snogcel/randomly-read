@@ -176,6 +176,8 @@ exports.createUser = async (req, res, next) => {
         for (let i = 0; i < obj.routines.length; i++) {
           routines.push(new ObjectId(obj.routines[i]));
         }
+        
+        obj.routines = routines;
 
         // append new user to superuser clients array
         obj.clients.push(new ObjectId(newUser._id));
@@ -418,7 +420,7 @@ exports.createRoutine = async (req, res, next) => {
             next(err);
           } else {
             let obj = JSON.parse(JSON.stringify(data));
-            obj.routines.push(routineId); // add new routine to routines array
+            obj.routines.push(new ObjectId(routineId)); // add new routine to routines array
 
             // Add to Related User Routines array
             User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
@@ -493,7 +495,7 @@ exports.deleteRoutine = async (req, res) => {
       let routines = [];
 
       for (let i = 0; i < obj.routines.length; i++) {
-        if (obj.routines[i] !== routineId) routines.push(obj.routines[i]); // remove routine from user obj
+        if (obj.routines[i] !== routineId) routines.push(new ObjectId(obj.routines[i])); // remove routine from user obj
       }
 
       obj.routines = routines;
