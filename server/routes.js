@@ -81,7 +81,7 @@ router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch rou
 router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
 
 // Statistics
-router.get('/history/words/:id', jwtAuth, viewHistory.list); // fetch word view statistics
+router.get('/history/words/:id/start/:start/end/:end', jwtAuth, viewHistory.list); // fetch word view statistics
 
 // Routine Settings
 router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings

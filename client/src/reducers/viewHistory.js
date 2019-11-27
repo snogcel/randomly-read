@@ -1,10 +1,14 @@
+import {UPDATE_START_DATE} from '../actions/viewHistory';
+import {UPDATE_END_DATE} from '../actions/viewHistory';
+
 import {FETCH_VIEW_HISTORY_REQUEST} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_SUCCESS} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_ERROR} from '../actions/viewHistory';
 
 let dataSet;
 const initialState = {
-  filter: 30,
+  startDate: null,
+  endDate: null,
   dataSet: [],
   isFetching: false
 };
@@ -17,6 +21,12 @@ export default (state = initialState, action) => {
       return { ...state, isFetching: false, dataSet: action.viewHistory };
     case FETCH_VIEW_HISTORY_ERROR:
       return { ...state, isFetching: false };
+
+    case UPDATE_START_DATE:
+      return {...state, startDate: action.startDate };
+
+    case UPDATE_END_DATE:
+      return {...state, endDate: action.endDate };
 
     default:
       return state;

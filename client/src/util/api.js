@@ -206,7 +206,7 @@ export async function createUser (user, token) {
   return await methods.post('superuser/users', user, token);
 }
 
-export async function getViewHistory (id, token) {
+export async function getViewHistory (id, startDate, endDate, token) {
   console.log("-fetching view history-");
-  return await methods.get(`history/words/${id}`, token)
+  return await methods.get(`history/words/${id}/start/${startDate}/end/${endDate}`, token)
 }

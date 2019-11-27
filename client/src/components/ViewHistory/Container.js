@@ -1,14 +1,16 @@
 import { connect } from 'react-redux';
-import { fetchViewHistory } from '../../actions/viewHistory';
+import { fetchViewHistory, updateStartDate, updateEndDate } from '../../actions/viewHistory';
 import ViewHistory from './Component';
 
 export const mapStateToProps = state => ({
-  filter: state.viewHistory.filter,
+  startDate: state.viewHistory.startDate,
+  endDate: state.viewHistory.endDate,
   dataSet: state.viewHistory.dataSet,
+  error: state.viewHistory.error,
   isFetching: state.viewHistory.isFetching
 });
 
-const mapDispatchToProps = { fetchViewHistory };
+const mapDispatchToProps = { fetchViewHistory, updateStartDate, updateEndDate };
 
 const ViewHistoryContainer = connect(
   mapStateToProps,

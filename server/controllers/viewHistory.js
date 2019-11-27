@@ -51,13 +51,25 @@ const data = [
 ];
 
 
-function transformViewHistory(data, range, type) {
+function transformViewHistory(data, start, end, type) {
 
-  let result = [];
+  let result = []; // for parsing mongo results
+  let resultSet = []; // for stubbing out range of dates in filter
 
-  let resultSet = [];
+  let today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
 
-  let startDate = moment(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * range ));
+  // TODO - accept arguments for "start" and "end" instead of using range
+  // let startDate = moment(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * range ));
+
+  let startDate = moment(new Date(start * 1000)).startOf("day");
+  let endDate = moment(new Date(end * 1000)).startOf("day");
+
+  console.log("Start Date: ", startDate.format());
+  console.log("End Date: ", endDate.format());
+
+  let range = endDate.diff(startDate, 'days');
+
+  console.log(range);
 
   // stub out response array
   for (let i = 0; i <= range; i++) {
@@ -76,7 +88,7 @@ function transformViewHistory(data, range, type) {
 
   }
 
-  // console.log(resultSet);
+  console.log(resultSet);
 
   // iterate through data
   for (let i = 0; i < data.length; i++) {
@@ -127,10 +139,11 @@ function transformViewHistory(data, range, type) {
 exports.list = async (req, res) => {
   // const superuser = req.user.id; // TODO - remove?
 
-  let range = 6;
-
   const id = req.params.id;
   const u_id = new ObjectId(id);
+
+  const startDate = req.params.start;
+  const endDate = req.params.end;
 
   let response = {};
 
@@ -139,7 +152,8 @@ exports.list = async (req, res) => {
     { $match: {
         author: u_id,
         "created": {
-          "$gte": new Date(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * range ))
+          "$gte": new Date(startDate * 1000),
+          "$lte": new Date(endDate * 1000)
         }
       } },
     { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$created", timezone: "America/New_York" } }, count: { $sum: 1 } } },
@@ -151,7 +165,7 @@ exports.list = async (req, res) => {
       res.json(response);
     } else {
 
-      response = transformViewHistory(data, range, "ViewHistory");
+      response = transformViewHistory(data, startDate, endDate, "ViewHistory");
       res.json(response);
 
     }
