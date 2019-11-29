@@ -2,7 +2,9 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
@@ -285,6 +287,12 @@ class Administration extends React.Component {
               <Grid item xs={userAdministrationContainerWidth}>
 
                 <Card className={classes.userAdminCard}>
+
+                  <CardHeader
+                    titleTypographyProps={{color:"textSecondary"}}
+                    title="Create User"
+                  />
+
                   <CardContent>
 
                     <Grid container>
@@ -339,6 +347,12 @@ class Administration extends React.Component {
                   <Grid item xs={userAdministrationContainerWidth}>
 
                     <Card className={classes.userAdminCard}>
+
+                      <CardHeader
+                        titleTypographyProps={{color:"textSecondary"}}
+                        title="User Details"
+                      />
+
                       <CardContent>
 
                         <Grid container>
@@ -393,23 +407,26 @@ class Administration extends React.Component {
                       </CardContent>
                     </Card>
 
+                    {(selectedUserId) ? (
+                      <>
+                      <Card className={classes.userAdminCard}>
 
-                    <Card className={classes.userAdminCard}>
-                      <CardContent>
+                        <CardContent>
 
-                        <Grid container>
+                          <Grid container>
 
-                          <Grid item xs={12}>
+                            <Grid item xs={12}>
 
-                            <ViewHistoryContainer userId={selectedUserId} />
+                              <ViewHistoryContainer userId={selectedUserId} />
+
+                            </Grid>
 
                           </Grid>
 
-                        </Grid>
-
-                      </CardContent>
-                    </Card>
-
+                        </CardContent>
+                      </Card>
+                      </>
+                    ) : ( <> </> )}
 
                   </Grid>
 
