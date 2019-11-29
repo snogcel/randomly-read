@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
     case FETCH_VIEW_HISTORY_REQUEST:
       return { ...state, isFetching: true };
     case FETCH_VIEW_HISTORY_SUCCESS:
-      return { ...state, isFetching: false, dataSet: action.viewHistory };
+      return { ...state, isFetching: false, dataSet: action.viewHistory.dataSet, startDate: action.viewHistory.startDate, endDate: action.viewHistory.endDate };
     case FETCH_VIEW_HISTORY_ERROR:
       return { ...state, isFetching: false };
 

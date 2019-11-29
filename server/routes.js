@@ -96,6 +96,9 @@ router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete
 
 
 module.exports = app => {
+
+  app.disable('etag');
+
   app.use('/api', router);
 
   app.use('/graphql', jwtAuth, graphqlExpress((req) => ({ schema, context: {user: req.user} })));

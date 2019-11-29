@@ -33,7 +33,7 @@ class ViewHistory extends React.Component {
   }
 
   loadHistory(userId, startDate, endDate) {
-    this.props.fetchViewHistory(userId, startDate, endDate);
+    if (startDate < endDate) this.props.fetchViewHistory(userId, startDate, endDate);
   };
 
   componentWillMount() {
@@ -49,11 +49,19 @@ class ViewHistory extends React.Component {
   }
 
   startDateHandler(startDate) {
-    this.props.updateStartDate(startDate);
+    if (this.props.userId && this.props.startDate && this.props.endDate) {
+      this.loadHistory(this.props.userId, startDate, this.props.endDate)
+    } else {
+      this.props.updateStartDate(startDate);
+    }
   }
 
   endDateHandler(endDate) {
-    this.props.updateEndDate(endDate);
+    if (this.props.userId && this.props.startDate && this.props.endDate) {
+      this.loadHistory(this.props.userId, this.props.startDate, endDate)
+    } else {
+      this.props.updateEndDate(endDate);
+    }
   }
 
   render() {

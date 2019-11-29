@@ -124,11 +124,17 @@ function transformViewHistory(data, start, end, type) {
 
   }
 
+  let results = {
+    dataSet: resultSet,
+    startDate: start,
+    endDate: end
+  };
+
   return {
     "type": type,
     "error": false,
     "message": "OK",
-    "data": resultSet,
+    "data": results,
     "meta": {
       "total": result.length
     }

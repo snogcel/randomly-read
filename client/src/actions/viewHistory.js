@@ -15,7 +15,7 @@ export const fetchViewHistory = (userId, startDate, endDate) => async (dispatch,
   dispatch(fetchViewHistoryRequest);
   try {
     const { token } = getState().auth;
-    const viewHistory = await getViewHistory(userId, startDate, endDate, token);
+    let viewHistory = await getViewHistory(userId, startDate, endDate, token);
     dispatch(fetchViewHistorySuccess(viewHistory.data));
   } catch (error) {
     dispatch(fetchViewHistoryError(error));
