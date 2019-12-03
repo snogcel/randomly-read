@@ -57,8 +57,6 @@ exports.listByUserAndDate = async (req, res) => {
       "$lte": new Date(endDate * 1000)
     }}, { postId: 1, _id: 0 });
 
-  console.log(viewedPosts);
-
   let viewed = [];
   for (let i = 0; i < viewedPosts.length; i++) {
     viewed.push(viewedPosts[i].postId);

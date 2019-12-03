@@ -94,9 +94,6 @@ exports.list = async (req, res) => {
 
   let response = {};
 
-  console.log(startDate);
-  console.log(endDate);
-
   // fetch view history by userId
   await ViewHistory.aggregate([
     { $match: {
@@ -114,9 +111,6 @@ exports.list = async (req, res) => {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-
-      console.log(data);
-
       response = transformViewHistory(data, startDate, endDate, "ViewHistory");
       res.json(response);
 
