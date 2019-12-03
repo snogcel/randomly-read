@@ -1,5 +1,6 @@
 import {UPDATE_START_DATE} from '../actions/viewHistory';
 import {UPDATE_END_DATE} from '../actions/viewHistory';
+import {UPDATE_FILTER} from '../actions/viewHistory';
 
 import {FETCH_VIEW_HISTORY_REQUEST} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_SUCCESS} from '../actions/viewHistory';
@@ -10,6 +11,7 @@ const initialState = {
   startDate: null,
   endDate: null,
   dataSet: [],
+  filter: "all",
   isFetching: false
 };
 
@@ -27,6 +29,9 @@ export default (state = initialState, action) => {
 
     case UPDATE_END_DATE:
       return {...state, endDate: action.endDate };
+
+    case UPDATE_FILTER:
+      return {...state, filter: action.filter };
 
     default:
       return state;

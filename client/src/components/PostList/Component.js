@@ -21,8 +21,8 @@ class PostList extends React.Component {
   loadPosts = () => {
     const { username, category, startDate, endDate } = this.props;
     console.log("username: ", username);
+    if (username && startDate && endDate && category === "all") return this.props.fetchPostsByDate(username, startDate, endDate);
     if (username && category) return this.props.fetchProfile(username, category);
-    if (username && startDate && endDate) return this.props.fetchPostsByDate(username, startDate, endDate);
     return this.props.fetchPosts(category);
   };
 

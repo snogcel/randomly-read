@@ -2,6 +2,7 @@ import { getViewHistory } from "../util/api";
 
 export const UPDATE_START_DATE = 'UPDATE_START_DATE';
 export const UPDATE_END_DATE = 'UPDATE_END_DATE';
+export const UPDATE_FILTER = 'UPDATE_FILTER';
 
 export const FETCH_VIEW_HISTORY_REQUEST = 'FETCH_VIEW_HISTORY_REQUEST';
 export const FETCH_VIEW_HISTORY_SUCCESS = 'FETCH_VIEW_HISTORY_SUCCESS';
@@ -31,5 +32,11 @@ export function updateStartDate(startDate) {
 export function updateEndDate(endDate) {
   return {
     type: UPDATE_END_DATE, endDate
+  }
+}
+
+export function updateFilter(filter) {
+  return {
+    type: UPDATE_FILTER, filter
   }
 }

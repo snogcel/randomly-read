@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import StartDatePicker from './elements/StartDatePicker';
 import EndDatePicker from './elements/EndDatePicker';
+import WordViewFilter from './elements/WordViewFilter';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
@@ -26,12 +27,19 @@ const CustomTooltip = props => {
   return <DefaultTooltipContent payload={newPayload} />;
 };
 
+const options = [
+  { "id": "all", name: "Words by Date Range" },
+  { "id": "upvoted", name: "All Upvoted Words" },
+  { "id": "downvoted", name: "All Downvoted Words" }
+];
+
 class ViewHistory extends React.Component {
   constructor(props) {
     super(props);
 
     this.startDateHandler = this.startDateHandler.bind(this);
     this.endDateHandler = this.endDateHandler.bind(this);
+    this.filterHandler = this.filterHandler.bind(this);
 
   }
 
@@ -67,10 +75,32 @@ class ViewHistory extends React.Component {
     }
   }
 
+  filterHandler(filter) {
+    this.props.updateFilter(filter);
+  }
+
+  parseSelectedFilter(id) {
+    let selectedFilterObj = { "filter": '' };
+
+    let obj = options.find(o => o.id === id);
+    if (obj) selectedFilterObj.filter = obj.id;
+
+    return selectedFilterObj;
+  }
+
   render() {
 
-    console.log(this.props);
+    /*
 
+          <Grid item style={{ flexGrow: 1, align: "left" }}>
+            <Typography variant="h5" color="textSecondary">
+              All Viewed Words
+            </Typography>
+          </Grid>
+
+     */
+
+    let selectedFilterObj = this.parseSelectedFilter(this.props.filter);
     let dataSet = this.props.dataSet || [];
 
     let error = ""; // TODO - validate that startDate < endDate?
@@ -82,7 +112,7 @@ class ViewHistory extends React.Component {
 
           <Grid item style={{ flexGrow: 1, align: "left" }}>
             <Typography variant="h5" color="textSecondary">
-              Words Viewed
+              Word View Statistics
             </Typography>
           </Grid>
 
@@ -97,7 +127,7 @@ class ViewHistory extends React.Component {
         </Grid>
 
         <ResponsiveContainer width='100%' height={300}>
-          <BarChart data={dataSet} margin={{top: 20, right: 20, left: 20, bottom: 5}}>
+          <BarChart data={dataSet} margin={{top: 20, right: 20, left: 20, bottom: 20}}>
             <CartesianGrid strokeDasharray="1 1"/>
             <XAxis dataKey="name"/>
             <YAxis/>
@@ -106,7 +136,19 @@ class ViewHistory extends React.Component {
           </BarChart>
         </ResponsiveContainer>
 
-        <PostListContainer username={this.props.username} startDate={this.props.startDate} endDate={this.props.endDate} category={null} />
+        <Grid container alignItems="flex-start" justify="flex-end" direction="row" spacing={2}>
+
+
+
+          <Grid item>
+
+            <WordViewFilter options={options} filter={selectedFilterObj} action={this.filterHandler} />
+
+          </Grid>
+
+        </Grid>
+
+        <PostListContainer username={this.props.username} startDate={this.props.startDate} endDate={this.props.endDate} category={this.props.filter} />
 
       </div>
     );
