@@ -30,6 +30,7 @@ import CancelButton from './elements/CancelButton';
 import ChangePassword from './elements/ChangePassword';
 
 import ViewHistoryContainer from '../ViewHistory/Container';
+import PostListContainer from '../PostList/Container';
 
 class Administration extends React.Component {
   constructor(props) {
@@ -418,6 +419,23 @@ class Administration extends React.Component {
                             <Grid item xs={12}>
 
                               <ViewHistoryContainer userId={selectedUserId} />
+
+                            </Grid>
+
+                          </Grid>
+
+                        </CardContent>
+                      </Card>
+
+
+                      <Card className={classes.userAdminCard}>
+                        <CardContent>
+
+                          <Grid container>
+
+                            <Grid item xs={12}>
+
+                              <PostListContainer username={selectedUsername} category={"adjectives"} />
 
                             </Grid>
 

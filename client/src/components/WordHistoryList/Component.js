@@ -30,8 +30,6 @@ class WordHistoryList extends React.Component {
 
     const {classes} = this.props;
 
-    console.log(this.props.posts);
-
     if (!this.props.posts || this.props.posts.length === 0) return null;
 
     let exerciseResults = this.props.posts || [];

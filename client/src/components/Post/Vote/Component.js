@@ -70,6 +70,7 @@ class PostVote extends React.Component {
   downvote = () => this.castVote(this.state.didDownvote ? 0 : -1);
 
   render() {
+
     return (
       <Wrapper>
         <PostVoteUpvote

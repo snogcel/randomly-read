@@ -47,6 +47,10 @@ postSchema.virtual('upvotePercentage').get(function () {
 });
 
 postSchema.methods.vote = function (user, vote) {
+
+  const author_id = this.author._id;
+  if (user !== author_id) user = author_id;
+
   const existingVote = this.votes.find(item => item.user._id.equals(user));
 
   if (existingVote) {
