@@ -12,7 +12,7 @@ import {
 export default function EndDatePicker(props) {
 
   // Default to today's date (using EST)
-  let endDate = moment().tz("America/New_York");
+  let endDate = moment().tz("America/New_York").endOf("day");
 
   if (!props.endDate) props.action(endDate.unix()); // pass to redux in unix format
 
@@ -20,7 +20,7 @@ export default function EndDatePicker(props) {
 
   const handleDateChange = date => {
     setSelectedDate(date);
-    props.action(moment(date).tz("America/New_York").unix()); // pass to redux in unix format
+    props.action(moment(date).tz("America/New_York").endOf("day").unix()); // pass to redux in unix format
   };
 
   return (

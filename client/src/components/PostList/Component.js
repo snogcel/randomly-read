@@ -19,8 +19,10 @@ const List = styled.ul`
 
 class PostList extends React.Component {
   loadPosts = () => {
-    const { username, category } = this.props;
-    if (username) return this.props.fetchProfile(username);
+    const { username, category, startDate, endDate } = this.props;
+    console.log("username: ", username);
+    if (username && category) return this.props.fetchProfile(username, category);
+    if (username && startDate && endDate) return this.props.fetchPostsByDate(username, startDate, endDate);
     return this.props.fetchPosts(category);
   };
 
@@ -31,7 +33,9 @@ class PostList extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (
       this.props.category !== prevProps.category ||
-      this.props.username !== prevProps.username
+      this.props.username !== prevProps.username ||
+      this.props.startDate !== prevProps.startDate ||
+      this.props.endDate !== prevProps.endDate
     )
       this.loadPosts();
   }

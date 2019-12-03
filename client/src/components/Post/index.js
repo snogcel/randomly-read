@@ -9,9 +9,9 @@ const Wrapper = styled.div`
   background-color: ${props => props.theme.foreground};
 `;
 
-const Post = ({ id, author, votes, score, comments, full, ...content }) => (
+const Post = ({ id, author, action, votes, score, comments, full, ...content }) => (
   <Wrapper>
-    <PostVoteContainer id={id} author={author} votes={votes} score={score} />
+    <PostVoteContainer id={id} action={action} author={author} votes={votes} score={score} />
     <PostContent
       showFullPost={full}
       id={id}

@@ -29,6 +29,7 @@ const postSchema = new Schema({
   text: { type: String }, // remove?
   consonant: { type: String }, // remove?
   vowel: { type: String }, // remove?
+  position: { type: String },
   syllables: { type: String } // remove?
 });
 
@@ -59,14 +60,19 @@ postSchema.methods.vote = function (user, vote) {
     if (vote === 0) {
       // remove vote
       this.votes.pull(existingVote);
+      this.category = "words";
     } else {
       // change vote
       this.score += vote;
+      if (vote === 1) this.category = "upvoted";
+      if (vote === -1) this.category = "downvoted";
       existingVote.vote = vote;
     }
   } else if (vote !== 0) {
     // new vote
     this.score += vote;
+    if (vote === 1) this.category = "upvoted";
+    if (vote === -1) this.category = "downvoted";
     this.votes.push({ user, vote });
   }
 

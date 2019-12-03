@@ -43,9 +43,11 @@ const resolvers = {
 
                       let queryResult = data;
 
-                      let lexeme = new Lexeme(queryResult, id);
+                      let lexeme = new Lexeme(queryResult, location, id);
 
                       lexeme.submitPost().then(function(doc) {
+
+                        lexeme.submitViewHistory(doc._id);
 
                         // TODO - handle empty doc
                         queryResult[0].dataValues.id = doc._id; // mongo id of post
@@ -221,9 +223,11 @@ const resolvers = {
                                   if (nounIndex > -1) queryResult[0] = nounData[nounIndex];
                                   if (adjIndex > -1) queryResult[0] = adjData[adjIndex];
 
-                                  lexemes[i] = new Lexeme(queryResult, id);
+                                  lexemes[i] = new Lexeme(queryResult, location, id);
 
                                   promises.push(new Promise((resolve, reject) => { lexemes[i].submitPost().then(function (doc) {
+
+                                    lexemes[i].submitViewHistory(doc._id);
 
                                     lexemes[i].id = doc._id;
                                     lexemes[i].votes = doc.votes;

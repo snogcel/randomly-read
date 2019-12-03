@@ -12,18 +12,18 @@ import {
 export default function StartDatePicker(props) {
 
   // Default to today's date (using EST)
-  let startDate = moment().tz("America/New_York");
+  let startDate = moment();
 
   // go back 7 days (default)
   startDate.subtract(7, 'd');
 
-  if (!props.startDate) props.action(startDate.unix()); // pass to redux in unix format
+  if (!props.startDate) props.action(startDate.startOf("day").unix()); // pass to redux in unix format
 
   const [selectedDate, setSelectedDate] = React.useState(startDate.format());
 
   const handleDateChange = date => {
     setSelectedDate(date);
-    props.action(moment(date).tz("America/New_York").unix()); // pass to redux in unix format
+    props.action(moment(date).tz("America/New_York").startOf("day").unix()); // pass to redux in unix format
   };
 
   return (

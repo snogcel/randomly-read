@@ -8,6 +8,7 @@ import EndDatePicker from './elements/EndDatePicker';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
+import PostListContainer from '../PostList/Container';
 
 const CustomTooltip = props => {
   if (!props.active) {
@@ -104,6 +105,8 @@ class ViewHistory extends React.Component {
             <Bar dataKey="count" fill="#2f8eed" />
           </BarChart>
         </ResponsiveContainer>
+
+        <PostListContainer username={this.props.username} startDate={this.props.startDate} endDate={this.props.endDate} category={null} />
 
       </div>
     );

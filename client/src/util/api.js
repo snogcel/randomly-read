@@ -107,8 +107,12 @@ export async function getPosts (category) {
   return await methods.get(`posts/${category}`);
 }
 
-export async function getProfile (username) {
-  return await methods.get(`user/${username}`);
+export async function getPostsByDate (username, startDate, endDate) {
+  return await methods.get(`user/${username}/start/${startDate}/end/${endDate}`);
+}
+
+export async function getProfile (username, category) {
+  return await methods.get(`user/${username}/category/${category}`);
 }
 
 export async function getPost (id) {

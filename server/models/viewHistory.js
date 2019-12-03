@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const viewHistorySchema = new mongoose.Schema({
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  postId: { type: Schema.Types.ObjectId, ref: 'Post', required: true },
   title: { type: String, required: true },
   cmudict_id:{ type: Number },
   created: { type: Date, default: Date.now },

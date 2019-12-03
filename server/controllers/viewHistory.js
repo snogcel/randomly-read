@@ -2,53 +2,7 @@ const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const ViewHistory = require('../models/viewHistory');
 const Post = require('../models/post');
-const moment = require('moment');
-
-/*
-
-db.posts.aggregate([
-	{ $match: { author: ObjectId("5db72ed498ef22f07b6537fe") } },
-        { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$created" } }, count: { $sum: 1 } } },
-        { $sort: { _id: 1 } }
-])
-
-
-// where 7 = # of days
-
-db.posts.aggregate([
-	{ $match: {
-		author: ObjectId("5db72ed498ef22f07b6537fe"),
-		"created": { "$gte": new Date(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * 7 )) }
-	}},
-  { $group: { _id: { $dateToString: { format: "%Y-%m-%d", date: "$created" } }, count: { $sum: 1 } } },
-  { $sort: { _id: 1 } }
-])
-
- */
-
-const data = [
-  {
-    name: 'Mon', fullDate: 'Nov 4th, 2019', words: 240,
-  },
-  {
-    name: 'Tues', fullDate: 'Nov 5th, 2019', words: 139,
-  },
-  {
-    name: 'Wed', fullDate: 'Nov 6th, 2019', words: 0,
-  },
-  {
-    name: 'Thurs', fullDate: 'Nov 7th, 2019', words: 398,
-  },
-  {
-    name: 'Fri', fullDate: 'Nov 8th, 2019', words: 480,
-  },
-  {
-    name: 'Sat', fullDate: 'Nov 9th, 2019', words: 300,
-  },
-  {
-    name: 'Sun', fullDate: 'Nov 10th, 2019', words: 400,
-  }
-];
+const moment = require('moment-timezone');
 
 
 function transformViewHistory(data, start, end, type) {
@@ -56,20 +10,10 @@ function transformViewHistory(data, start, end, type) {
   let result = []; // for parsing mongo results
   let resultSet = []; // for stubbing out range of dates in filter
 
-  let today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"});
-
-  // TODO - accept arguments for "start" and "end" instead of using range
-  // let startDate = moment(new Date().valueOf() - ( 1000 * 60 * 60 * 24 * range ));
-
-  let startDate = moment(new Date(start * 1000)).startOf("day");
-  let endDate = moment(new Date(end * 1000)).startOf("day");
-
-  // console.log("Start Date: ", startDate.format());
-  // console.log("End Date: ", endDate.format());
+  let startDate = moment(new Date(start * 1000)).tz("America/New_York").startOf("day");
+  let endDate = moment(new Date(end * 1000)).tz("America/New_York").startOf("day");
 
   let range = endDate.diff(startDate, 'days');
-
-  // console.log(range);
 
   // stub out response array
   for (let i = 0; i <= range; i++) {
@@ -87,8 +31,6 @@ function transformViewHistory(data, start, end, type) {
     startDate.add(1, 'day');
 
   }
-
-  // console.log(resultSet);
 
   // iterate through data
   for (let i = 0; i < data.length; i++) {
@@ -152,7 +94,10 @@ exports.list = async (req, res) => {
 
   let response = {};
 
-  // fetch view history by userId -- hard coded to show last 7 days
+  console.log(startDate);
+  console.log(endDate);
+
+  // fetch view history by userId
   await ViewHistory.aggregate([
     { $match: {
         author: new ObjectId(id),
@@ -169,6 +114,8 @@ exports.list = async (req, res) => {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
+
+      console.log(data);
 
       response = transformViewHistory(data, startDate, endDate, "ViewHistory");
       res.json(response);
