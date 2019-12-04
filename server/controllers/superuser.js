@@ -1,4 +1,5 @@
-const { body, validationResult } = require('express-validator/check');
+const { check, body, validationResult } = require('express-validator/check');
+const bcrypt = require('bcryptjs');
 const ObjectId = require('mongodb').ObjectId;
 const Routine = require('../models/routine');
 const User = require('../models/user');
@@ -36,54 +37,103 @@ function transformDataSet(data, type) {
 
 }
 
-exports.users = async (req, res) => {
-  const superuser = req.user.id;
-  const s_id = new ObjectId(superuser);
+function transformData (data, type) {
 
+  const id = data.id;
+
+  let attributes = data;
+  delete attributes.id;
+
+  let result = {
+    "id": id,
+    "attributes": attributes
+  };
+
+  return {
+    "type": type,
+    "error": false,
+    "message": "OK",
+    "data": result,
+    "meta": {
+      "total": 1
+    }
+  }
+}
+
+function parseUserObj (obj) {
+
+  let parsedObj = obj;
+
+  let clients = [];
+  let routines = [];
+
+  // clients
+  for (let i = 0; i < obj.clients.length; i++) {
+    clients.push(new ObjectId(obj.clients[i]));
+  }
+
+  // routines
+  for (let i = 0; i < obj.routines.length; i++) {
+    routines.push(new ObjectId(obj.routines[i]));
+  }
+
+  parsedObj.clients = clients;
+  parsedObj.routines = routines;
+
+  return parsedObj;
+}
+
+exports.users = async (req, res) => {
+  const s_id = req.user.id;
+
+  let obj = {};
+  let parsedObj = {};
   let clients = [];
 
   // fetch superuser by ID
-  await User.findOne({"_id": s_id}, function(err, data) {
+  await User.findOne({"_id": new ObjectId(s_id)}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
+      obj = JSON.parse(JSON.stringify(data));
       clients = obj.clients;
     }
 
-  });
+    // TODO - find a better way to handle this
+    clients.unshift(s_id); // include superuser in result
+    obj.clients = clients;
 
-  clients.unshift(superuser); // include superuser in result
+    parsedObj = parseUserObj(obj);
 
-  let response = {};
+    let response = {};
 
-  // fetch and return users defined as "clients" of superuser
-  User.find({
-    '_id': {$in: clients}
-  }, function (err, data) {
+    // fetch and return users defined as "clients" of superuser
+    User.find({
+      '_id': {$in: parsedObj.clients}
+    }, function (err, data) {
 
-    if (err) {
-      response = {"error": true, "message": "Error fetching data"};
-      res.json(response);
-    } else {
-      response = transformDataSet(data, "users");
-      res.json(response);
-    }
+      if (err) {
+        response = {"error": true, "message": "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformDataSet(data, "users");
+        res.json(response);
+      }
+
+    });
 
   });
 
 };
 
-exports.routines = async (req, res) => {
+exports.user = async (req, res) => {
   const superuser = req.user.id;
   const id = req.params.id;
   const u_id = new ObjectId(id);
 
-  // test system generated routine
-
-  let assigned = [];
+  let response = {};
 
   // fetch user by ID
   await User.findOne({"_id": u_id}, function(err, data) {
@@ -92,25 +142,240 @@ exports.routines = async (req, res) => {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
-      assigned = obj.routines;
+      response = transformData(data, "user");
+      res.json(response);
     }
 
   });
 
-  let response = {};
+};
 
-  Routine.find({
-    '_id': {$in: assigned}
-  }, function (err, data) {
+exports.createUser = async (req, res, next) => {
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
 
-    if (err) {
-      response = {"error": true, "message": "Error fetching data"};
+  try {
+
+    const { username, password, firstName, lastName, isActive } = req.body;
+
+    let routines = [];
+
+    let user = {
+      "username": username,
+      "password": password,
+      "firstName": firstName,
+      "lastName": lastName,
+      "isActive": isActive
+    };
+
+    // Create User
+    const newUser = await User.create({ username, password, firstName, lastName, isActive });
+
+    // superuser ID
+    const s_id = req.user.id;
+
+    let obj = {};
+    let parsedObj = {};
+
+    // fetch superuser by ID
+    await User.findOne({"_id": new ObjectId(s_id)}, function(err, data) {
+
+      if(err) {
+        response = {"error" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        obj = JSON.parse(JSON.stringify(data));
+
+        // append new user to superuser clients array
+        obj.clients.push(new ObjectId(newUser._id.toString()));
+
+        parsedObj = parseUserObj(obj);
+
+        let response = {};
+
+        User.findOneAndUpdate({"_id": new ObjectId(s_id)}, parsedObj, {new: true}, function(err, data) {
+          if(err) {
+            response = {"errors" : true, "message" : "Error fetching data"};
+            res.json(response);
+          } else {
+            response = transformData(newUser, "user");
+            res.status(201).json(response);
+          }
+        });
+
+      }
+
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+};
+
+exports.updateUser = async (req, res, next) => {
+
+  const result = validationResult(req);
+
+  // only validate if password is included
+  if (!result.isEmpty()) {
+    const errors = result.array({ onlyFirstError: true });
+    return res.status(422).json({ errors });
+  }
+
+  try {
+
+    const superuser = req.user.id;
+
+    const id = req.params.id;
+
+    let response = {};
+
+    let userObj = {
+      "firstName": req.body.firstName,
+      "lastName": req.body.lastName,
+      "isActive": req.body.isActive
+    };
+
+    // rehash new password and update
+    if (req.body.password) {
+      let password = await bcrypt.hash(req.body.password, 10);
+      userObj.password = password;
+    }
+
+    // fetch user by ID
+    await User.findOneAndUpdate({"_id": new ObjectId(id)}, userObj, {new: true}, function(err, data) {
+      if(err) {
+        response = {"errors" : true, "message" : "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformData(data, "user");
+        res.status(201).json(response);
+      }
+    });
+
+  } catch (err) {
+    next(err);
+  }
+
+};
+
+exports.validate = method => {
+
+  const errors = [
+    body('username')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('firstName')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('lastName')
+      .exists()
+      .withMessage('is required')
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ max: 32 })
+      .withMessage('must be at most 32 characters long')
+
+      .custom(value => value.trim() === value)
+      .withMessage('cannot start or end with whitespace')
+
+      .matches(/^[a-zA-Z0-9_-]+$/)
+      .withMessage('contains invalid characters'),
+
+    body('password')
+      .optional()
+
+      .isLength({ min: 1 })
+      .withMessage('cannot be blank')
+
+      .isLength({ min: 8 })
+      .withMessage('must be at least 8 characters long')
+
+      .isLength({ max: 72 })
+      .withMessage('must be at most 72 characters long')
+  ];
+
+  if (method === 'register') {
+    errors.push(
+      body('username').custom(async username => {
+        const exists = await User.countDocuments({ username });
+        if (exists) throw new Error('already exists');
+      })
+    );
+  }
+
+  return errors;
+};
+
+exports.routines = async (req, res) => {
+  const superuser = req.user.id;
+  const id = req.params.id;
+
+  // test system generated routine
+
+  let assigned = [];
+  let obj = {};
+  let parsedObj = {};
+
+  // fetch user by ID
+  await User.findOne({"_id": new ObjectId(id)}, function(err, data) {
+
+    if(err) {
+      response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-      response = transformDataSet(data, "routines");
-      res.json(response);
+      obj = JSON.parse(JSON.stringify(data));
     }
+
+    parsedObj = parseUserObj(obj);
+
+    let response = {};
+
+    Routine.find({
+      '_id': {$in: parsedObj.routines}
+    }, function (err, data) {
+
+      if (err) {
+        response = {"error": true, "message": "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformDataSet(data, "routines");
+        res.json(response);
+      }
+
+    });
 
   });
 
@@ -125,9 +390,7 @@ exports.createRoutine = async (req, res, next) => {
 
   try {
     const { userId, routineName } = req.body;
-    const u_id = new ObjectId(userId);
 
-    let routines = [];
     let subroutine = [{
       "index": Date.now(),
       "rangeVal": 5,
@@ -144,8 +407,8 @@ exports.createRoutine = async (req, res, next) => {
       "position": "initial"
     }];
 
-    console.log("userId: ", userId);
-    console.log("routineName: ", routineName);
+    let obj = {};
+    let parsedObj = {};
 
     // Create Routine
     Routine.create({
@@ -159,16 +422,18 @@ exports.createRoutine = async (req, res, next) => {
         const routineId = data._id;
 
         // Find Related User
-        User.findOne({"_id": u_id}, function(err, data) {
+        User.findOne({"_id": new ObjectId(userId)}, function(err, data) {
 
           if(err) {
             next(err);
           } else {
             let obj = JSON.parse(JSON.stringify(data));
-            obj.routines.push(routineId); // add new routine to routines array
+            obj.routines.push(new ObjectId(routineId)); // add new routine to routines array
+
+            parsedObj = parseUserObj(obj);
 
             // Add to Related User Routines array
-            User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+            User.findOneAndUpdate({"_id": new ObjectId(userId)}, parsedObj, {new: true}, function(err, data) {
 
               if(err) {
                 next();
@@ -176,7 +441,7 @@ exports.createRoutine = async (req, res, next) => {
 
                 // fetch new availableRoutines and return
                 Routine.find({
-                  '_id': {$in: obj.routines}
+                  '_id': {$in: parsedObj.routines}
                 }, function (err, data) {
 
                   if (err) {
@@ -217,36 +482,36 @@ exports.createRoutine = async (req, res, next) => {
 exports.deleteRoutine = async (req, res) => {
 
   const userId = req.params.userId;
-  const u_id = new ObjectId(userId);
 
   const routineId = req.params.routineId;
-  const o_id = new ObjectId(routineId);
-
-  console.log("userId: ", userId);
-  console.log("routineId: ", routineId);
 
   let response = {};
+  let obj = {};
+  let parsedObj = {};
 
   // delete routine
 
   // Find Related User
-  User.findOne({"_id": u_id}, function(err, data) {
+  User.findOne({"_id": new ObjectId(userId)}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error deleting data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
+      obj = JSON.parse(JSON.stringify(data));
+
       let routines = [];
 
       for (let i = 0; i < obj.routines.length; i++) {
-        if (obj.routines[i] !== routineId) routines.push(obj.routines[i]); // remove routine from user obj
+        if (obj.routines[i] !== routineId) routines.push(new ObjectId(obj.routines[i])); // remove routine from user obj
       }
 
       obj.routines = routines;
 
+      parsedObj = parseUserObj(obj);
+
       // Remove from Related User Routines array
-      User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+      User.findOneAndUpdate({"_id": new ObjectId(userId)}, parsedObj, {new: true}, function(err, data) {
 
         if(err) {
           response = {"error" : true, "message" : "Error deleting data"};
@@ -254,7 +519,7 @@ exports.deleteRoutine = async (req, res) => {
         } else {
 
           // Delete Routine from Server
-          Routine.deleteOne({"_id":o_id}, function(err, data) {
+          Routine.deleteOne({"_id": new ObjectId(routineId)}, function(err, data) {
 
             if(err) {
               response = {"error" : true, "message" : "Error deleting data"};
@@ -263,7 +528,7 @@ exports.deleteRoutine = async (req, res) => {
 
               // fetch new availableRoutines and return
               Routine.find({
-                '_id': {$in: routines}
+                '_id': {$in: parsedObj.routines}
               }, function (err, data) {
 
                 if (err) {

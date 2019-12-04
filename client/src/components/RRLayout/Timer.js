@@ -10,6 +10,24 @@ import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 
+import IconButton from '@material-ui/core/IconButton';
+
+import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
+
+
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+
+
+import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+
+import ReplayIcon from '@material-ui/icons/Replay';
+
+
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
+
+
+
 import { styles } from '../../themeHandler';
 
 class Timer extends React.Component {
@@ -28,7 +46,7 @@ class Timer extends React.Component {
       consonant: [],
       templates: [],
       syllables: [],
-      location: 'initial',
+      position: 'initial',
       limit: 1,
     };
 
@@ -307,27 +325,8 @@ class Timer extends React.Component {
     console.log("-reset timer and query-");
 
     this.exercisePointer = 0;
-    this.setState({time: 0, isOn: false})
-    this.props.addRoutineVowel([]); // null?
-    this.props.removeConsonant();
-    this.props.addSyllables([1])
-    this.props.setMode('Word');
-
-    // Clear Query History
-    this.props.clearQueryResults();
-
-    // Reset Current Exercise
-    this.props.updateCompleted(0);
-
-  }
-
-  resetTimer() {
-
-    console.log("-reset timer and exercise stack-");
-
-    this.exercisePointer = 0;
     this.setState({time: 0, isOn: false});
-    this.props.addExerciseNumber(this.exercisePointer);
+    this.props.addExerciseNumber(null);
 
     this.props.addRoutineVowel([]); // null?
     this.props.removeConsonant();
@@ -338,6 +337,29 @@ class Timer extends React.Component {
     this.props.clearQueryResults();
 
     // Reset Current Exercise
+    this.completed = 0;
+    this.props.updateCompleted(0);
+
+  }
+
+  resetTimer() {
+
+    console.log("-reset timer and exercise stack-");
+
+    this.exercisePointer = 0;
+    this.setState({time: 0, isOn: false});
+    this.props.addExerciseNumber(null);
+
+    this.props.addRoutineVowel([]); // null?
+    this.props.removeConsonant();
+    this.props.addSyllables([1]);
+    this.props.setMode('Word');
+
+    // Clear Query History
+    this.props.clearQueryResults();
+
+    // Reset Current Exercise
+    this.completed = 0;
     this.props.updateCompleted(0);
 
   }
@@ -346,6 +368,7 @@ class Timer extends React.Component {
     let mode = this.state.mode;
     let vowel = this.state.vowel;
     let consonant = this.state.consonant;
+    let position = this.state.position;
     let templates = this.state.templates;
     let syllables = this.state.syllables;
 
@@ -392,16 +415,17 @@ class Timer extends React.Component {
     consonant = options.consonant;
     templates = options.templates;
     syllables = options.syllables;
-
-    console.log("timer: ", options.vowel);
+    position = options.position;
 
     // passes updated variables to redux
     console.log("- passing updated variables to redux..");
+    this.props.addExerciseNumber(this.exercisePointer);
     this.props.addRoutineVowel(options.vowel); // pass to TimerContainer
     this.props.addConsonant(options.consonant); // pass to TimerContainer
     this.props.addSyllables(options.syllables); // pass to TimerContainer
     this.props.setLimit(limitText); // pass to TimerContainer
     this.props.setMode(mode); // pass to TimerContainer
+    this.props.setPosition(position); // pass to TimerContainer
     this.props.setIntermissionText(options.intermissionText); // pass to TimerContainer
 
     if (this.state.mode === "Intermission") refresh = false;
@@ -410,6 +434,7 @@ class Timer extends React.Component {
       mode: mode,
       vowel: vowel,
       consonant: consonant,
+      position: position,
       templates: templates,
       syllables: syllables,
       limit: limitText,
@@ -455,17 +480,33 @@ class Timer extends React.Component {
 
     }
 
+    /*
+
     let start = (this.state.time === 0) ?
       <Button onClick={this.startTimer} size="small" variant="outlined" color={"default"} ><b>Start</b></Button> : null;
+
     let stop = (this.state.time === 0 || !this.state.isOn) ?
       null : <Button onClick={this.stopTimer} size="small" variant="outlined" color={"default"} ><b>Pause</b></Button>;
+
     let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
       null : <Button onClick={this.resumeTimer} size="small" variant="outlined" color={"default"} ><b>Resume</b></Button>;
+
     let reset = (this.state.time === 0 || this.state.isOn) ?
       null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
 
+     */
+
+    let start = (this.state.time === 0) ?
+      <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;
+    let stop = (this.state.time === 0 || !this.state.isOn) ?
+      null : <IconButton onClick={this.stopTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PauseCircleFilledIcon fontSize="large" /></IconButton>;
+    let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
+      null : <IconButton onClick={this.resumeTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton>;
+    let reset = (this.state.time === 0 || this.state.isOn) ?
+      null : <IconButton onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"}><ReplayIcon fontSize="large" /></IconButton>;
+
     return (
-      <Grid container spacing={2}>
+      <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
 
         <Grid item>
           <div className={classes.RoutineSelector}>

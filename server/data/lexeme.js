@@ -1,9 +1,13 @@
 const Post = require('../models/post');
 const ViewHistory = require('../models/viewHistory');
 
-const Lexeme = function(data, id) {
+const Lexeme = function(data, position, id) {
 
-  let dataValues = data[0].dataValues;
+  let dataValues = {};
+
+  if (data.length > 0) {
+    dataValues = data[0].dataValues;
+  }
 
   this.cmudict_id = dataValues.cmudict_id;
   this.wordid = dataValues.wordid;
@@ -11,17 +15,28 @@ const Lexeme = function(data, id) {
   this.lexeme = dataValues.lexeme;
   this.consonant = dataValues.consonant;
   this.vowel = dataValues.vowel;
+  this.position = position;
   this.type = dataValues.type;
   this.subtype = dataValues.subtype;
   this.syllables = dataValues.syllables;
   this.wordsXsensesXsynsets = dataValues.wordsXsensesXsynsets;
-
-  if (this.type === 'noun') this.category = 'nouns';
-  if (this.type === 'verb') this.category = 'verbs';
-  if (this.type === 'adj') this.category = 'adjectives';
-  if (this.type === 'adv') this.category = 'adverbs';
+  this.category = "words";
 
   this.author = id;
+
+};
+
+Lexeme.prototype.submitViewHistory = function(postId) {
+
+  ViewHistory.create({
+    "author": this.author,
+    "postId": postId,
+    "title": this.lexeme,
+    "cmudict_id": this.cmudict_id,
+    "consonant": this.consonant,
+    "vowel": this.vowel,
+    "syllables": this.syllables,
+  });
 
 };
 
@@ -45,26 +60,15 @@ Lexeme.prototype.submitPost = function() {
     title: this.lexeme,
     author: this.author,
     category: this.category,
-    text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "]",
+    text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "] using " + this.position + " matching.",
     consonant: this.consonant,
     vowel: this.vowel,
+    position: this.position,
     syllables: this.syllables,
   }).then(null, function(err) {
     if (err.code === 11000) {
 
       console.log("fetching: ", lexeme);
-
-      /*
-
-      // TODO - increment view count using something like the following:
-
-      const post = await Post.findByIdAndUpdate(
-        req.post.id,
-        { $inc: { views: 1 } },
-        { new: true }
-      );
-
-       */
 
       return Post.findOne({title:lexeme}).lean().exec();
 
@@ -85,9 +89,10 @@ Lexeme.prototype.submitPostAsync = function() {
     title: this.lexeme,
     author: this.author,
     category: this.category,
-    text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "]",
+    text: "debug info: [ " + this.consonant + " ] + [ " + this.vowel + "] using " + this.position + " matching.",
     consonant: this.consonant,
     vowel: this.vowel,
+    position: this.position,
     syllables: this.syllables,
   }).then(null, function(err) {
     if (err.code === 11000) {

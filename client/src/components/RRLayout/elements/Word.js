@@ -24,7 +24,7 @@ class Word extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Typography className={classes.title}>
+      <Typography variant="h1" className={classes.word}>
         {this.props.value.name}
       </Typography>
     );

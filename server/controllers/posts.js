@@ -3,6 +3,7 @@ const Post = require('../models/post');
 const User = require('../models/user');
 const VoteHistory = require('../models/voteHistory');
 const UserHistoryInitial = require('../models/userHistoryInitial');
+const ViewHistory = require('../models/viewHistory');
 
 exports.load = async (req, res, next, id) => {
   try {
@@ -40,6 +41,38 @@ exports.listByUser = async (req, res) => {
   const username = req.params.user;
   const author = await User.findOne({ username });
   const posts = await Post.find({ author: author.id, score: 1 }).sort('-created');
+  res.json(posts);
+};
+
+exports.listByUserAndDate = async (req, res) => {
+  const username = req.params.user;
+  const startDate = req.params.start;
+  const endDate = req.params.end;
+
+  const author = await User.findOne({ username });
+
+  // find views by user over start / end date range
+  const viewedPosts = await ViewHistory.find({
+    author: author.id,
+    "created": {
+      "$gte": new Date(startDate * 1000),
+      "$lte": new Date(endDate * 1000)
+    }}, { postId: 1, _id: 0 });
+
+  let viewed = [];
+  for (let i = 0; i < viewedPosts.length; i++) {
+    viewed.push(viewedPosts[i].postId);
+  }
+
+  const posts = await Post.find({ '_id': {$in: viewed} }).sort('-created');
+  res.json(posts);
+};
+
+exports.listByUserAndCategory = async (req, res) => {
+  const username = req.params.user;
+  const category = req.params.category;
+  const author = await User.findOne({ username });
+  const posts = await Post.find({ author: author.id, category: category }).sort('-created');
   res.json(posts);
 };
 

@@ -42,6 +42,7 @@ const Header = ({ user, logout }) => (
       <>
 
         <HeaderNavLink to='/RandomlyRead'>Randomly Read</HeaderNavLink>
+        <HeaderNavLink to='/Administration'>Administration</HeaderNavLink>
         <HeaderNavLink to='/RoutineBuilder'>Routine Builder</HeaderNavLink>
         <HeaderNavLink as='span' onClick={logout}>Log Out</HeaderNavLink>
       </>

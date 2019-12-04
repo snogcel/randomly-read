@@ -1,5 +1,6 @@
 import {
   getPosts,
+  getPostsByDate,
   getProfile,
   getPost,
   createPost,
@@ -27,10 +28,28 @@ export const fetchPosts = (category = '') => async dispatch => {
   }
 };
 
-export const fetchProfile = username => async dispatch => {
+export const FETCH_POSTS_BY_DATE_REQUEST = 'FETCH_POSTS_BY_DATE_REQUEST';
+export const FETCH_POSTS_BY_DATE_SUCCESS = 'FETCH_POSTS_BY_DATE_SUCCESS';
+export const FETCH_POSTS_BY_DATE_ERROR = 'FETCH_POSTS_BY_DATE_ERROR';
+
+const fetchPostsByDateRequest = { type: FETCH_POSTS_BY_DATE_REQUEST };
+const fetchPostsByDateSuccess = posts => ({ type: FETCH_POSTS_BY_DATE_SUCCESS, posts });
+const fetchPostsByDateError = error => ({ type: FETCH_POSTS_BY_DATE_ERROR, error });
+
+export const fetchPostsByDate = (username, startDate, endDate) => async dispatch => {
+  dispatch(fetchPostsByDateRequest);
+  try {
+    const posts = await getPostsByDate(username, startDate, endDate);
+    dispatch(fetchPostsByDateSuccess(posts));
+  } catch (error) {
+    dispatch(fetchPostsByDateError(error));
+  }
+};
+
+export const fetchProfile = (username, category = '') => async dispatch => {
   dispatch(fetchPostsRequest);
   try {
-    const posts = await getProfile(username);
+    const posts = await getProfile(username, category);
     dispatch(fetchPostsSuccess(posts));
   } catch (error) {
     dispatch(fetchPostsError(error));

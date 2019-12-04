@@ -1,4 +1,9 @@
-import Blacklist from './Blacklist';
+import InitialSentenceBlacklist from "./InitialSentenceBlacklist";
+import MedialSentenceBlacklist from "./MedialSentenceBlacklist";
+import FinalSentenceBlacklist from "./FinalSentenceBlacklist";
+import InitialWordBlacklist from "./InitialWordBlacklist";
+import MedialWordBlacklist from "./MedialWordBlacklist";
+import FinalWordBlacklist from "./FinalWordBlacklist";
 
 const vowelArr = ["AA","AE","AH","AO","AW","AY","EH","ER","EY","IH","IY","OW","OY","UW"];
 
@@ -6,13 +11,49 @@ const RoutineBuilder = function() {
 
 };
 
-RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, syllables) {
+RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseConfig) {
 
-  let depth = Math.min(...syllables);
+  let syllables = exerciseConfig.syllables;
+  let mode = exerciseConfig.mode;
+  let position = exerciseConfig.position;
+  let vowels = exerciseConfig.vowels;
 
-  let vowelBlacklist = Blacklist[vowel].consonants[depth - 1];
+  let result = [];
 
-  if (vowelBlacklist.indexOf(consonant) > -1) {
+  let blacklist = {};
+
+  if (exerciseConfig.vowels.indexOf(consonant) > -1) { // if consonant is a vowel...
+    if (consonant !== vowel) return false; // if consonant and vowel are not the same, return false
+  }
+
+  // sentences
+  if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
+  if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
+  if (mode === "Sentence" && position === "final") blacklist = FinalSentenceBlacklist;
+
+  // words
+  if (mode === "Word" && position === "initial") blacklist = InitialWordBlacklist;
+  if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
+  if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
+
+  // iterate through vowel array (in cases where more than one vowel is being filtered on)
+  for (let i = 0; i < vowels.length; i++) {
+
+    // determine overlap
+    for (let j = 0; j < syllables.length; j++) {
+
+      if (j === 0 && i === 0) { // for first iteration, include full array
+        result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
+      } else { // find intersection of arrays
+        result = result.filter(function(value) {
+          return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+        });
+      }
+    }
+
+  }
+
+  if (result.indexOf(consonant) > -1) {
     return false;
   }
 
@@ -26,7 +67,8 @@ RoutineBuilder.prototype._buildActionBase = function(exerciseConfig) {
     consonant: [],
     templates: exerciseConfig.templates,
     syllables: exerciseConfig.syllables,
-    limit: exerciseConfig.limit
+    limit: exerciseConfig.limit,
+    position: exerciseConfig.position
   };
 
   if (exerciseConfig.intermissionText) actionBase.intermissionText = exerciseConfig.intermissionText;
@@ -91,21 +133,15 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
-      // if consonant is a vowel, replace vowel with matching vowel
-      if (vowelArr.indexOf(consonant) >= 0) vowel = consonant;
-
-      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables); // set and verify initial matched word
+      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
 
       while (!verified) {
         rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
         randVowel = Math.floor(Math.random() * (exerciseConfig.vowels.length));
         consonant = exerciseConfig.consonants[rand];
         vowel = exerciseConfig.vowels[randVowel];
+        verified = this._verifyBlacklist(vowel, consonant, exerciseConfig);
 
-        // if consonant is a vowel, replace vowel with matching vowel
-        if (vowelArr.indexOf(consonant) >= 0) vowel = consonant;
-
-        verified = this._verifyBlacklist(vowel, consonant, exerciseConfig.syllables);
         if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
       }
 

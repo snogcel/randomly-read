@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
   text: state.word.text,
   vowel: state.word.vowel,
   consonant: state.word.consonant,
+  position: state.word.position,
   syllables: state.word.syllables,
   mode: state.word.mode,
   limit: state.word.limit,

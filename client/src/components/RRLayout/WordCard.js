@@ -5,6 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,6 +19,7 @@ import { styles } from '../../themeHandler';
 
 import VowelCheckbox from './elements/VowelCheckbox';
 import Word from './elements/Word';
+import Sentence from './elements/Sentence';
 
 function getModalStyle() {
   const top = 50;
@@ -84,12 +86,14 @@ class WordCard extends React.Component  {
     let syllables = JSON.stringify(this.props.syllables);
     let limit = parseInt(this.props.limit);
 
+    let position = JSON.stringify(this.props.position);
+
     switch(this.props.mode) {
         case 'Sentence':
             if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
                 return gql`
                 {
-                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -106,7 +110,7 @@ class WordCard extends React.Component  {
             } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
               return gql`
                 {
-                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -123,7 +127,7 @@ class WordCard extends React.Component  {
             } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
               return gql`
                 {
-                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -140,7 +144,7 @@ class WordCard extends React.Component  {
             } else {
                 return gql`
                 {
-                    sentences(syllables: ${syllables}, limit: ${limit}) {                    
+                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         words {
                           id
                           votes {
@@ -160,7 +164,7 @@ class WordCard extends React.Component  {
             if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
                 return gql`
                 {
-                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -168,19 +172,14 @@ class WordCard extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
             } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
               return gql`
                 {
-                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -188,19 +187,14 @@ class WordCard extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
             } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
               return gql`
                 {
-                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}) {                    
+                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -208,19 +202,14 @@ class WordCard extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
             } else {
                 return gql`
                 {
-                    words(syllables: ${syllables}, limit: ${limit}) {                    
+                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
                         id
                         votes {
                           user
@@ -228,12 +217,7 @@ class WordCard extends React.Component  {
                         }
                         score
                         cmudict_id
-                        lexeme
-                        wordsXsensesXsynsets {
-                          wordid
-                          pos
-                          definition
-                      }
+                        lexeme                        
                     }
                 }
                 `;
@@ -272,24 +256,34 @@ class WordCard extends React.Component  {
 
     return (
 
-        <div className={classes.column}>
+      <Grid container className={classes.wordGrid} justify="center">
+        <Grid item>
 
-          <Card elevation="0" className={classes.card}>
-            <CardContent>
-              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="no-cache" onCompleted={() => { this.fetching = false; this.props.addWord({ word: this.result, definitions: null }); }}>
+              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
                 {({ loading, error, data, refetch }) => {
 
-                  if (loading) return null;
+                  this.refresh = refetch;
 
                   if (error) {
-                    return(<div>
-                      <Word value={{name: "Server Error", selectedVowel: this.props.vowel}} />
-                    </div>);
+
+                    this.result = null;
+                    this.fetching = false;
+
+                    if (this.props.mode === 'Word') {
+                      return(<div>
+                        <Word value={{name: "No Result Found", selectedVowel: this.props.vowel}} />
+                      </div>);
+                    }
+
+                    if (this.props.mode === 'Sentence') {
+                      return(<div>
+                        <Word value={{name: "No Result Found", selectedVowel: this.props.vowel}} />
+                      </div>);
+                    }
+
                   }
 
                   if (data) {
-
-                    this.refresh = refetch;
 
                     // check if data object is empty
                     if (Object.keys(data).length === 0 && data.constructor === Object) {
@@ -297,21 +291,6 @@ class WordCard extends React.Component  {
                       refetch();
                       return null;
                     }
-
-                    if (this.props.mode === 'Word' && typeof(data.words) === 'undefined') {
-                      this.result = null;
-
-                      return(<div>
-                        <Word value={{name: "No Result", selectedVowel: this.props.vowel}} />
-                      </div>);
-                    }
-
-                    if (this.props.mode === 'Sentence' && typeof(data.sentences) === 'undefined') {
-                      return(<div>
-                        <Word value={{name: "No Result", selectedVowel: this.props.vowel}} />
-                      </div>);
-                    }
-
 
                     // check if word is a repeat...
                     if (this.props.mode === 'Word' && data.words) {
@@ -332,12 +311,11 @@ class WordCard extends React.Component  {
                           time: Date.now()
                         };
 
-                        console.log(fetched);
-
                         this.fetching = false;
                         this.props.addQueryResult(fetched);
                       }
-                    } else if (this.props.mode === 'Sentence' && data.sentences.words.length > 0) { // if we are fetching sentences
+
+                    } else if (this.props.mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
 
                       // build result
                       let result = "";
@@ -383,25 +361,46 @@ class WordCard extends React.Component  {
                     }
                   }
 
-                  return(<div>
-                    <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
-                  </div>);
+                  if (loading) return null;
+
+                  if (this.props.mode === 'Sentence') {
+
+                    return (
+                      <Card elevation="1" className={classes.card}>
+                        <CardContent>
+                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  } else if (this.props.mode === 'Word') {
+
+                    return (
+                      <Card elevation="1" className={classes.card}>
+                        <CardContent>
+                          <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  } else {
+
+                    return (
+                      <Card elevation="0" className={classes.card}>
+                        <CardContent>
+                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
+                        </CardContent>
+                      </Card>
+                    );
+
+                  }
 
                   }}
                   </Query>
                 }
-            </CardContent>
-          </Card>
 
-          {/* VowelCheckboxes.map((item, i) => (
-             <>
-
-               <VowelCheckbox action={this.handleChange} value={{name: item.name, displayName: item.label, selectedVowel: this.props.vowel}} />
-
-             </>
-          )) */}
-
-        </div>
+        </Grid>
+      </Grid>
 
     );
 

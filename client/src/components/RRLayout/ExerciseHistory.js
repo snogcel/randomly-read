@@ -1,12 +1,32 @@
 import React from 'react';
-import {makeStyles, withStyles} from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import {makeStyles, withStyles} from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import Checkbox from '@material-ui/core/Checkbox';
+import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
+
+import { styles } from '../../themeHandler';
+
+const StyledListItem = withStyles({
+  root: {
+    border: "1px solid #E0E0F5",
+    marginTop: 10,
+    marginBottom: 10,
+    "&$selected, &$selected:hover, &$selected:focus": {
+      backgroundColor: "#82BBF3"
+    }
+  },
+  selected: {}
+})(ListItem);
 
 const availableConsonants = [
   { id: "AA", name: "ɑ"},
@@ -52,15 +72,6 @@ const availableModes = [
   { id: "intermission", name: "Intermission"},
 ];
 
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 class ExerciseHistory extends React.Component {
   constructor(props) {
     super(props);
@@ -85,93 +96,122 @@ class ExerciseHistory extends React.Component {
 
   render() {
     const {classes, currentExerciseNumber} = this.props;
+    const { width } = this.props;
 
-    return(
+    let exerciseHistory = <React.Fragment>
+      <List>
 
-        <List>
+        {this.props.currentExercise.map(function(step, stepNumber) {
 
-          {this.props.currentExercise.map(function(step, stepNumber) {
+          let mode = availableModes.find(o => o.name === step.mode);
 
-            let mode = availableModes.find(o => o.name === step.mode);
+          // backwards compatibility for randomly-read-dev
+          if (typeof mode === "undefined") step.isIntermission = true;
 
-            // backwards compatibility for randomly-read-dev
-            if (typeof mode === "undefined") step.isIntermission = true;
+          let listItemText = "";
+          let subHeaderText = "";
 
-            let listItemText = "";
-            let subHeaderText = "";
+          if (!step.isIntermission) {
 
-            if (!step.isIntermission) {
+            let plural = false;
+            if (step.repetitions > 1) plural = true;
 
-              let plural = false;
-              if (step.repetitions > 1) plural = true;
-
-              if (plural) {
-                listItemText += step.repetitions + " " + step.mode + "s";
-              } else {
-                listItemText += step.repetitions + " " + step.mode;
-              }
-
-              if (step.vowels.length > 0) {
-                let vowels = "";
-                let uniqVowels = Array.from(new Set(step.vowels));
-
-                for (let i = 0; i < uniqVowels.length; i++) {
-
-                  let vowel = availableConsonants.find(o => o.id === uniqVowels[i]);
-                  vowels += vowel.name;
-                  if (i < (uniqVowels.length - 2)) {
-                    vowels += ", ";
-                  } else if (i < (uniqVowels.length - 1)) {
-                    vowels += " and ";
-                  }
-                }
-                listItemText += " focused on " + vowels;
-              }
-
-              if (step.consonants.length > 0) {
-
-                if (step.position === "initial") subHeaderText += "that start with ";
-                if (step.position === "medial") subHeaderText += "that contain ";
-                if (step.position === "final") subHeaderText += "that end with ";
-
-                let consonants = "";
-                let uniqConsonants = Array.from(new Set(step.consonants));
-
-                for (let i = 0; i < uniqConsonants.length; i++) {
-
-                  let consonant = availableConsonants.find(o => o.id === uniqConsonants[i]);
-                  consonants += consonant.name;
-                  if (i < (uniqConsonants.length - 2)) {
-                    consonants += ", ";
-                  } else if (i < (uniqConsonants.length - 1)) {
-                    consonants += " and ";
-                  }
-
-                }
-                subHeaderText += consonants;
-              }
-
+            if (plural) {
+              listItemText += step.repetitions + " " + step.mode + "s";
             } else {
-
-              listItemText += "Intermission for " + step.rangeVal + " seconds"
-              subHeaderText += step.intermissionText;
-
+              listItemText += step.repetitions + " " + step.mode;
             }
 
+            if (step.vowels.length > 0) {
+              let vowels = "";
+              for (let i = 0; i < step.vowels.length; i++) {
+
+                let vowel = availableConsonants.find(o => o.id === step.vowels[i]);
+                vowels += vowel.name;
+                if (i < (step.vowels.length - 2)) {
+                  vowels += ", ";
+                } else if (i < (step.vowels.length - 1)) {
+                  vowels += " and ";
+                }
+              }
+              listItemText += " focused on " + vowels;
+            }
+
+            if (step.consonants.length > 0) {
+
+              if (step.position === "initial") subHeaderText += "that start with ";
+              if (step.position === "medial") subHeaderText += "that contain ";
+              if (step.position === "final") subHeaderText += "that end with ";
+
+              let consonants = "";
+              for (let i = 0; i < step.consonants.length; i++) {
+
+                let consonant = availableConsonants.find(o => o.id === step.consonants[i]);
+                consonants += consonant.name;
+                if (i < (step.consonants.length - 2)) {
+                  consonants += ", ";
+                } else if (i < (step.consonants.length - 1)) {
+                  consonants += " and ";
+                }
+
+              }
+              subHeaderText += consonants;
+            }
+
+          } else {
+
+            listItemText += "Intermission for " + step.rangeVal + " seconds";
+            subHeaderText += step.intermissionText;
+
+          }
+
+          if ((width === "xs" || width === "sm" || width === "md") && (currentExerciseNumber === stepNumber)) {
             return(
-              <ListItem selected={currentExerciseNumber === stepNumber} >
-                <ListItemText primary={listItemText} secondary={subHeaderText} />
-              </ListItem>
+              <StyledListItem selected={true} className={classes.exerciseHistoryMobile}>
+                <Typography variant="h6" color="secondary"><ListItemText primary={listItemText} /></Typography>
+              </StyledListItem>
             );
+          } else if (width === "lg" || width === "xl") {
+            return(
+              <StyledListItem selected={currentExerciseNumber === stepNumber} >
+                <ListItemText primary={listItemText} secondary={(currentExerciseNumber === stepNumber) ? (subHeaderText) : ( null ) } />
+              </StyledListItem>
+            );
+          } else {
+            return null;
+          }
 
-          })}
+        })}
+      </List>
+    </React.Fragment>;
+    let exerciseHistoryWrapped;
 
-        </List>
+    if (width === "lg" || width === "xl") {
 
-    )
+      exerciseHistoryWrapped = <React.Fragment>
+
+        <div className={classes.exerciseStepsCard}>
+
+            {exerciseHistory}
+
+        </div>
+
+      </React.Fragment>;
+
+    } else {
+      exerciseHistoryWrapped = exerciseHistory;
+    }
+
+    return exerciseHistoryWrapped;
 
   }
 
 }
 
-export default ExerciseHistory;
+ExerciseHistory.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
+const ExerciseHistoryWrapped = withStyles(styles)(ExerciseHistory);
+
+export default withWidth()(ExerciseHistoryWrapped);

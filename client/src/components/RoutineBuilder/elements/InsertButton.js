@@ -4,7 +4,8 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   button: {
-    margin: theme.spacing(1),
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
   input: {
     display: 'none',

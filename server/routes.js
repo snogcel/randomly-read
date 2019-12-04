@@ -6,6 +6,7 @@ const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
 const routine = require('./controllers/routine');
 const superuser = require('./controllers/superuser');
+const viewHistory = require('./controllers/viewHistory');
 const interaction = require('./controllers/interaction');
 const interactions = require('./controllers/interactions'); // TODO - Remove
 const comments = require('./controllers/comments');
@@ -24,7 +25,11 @@ router.delete('/post/:post', [jwtAuth, postAuth], posts.destroy);
 router.get('/post/:post/upvote', jwtAuth, posts.upvote);
 router.get('/post/:post/downvote', jwtAuth, posts.downvote);
 router.get('/post/:post/unvote', jwtAuth, posts.unvote);
-router.get('/user/:user', posts.listByUser);
+
+router.get('/user/:user', posts.listByUser); // deprecated...
+router.get('/user/:user/start/:start/end/:end', posts.listByUserAndDate);
+router.get('/user/:user/category/:category', posts.listByUserAndCategory);
+
 router.param('comment', comments.load);
 router.post('/post/:post', [jwtAuth, comments.validate], comments.create);
 router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
@@ -56,28 +61,6 @@ router.get('/admin/routines/:id', admin.routine); // TODO - add auth token?
 router.patch('/admin/routines/:id', admin.updateRoutine); // TODO - add auth token?
 router.delete('/admin/routines/:id', admin.deleteRoutine); // TODO - add auth token?
 
-
-// TODO - implement superuser auth
-// Superuser Functions
-router.post('/superuser/routines', jwtAuth, superuser.createRoutine);
-router.get('/superuser/users', jwtAuth, superuser.users); // get client users
-router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
-router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
-
-
-// Routine Settings
-router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings
-
-// Interactions
-router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
-router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
-router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete);
-
-// Interaction Settings
-router.get('/settings/interactions', jwtAuth, interaction.settings); // fetch current user interaction settings
-
-
-
 // Interaction Administration
 router.post('/admin/interactionSettings', admin.createInteractionSetting); // TODO - add auth token
 router.get('/admin/interactionSettings', admin.interactionSettings); // TODO - add auth token
@@ -89,7 +72,37 @@ router.delete('/admin/interactionSettings/:id', admin.deleteInteractionSetting);
 router.get('/admin/testRoutine', routine.testCreate);
 router.get('/admin/testInteractionSetting', admin.interactionSettingsTestCreate);
 
+
+// TODO - implement superuser auth / validation
+// Superuser Functions
+router.post('/superuser/users', [jwtAuth, superuser.validate('register')], superuser.createUser); // create new client user
+router.get('/superuser/users', jwtAuth, superuser.users); // get client users
+router.get('/superuser/users/:id', jwtAuth, superuser.user); // get client user details
+router.patch('/superuser/users/:id', [jwtAuth, superuser.validate()], superuser.updateUser); // update user details
+
+router.post('/superuser/routines', jwtAuth, superuser.createRoutine); // create new routine
+router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
+router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
+
+// Statistics
+router.get('/history/words/:id/start/:start/end/:end', jwtAuth, viewHistory.list); // fetch word view statistics
+
+// Routine Settings
+router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings
+
+// Interaction Settings
+router.get('/settings/interactions', jwtAuth, interaction.settings); // fetch current user interaction settings
+
+// Interactions
+router.post('/interaction', [jwtAuth, interactionAuth], interaction.create); // Apply this auth method to other admin routes
+router.get('/interaction', [jwtAuth, interactionAuth], interaction.list);
+router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete);
+
+
 module.exports = app => {
+
+  app.disable('etag');
+
   app.use('/api', router);
 
   app.use('/graphql', jwtAuth, graphqlExpress((req) => ({ schema, context: {user: req.user} })));
