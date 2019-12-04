@@ -42,10 +42,12 @@ const availableConsonants = [
   { id: "IY", name: "i"},
   { id: "OW", name: "oʊ"},
   { id: "OY", name: "ɔɪ"},
+  { id: "UH", name: "ʊ"},
   { id: "UW", name: "u"},
   { id: "B", name: "b"},
   { id: "CH", name: "tʃ"},
   { id: "D", name: "d"},
+  { id: "DH", name: "ð"},
   { id: "F", name: "f"},
   { id: "G", name: "g"},
   { id: "HH", name: "h"},
@@ -63,7 +65,8 @@ const availableConsonants = [
   { id: "V", name: "v"},
   { id: "W", name: "w"},
   { id: "Y", name: "j"},
-  { id: "Z", name: "Z"}
+  { id: "Z", name: "Z"},
+  { id: "ZH", name: "ʒ"}
 ];
 
 const availableModes = [
