@@ -30,6 +30,7 @@ const Wrapper = styled.header`
 
 /*
 
+
 <HeaderNavLink to='/Interactions'>Interactions</HeaderNavLink>
 
  */
@@ -39,6 +40,7 @@ const Header = ({ user, logout }) => (
     <HeaderLogo />
     {user ? (
       <>
+
         <HeaderNavLink to='/RandomlyRead'>Randomly Read</HeaderNavLink>
         <HeaderNavLink to='/Administration'>Administration</HeaderNavLink>
         <HeaderNavLink to='/RoutineBuilder'>Routine Builder</HeaderNavLink>

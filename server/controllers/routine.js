@@ -4,6 +4,9 @@ const Routine = require('../models/routine');
 const User = require('../models/user');
 const Post = require('../models/post');
 
+const UserHistoryInitial = require('../models/userHistoryInitial');
+const math = require('mathjs');
+
 // TODO - move to Utils
 function transformRoutineSet(data, type) {
 
@@ -37,6 +40,66 @@ function transformRoutineSet(data, type) {
   }
 
 }
+
+async function generateSuggestedRoutine(userHistory) {
+
+  if (userHistory === null) {
+    return { vowels: [], consonants: [] };
+  } else {
+
+    let userHistoryObj = JSON.parse(JSON.stringify(userHistory));
+
+    let vowelCount = [];
+    let consonantCount = [];
+
+    for (var key of Object.keys(userHistoryObj)) {
+
+      if (key.indexOf("vowel_") >= 0) {
+        if (userHistoryObj[key] > 0) vowelCount.push(userHistoryObj[key]);
+      }
+
+      if (key.indexOf("consonant_") >= 0) {
+        if (userHistoryObj[key] > 0) consonantCount.push(userHistoryObj[key]);
+      }
+
+    }
+
+    /*
+    // for future use?
+    let vowelStdDev = math.std(vowelCount);
+    let consonantStdDev = math.std(consonantCount);
+
+    let vowelMean = math.mean(vowelCount);
+    let consonantMean = math.mean(consonantCount);
+    */
+
+    let vowels = [];
+    let consonants = [];
+
+    for (var key of Object.keys(userHistoryObj)) {
+
+      if (key.indexOf("vowel_") >= 0) {
+        for (let i = 0; i < userHistoryObj[key]; i++) {
+          // if (userHistoryObj[key] >= vowelMean)
+          vowels.push(key.split('_').pop());
+        }
+      }
+
+      if (key.indexOf("consonant_") >= 0) {
+        for (let i = 0; i < userHistoryObj[key]; i++) {
+          // if (userHistoryObj[key] >= consonantMean)
+          consonants.push(key.split('_').pop());
+        }
+      }
+
+    }
+
+    return {
+      vowels: vowels,
+      consonants: consonants
+    }
+
+  }
 
 function parseUserObj (obj) {
   let parsedObj = obj;
@@ -106,6 +169,24 @@ exports.settings = async (req, res) => {
 
   let votedRoutines = await upVotedRoutines(author);
 
+  const userHistory = await UserHistoryInitial.findOne({"user": a_id});
+
+  let { vowels, consonants } = await generateSuggestedRoutine(userHistory); // if average or greater upvotes
+
+  let id = a_id;
+  let name = "Suggested Words";
+  let subroutine = [{
+    "index": Date.now(),
+    "rangeVal": 5,
+    "repetitions": 25,
+    "mode": "Word",
+    "isIntermission": false,
+    "vowels": vowels,
+    "consonants": consonants,
+    "syllables": [ "1", "2" ],
+    "position": "initial"
+  }];
+
   // fetch user by ID
   await User.findOne({"_id": new ObjectId(author)}, function(err, data) {
 
@@ -127,17 +208,22 @@ exports.settings = async (req, res) => {
         data.push(votedRoutines[i]);
       }
 
-      console.log(data);
-
-      if (err) {
-        response = {"error": true, "message": "Error fetching data"};
-        res.json(response);
-      } else {
-        response = transformRoutineSet(data, "routines");
-        res.json(response);
-      }
-
+    // include default routines
+    data.unshift({
+      "id": id,
+      "name": name,
+      "subroutine": subroutine
     });
+
+    console.log(data);
+
+    if (err) {
+      response = {"error": true, "message": "Error fetching data"};
+      res.json(response);
+    } else {
+      response = transformRoutineSet(data, "routines");
+      res.json(response);
+    }
 
   });
 

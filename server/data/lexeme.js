@@ -46,6 +46,15 @@ Lexeme.prototype.submitPost = function() {
 
   console.log("writing to mongodb: ", lexeme);
 
+  ViewHistory.create({
+    "author": this.author,
+    "title": this.lexeme,
+    "cmudict_id": this.cmudict_id,
+    "consonant": this.consonant,
+    "vowel": this.vowel,
+    "syllables": this.syllables,
+  });
+
   return Post.create({
     cmudict_id: this.cmudict_id,
     title: this.lexeme,
