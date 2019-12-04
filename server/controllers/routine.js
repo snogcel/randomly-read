@@ -2,7 +2,7 @@ const { body, validationResult } = require('express-validator/check');
 const ObjectId = require('mongodb').ObjectId;
 const Routine = require('../models/routine');
 const User = require('../models/user');
-
+const Post = require('../models/post');
 
 // TODO - move to Utils
 function transformRoutineSet(data, type) {
@@ -60,12 +60,51 @@ function parseUserObj (obj) {
   return parsedObj;
 }
 
+async function upVotedRoutines(author) {
+
+  const category = "upvoted";
+  const posts = await Post.find({ author: new ObjectId(author), category: category }).sort('-created');
+
+  let routines = [];
+
+  // parse through posts to create upvoted routines
+
+  for (let i = 0; i < posts.length; i++) {
+
+    let subroutine = [{
+      "index": Date.now(),
+      "rangeVal": 5,
+      "repetitions": 25,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [posts[i].vowel],
+      "consonants": [posts[i].consonant],
+      "syllables": [], // posts[i].syllables
+      "position": posts[i].position
+    }];
+
+    routines.push({
+      "id": posts[i]._id,
+      "name": "Words based on '" + posts[i].title + "'",
+      "subroutine": subroutine
+    })
+
+  }
+
+  // console.log(routines);
+
+  return routines;
+
+}
+
 exports.settings = async (req, res) => {
 
   const author = req.user.id;
 
   let obj = {};
   let parsedObj = {};
+
+  let votedRoutines = await upVotedRoutines(author);
 
   // fetch user by ID
   await User.findOne({"_id": new ObjectId(author)}, function(err, data) {
@@ -83,6 +122,12 @@ exports.settings = async (req, res) => {
     Routine.find({
       '_id': {$in: parsedObj.routines}
     }, function (err, data) {
+
+      for (let i = 0; i < votedRoutines.length; i++) {
+        data.push(votedRoutines[i]);
+      }
+
+      console.log(data);
 
       if (err) {
         response = {"error": true, "message": "Error fetching data"};
