@@ -81,6 +81,7 @@ const availableVowels = [
   { id: "IY", name: "i"},
   { id: "OW", name: "oʊ"},
   { id: "OY", name: "ɔɪ"},
+  { id: "UH", name: "ʊ"},
   { id: "UW", name: "u"}
 ];
 
@@ -98,10 +99,12 @@ const availableConsonants = [
   { id: "IY", name: "i"},
   { id: "OW", name: "oʊ"},
   { id: "OY", name: "ɔɪ"},
+  { id: "UH", name: "ʊ"},
   { id: "UW", name: "u"},
   { id: "B", name: "b"},
   { id: "CH", name: "tʃ"},
   { id: "D", name: "d"},
+  { id: "DH", name: "ð"},
   { id: "F", name: "f"},
   { id: "G", name: "g"},
   { id: "HH", name: "h"},
@@ -119,13 +122,15 @@ const availableConsonants = [
   { id: "V", name: "v"},
   { id: "W", name: "w"},
   { id: "Y", name: "j"},
-  { id: "Z", name: "Z"}
+  { id: "Z", name: "Z"},
+  { id: "ZH", name: "ʒ"}
 ];
 
 const defaultConsonants = [
   { id: "B", name: "b"},
   { id: "CH", name: "tʃ"},
   { id: "D", name: "d"},
+  { id: "DH", name: "ð"},
   { id: "F", name: "f"},
   { id: "G", name: "g"},
   { id: "HH", name: "h"},
@@ -143,7 +148,8 @@ const defaultConsonants = [
   { id: "V", name: "v"},
   { id: "W", name: "w"},
   { id: "Y", name: "j"},
-  { id: "Z", name: "Z"}
+  { id: "Z", name: "Z"},
+  { id: "ZH", name: "ʒ"}
 ];
 
 const availableModes = [
@@ -858,9 +864,11 @@ class RoutineBuilder extends React.Component {
       "OW": false,
       "OY": false,
       "UW": false,
+      "UH": false,
       "B": false,
       "CH": false,
       "D": false,
+      "DH": false,
       "F": false,
       "G": false,
       "HH": false,
@@ -878,7 +886,8 @@ class RoutineBuilder extends React.Component {
       "V": false,
       "W": false,
       "Y": false,
-      "Z": false
+      "Z": false,
+      "ZH": false
     };
 
     if (typeof consonants !== "undefined") {
