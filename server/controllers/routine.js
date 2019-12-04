@@ -44,7 +44,7 @@ function transformRoutineSet(data, type) {
 async function generateSuggestedRoutine(userHistory) {
 
   if (userHistory === null) {
-    return { vowels: [], consonants: [] };
+    return {vowels: [], consonants: []};
   } else {
 
     let userHistoryObj = JSON.parse(JSON.stringify(userHistory));
@@ -100,6 +100,7 @@ async function generateSuggestedRoutine(userHistory) {
     }
 
   }
+}
 
 function parseUserObj (obj) {
   let parsedObj = obj;
@@ -169,11 +170,11 @@ exports.settings = async (req, res) => {
 
   let votedRoutines = await upVotedRoutines(author);
 
-  const userHistory = await UserHistoryInitial.findOne({"user": a_id});
+  const userHistory = await UserHistoryInitial.findOne({"user": new ObjectId(author)});
 
   let { vowels, consonants } = await generateSuggestedRoutine(userHistory); // if average or greater upvotes
 
-  let id = a_id;
+  let id = author;
   let name = "Suggested Words";
   let subroutine = [{
     "index": Date.now(),
@@ -225,27 +226,8 @@ exports.settings = async (req, res) => {
       res.json(response);
     }
 
-  });
-
-};
-
-
-
-
-
-
-
-
-exports.testCreate = async (req, res) => {
-
-  try {
-    const routine = await Routine.create({
-      name,
-      subroutine
     });
-    res.status(201).json(routine);
-  } catch (err) {
-    res.status(201).json("Error!");
-  }
+
+  });
 
 };

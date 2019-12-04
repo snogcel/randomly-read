@@ -9,7 +9,7 @@ const Item = styled.li`
 `;
 
 const PostListItem = props => (
-  <>{ (props.score > 0) ? <Item><Post {...props} /></Item> : null }</>
+  <Item><Post {...props} /></Item>
 );
 
 export default PostListItem;

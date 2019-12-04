@@ -69,7 +69,6 @@ router.patch('/admin/interactionSettings/:id', admin.updateInteractionSetting); 
 router.delete('/admin/interactionSettings/:id', admin.deleteInteractionSetting); // TODO - add auth token
 
 // Test Routes
-router.get('/admin/testRoutine', routine.testCreate);
 router.get('/admin/testInteractionSetting', admin.interactionSettingsTestCreate);
 
 

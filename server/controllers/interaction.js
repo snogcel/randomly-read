@@ -57,7 +57,7 @@ async function attemptInteractionEntry(author, word) {
 
   // Fetch Query Data
   return new Promise((resolve, reject) => {
-    Word[location].findAll({ where: filter, limit: limit, include: [{ model: Word['wordsXsensesXsynsets'], as: 'wordsXsensesXsynsets'}]}).then(function(data) {
+    Word[location].findAll({ where: filter, limit: limit }).then(function(data) {
 
       if (data.length === 0) {
         resolve(null);
@@ -65,7 +65,7 @@ async function attemptInteractionEntry(author, word) {
 
         let queryResult = data;
 
-        let lexeme = new Lexeme(queryResult, id);
+        let lexeme = new Lexeme(queryResult, location, id);
 
         lexeme.score = 1;
 
