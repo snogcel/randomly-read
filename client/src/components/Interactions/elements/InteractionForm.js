@@ -29,6 +29,13 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     textAlign: 'center'
+  },
+  interactionSlider: {
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   }
 }));
 
@@ -45,6 +52,7 @@ export default function InteractionForm(props) {
   const [value, setValue] = React.useState('');
 
   const [state, setState] = React.useState({
+    position: "start",
     word: "",
     ease: 50
   });
@@ -54,6 +62,7 @@ export default function InteractionForm(props) {
     props.action(state);  // pass form submission back to InteractionsHome
 
     let defaultState = {
+      position: "start",
       word: "",
       ease: 50
     };
@@ -68,7 +77,6 @@ export default function InteractionForm(props) {
   };
 
   const handleRadioGroupChange = name => event => {
-    setValue(event.target.value);
     setState({ ...state, [name]: event.target.value });
   };
 
@@ -79,11 +87,8 @@ export default function InteractionForm(props) {
   return (
     <div>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
-        <Grid container justify="center">
 
-          <Grid item xs={8}>
-
-            <Grid container>
+            <Grid container justify="center">
 
               <Grid item xs={4}>
 
@@ -102,11 +107,30 @@ export default function InteractionForm(props) {
                   onChange={handleChange('word')}
                 />
 
+                <RadioGroup aria-label="position" name="position" value={state.position} onChange={handleRadioGroupChange('position')} row>
+                  <FormControlLabel
+                    value="start"
+                    control={<Radio color="primary" />}
+                    label="Start"
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="middle"
+                    control={<Radio color="primary" />}
+                    label="Middle"
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="end"
+                    control={<Radio color="primary" />}
+                    label="End"
+                    labelPlacement="bottom"
+                  />
+                </RadioGroup>
+
               </Grid>
 
-              <Grid item xs={6}>
-
-                <br />
+              <Grid item xs={8} className={classes.interactionSlider}>
 
                 <Slider
                   value={state.ease}
@@ -117,20 +141,12 @@ export default function InteractionForm(props) {
                   onChange={handleSliderChange('ease', value)}
                 />
 
+                <Button type="submit">Submit!</Button>
+
               </Grid>
 
             </Grid>
 
-
-          </Grid>
-
-          <Grid item xs={8} className={classes.submit}>
-
-            <Button type="submit">Submit!</Button>
-
-          </Grid>
-
-        </Grid>
       </form>
     </div>
   );
