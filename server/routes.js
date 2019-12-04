@@ -6,6 +6,7 @@ const posts = require('./controllers/posts');
 const admin = require('./controllers/admin');
 const routine = require('./controllers/routine');
 const superuser = require('./controllers/superuser');
+const viewHistory = require('./controllers/viewHistory');
 const interaction = require('./controllers/interaction');
 const interactions = require('./controllers/interactions'); // TODO - Remove
 const comments = require('./controllers/comments');
@@ -24,7 +25,11 @@ router.delete('/post/:post', [jwtAuth, postAuth], posts.destroy);
 router.get('/post/:post/upvote', jwtAuth, posts.upvote);
 router.get('/post/:post/downvote', jwtAuth, posts.downvote);
 router.get('/post/:post/unvote', jwtAuth, posts.unvote);
-router.get('/user/:user', posts.listByUser);
+
+router.get('/user/:user', posts.listByUser); // deprecated...
+router.get('/user/:user/start/:start/end/:end', posts.listByUserAndDate);
+router.get('/user/:user/category/:category', posts.listByUserAndCategory);
+
 router.param('comment', comments.load);
 router.post('/post/:post', [jwtAuth, comments.validate], comments.create);
 router.delete('/post/:post/:comment', [jwtAuth, commentAuth], comments.destroy);
@@ -79,6 +84,9 @@ router.post('/superuser/routines', jwtAuth, superuser.createRoutine); // create 
 router.get('/superuser/routines/:id', jwtAuth, superuser.routines); // fetch routine settings by userId
 router.delete('/superuser/routines/:userId/:routineId', jwtAuth, superuser.deleteRoutine); // delete specified routine and remove from User
 
+// Statistics
+router.get('/history/words/:id/start/:start/end/:end', jwtAuth, viewHistory.list); // fetch word view statistics
+
 // Routine Settings
 router.get('/settings/routines', jwtAuth, routine.settings); // fetch current user routine settings
 
@@ -92,6 +100,9 @@ router.delete('/interaction/:id', [jwtAuth, interactionAuth], interaction.delete
 
 
 module.exports = app => {
+
+  app.disable('etag');
+
   app.use('/api', router);
 
   app.use('/graphql', jwtAuth, graphqlExpress((req) => ({ schema, context: {user: req.user} })));

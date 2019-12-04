@@ -231,7 +231,7 @@ class RoutineBuilder extends React.Component {
 
     }
 
-    this.routinePreview.current.state.query = null; // clear preview window
+    if (this.routinePreview.current) this.routinePreview.current.state.query = null; // clear preview window
 
   };
 
@@ -245,12 +245,12 @@ class RoutineBuilder extends React.Component {
 
     }
 
-    this.routinePreview.current.state.query = null; // clear preview window
+    if (this.routinePreview.current) this.routinePreview.current.state.query = null; // clear preview window
 
   }
 
   previewHandler() {
-    this.routinePreview.current.refreshQuery();
+    if (this.routinePreview.current) this.routinePreview.current.refreshQuery();
   }
 
   saveHandler() {
@@ -804,6 +804,7 @@ class RoutineBuilder extends React.Component {
     let blacklist = {};
 
     // apply relevant blacklist to mode + position
+    console.log("Mode: ", mode);
 
     // sentences
     if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
@@ -1148,7 +1149,7 @@ class RoutineBuilder extends React.Component {
 
                       <Grid item xs={12} justify="center">
 
-                        
+
 
                       </Grid>
 

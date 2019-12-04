@@ -12,6 +12,7 @@ import formData from './reducers/formData';
 import exerciseHistory from './reducers/exerciseHistory';
 import routineBuilder from './reducers/routineBuilder';
 import routineSelect from './reducers/routineSelect';
+import viewHistory from './reducers/viewHistory';
 import authMiddleware from './middleware/auth';
 import errorMiddleware from './middleware/error';
 import themeMiddleware from './middleware/theme';
@@ -20,7 +21,7 @@ import themeMiddleware from './middleware/theme';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default createStore(
-  combineReducers({ form, error, auth, posts, theme, word, interaction, exerciseHistory, routineBuilder, routineSelect, administration, formData}),
+  combineReducers({ form, error, auth, posts, theme, word, interaction, exerciseHistory, routineBuilder, routineSelect, administration, viewHistory, formData}),
   composeEnhancers(
     applyMiddleware(thunk, authMiddleware, errorMiddleware, themeMiddleware)
   )

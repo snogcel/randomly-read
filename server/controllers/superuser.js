@@ -60,42 +60,69 @@ function transformData (data, type) {
   }
 }
 
-exports.users = async (req, res) => {
-  const superuser = req.user.id;
-  const s_id = new ObjectId(superuser);
+function parseUserObj (obj) {
 
+  let parsedObj = obj;
+
+  let clients = [];
+  let routines = [];
+
+  // clients
+  for (let i = 0; i < obj.clients.length; i++) {
+    clients.push(new ObjectId(obj.clients[i]));
+  }
+
+  // routines
+  for (let i = 0; i < obj.routines.length; i++) {
+    routines.push(new ObjectId(obj.routines[i]));
+  }
+
+  parsedObj.clients = clients;
+  parsedObj.routines = routines;
+
+  return parsedObj;
+}
+
+exports.users = async (req, res) => {
+  const s_id = req.user.id;
+
+  let obj = {};
+  let parsedObj = {};
   let clients = [];
 
   // fetch superuser by ID
-  await User.findOne({"_id": s_id}, function(err, data) {
+  await User.findOne({"_id": new ObjectId(s_id)}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
+      obj = JSON.parse(JSON.stringify(data));
       clients = obj.clients;
     }
 
-  });
+    // TODO - find a better way to handle this
+    clients.unshift(s_id); // include superuser in result
+    obj.clients = clients;
 
-  // TODO - find a better way to handle this
-  clients.unshift(superuser); // include superuser in result
+    parsedObj = parseUserObj(obj);
 
-  let response = {};
+    let response = {};
 
-  // fetch and return users defined as "clients" of superuser
-  User.find({
-    '_id': {$in: clients}
-  }, function (err, data) {
+    // fetch and return users defined as "clients" of superuser
+    User.find({
+      '_id': {$in: parsedObj.clients}
+    }, function (err, data) {
 
-    if (err) {
-      response = {"error": true, "message": "Error fetching data"};
-      res.json(response);
-    } else {
-      response = transformDataSet(data, "users");
-      res.json(response);
-    }
+      if (err) {
+        response = {"error": true, "message": "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformDataSet(data, "users");
+        res.json(response);
+      }
+
+    });
 
   });
 
@@ -116,9 +143,6 @@ exports.user = async (req, res) => {
       res.json(response);
     } else {
       response = transformData(data, "user");
-
-      console.log(response);
-
       res.json(response);
     }
 
@@ -137,6 +161,8 @@ exports.createUser = async (req, res, next) => {
 
     const { username, password, firstName, lastName, isActive } = req.body;
 
+    let routines = [];
+
     let user = {
       "username": username,
       "password": password,
@@ -147,26 +173,30 @@ exports.createUser = async (req, res, next) => {
 
     // Create User
     const newUser = await User.create({ username, password, firstName, lastName, isActive });
-    console.log(newUser._id);
 
-    const s_id = new ObjectId(req.user.id);
-    console.log("superuser id: ", s_id);
+    // superuser ID
+    const s_id = req.user.id;
+
+    let obj = {};
+    let parsedObj = {};
 
     // fetch superuser by ID
-    await User.findOne({"_id": s_id}, function(err, data) {
+    await User.findOne({"_id": new ObjectId(s_id)}, function(err, data) {
 
       if(err) {
         response = {"error" : true, "message" : "Error fetching data"};
         res.json(response);
       } else {
-        let obj = JSON.parse(JSON.stringify(data));
+        obj = JSON.parse(JSON.stringify(data));
+
+        // append new user to superuser clients array
+        obj.clients.push(new ObjectId(newUser._id.toString()));
+
+        parsedObj = parseUserObj(obj);
 
         let response = {};
 
-        // append new user to superuser clients array
-        obj.clients.push(newUser._id);
-
-        User.findOneAndUpdate({"_id": s_id}, obj, {new: true}, function(err, data) {
+        User.findOneAndUpdate({"_id": new ObjectId(s_id)}, parsedObj, {new: true}, function(err, data) {
           if(err) {
             response = {"errors" : true, "message" : "Error fetching data"};
             res.json(response);
@@ -201,7 +231,6 @@ exports.updateUser = async (req, res, next) => {
     const superuser = req.user.id;
 
     const id = req.params.id;
-    const u_id = new ObjectId(id);
 
     let response = {};
 
@@ -218,7 +247,7 @@ exports.updateUser = async (req, res, next) => {
     }
 
     // fetch user by ID
-    await User.findOneAndUpdate({"_id": u_id}, userObj, {new: true}, function(err, data) {
+    await User.findOneAndUpdate({"_id": new ObjectId(id)}, userObj, {new: true}, function(err, data) {
       if(err) {
         response = {"errors" : true, "message" : "Error fetching data"};
         res.json(response);
@@ -313,36 +342,38 @@ exports.validate = method => {
 exports.routines = async (req, res) => {
   const superuser = req.user.id;
   const id = req.params.id;
-  const u_id = new ObjectId(id);
 
   let assigned = [];
+  let obj = {};
+  let parsedObj = {};
 
   // fetch user by ID
-  await User.findOne({"_id": u_id}, function(err, data) {
+  await User.findOne({"_id": new ObjectId(id)}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error fetching data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
-      assigned = obj.routines;
+      obj = JSON.parse(JSON.stringify(data));
     }
 
-  });
+    parsedObj = parseUserObj(obj);
 
-  let response = {};
+    let response = {};
 
-  Routine.find({
-    '_id': {$in: assigned}
-  }, function (err, data) {
+    Routine.find({
+      '_id': {$in: parsedObj.routines}
+    }, function (err, data) {
 
-    if (err) {
-      response = {"error": true, "message": "Error fetching data"};
-      res.json(response);
-    } else {
-      response = transformDataSet(data, "routines");
-      res.json(response);
-    }
+      if (err) {
+        response = {"error": true, "message": "Error fetching data"};
+        res.json(response);
+      } else {
+        response = transformDataSet(data, "routines");
+        res.json(response);
+      }
+
+    });
 
   });
 
@@ -357,9 +388,7 @@ exports.createRoutine = async (req, res, next) => {
 
   try {
     const { userId, routineName } = req.body;
-    const u_id = new ObjectId(userId);
 
-    let routines = [];
     let subroutine = [{
       "index": Date.now(),
       "rangeVal": 5,
@@ -376,8 +405,8 @@ exports.createRoutine = async (req, res, next) => {
       "position": "initial"
     }];
 
-    console.log("userId: ", userId);
-    console.log("routineName: ", routineName);
+    let obj = {};
+    let parsedObj = {};
 
     // Create Routine
     Routine.create({
@@ -391,16 +420,18 @@ exports.createRoutine = async (req, res, next) => {
         const routineId = data._id;
 
         // Find Related User
-        User.findOne({"_id": u_id}, function(err, data) {
+        User.findOne({"_id": new ObjectId(userId)}, function(err, data) {
 
           if(err) {
             next(err);
           } else {
             let obj = JSON.parse(JSON.stringify(data));
-            obj.routines.push(routineId); // add new routine to routines array
+            obj.routines.push(new ObjectId(routineId)); // add new routine to routines array
+
+            parsedObj = parseUserObj(obj);
 
             // Add to Related User Routines array
-            User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+            User.findOneAndUpdate({"_id": new ObjectId(userId)}, parsedObj, {new: true}, function(err, data) {
 
               if(err) {
                 next();
@@ -408,7 +439,7 @@ exports.createRoutine = async (req, res, next) => {
 
                 // fetch new availableRoutines and return
                 Routine.find({
-                  '_id': {$in: obj.routines}
+                  '_id': {$in: parsedObj.routines}
                 }, function (err, data) {
 
                   if (err) {
@@ -449,36 +480,36 @@ exports.createRoutine = async (req, res, next) => {
 exports.deleteRoutine = async (req, res) => {
 
   const userId = req.params.userId;
-  const u_id = new ObjectId(userId);
 
   const routineId = req.params.routineId;
-  const o_id = new ObjectId(routineId);
-
-  console.log("userId: ", userId);
-  console.log("routineId: ", routineId);
 
   let response = {};
+  let obj = {};
+  let parsedObj = {};
 
   // delete routine
 
   // Find Related User
-  User.findOne({"_id": u_id}, function(err, data) {
+  User.findOne({"_id": new ObjectId(userId)}, function(err, data) {
 
     if(err) {
       response = {"error" : true, "message" : "Error deleting data"};
       res.json(response);
     } else {
-      let obj = JSON.parse(JSON.stringify(data));
+      obj = JSON.parse(JSON.stringify(data));
+
       let routines = [];
 
       for (let i = 0; i < obj.routines.length; i++) {
-        if (obj.routines[i] !== routineId) routines.push(obj.routines[i]); // remove routine from user obj
+        if (obj.routines[i] !== routineId) routines.push(new ObjectId(obj.routines[i])); // remove routine from user obj
       }
 
       obj.routines = routines;
 
+      parsedObj = parseUserObj(obj);
+
       // Remove from Related User Routines array
-      User.findOneAndUpdate({"_id":u_id}, obj, {new: true}, function(err, data) {
+      User.findOneAndUpdate({"_id": new ObjectId(userId)}, parsedObj, {new: true}, function(err, data) {
 
         if(err) {
           response = {"error" : true, "message" : "Error deleting data"};
@@ -486,7 +517,7 @@ exports.deleteRoutine = async (req, res) => {
         } else {
 
           // Delete Routine from Server
-          Routine.deleteOne({"_id":o_id}, function(err, data) {
+          Routine.deleteOne({"_id": new ObjectId(routineId)}, function(err, data) {
 
             if(err) {
               response = {"error" : true, "message" : "Error deleting data"};
@@ -495,7 +526,7 @@ exports.deleteRoutine = async (req, res) => {
 
               // fetch new availableRoutines and return
               Routine.find({
-                '_id': {$in: routines}
+                '_id': {$in: parsedObj.routines}
               }, function (err, data) {
 
                 if (err) {

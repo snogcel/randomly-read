@@ -2,7 +2,9 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
@@ -27,6 +29,7 @@ import SaveButton from './elements/SaveButton';
 import CancelButton from './elements/CancelButton';
 import ChangePassword from './elements/ChangePassword';
 
+import ViewHistoryContainer from '../ViewHistory/Container';
 
 class Administration extends React.Component {
   constructor(props) {
@@ -124,6 +127,8 @@ class Administration extends React.Component {
         });
       }
 
+      console.log("Available Users: ", availableUsers);
+
       // display first user from list by default
       if(typeof availableUsers[0] !== "undefined" && this.props.selectedUserId === null && this.props.mode !== "create") {
         this.userSelectHandler(availableUsers[0].id);
@@ -185,8 +190,6 @@ class Administration extends React.Component {
     let selectedFirstNameObj = this.parseSelectedFirstName(selectedFirstName);
     let selectedLastNameObj = this.parseSelectedLastName(selectedLastName);
     let selectedActiveObj = this.parseSelectedActive(selectedActive);
-
-    console.log(this.props);
 
     let errorString = this.props.error.toString();
     let usernameError = "";
@@ -284,6 +287,12 @@ class Administration extends React.Component {
               <Grid item xs={userAdministrationContainerWidth}>
 
                 <Card className={classes.userAdminCard}>
+
+                  <CardHeader
+                    titleTypographyProps={{color:"textSecondary"}}
+                    title="Create User"
+                  />
+
                   <CardContent>
 
                     <Grid container>
@@ -338,6 +347,12 @@ class Administration extends React.Component {
                   <Grid item xs={userAdministrationContainerWidth}>
 
                     <Card className={classes.userAdminCard}>
+
+                      <CardHeader
+                        titleTypographyProps={{color:"textSecondary"}}
+                        title="User Details"
+                      />
+
                       <CardContent>
 
                         <Grid container>
@@ -392,10 +407,45 @@ class Administration extends React.Component {
                       </CardContent>
                     </Card>
 
+                    {(selectedUserId) ? (
+                      <>
+                      <Card className={classes.userAdminCard}>
+
+                        <CardContent>
+
+                          <Grid container>
+
+                            <Grid item xs={12}>
+
+                              <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
+
+                            </Grid>
+
+                          </Grid>
+
+                        </CardContent>
+                      </Card>
+
+
+                      <Card className={classes.userAdminCard}>
+                        <CardContent>
+
+                          <Grid container>
+
+                            <Grid item xs={12}>
+
+                            </Grid>
+
+                          </Grid>
+
+                        </CardContent>
+                      </Card>
+                      </>
+                    ) : ( <> </> )}
+
                   </Grid>
 
                 </> )}
-
 
           </Grid>
 

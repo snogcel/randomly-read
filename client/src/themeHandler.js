@@ -110,6 +110,9 @@ const styles = theme => ({
   sideCard: {
     marginBottom: 20
   },
+  cardHeader: {
+    backgroundColor:"#333",
+  },
   word: {
     fontWeight: "bold",
     color: "#2f8eed"

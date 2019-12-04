@@ -107,8 +107,12 @@ export async function getPosts (category) {
   return await methods.get(`posts/${category}`);
 }
 
-export async function getProfile (username) {
-  return await methods.get(`user/${username}`);
+export async function getPostsByDate (username, startDate, endDate) {
+  return await methods.get(`user/${username}/start/${startDate}/end/${endDate}`);
+}
+
+export async function getProfile (username, category) {
+  return await methods.get(`user/${username}/category/${category}`);
 }
 
 export async function getPost (id) {
@@ -176,7 +180,7 @@ export async function updateRoutine (id, body, token) {
 }
 
 export async function getUsers (token) {
-  console.log("-fetching client users-");
+  console.log("-fetching client users with token: ", token);
   return await methods.get('superuser/users', token)
 }
 
@@ -204,4 +208,9 @@ export async function updateUser (id, body, token) {
 
 export async function createUser (user, token) {
   return await methods.post('superuser/users', user, token);
+}
+
+export async function getViewHistory (id, startDate, endDate, token) {
+  console.log("-fetching view history-");
+  return await methods.get(`history/words/${id}/start/${startDate}/end/${endDate}`, token)
 }
