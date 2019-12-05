@@ -44,11 +44,10 @@ function transformRoutineSet(data, type) {
 
 }
 
-async function attemptInteractionEntry(author, word) {
+async function attemptInteractionEntry(author, word, position) {
 
   let filter = {};
   let limit = 1; // default
-  let location = "initial"; // default
 
   const id = author; // get user id
 
@@ -57,7 +56,7 @@ async function attemptInteractionEntry(author, word) {
 
   // Fetch Query Data
   return new Promise((resolve, reject) => {
-    Word[location].findAll({ where: filter, limit: limit }).then(function(data) {
+    Word[position].findAll({ where: filter, limit: limit }).then(function(data) {
 
       if (data.length === 0) {
         resolve(null);
@@ -65,7 +64,7 @@ async function attemptInteractionEntry(author, word) {
 
         let queryResult = data;
 
-        let lexeme = new Lexeme(queryResult, location, id);
+        let lexeme = new Lexeme(queryResult, position, id);
 
         lexeme.score = 1;
 
@@ -102,13 +101,15 @@ exports.create = async (req, res, next) => {
   try {
     const author = req.user.id;
     const ease = req.body.ease;
+    const position = req.body.position;
+
     let word = req.body.word;
     let consonant = null;
     let vowel = null;
     let postId = null;
 
     // Attempt lookup in cmudict
-    let interactionEntry = await attemptInteractionEntry(author, word);
+    let interactionEntry = await attemptInteractionEntry(author, word, position);
 
     if (interactionEntry) {
 
@@ -134,11 +135,11 @@ exports.create = async (req, res, next) => {
           "syllables": post.syllables
         });
 
-        let vowel = "vowel_"+post.vowel;
-        let consonant = "consonant_"+post.consonant;
+        // let vowel = "vowel_"+post.vowel;
+        // let consonant = "consonant_"+post.consonant;
 
-        // test for initial / medial / final and record to given User History model
-        let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+        // test for initial / medial / final and record to given User History model -- remove?
+        // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
 
       }
 
@@ -156,11 +157,11 @@ exports.create = async (req, res, next) => {
           "syllables": post.syllables
         });
 
-        let vowel = "vowel_"+post.vowel;
-        let consonant = "consonant_"+post.consonant;
+        // let vowel = "vowel_"+post.vowel;
+        // let consonant = "consonant_"+post.consonant;
 
-        // test for initial / medial / final and record to given User History model
-        let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+        // test for initial / medial / final and record to given User History model -- remove?
+        // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
       }
 
     }
@@ -185,7 +186,7 @@ exports.create = async (req, res, next) => {
 exports.list = async (req, res) => {
   const author = req.user.id;
   const a_id = new ObjectId(author);
-  const interactions =  await Interaction.find({"author":a_id,"createdAt":{$gt:new Date(Date.now() - (12 * 60* 60 * 1000))}}).sort({"createdAt":-1});
+  const interactions =  await Interaction.find({"author":a_id,"createdAt":{$gt:new Date(Date.now() - (12 * 60* 60 * 1000 * 7))}}).sort({"createdAt":-1});
   res.json(interactions);
 };
 
@@ -253,11 +254,11 @@ exports.delete = async (req, res) => {
         "syllables": post.syllables
       });
 
-      let vowel = "vowel_"+post.vowel;
-      let consonant = "consonant_"+post.consonant;
+      // let vowel = "vowel_"+post.vowel;
+      // let consonant = "consonant_"+post.consonant;
 
       // test for initial / medial / final and record to given User History model
-      let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+      // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
 
     }
 
@@ -275,11 +276,11 @@ exports.delete = async (req, res) => {
         "syllables": post.syllables
       });
 
-      let vowel = "vowel_"+post.vowel;
-      let consonant = "consonant_"+post.consonant;
+      // let vowel = "vowel_"+post.vowel;
+      // let consonant = "consonant_"+post.consonant;
 
       // test for initial / medial / final and record to given User History model
-      let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+      // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
     }
   }
 
