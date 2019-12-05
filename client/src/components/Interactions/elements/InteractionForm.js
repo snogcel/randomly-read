@@ -99,7 +99,7 @@ export default function InteractionForm(props) {
 
             <Grid container justify="center">
 
-              <Grid item xs={12} sm={12} md={4} className={classes.wordEntry}>
+              <Grid item xs={12} className={classes.wordEntry}>
 
                 <TextField
                   id="outlined-word-name"
@@ -139,7 +139,7 @@ export default function InteractionForm(props) {
 
               </Grid>
 
-              <Grid item xs={10} sm={10} md={6} className={classes.interactionSlider}>
+              <Grid item xs={10} md={6} className={classes.interactionSlider}>
 
                 <Slider
                   value={state.ease}

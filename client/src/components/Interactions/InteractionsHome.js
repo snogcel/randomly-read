@@ -83,11 +83,6 @@ class InteractionsHome extends React.Component {
           <>
             <Card className={classes.userAdminCard}>
 
-              <CardHeader
-                titleTypographyProps={{color:"textSecondary"}}
-                title="My Interactions"
-              />
-
               <CardContent>
 
                 <Grid container justify="center">
