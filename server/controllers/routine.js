@@ -183,6 +183,10 @@ exports.settings = async (req, res) => {
 
   const userHistory = await UserHistoryInitial.findOne({"user": new ObjectId(author)});
 
+  /*
+
+  // disabling "Suggested Words" for now...
+
   let { vowels, consonants } = await generateSuggestedRoutine(userHistory); // if average or greater upvotes
 
   let id = author;
@@ -198,6 +202,7 @@ exports.settings = async (req, res) => {
     "syllables": [ "1", "2" ],
     "position": "initial"
   }];
+  */
 
   // fetch user by ID
   await User.findOne({"_id": new ObjectId(author)}, function(err, data) {
@@ -220,14 +225,14 @@ exports.settings = async (req, res) => {
         data.push(votedRoutines[i]);
       }
 
-    // include default routines
+    // include suggested routines
+    /*
     data.unshift({
       "id": id,
       "name": name,
       "subroutine": subroutine
     });
-
-    console.log(data);
+    */
 
     if (err) {
       response = {"error": true, "message": "Error fetching data"};
