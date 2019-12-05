@@ -34,8 +34,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4)
+  },
+  wordEntry: {
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center",
   }
 }));
 
@@ -90,7 +95,7 @@ export default function InteractionForm(props) {
 
             <Grid container justify="center">
 
-              <Grid item xs={4}>
+              <Grid item xs={12} sm={12} md={3} className={classes.wordEntry}>
 
                 <TextField
                   id="outlined-word-name"
@@ -130,7 +135,7 @@ export default function InteractionForm(props) {
 
               </Grid>
 
-              <Grid item xs={8} className={classes.interactionSlider}>
+              <Grid item xs={10} sm={10} md={6} className={classes.interactionSlider}>
 
                 <Slider
                   value={state.ease}

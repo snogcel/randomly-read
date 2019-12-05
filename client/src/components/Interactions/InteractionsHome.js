@@ -105,7 +105,7 @@ class InteractionsHome extends React.Component {
           <>
             <Grid container justify="center">
 
-              <Grid item xs={8}>
+              <Grid item xs={11} sm={11} md={10}>
 
                 <InteractionForm action={this.interactionHandler}/>
 
@@ -113,11 +113,9 @@ class InteractionsHome extends React.Component {
 
             </Grid>
 
-            <br /><br />
-
             <Grid container justify="center">
 
-              <Grid item xs={8}>
+              <Grid item xs={11} sm={11} md={10}>
 
                 <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
 
