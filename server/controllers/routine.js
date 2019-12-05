@@ -135,6 +135,15 @@ async function upVotedRoutines(author) {
 
   for (let i = 0; i < posts.length; i++) {
 
+    let syllables = [];
+
+    // get similar word length
+    if (posts[i].syllables === "1") syllables = ['1','2'];
+    if (posts[i].syllables === "2") syllables = ['1','2'];
+    if (posts[i].syllables === "3") syllables = ['2','3'];
+    if (posts[i].syllables === "4") syllables = ['3','4'];
+    if (posts[i].syllables === "5") syllables = ['3','4','5'];
+
     let subroutine = [{
       "index": Date.now(),
       "rangeVal": 5,
@@ -143,9 +152,11 @@ async function upVotedRoutines(author) {
       "isIntermission": false,
       "vowels": [posts[i].vowel],
       "consonants": [posts[i].consonant],
-      "syllables": [posts[i].syllables], // posts[i].syllables
+      "syllables": syllables, // posts[i].syllables
       "position": posts[i].position
     }];
+
+    console.log(subroutine);
 
     routines.push({
       "id": posts[i]._id,
