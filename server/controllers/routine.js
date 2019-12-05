@@ -143,7 +143,7 @@ async function upVotedRoutines(author) {
       "isIntermission": false,
       "vowels": [posts[i].vowel],
       "consonants": [posts[i].consonant],
-      "syllables": [], // posts[i].syllables
+      "syllables": [posts[i].syllables], // posts[i].syllables
       "position": posts[i].position
     }];
 
