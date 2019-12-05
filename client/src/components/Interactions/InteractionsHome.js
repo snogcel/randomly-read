@@ -1,47 +1,24 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
-import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
-
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { styles } from '../../themeHandler';
 
-import { getRoutineSettings } from '../../util/api';
 import InteractionForm from './elements/InteractionForm';
 import InteractionTable from './elements/InteractionTable';
 
 import Button from '@material-ui/core/Button';
-import store from "../../store";
-
+import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
 import LoginFormContainer from '../LoginForm/Container';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    padding: 25
-  },
-  column: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideColumn: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideTitle: {
-    fontSize: 18
-  },
-  exerciseHeadline: {
-    margin: "0.25em"
-  },
-});
+import store from "../../store";
 
 class InteractionsHome extends React.Component {
   constructor(props) {
@@ -94,37 +71,50 @@ class InteractionsHome extends React.Component {
   render() {
 
     const { user } = this.props;
+    const { classes } = this.props;
 
     let items = store.getState().interaction.items;
 
     return (
 
-      <div>
+      <Grid className={classes.root}>
 
         {user ? (
           <>
-            <Grid container justify="center">
+            <Card className={classes.userAdminCard}>
 
-              <Grid item xs={11} sm={11} md={10}>
+              <CardHeader
+                titleTypographyProps={{color:"textSecondary"}}
+                title="My Interactions"
+              />
 
-                <InteractionForm action={this.interactionHandler}/>
+              <CardContent>
 
-              </Grid>
+                <Grid container justify="center">
 
-            </Grid>
+                  <Grid item xs={11} sm={11} md={10}>
 
-            <Grid container justify="center">
+                    <InteractionForm action={this.interactionHandler}/>
 
-              <Grid item xs={11} sm={11} md={10}>
+                  </Grid>
 
-                <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+                </Grid>
 
-              </Grid>
-            </Grid>
+                <Grid container justify="center">
+
+                  <Grid item xs={11} sm={11} md={10}>
+
+                    <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+
+                  </Grid>
+                </Grid>
+
+              </CardContent>
+            </Card>
           </>
         ) : ( this.props.history.push("/login") )}
 
-      </div>
+      </Grid>
 
     )
 

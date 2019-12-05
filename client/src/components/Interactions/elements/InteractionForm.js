@@ -57,7 +57,7 @@ export default function InteractionForm(props) {
   const [value, setValue] = React.useState('');
 
   const [state, setState] = React.useState({
-    position: "start",
+    position: "initial",
     word: "",
     ease: 50
   });
@@ -67,7 +67,7 @@ export default function InteractionForm(props) {
     props.action(state);  // pass form submission back to InteractionsHome
 
     let defaultState = {
-      position: "start",
+      position: "initial",
       word: "",
       ease: 50
     };
@@ -114,19 +114,19 @@ export default function InteractionForm(props) {
 
                 <RadioGroup aria-label="position" name="position" value={state.position} onChange={handleRadioGroupChange('position')} row>
                   <FormControlLabel
-                    value="start"
+                    value="initial"
                     control={<Radio color="primary" />}
                     label="Start"
                     labelPlacement="bottom"
                   />
                   <FormControlLabel
-                    value="middle"
+                    value="medial"
                     control={<Radio color="primary" />}
                     label="Middle"
                     labelPlacement="bottom"
                   />
                   <FormControlLabel
-                    value="end"
+                    value="final"
                     control={<Radio color="primary" />}
                     label="End"
                     labelPlacement="bottom"
