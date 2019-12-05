@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import moment from 'moment-timezone';
+import Hidden from '@material-ui/core/Hidden';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -29,10 +30,9 @@ const useStyles1 = makeStyles(theme => ({
 const useStyles2 = makeStyles(theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
   },
   table: {
-    minWidth: 500,
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -103,13 +103,13 @@ function TablePaginationActions(props) {
 
   return (
     <div className={classes.root}>
-      <IconButton
+      <Hidden xsDown><IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
         aria-label="first page"
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
+      </IconButton></Hidden>
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
@@ -120,13 +120,13 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
-      <IconButton
+      <Hidden xsDown><IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
         {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
+      </IconButton></Hidden>
     </div>
   );
 }
@@ -185,59 +185,59 @@ export default function InteractionTable(props) {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.tableWrapper}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell align="center">Date</TableCell>
-              <TableCell align="center">Word</TableCell>
-              <TableCell align="center">Consonant</TableCell>
-              <TableCell align="center">Vowel</TableCell>
-              <TableCell align="center">Ease</TableCell>
-              <TableCell align="center"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-
-            {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-              <TableRow key={row.word}>
-                <TableCell align="center">{row.createdAt}</TableCell>
-                <TableCell align="center">{row.word}</TableCell>
-                <TableCell align="center">{row.consonant}</TableCell>
-                <TableCell align="center">{row.vowel}</TableCell>
-                <TableCell align="center">{row.ease}</TableCell>
-                <TableCell align="center"><Button onClick={(e) => { e.preventDefault(); props.action(row.id); }}>Delete</Button></TableCell>
+      <Paper className={classes.root}>
+        <div className={classes.tableWrapper}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <Hidden xsDown><TableCell align="center">Date</TableCell></Hidden>
+                <TableCell align="center">Word</TableCell>
+                <Hidden xsDown><TableCell align="center">Consonant</TableCell></Hidden>
+                <Hidden xsDown><TableCell align="center">Vowel</TableCell></Hidden>
+                <TableCell align="center">Ease</TableCell>
+                <Hidden xsDown><TableCell align="center"></TableCell></Hidden>
               </TableRow>
-            ))}
+            </TableHead>
+            <TableBody>
 
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={6} />
+              {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+                <TableRow key={row.word}>
+                  <Hidden xsDown><TableCell align="center">{row.createdAt}</TableCell></Hidden>
+                  <TableCell align="center">{row.word}</TableCell>
+                  <Hidden xsDown><TableCell align="center">{row.consonant}</TableCell></Hidden>
+                  <Hidden xsDown><TableCell align="center">{row.vowel}</TableCell></Hidden>
+                  <TableCell align="center">{row.ease}</TableCell>
+                  <Hidden xsDown><TableCell align="center"><Button onClick={(e) => { e.preventDefault(); props.action(row.id); }}>Delete</Button></TableCell></Hidden>
+                </TableRow>
+              ))}
+
+              {emptyRows > 0 && (
+                <TableRow style={{ height: 53 * emptyRows }}>
+                  <TableCell colSpan={6} />
+                </TableRow>
+              )}
+
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5]}
+                  colSpan={6}
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'rows per page' },
+                    native: true,
+                  }}
+                  onChangePage={handleChangePage}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
+                />
               </TableRow>
-            )}
-
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25]}
-                colSpan={6}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'rows per page' },
-                  native: true,
-                }}
-                onChangePage={handleChangePage}
-                onChangeRowsPerPage={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </div>
-    </Paper>
+            </TableFooter>
+          </Table>
+        </div>
+      </Paper>
   );
 }

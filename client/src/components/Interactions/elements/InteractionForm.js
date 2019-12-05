@@ -30,6 +30,10 @@ const useStyles = makeStyles(theme => ({
   submit: {
     textAlign: 'center'
   },
+  submitButton: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
+  },
   interactionSlider: {
     alignItems: "center",
     display:"grid",
@@ -95,7 +99,7 @@ export default function InteractionForm(props) {
 
             <Grid container justify="center">
 
-              <Grid item xs={12} sm={12} md={3} className={classes.wordEntry}>
+              <Grid item xs={12} sm={12} md={4} className={classes.wordEntry}>
 
                 <TextField
                   id="outlined-word-name"
@@ -146,7 +150,7 @@ export default function InteractionForm(props) {
                   onChange={handleSliderChange('ease', value)}
                 />
 
-                <Button type="submit">Submit!</Button>
+                <Button type="submit" variant="outlined" className={classes.submitButton}>Submit</Button>
 
               </Grid>
 
