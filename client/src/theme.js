@@ -1,8 +1,8 @@
 const constants = {
   error: '#f5222d',
   vote: '#b6b6b6',
-  upvote: '#8A0C93',
-  downvote: '#C70E4C'
+  upvote: '#C70E4C',
+  downvote: '#8A0C93'
 };
 
 const dark = {

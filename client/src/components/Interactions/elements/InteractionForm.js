@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
@@ -45,6 +46,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
+  },
+  formControlLabel: {
+    fontSize:"12px"
   }
 }));
 
@@ -63,7 +67,7 @@ export default function InteractionForm(props) {
   const [state, setState] = React.useState({
     position: "initial",
     word: "",
-    ease: 50
+    ease: 0
   });
 
   const handleSubmit = event => {
@@ -73,7 +77,7 @@ export default function InteractionForm(props) {
     let defaultState = {
       position: "initial",
       word: "",
-      ease: 50
+      ease: 0
     };
 
     // reset form state
@@ -93,6 +97,27 @@ export default function InteractionForm(props) {
     setState({ ...state, [name]: value });
   };
 
+  /*
+
+  <Slider
+                  value={state.ease}
+                  aria-labelledby="ease"
+                  step={50}
+                  valueLabelDisplay="auto"
+                  marks={ease}
+                  onChange={handleSliderChange('ease', value)}
+                />
+
+
+<FormControlLabel
+                    value="medial"
+                    control={<Radio color="primary" />}
+                    label={<Typography className={classes.formControlLabel}>Middle</Typography>}
+                    labelPlacement="bottom"
+                  />
+
+   */
+
   return (
     <div>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
@@ -103,7 +128,7 @@ export default function InteractionForm(props) {
 
                 <TextField
                   id="outlined-word-name"
-                  label="Word Spoken"
+                  label="Focus Words"
                   className={classes.textField}
                   style={{ margin: 8 }}
                   margin="normal"
@@ -120,19 +145,13 @@ export default function InteractionForm(props) {
                   <FormControlLabel
                     value="initial"
                     control={<Radio color="primary" />}
-                    label="Start"
-                    labelPlacement="bottom"
-                  />
-                  <FormControlLabel
-                    value="medial"
-                    control={<Radio color="primary" />}
-                    label="Middle"
+                    label={<Typography className={classes.formControlLabel}>Start of Word</Typography>}
                     labelPlacement="bottom"
                   />
                   <FormControlLabel
                     value="final"
                     control={<Radio color="primary" />}
-                    label="End"
+                    label={<Typography className={classes.formControlLabel}>End of Word</Typography>}
                     labelPlacement="bottom"
                   />
                 </RadioGroup>
@@ -140,15 +159,6 @@ export default function InteractionForm(props) {
               </Grid>
 
               <Grid item xs={10} md={6} className={classes.interactionSlider}>
-
-                <Slider
-                  value={state.ease}
-                  aria-labelledby="ease"
-                  step={5}
-                  valueLabelDisplay="auto"
-                  marks={ease}
-                  onChange={handleSliderChange('ease', value)}
-                />
 
                 <Button type="submit" variant="outlined" className={classes.submitButton}>Submit</Button>
 

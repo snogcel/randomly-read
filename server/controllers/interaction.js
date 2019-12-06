@@ -121,7 +121,7 @@ exports.create = async (req, res, next) => {
       consonant = post.consonant; // include consonant
       vowel = post.vowel; // include vowel in response
 
-      if (ease <= 50 && post.score < 1) {
+      if (ease < 50 && post.score < 1) {
         post.vote(author, 1);
 
         // record vote

@@ -19,6 +19,7 @@ import Button from '@material-ui/core/Button';
 import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
 import LoginFormContainer from '../LoginForm/Container';
 import store from "../../store";
+import Hidden from '@material-ui/core/Hidden';
 
 class InteractionsHome extends React.Component {
   constructor(props) {
@@ -81,31 +82,48 @@ class InteractionsHome extends React.Component {
 
         {user ? (
           <>
-            <Card className={classes.userAdminCard}>
 
-              <CardContent>
+            {(this.props.currentExerciseNumber === null) ? (
+              <>
 
-                <Grid container justify="center">
+                <Card elevation={0} className={classes.userAdminCard}>
+                  <CardContent>
+                    <Grid container justify="center">
+                      <Grid item xs={11} sm={11} md={10}>
+                        <InteractionForm action={this.interactionHandler}/>
+                      </Grid>
+                    </Grid>
+                    <Grid container justify="center">
+                      <Grid item xs={11} sm={11} md={10}>
+                        <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
 
-                  <Grid item xs={11} sm={11} md={10}>
+              </>
+            ) : (
+              <>
 
-                    <InteractionForm action={this.interactionHandler}/>
+                <Hidden mdDown>
+                  <Card elevation={0} className={classes.userAdminCard}>
+                    <CardContent>
+                      <Grid container justify="center">
+                        <Grid item xs={11} sm={11} md={10}>
+                          <InteractionForm action={this.interactionHandler}/>
+                        </Grid>
+                      </Grid>
+                      <Grid container justify="center">
+                        <Grid item xs={11} sm={11} md={10}>
+                          <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Hidden>
 
-                  </Grid>
-
-                </Grid>
-
-                <Grid container justify="center">
-
-                  <Grid item xs={11} sm={11} md={10}>
-
-                    <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
-
-                  </Grid>
-                </Grid>
-
-              </CardContent>
-            </Card>
+              </>
+            )}
           </>
         ) : ( this.props.history.push("/login") )}
 

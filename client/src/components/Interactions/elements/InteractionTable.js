@@ -17,6 +17,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import DoneIcon from '@material-ui/icons/Done';
+
+
 
 const useStyles1 = makeStyles(theme => ({
   root: {
@@ -36,6 +41,15 @@ const useStyles2 = makeStyles(theme => ({
   },
   tableWrapper: {
     overflowX: 'auto',
+  },
+  upvote: {
+    color: "#C70E4C"
+  },
+  downvote: {
+    color: "#8A0C93"
+  },
+  margin: {
+    margin: theme.spacing(1),
   },
 }));
 
@@ -103,13 +117,6 @@ function TablePaginationActions(props) {
 
   return (
     <div className={classes.root}>
-      <Hidden xsDown><IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton></Hidden>
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
@@ -120,13 +127,6 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
-      <Hidden xsDown><IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton></Hidden>
     </div>
   );
 }
@@ -158,22 +158,31 @@ export default function InteractionTable(props) {
 
     interactions.map(function(item) {
 
-      console.log(item.consonant);
-
       let consonant = "N/A";
       let vowel = "N/A";
+      let summary = "";
 
       if (item.consonant !== null) consonant = availableCharacters.find(o => o.id === item.consonant);
       if (item.vowel !== null) vowel = availableCharacters.find(o => o.id === item.vowel);
+
+      if (consonant.name && vowel.name) {
+        summary = "(" + consonant.name + " and " + vowel.name + ")";
+      }
+
+      let result = "difficult";
+      if (item.ease >= 50) result = "easier";
+      if (item.ease === 100) result = "easy";
 
       rows.push({
         "id": item.id,
         "word": item.word,
         "vowel": vowel.name,
         "consonant": consonant.name,
-        "ease": item.ease,
-        "createdAt": moment(item.createdAt).tz("America/New_York").format('YYYY-MM-DD'),
-        "updatedAt": item.updatedAt
+        "summary": summary,
+        "ease": result,
+        "createdAt": moment(item.createdAt).tz("America/New_York").format('MM/DD'),
+        "updatedAt": item.updatedAt,
+        "class": ((item.ease < 50) ? classes.upvote : null)
       });
     });
 
@@ -190,24 +199,24 @@ export default function InteractionTable(props) {
           <Table className={classes.table}>
             <TableHead>
               <TableRow>
-                <Hidden xsDown><TableCell align="center">Date</TableCell></Hidden>
                 <TableCell align="center">Word</TableCell>
-                <Hidden xsDown><TableCell align="center">Consonant</TableCell></Hidden>
-                <Hidden xsDown><TableCell align="center">Vowel</TableCell></Hidden>
-                <TableCell align="center">Ease</TableCell>
-                <Hidden xsDown><TableCell align="center"></TableCell></Hidden>
+                <TableCell align="center">Remove</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
 
               {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                 <TableRow key={row.word}>
-                  <Hidden xsDown><TableCell align="center">{row.createdAt}</TableCell></Hidden>
-                  <TableCell align="center">{row.word}</TableCell>
-                  <Hidden xsDown><TableCell align="center">{row.consonant}</TableCell></Hidden>
-                  <Hidden xsDown><TableCell align="center">{row.vowel}</TableCell></Hidden>
-                  <TableCell align="center">{row.ease}</TableCell>
-                  <Hidden xsDown><TableCell align="center"><Button onClick={(e) => { e.preventDefault(); props.action(row.id); }}>Delete</Button></TableCell></Hidden>
+                  <TableCell align="center" className={row.class}>
+                    {row.word}
+                    <br />
+                    {row.summary}
+                  </TableCell>
+                  <TableCell align="center">
+                    <IconButton aria-label="delete" className={classes.margin} onClick={(e) => { e.preventDefault(); props.action(row.id); }}>
+                      <DoneIcon />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
 
