@@ -1,6 +1,7 @@
 const { body, validationResult } = require('express-validator/check');
 const Post = require('../models/post');
 const User = require('../models/user');
+const Interaction = require('../models/interaction');
 const VoteHistory = require('../models/voteHistory');
 const UserHistoryInitial = require('../models/userHistoryInitial');
 const ViewHistory = require('../models/viewHistory');
@@ -170,11 +171,20 @@ exports.upvote = async (req, res) => {
     "syllables": post.syllables
   });
 
-  let vowel = "vowel_"+post.vowel;
-  let consonant = "consonant_"+post.consonant;
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
 
   // test for initial / medial / final and record to given User History model
-  let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+
+  const interaction = await Interaction.create({
+    "author": post.author._id,
+    "postId": post.id,
+    "word": post.title,
+    "ease": 0,
+    "consonant": post.consonant,
+    "vowel": post.vowel
+  });
 
   res.json(post);
 };
@@ -193,11 +203,11 @@ exports.downvote = async (req, res) => {
     "syllables": post.syllables
   });
 
-  let vowel = "vowel_"+post.vowel;
-  let consonant = "consonant_"+post.consonant;
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
 
   // test for initial / medial / final and record to given User History model
-  let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
 
   res.json(post);
 };

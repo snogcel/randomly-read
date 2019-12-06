@@ -3,6 +3,7 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import WordCardContainer from './WordCardContainer';
 import TimerContainer from './TimerContainer';
+import Interactions from '../Interactions/InteractionsHomeContainer';
 import Grid from '@material-ui/core/Grid';
 
 import Hidden from '@material-ui/core/Hidden';
@@ -37,12 +38,32 @@ const RRHome = props => {
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
+  let interactionContainerWidth = 12;
 
   // laptop or desktop
   if (width === "xl" || width === "lg") {
     exerciseHistoryContainerWidth = 3;
-    timerContainerWidth = 9;
+    timerContainerWidth = 6;
+    interactionContainerWidth = 3;
   }
+
+  /*
+
+  <Grid className={classes.root}>
+
+      <Card elevation={0} className={classes.userAdminCard}>
+
+        <CardContent>
+
+
+
+        </CardContent>
+
+      </Card>
+
+    </Grid>
+
+   */
 
   return (
 
@@ -67,6 +88,12 @@ const RRHome = props => {
                 <ProgressIndicator />
 
                 <WordHistoryList />
+
+              </Grid>
+
+              <Grid item xs={interactionContainerWidth}>
+
+                <Interactions />
 
               </Grid>
 

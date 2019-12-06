@@ -33,19 +33,19 @@ export default (state = initialState, action) => {
       return { ...state, isFetching: false };
 
     case CREATE_INTERACTION_REQUEST:
-      return { ...state, isFetching: true };
+      return { ...state, isFetching: true, isInteractionVoting: true };
     case CREATE_INTERACTION_SUCCESS:
-      return { ...state, isFetching: false, items: [action.interaction, ...state.items] };
+      return { ...state, isFetching: false, isInteractionVoting: false, items: [action.interaction, ...state.items] };
     case CREATE_INTERACTION_ERROR:
-      return { ...state, isFetching: false, error: action.error };
+      return { ...state, isFetching: false, isInteractionVoting: false, error: action.error };
 
     case DELETE_INTERACTION_REQUEST:
-      return { ...state, isDeleting: true };
+      return { ...state, isDeleting: true, isInteractionVoting: true };
     case DELETE_INTERACTION_SUCCESS:
       items = state.items.filter(i => i.id !== action.interaction);
-      return { ...state, isDeleting: false, items, post: null };
+      return { ...state, isDeleting: false, isInteractionVoting: false, items, post: null };
     case DELETE_INTERACTION_ERROR:
-      return { ...state, isDeleting: false };
+      return { ...state, isDeleting: false, isInteractionVoting: false };
 
     default:
       return state;

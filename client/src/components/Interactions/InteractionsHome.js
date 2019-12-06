@@ -56,6 +56,18 @@ class InteractionsHome extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if (typeof this.props.isVoting !== "undefined") {
+      if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
+
+        this.props.fetchInteractions();
+
+      }
+    }
+
+  }
+
   interactionHandler(interaction) {
     this.props.attemptCreateInteraction(interaction);
     // this.props.fetchInteractions({});
@@ -75,6 +87,7 @@ class InteractionsHome extends React.Component {
     const { classes } = this.props;
 
     let items = store.getState().interaction.items;
+
 
     return (
 

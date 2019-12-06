@@ -85,6 +85,28 @@ class RoutineSelect extends React.Component {
       this.props.fetchAssignedRoutines();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+      if (typeof this.props.isVoting !== "undefined") {
+        if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
+
+          this.props.fetchAssignedRoutines();
+          this.props.updateId(prevProps.id);
+
+        }
+      }
+
+      if (typeof this.props.isInteractionVoting !== "undefined") {
+        if ((prevProps.isInteractionVoting !== this.props.isInteractionVoting) && !this.props.isInteractionVoting) { // fetch updated routines
+
+          this.props.fetchAssignedRoutines();
+          this.props.updateId(prevProps.id);
+
+        }
+      }
+
+    }
+
     componentDidMount() {
 
     }
@@ -112,6 +134,7 @@ class RoutineSelect extends React.Component {
         const { classes } = this.props;
         const { theme } = this.props;
 
+        /*
         // set default select option
         if (typeof this.props.availableRoutines[0] !== "undefined" && this.props.id === 0) {
           this.props.updateId(this.props.availableRoutines[0].attributes.id);
@@ -119,6 +142,7 @@ class RoutineSelect extends React.Component {
           this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
           this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
         }
+        */
 
         return (
             <React.Fragment>
