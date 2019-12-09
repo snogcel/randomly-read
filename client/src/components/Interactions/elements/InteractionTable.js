@@ -206,7 +206,7 @@ export default function InteractionTable(props) {
             <TableBody>
 
               {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                <TableRow key={row.word}>
+                <TableRow key={row.id}>
                   <TableCell align="center" className={row.class}>
                     {row.word}
                     <br />
