@@ -1,53 +1,30 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
-import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
-
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
 
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { styles } from '../../themeHandler';
 
-import { getRoutineSettings } from '../../util/api';
 import InteractionForm from './elements/InteractionForm';
 import InteractionTable from './elements/InteractionTable';
 
 import Button from '@material-ui/core/Button';
-import store from "../../store";
-
+import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
 import LoginFormContainer from '../LoginForm/Container';
-
-const styles = theme => ({
-  root: {
-    flexGrow: 1,
-    padding: 25
-  },
-  column: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideColumn: {
-    padding: theme.spacing.unit * 2,
-    textAlign: "center",
-    color: theme.palette.text.secondary
-  },
-  sideTitle: {
-    fontSize: 18
-  },
-  exerciseHeadline: {
-    margin: "0.25em"
-  },
-});
+import store from "../../store";
+import Hidden from '@material-ui/core/Hidden';
 
 class InteractionsHome extends React.Component {
   constructor(props) {
     super(props);
 
-    this.buttonHandler = this.buttonHandler.bind(this);
     this.interactionHandler = this.interactionHandler.bind(this);
     this.removeInteractionHandler = this.removeInteractionHandler.bind(this);
 
@@ -75,29 +52,25 @@ class InteractionsHome extends React.Component {
 
   prepareInteractionForm(){
 
-    this.props.fetchInteractionSettings();
-
     this.props.fetchInteractions();
-
-    let options = store.getState().interaction;
-
-    this.setState({
-      options: options.settings,
-      selectedOption: options.settings[0]
-    });
 
   }
 
-  buttonHandler(option) {
-    this.setState({
-      selectedOption: option
-    });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+
+    if (typeof this.props.isVoting !== "undefined") {
+      if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
+
+        this.props.fetchInteractions();
+
+      }
+    }
+
   }
 
   interactionHandler(interaction) {
-    interaction.setting = this.state.selectedOption.name; // define setting based on current state
     this.props.attemptCreateInteraction(interaction);
-    this.props.fetchInteractions({});
+    // this.props.fetchInteractions({});
   }
 
   removeInteractionHandler(id) {
@@ -111,51 +84,63 @@ class InteractionsHome extends React.Component {
   render() {
 
     const { user } = this.props;
+    const { classes } = this.props;
 
     let items = store.getState().interaction.items;
 
+
     return (
 
-      <div>
+      <Grid className={classes.root}>
 
         {user ? (
           <>
-            <Grid container>
 
-              <Grid item xs={12} sm={2}>
+            {(this.props.currentExerciseNumber === null) ? (
+              <>
 
-                {  this.state.options.map((item) => (
-                  <div><Button onClick={() => { this.buttonHandler(item) }} color={(item.name === this.state.selectedOption.name) ? "primary" : "secondary"}> {item.name} </Button></div>
-                )) }
+                <Card elevation={0} className={classes.userAdminCard}>
+                  <CardContent>
+                    <Grid container justify="center">
+                      <Grid item xs={11} sm={11} md={10}>
+                        <InteractionForm action={this.interactionHandler}/>
+                      </Grid>
+                    </Grid>
+                    <Grid container justify="center">
+                      <Grid item xs={11} sm={11} md={10}>
+                        <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+                      </Grid>
+                    </Grid>
+                  </CardContent>
+                </Card>
 
-              </Grid>
+              </>
+            ) : (
+              <>
 
-              <Grid item xs={12} sm={10}>
+                <Hidden mdDown>
+                  <Card elevation={0} className={classes.userAdminCard}>
+                    <CardContent>
+                      <Grid container justify="center">
+                        <Grid item xs={11} sm={11} md={10}>
+                          <InteractionForm action={this.interactionHandler}/>
+                        </Grid>
+                      </Grid>
+                      <Grid container justify="center">
+                        <Grid item xs={11} sm={11} md={10}>
+                          <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Hidden>
 
-                <InteractionForm options={this.state.selectedOption} action={this.interactionHandler}/>
-
-              </Grid>
-
-            </Grid>
-
-            <br /><br />
-
-            <Grid container spacing={24}>
-
-              <Grid item xs={12} sm={2}>
-
-              </Grid>
-
-              <Grid item xs={12} sm={8}>
-
-                <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
-
-              </Grid>
-            </Grid>
+              </>
+            )}
           </>
         ) : ( this.props.history.push("/login") )}
 
-      </div>
+      </Grid>
 
     )
 

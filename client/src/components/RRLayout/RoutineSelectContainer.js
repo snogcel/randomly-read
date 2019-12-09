@@ -9,6 +9,8 @@ const mapStateToProps = state => ({
   name: state.routineSelect.name,
   id: state.routineSelect.id,
   routine: state.routineSelect.routine,
+  isVoting: state.posts.isVoting,
+  isInteractionVoting: state.interaction.isInteractionVoting,
   isFetching: state.routineSelect.isFetching
 });
 

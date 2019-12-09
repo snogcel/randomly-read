@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import InputBase from '@material-ui/core/InputBase';
 import InputLabel from '@material-ui/core/InputLabel';
 import { fade, withStyles } from "@material-ui/core/styles";
@@ -74,14 +75,12 @@ export default function EditFirstName(props) {
 
   return (
     <form className={classes.root} noValidate autoComplete="off">
-      <FormControl className={classes.margin}>
+      <FormControl className={classes.margin} error={props.error.length === 0 ? false : true }>
         <InputLabel shrink htmlFor="admin-edit-firstname-input">
           First Name
         </InputLabel>
         <BootstrapInput
           id="firstname-text"
-          error={props.error.length === 0 ? false : true }
-          helperText={props.error}
           InputLabelProps={{
             shrink: true,
           }}
@@ -89,6 +88,7 @@ export default function EditFirstName(props) {
           value={props.firstname.firstname}
           onChange={handleChange('firstname')}
         />
+        <FormHelperText id="component-error-text">{props.error}</FormHelperText>
       </FormControl>
     </form>
   );

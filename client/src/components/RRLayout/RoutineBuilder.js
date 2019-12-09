@@ -5,6 +5,8 @@ import InitialWordBlacklist from "./InitialWordBlacklist";
 import MedialWordBlacklist from "./MedialWordBlacklist";
 import FinalWordBlacklist from "./FinalWordBlacklist";
 
+const vowelArr = ["AA","AE","AH","AO","AW","AY","EH","ER","EY","IH","IY","OW","OY","UW"];
+
 const RoutineBuilder = function() {
 
 };
@@ -139,6 +141,7 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
         consonant = exerciseConfig.consonants[rand];
         vowel = exerciseConfig.vowels[randVowel];
         verified = this._verifyBlacklist(vowel, consonant, exerciseConfig);
+
         if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
       }
 

@@ -9,9 +9,7 @@ const Item = styled.li`
 `;
 
 const PostListItem = props => (
-  <Item>
-    <Post {...props} />
-  </Item>
+  <Item><Post {...props} /></Item>
 );
 
 export default PostListItem;

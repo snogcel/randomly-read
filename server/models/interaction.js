@@ -2,14 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const interactionSchema = new Schema({
-
     author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    setting: { type: String, required: true },
-    audience: { type: String, required: true },
-    intention: { type: Boolean, required: true },
-    applied: { type: Boolean, required: true },
+    postId: { type: Schema.Types.ObjectId, ref: 'Post', required: false },
+    word: { type: String, required: true },
     ease: { type: Number, required: true },
-
+    position: { type: String, required: true },
+    consonant: { type: String, required: false },
+    vowel: { type: String, required: false }
 });
 
 interactionSchema.set('timestamps', true);
@@ -26,4 +25,3 @@ interactionSchema.options.toJSON.transform = (doc, ret) => {
 const Interaction = mongoose.model('Interaction', interactionSchema);
 
 module.exports = Interaction;
-

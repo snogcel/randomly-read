@@ -1,9 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormGroup from '@material-ui/core/FormGroup';
+import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -12,6 +14,7 @@ import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import TableCell from "./InteractionTable";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,6 +30,25 @@ const useStyles = makeStyles(theme => ({
   },
   submit: {
     textAlign: 'center'
+  },
+  submitButton: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(1)
+  },
+  interactionSlider: {
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center",
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4)
+  },
+  wordEntry: {
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center",
+  },
+  formControlLabel: {
+    fontSize:"12px"
   }
 }));
 
@@ -34,7 +56,6 @@ const useStyles = makeStyles(theme => ({
 
 const ease = [
   { label: "Difficult", value: 0 },
-  { label: "Easier", value: 50 },
   { label: "Easy", value: 100 }
 ];
 
@@ -44,33 +65,31 @@ export default function InteractionForm(props) {
   const [value, setValue] = React.useState('');
 
   const [state, setState] = React.useState({
-    audience: "",
-    intention: false,
-    applied: false,
+    position: "initial",
+    word: "",
     ease: 0
   });
 
   const handleSubmit = event => {
 
-    if (!state.audience) {
-      alert("Who did you speak with?")
-    } else {
-      props.action(state);  // pass form submission back to InteractionsHome
+    props.action(state);  // pass form submission back to InteractionsHome
 
-      let defaultState = {
-        audience: "",
-        intention: false,
-        applied: false,
-        ease: 0
-      };
+    let defaultState = {
+      position: "initial",
+      word: "",
+      ease: 0
+    };
 
-      // reset form state
-      setState( defaultState );
-    }
+    // reset form state
+    setState( defaultState );
+
+  };
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.value });
   };
 
   const handleRadioGroupChange = name => event => {
-    setValue(event.target.value);
     setState({ ...state, [name]: event.target.value });
   };
 
@@ -78,65 +97,75 @@ export default function InteractionForm(props) {
     setState({ ...state, [name]: value });
   };
 
-  const handleSwitchChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-  };
+  /*
+
+  <Slider
+                  value={state.ease}
+                  aria-labelledby="ease"
+                  step={50}
+                  valueLabelDisplay="auto"
+                  marks={ease}
+                  onChange={handleSliderChange('ease', value)}
+                />
+
+
+<FormControlLabel
+                    value="medial"
+                    control={<Radio color="primary" />}
+                    label={<Typography className={classes.formControlLabel}>Middle</Typography>}
+                    labelPlacement="bottom"
+                  />
+
+   */
 
   return (
     <div>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
-        <Grid container>
 
-          <Grid item xs={12}><FormLabel component="legend"><h2>{ props.options.name }</h2><br /></FormLabel></Grid>
+            <Grid container justify="center">
 
-          <Grid item xs={3}>
-            <FormControl component="fieldset" className={classes.formControl}>
-                <RadioGroup aria-label="audience" name="audience" onChange={handleRadioGroupChange('audience')} value={state.audience} >
-                  {  props.options.audience.map((item) => (
-                    <FormControlLabel
-                    value={item}
+              <Grid item xs={12} className={classes.wordEntry}>
+
+                <TextField
+                  id="outlined-word-name"
+                  label="Focus Words"
+                  className={classes.textField}
+                  style={{ margin: 8 }}
+                  margin="normal"
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  variant="outlined"
+                  defaultValue={state.word}
+                  value={state.word}
+                  onChange={handleChange('word')}
+                />
+
+                <RadioGroup aria-label="position" name="position" value={state.position} onChange={handleRadioGroupChange('position')} row>
+                  <FormControlLabel
+                    value="initial"
                     control={<Radio color="primary" />}
-                    label={item}
-
-                    />
-                    )) }
+                    label={<Typography className={classes.formControlLabel}>Start of Word</Typography>}
+                    labelPlacement="bottom"
+                  />
+                  <FormControlLabel
+                    value="final"
+                    control={<Radio color="primary" />}
+                    label={<Typography className={classes.formControlLabel}>End of Word</Typography>}
+                    labelPlacement="bottom"
+                  />
                 </RadioGroup>
-            </FormControl>
-          </Grid>
 
-          <Grid item xs={6}>
+              </Grid>
 
-            <FormControlLabel
-              control={ <Switch checked={state.intention} onChange={handleSwitchChange('intention')} value="intention" color="primary" /> }
-              label="Remembered your Intention"
-            />
+              <Grid item xs={10} md={6} className={classes.interactionSlider}>
 
-            <br /><br />
+                <Button type="submit" variant="outlined" className={classes.submitButton}>Submit</Button>
 
-            <FormControlLabel
-              control={ <Switch checked={state.applied} onChange={handleSwitchChange('applied')} value="applied" color="primary" /> }
-              label="Spoke with Intention"
-            />
+              </Grid>
 
-            <br /><br />
+            </Grid>
 
-            <Slider
-              value={state.ease}
-              aria-labelledby="ease"
-              step={5}
-              valueLabelDisplay="auto"
-              marks={ease}
-              onChange={handleSliderChange('ease', value)}
-            />
-          </Grid>
-
-          <Grid item xs={12} className={classes.submit}>
-
-            <Button type="submit">Submit!</Button>
-
-          </Grid>
-
-        </Grid>
       </form>
     </div>
   );

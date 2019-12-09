@@ -7,7 +7,10 @@ import withAuth from "../../util/withAuth";
 const mapStateToProps = state => ({
   settings: state.interaction.settings,
   interactions: state.interaction.items,
-  isFetching: state.interaction.isFetching
+  isFetching: state.interaction.isFetching,
+  isInteractionVoting: state.interaction.isInteractionVoting,
+  isVoting: state.posts.isVoting,
+  currentExerciseNumber: state.exerciseHistory.currentExerciseNumber
 });
 
 const mapDispatchToProps = { attemptCreateInteraction, attemptDeleteInteraction, fetchInteractions, fetchInteractionSettings };

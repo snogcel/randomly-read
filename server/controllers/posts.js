@@ -1,6 +1,9 @@
 const { body, validationResult } = require('express-validator/check');
 const Post = require('../models/post');
 const User = require('../models/user');
+const Interaction = require('../models/interaction');
+const VoteHistory = require('../models/voteHistory');
+const UserHistoryInitial = require('../models/userHistoryInitial');
 const ViewHistory = require('../models/viewHistory');
 
 exports.load = async (req, res, next, id) => {
@@ -38,7 +41,7 @@ exports.listByCategory = async (req, res) => {
 exports.listByUser = async (req, res) => {
   const username = req.params.user;
   const author = await User.findOne({ username });
-  const posts = await Post.find({ author: author.id }).sort('-created');
+  const posts = await Post.find({ author: author.id, score: 1 }).sort('-created');
   res.json(posts);
 };
 
@@ -156,16 +159,80 @@ exports.validate = [
 
 exports.upvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 1);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
+
+  // test for initial / medial / final and record to given User History model
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+
+  const interaction = await Interaction.create({
+    "author": post.author._id,
+    "postId": post.id,
+    "word": post.title,
+    "ease": 0,
+    "position": post.position,
+    "consonant": post.consonant,
+    "vowel": post.vowel
+  });
+
   res.json(post);
 };
 
 exports.downvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, -1);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
+
+  // test for initial / medial / final and record to given User History model
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+
   res.json(post);
 };
 
 exports.unvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 0);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
+  let vowel = "vowel_"+post.vowel;
+  let consonant = "consonant_"+post.consonant;
+
+  // test for initial / medial / final and record to given User History model
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+
   res.json(post);
 };
 

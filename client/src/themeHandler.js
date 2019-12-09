@@ -138,10 +138,10 @@ const styles = theme => ({
     color: "rgba(0, 0, 0, 0.25)",
   },
   historyTitleUpvote: {
-    color: "#8A0C93"
+    color: "#C70E4C"
   },
   historyTitleDownvote: {
-    color: "#C70E4C"
+    color: "#8A0C93"
   },
   subtitle: {
     fontSize: 20
@@ -215,6 +215,13 @@ const styles = theme => ({
   exerciseHistoryMobile: {
     display:'flex',
     justifyContent:'center'
+  },
+  interactionSlider: {
+    alignItems: "center",
+    display:"grid",
+    justifyItems: "center",
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
   }
 });
 

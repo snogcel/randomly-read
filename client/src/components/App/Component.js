@@ -24,7 +24,7 @@ import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
 import Interactions from '../Interactions/InteractionsHomeContainer';
 import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
-import Administration from '../Administration/Container.js';
+import Administration from '../Administration/Container';
 
 const AuthLink = (operation, next) => {
   const token = localStorage.getItem('token');

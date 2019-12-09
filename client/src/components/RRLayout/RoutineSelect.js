@@ -6,6 +6,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from "@material-ui/core/styles";
+import ListSubheader from '@material-ui/core/ListSubheader';
 
 let Routines = [];
 
@@ -85,6 +86,28 @@ class RoutineSelect extends React.Component {
       this.props.fetchAssignedRoutines();
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+      if (typeof this.props.isVoting !== "undefined") {
+        if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
+
+          this.props.fetchAssignedRoutines();
+          this.props.updateId(prevProps.id);
+
+        }
+      }
+
+      if (typeof this.props.isInteractionVoting !== "undefined") {
+        if ((prevProps.isInteractionVoting !== this.props.isInteractionVoting) && !this.props.isInteractionVoting) { // fetch updated routines
+
+          this.props.fetchAssignedRoutines();
+          this.props.updateId(prevProps.id);
+
+        }
+      }
+
+    }
+
     componentDidMount() {
 
     }
@@ -112,6 +135,7 @@ class RoutineSelect extends React.Component {
         const { classes } = this.props;
         const { theme } = this.props;
 
+        /*
         // set default select option
         if (typeof this.props.availableRoutines[0] !== "undefined" && this.props.id === 0) {
           this.props.updateId(this.props.availableRoutines[0].attributes.id);
@@ -119,19 +143,42 @@ class RoutineSelect extends React.Component {
           this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
           this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
         }
+        */
+
+        console.log(this.props.availableRoutines);
+
+        // split into assigned / system generated routines
+        let upvotedRoutines = [];
+        let routines = [];
+
+        for (let i = 0; i < this.props.availableRoutines.length; i++) {
+          if (this.props.availableRoutines[i].attributes.upvoted) {
+            upvotedRoutines.push(this.props.availableRoutines[i]);
+          } else {
+            routines.push(this.props.availableRoutines[i]);
+          }
+        }
+
+        // defaultValue={this.props.id}
+
+      console.log(this.props.id);
 
         return (
             <React.Fragment>
                  <FormControl style={{minWidth: 150 }}>
                   <Select
                   classes={{select: theme === true ? classes.select : undefined}}
-                  defaultValue={this.props.id}
                   value={this.props.id}
                   onChange={this.handleChange}
+                  displayEmpty
                   input={<BootstrapInput name="routine" id="routine-customized-select" />}
                   >
-                    { this.props.availableRoutines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
-
+                    <MenuItem value="0" disabled>
+                      Select a routine...
+                    </MenuItem>
+                    { routines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
+                    { ((upvotedRoutines.length > 0) && <ListSubheader>System Generated</ListSubheader> ) }
+                    { upvotedRoutines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
                   </Select>
                   </FormControl>
             </React.Fragment>
