@@ -82,6 +82,39 @@ const availableCharacters = [
   { id: "ZH", name: "ʒ"}
 ];
 
+const defaultRoutines = [
+  {
+    "id": "rand_words",
+    "name": "25 Random Words",
+    "subroutine": [{
+      "index": Date.now(),
+      "rangeVal": 5,
+      "repetitions": 25,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }]
+  },
+  {
+    "id": "rand_sentences",
+    "name": "25 Random Sentences",
+    "subroutine": [{
+      "index": Date.now(),
+      "rangeVal": 5,
+      "repetitions": 25,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }]
+  }
+];
+
 async function generateSuggestedRoutine(userHistory) {
 
   if (userHistory === null) {
@@ -267,6 +300,13 @@ exports.settings = async (req, res) => {
     Routine.find({
       '_id': {$in: parsedObj.routines}
     }, function (err, data) {
+
+      // if no routines assigned, load with defaults
+      if (data.length === 0) {
+        for (let i = 0; i < defaultRoutines.length; i++) {
+          data.push(defaultRoutines[i]);
+        }
+      }
 
       for (let i = 0; i < votedRoutines.length; i++) {
         data.push(votedRoutines[i]);
