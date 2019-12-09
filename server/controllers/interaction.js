@@ -171,8 +171,18 @@ exports.create = async (req, res, next) => {
       postId,
       word,
       ease,
+      position,
       consonant,
       vowel
+    }).catch(function(err) {
+
+      if (err.code === 11000) {
+        let response = {"error" : true, "message" : "Duplicate Word"};
+        return res.status(422).json(response);
+      } else {
+        return res.status(422).json(err.message);
+      }
+
     });
 
     res.status(201).json(interaction);
