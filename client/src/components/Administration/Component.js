@@ -172,7 +172,7 @@ class Administration extends React.Component {
 
     const { width } = this.props;
 
-    console.log(width);
+    console.log(selectedUserId);
 
     let userSelectContainerWidth = 12;
     let userAdministrationContainerWidth = 12;
@@ -234,18 +234,20 @@ class Administration extends React.Component {
 
     if (usernameValidation.indexOf(errorString) > -1) {
       usernameError = errorString;
+      usernameError = usernameError.replace("Error: u", "U");
     }
 
     if (firstNameValidation.indexOf(errorString) > -1) {
-      firstNameError = errorString.replace("firstName", "First Name");
+      firstNameError = errorString.replace("Error: firstName", "First Name");
     }
 
     if (lastNameValidation.indexOf(errorString) > -1) {
-      lastNameError = errorString.replace("lastName", "Last Name");
+      lastNameError = errorString.replace("Error: lastName", "Last Name");
     }
 
     if (passwordValidation.indexOf(errorString) > -1) {
       passwordError = errorString;
+      passwordError = passwordError.replace("Error: p", "P");
     }
 
     return (

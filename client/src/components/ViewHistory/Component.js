@@ -48,13 +48,15 @@ class ViewHistory extends React.Component {
   };
 
   componentWillMount() {
-
+    if (this.props.userId && this.props.startDate && this.props.endDate) this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
     if (this.props.userId !== prevProps.userId || this.props.startDate !== prevProps.startDate || this.props.endDate !== prevProps.endDate) {
+
       if (this.props.userId && this.props.startDate && this.props.endDate) this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
+
     }
 
   }
