@@ -166,7 +166,8 @@ export default function InteractionTable(props) {
       if (item.vowel !== null) vowel = availableCharacters.find(o => o.id === item.vowel);
 
       if (consonant.name && vowel.name) {
-        summary = "(" + consonant.name + " and " + vowel.name + ")";
+        if (item.position === "initial") summary = "(" + consonant.name + " and " + vowel.name + ")";
+        if (item.position === "final") summary = "(" + vowel.name + " and " + consonant.name + ")";
       }
 
       let result = "difficult";

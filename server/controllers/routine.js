@@ -41,6 +41,47 @@ function transformRoutineSet(data, type) {
 
 }
 
+const availableCharacters = [
+  { id: "AA", name: "ɑ"},
+  { id: "AE", name: "æ"},
+  { id: "AH", name: "ʌ"},
+  { id: "AO", name: "ɔ"},
+  { id: "AW", name: "aʊ"},
+  { id: "AY", name: "aɪ"},
+  { id: "EH", name: "ɛ"},
+  { id: "ER", name: "ɝ"},
+  { id: "EY", name: "eɪ"},
+  { id: "IH", name: "ɪ"},
+  { id: "IY", name: "i"},
+  { id: "OW", name: "oʊ"},
+  { id: "OY", name: "ɔɪ"},
+  { id: "UH", name: "ʊ"},
+  { id: "UW", name: "u"},
+  { id: "B", name: "b"},
+  { id: "CH", name: "tʃ"},
+  { id: "D", name: "d"},
+  { id: "DH", name: "ð"},
+  { id: "F", name: "f"},
+  { id: "G", name: "g"},
+  { id: "HH", name: "h"},
+  { id: "JH", name: "dʒ"},
+  { id: "K", name: "k"},
+  { id: "L", name: "l"},
+  { id: "M", name: "m"},
+  { id: "N", name: "n"},
+  { id: "P", name: "p"},
+  { id: "R", name: "ɹ"},
+  { id: "S", name: "s"},
+  { id: "SH", name: "ʃ"},
+  { id: "T", name: "t"},
+  { id: "TH", name: "θ"},
+  { id: "V", name: "v"},
+  { id: "W", name: "w"},
+  { id: "Y", name: "j"},
+  { id: "Z", name: "Z"},
+  { id: "ZH", name: "ʒ"}
+];
+
 async function generateSuggestedRoutine(userHistory) {
 
   if (userHistory === null) {
@@ -129,6 +170,9 @@ async function upVotedRoutines(author) {
   const category = "upvoted";
   const posts = await Post.find({ author: new ObjectId(author), category: category }).sort('-created');
 
+  let name;
+  let consonant;
+  let vowel;
   let routines = [];
 
   // parse through posts to create upvoted routines
@@ -140,8 +184,8 @@ async function upVotedRoutines(author) {
     // get similar word length
     if (posts[i].syllables === "1") syllables = ['1','2'];
     if (posts[i].syllables === "2") syllables = ['1','2'];
-    if (posts[i].syllables === "3") syllables = ['2','3'];
-    if (posts[i].syllables === "4") syllables = ['3','4'];
+    if (posts[i].syllables === "3") syllables = ['1','2','3'];
+    if (posts[i].syllables === "4") syllables = ['2','3','4'];
     if (posts[i].syllables === "5") syllables = ['3','4','5'];
 
     let subroutine = [{
@@ -153,20 +197,23 @@ async function upVotedRoutines(author) {
       "vowels": [posts[i].vowel],
       "consonants": [posts[i].consonant],
       "syllables": syllables, // posts[i].syllables
-      "position": posts[i].position
+      "position": posts[i].position,
+      "upvoted": true
     }];
 
-    console.log(subroutine);
+    if (posts[i].consonant !== null) consonant = availableCharacters.find(o => o.id === posts[i].consonant);
+    if (posts[i].vowel !== null) vowel = availableCharacters.find(o => o.id === posts[i].vowel);
+
+    if (posts[i].position === "initial") name = "Words starting with " + consonant.name + " and " + vowel.name + " ('" + posts[i].title + "')";
+    if (posts[i].position === "final") name = "Words ending with " + vowel.name + " and " + consonant.name + " ('" + posts[i].title + "')";
 
     routines.push({
       "id": posts[i]._id,
-      "name": "Words based on '" + posts[i].title + "'",
+      "name": name,
       "subroutine": subroutine
     })
 
   }
-
-  // console.log(routines);
 
   return routines;
 
