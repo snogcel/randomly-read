@@ -43,6 +43,8 @@ Lexeme.prototype.submitViewHistory = function(postId) {
 Lexeme.prototype.submitPost = function() {
 
   let lexeme = this.lexeme;
+  let author = this.author;
+  let position = this.position;
 
   console.log("writing to mongodb: ", lexeme);
 
@@ -61,7 +63,7 @@ Lexeme.prototype.submitPost = function() {
 
       console.log("fetching: ", lexeme);
 
-      return Post.findOne({title:lexeme}).lean().exec();
+      return Post.findOne({title:lexeme, author: author, position: position}).lean().exec();
 
     } else {
       throw err;
