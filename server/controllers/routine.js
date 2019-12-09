@@ -197,8 +197,7 @@ async function upVotedRoutines(author) {
       "vowels": [posts[i].vowel],
       "consonants": [posts[i].consonant],
       "syllables": syllables, // posts[i].syllables
-      "position": posts[i].position,
-      "upvoted": true
+      "position": posts[i].position
     }];
 
     if (posts[i].consonant !== null) consonant = availableCharacters.find(o => o.id === posts[i].consonant);
@@ -210,6 +209,7 @@ async function upVotedRoutines(author) {
     routines.push({
       "id": posts[i]._id,
       "name": name,
+      "upvoted": true,
       "subroutine": subroutine
     })
 
