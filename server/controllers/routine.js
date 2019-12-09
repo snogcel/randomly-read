@@ -181,7 +181,7 @@ exports.settings = async (req, res) => {
 
   let votedRoutines = await upVotedRoutines(author);
 
-  const userHistory = await UserHistoryInitial.findOne({"user": new ObjectId(author)});
+  // const userHistory = await UserHistoryInitial.findOne({"user": new ObjectId(author)});
 
   /*
 

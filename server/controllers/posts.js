@@ -230,7 +230,7 @@ exports.unvote = async (req, res) => {
   let consonant = "consonant_"+post.consonant;
 
   // test for initial / medial / final and record to given User History model
-  let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
 
   res.json(post);
 };
