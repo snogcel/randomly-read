@@ -182,6 +182,7 @@ exports.upvote = async (req, res) => {
     "postId": post.id,
     "word": post.title,
     "ease": 0,
+    "position": post.position,
     "consonant": post.consonant,
     "vowel": post.vowel
   });
