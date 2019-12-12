@@ -8,8 +8,10 @@ const resolvers = {
         words(_, args, req) {
             let filter = {
               syllables: [1,2,3,4,5],
-              type: ["noun", "verb", "adj", "adv"]
             };
+
+            // type: ["noun", "verb", "adj", "adv"]
+
             let limit = 1; // default
             let location = "initial"; // default
 
