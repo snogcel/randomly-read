@@ -235,7 +235,7 @@ exports.unvote = async (req, res) => {
   let interaction = await Interaction.findOne({"postId": post._id, "word": post.title, "position": post.position});
   let i_id = new ObjectId(interaction._id);
   await Interaction.deleteOne({"_id": i_id});
-  
+
   // let vowel = "vowel_"+post.vowel;
   // let consonant = "consonant_"+post.consonant;
 

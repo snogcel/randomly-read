@@ -7,11 +7,12 @@ const resolvers = {
     Query: {
         words(_, args, req) {
             let filter = {
-              syllables: [1,2,3,4,5],
+              syllables: [1,2,3,4,5]
             };
 
             // type: ["noun", "verb", "adj", "adv"]
 
+            let typeLimit = 5; // return more obscure results if less than 5 found
             let limit = 1; // default
             let location = "initial"; // default
 
@@ -32,20 +33,27 @@ const resolvers = {
                 if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
-            console.log("location filter: ", args.position);
-
-            console.log("vowel filter: ", filter.vowel);
-            console.log("consonant filter: ", filter.consonant);
-
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
+                  Word[location].findAll({ where: filter }).then(function(data) {
 
-                      console.log(data);
+                      let wordsWithType = [];
+                      let queryResult = [];
 
-                      let queryResult = data;
+                      for (let i = 0; i < data.length; i++) {
+                        if (data[i].dataValues.type === "noun" || data[i].dataValues.type === "verb" || data[i].dataValues.type === "adv" || data[i].dataValues.type === "adj") {
+                          wordsWithType.push(data[i]);
+                        }
+                      }
 
+                      if (wordsWithType.length >= typeLimit) {
+                        queryResult.push(wordsWithType[Math.floor(Math.random()*wordsWithType.length)]);
+                      } else {
+                        queryResult.push(data[Math.floor(Math.random()*data.length)]);
+                      }
+
+                      console.log(wordsWithType.length + " typed results found (" + data.length + " total)");
                       let lexeme = new Lexeme(queryResult, location, id);
 
                       lexeme.submitPost().then(function(doc) {
