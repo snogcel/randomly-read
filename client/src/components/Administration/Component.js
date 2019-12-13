@@ -428,20 +428,6 @@ class Administration extends React.Component {
                         </CardContent>
                       </Card>
 
-
-                      <Card className={classes.userAdminCard}>
-                        <CardContent>
-
-                          <Grid container>
-
-                            <Grid item xs={12}>
-
-                            </Grid>
-
-                          </Grid>
-
-                        </CardContent>
-                      </Card>
                       </>
                     ) : ( <> </> )}
 

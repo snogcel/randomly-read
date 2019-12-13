@@ -1,137 +1,137 @@
 const blacklist = {
   "AA": {
     consonants: [
-      ["AA","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["D","F","P","R","TH","Y"],
-      ["HH","JH","R","T","V","Y"],
-      ["AA","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["AA","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["B","F","G","HH","L","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","P","S","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","L","N","P","SH","TH","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["AA","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "AE": {
     consonants: [
-      ["AE","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["CH","D","JH","N","SH","TH","W","Y"],
-      ["CH","D","HH","JH","N","R","SH","TH","V","W","Y","Z"],
-      ["B","CH","D","F","G","HH","JH","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["CH","HH","JH","L","R","TH","V","W","Y","Z","ZH","DH"],
+      ["F","HH","JH","R","TH","V","W","Y","Z","ZH","DH"],
+      ["AE","B","CH","G","HH","JH","L","M","N","P","R","TH","V","W","Y","Z","ZH","DH"],
+      ["AE","B","CH","D","F","G","HH","JH","L","M","N","P","R","S","TH","V","W","Y","Z","ZH","DH"],
+      ["AE","B","CH","D","F","G","HH","JH","L","M","N","P","R","S","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "AH": {
     consonants: [
-      ["AH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["HH","L","N","S","W"],
-      ["HH","L","N","S"],
-      ["HH","L","N","S"],
-      ["B","F","HH","JH","L","M","N","P","R","S","V","W","Y"],
+      ["HH","JH","R","W","Y","Z","ZH","DH"],
+      ["CH","G","HH","R","SH","Y","Z","ZH","DH"],
+      ["CH","F","G","HH","JH","P","W","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","P","R","TH","V","Z","ZH","DH"],
+      ["AH","B","CH","D","F","G","HH","JH","K","M","P","R","SH","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "AO": {
     consonants: [
-      ["AO","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["AO","CH","HH","JH","SH","T","V","Y"],
-      ["CH","D","HH","JH","K","M","N","P","SH","T","TH","W","Y","Z"],
-      ["AO","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","TH","V","W","Y","Z"],
-      ["AO","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["B","HH","JH","P","SH","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","P","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["AO","B","CH","F","HH","JH","K","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","D","F","G","HH","JH","K","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["AO","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "AW": {
     consonants: [
-      ["AW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["CH","G","JH","K","L","M","R","SH","T","TH","V","W","Y","Z"],
-      ["AW","CH","D","F","G","HH","JH","K","L","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["AW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["AW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["B","CH","F","G","HH","JH","K","M","P","S","SH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","M","P","R","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["AW","B","CH","F","G","HH","JH","K","L","M","N","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["AW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["AW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "AY": {
     consonants: [
-      ["AY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["CH","D","HH","JH","SH","TH","Y"],
-      ["CH","HH","JH","SH","TH","Y","Z"],
-      ["B","CH","D","G","HH","JH","K","L","M","P","R","SH","TH","V","W","Y","Z"],
-      ["AY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-    ],
+      ["B","CH","G","HH","JH","SH","W","Y","ZH"],
+      ["B","CH","F","G","HH","JH","S","SH","TH","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","S","SH","TH","V","W","Y","ZH","DH"],
+      ["AY","B","CH","F","G","HH","JH","K","L","M","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["AY","B","CH","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+    ]
   },
   "EH": {
     consonants: [
-      ["EH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["G","SH","TH","Y"],
-      ["CH","D","G","HH","JH","M","R","SH","TH","V","W","Y"],
-      ["B","CH","D","F","G","HH","JH","K","L","M","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["EH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["B","G","HH","JH","M","Z","ZH","DH"],
+      ["B","F","HH","JH","M","P","SH","TH","V","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","L","P","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","D","F","G","HH","JH","K","L","M","N","P","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["EH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "ER": {
     consonants: [
-      ["ER","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["TH","Y"],
-      ["R","SH","TH","Y"],
-      ["D","HH","JH","K","M","P","R","SH","TH","W","Y","Z"],
-      ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-    ],
+      ["B","F","G","HH","JH","L","P","R","SH","V","W","Y","Z","ZH","DH"],
+      ["CH","F","G","HH","JH","K","L","P","R","SH","TH","V","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","L","M","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","F","HH","JH","K","M","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+    ]
   },
   "EY": {
     consonants: [
-      ["EY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["HH","JH","TH","Y","Z"],
-      ["CH","HH","JH","R","SH","TH","V","Y","Z"],
-      ["B","CH","D","F","G","HH","JH","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["EY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-    ],
+      ["B","CH","HH","R","S","SH","TH","W","Y","DH"],
+      ["B","CH","F","G","HH","R","S","SH","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","L","M","P","R","SH","TH","V","W","Y","ZH","DH"],
+      ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["EY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+    ]
   },
   "IH": {
     consonants: [
-      ["IH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["Y"],
-      ["HH","TH","W","Y"],
-      ["B","G","HH","W","Y"],
-      ["B","CH","F","G","HH","JH","K","P","SH","TH","V","W","Y"],
+      ["HH","JH"],
+      ["B","F","HH","JH","M","P","TH","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","M","P","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","L","M","P","R","SH","W","Y","Z","ZH","DH"],
+      ["IH","B","CH","D","F","G","HH","JH","L","M","P","R","S","SH","TH","W","Y","Z","ZH","DH"],
     ]
   },
   "IY": {
     consonants: [
-      ["IY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["HH","Y"],
-      ["HH","JH","SH","W","Y","Z"],
-      ["B","D","F","G","HH","JH","K","P","SH","V","W","Y","Z"],
-      ["B","CH","D","F","G","HH","JH","K","L","M","P","S","SH","T","TH","V","W","Y","Z"],
+      ["B","G","HH","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","R","SH","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","L","M","P","R","SH","W","Y","ZH","DH"],
+      ["B","CH","D","F","G","HH","JH","K","L","M","P","SH","T","TH","V","W","Y","ZH","DH"],
+      ["B","CH","D","F","G","HH","JH","K","L","M","P","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "OW": {
     consonants: [
-      ["OW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["JH","SH","W","Y"],
-      ["CH","HH","JH","L","R","SH","TH","V","W","Y"],
-      ["B","CH","F","G","HH","JH","K","L","M","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["OW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["B","CH","F","G","HH","JH","P","R","SH","V","W","Y","ZH","DH"],
+      ["B","CH","F","G","HH","JH","M","P","R","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","L","P","R","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["OW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   },
   "OY": {
     consonants: [
-      ["OY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["CH","F","HH","L","M","SH","T","TH","W","Y","Z"],
-      ["B","CH","D","F","G","HH","JH","K","M","R","S","SH","T","TH","V","W","Y","Z"],
-      ["OY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["OY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-    ],
+      ["B","CH","F","G","HH","JH","K","L","M","N","P","R","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["OY","B","CH","F","G","HH","JH","K","L","M","N","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["OY","B","CH","F","G","HH","JH","K","L","M","N","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["OY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["OY","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+    ]
   },
   "UH": {
     consonants: [
-      ["UH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["UH","CH","D","F","G","HH","JH","L","M","R","S","TH","V","W","Y","Z"],
-      ["UH","B","CH","D","F","G","HH","JH","L","M","N","P","R","S","SH","T","TH","V","Y","Z"],
-      ["UH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["UH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-    ],
+      ["UH","B","F","G","HH","JH","K","M","N","P","S","TH","V","W","Y","Z","ZH","DH"],
+      ["UH","B","CH","F","G","HH","JH","L","M","N","P","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["UH","B","CH","F","G","HH","JH","K","L","M","N","P","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["UH","B","CH","D","F","G","HH","JH","K","L","M","N","P","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["UH","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+    ]
   },
   "UW": {
     consonants: [
-      ["UW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
-      ["UW","G","HH","SH","TH","V","W","Z"],
-      ["UW","CH","F","G","HH","JH","R","SH","TH","V","W","Z"],
-      ["UW","B","CH","D","F","G","HH","JH","K","L","M","P","R","S","SH","TH","V","W","Y","Z"],
-      ["UW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"],
+      ["B","CH","G","HH","K","R","SH","TH","V","W","Y","Z","ZH"],
+      ["B","CH","G","HH","JH","K","P","R","SH","V","W","Y","Z","ZH","DH"],
+      ["B","CH","G","HH","JH","K","M","P","R","S","SH","TH","V","W","Y","Z","ZH","DH"],
+      ["UW","B","CH","F","G","HH","JH","K","L","M","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
+      ["UW","B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH","DH"],
     ]
   }
 };

@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 `;
 
 const Post = ({ id, author, action, votes, score, comments, full, ...content }) => (
-  <Wrapper>
+  <React.Fragment>
     <PostVoteContainer id={id} action={action} author={author} votes={votes} score={score} />
     <PostContent
       showFullPost={full}
@@ -18,7 +18,7 @@ const Post = ({ id, author, action, votes, score, comments, full, ...content }) 
       commentCount={comments ? comments.length : 0}
       {...content}
     />
-  </Wrapper>
+  </React.Fragment>
 );
 
 export default Post;

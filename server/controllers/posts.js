@@ -1,4 +1,5 @@
 const { body, validationResult } = require('express-validator/check');
+const ObjectId = require('mongodb').ObjectId;
 const Post = require('../models/post');
 const User = require('../models/user');
 const Interaction = require('../models/interaction');
@@ -204,6 +205,10 @@ exports.downvote = async (req, res) => {
     "syllables": post.syllables
   });
 
+  let interaction = await Interaction.findOne({"postId": post._id, "word": post.title, "position": post.position});
+  let i_id = new ObjectId(interaction._id);
+  await Interaction.deleteOne({"_id": i_id});
+
   // let vowel = "vowel_"+post.vowel;
   // let consonant = "consonant_"+post.consonant;
 
@@ -227,8 +232,12 @@ exports.unvote = async (req, res) => {
     "syllables": post.syllables
   });
 
-  let vowel = "vowel_"+post.vowel;
-  let consonant = "consonant_"+post.consonant;
+  let interaction = await Interaction.findOne({"postId": post._id, "word": post.title, "position": post.position});
+  let i_id = new ObjectId(interaction._id);
+  await Interaction.deleteOne({"_id": i_id});
+
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
 
   // test for initial / medial / final and record to given User History model
   // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});

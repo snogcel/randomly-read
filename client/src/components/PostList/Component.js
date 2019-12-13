@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import PostTable from './PostTable';
 import PostListItem from './Item';
 import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
 import Empty from '../shared/Empty';
@@ -45,10 +46,16 @@ class PostList extends React.Component {
       <PostListItem key={index} {...post} />
     ));
 
+  displayWords() {
+
+    return <PostTable posts={this.props.posts} />;
+
+  }
+
   render() {
     if (this.props.isFetching) return <LoadingIndicatorBox />;
     if (!this.props.posts || this.props.posts.length === 0) return <Empty />;
-    return <List>{this.mapPosts()}</List>;
+    return this.displayWords();
   }
 }
 

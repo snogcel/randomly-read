@@ -1,13 +1,14 @@
 import React from 'react';
+import TableCell from '@material-ui/core/TableCell';
 import styled from 'styled-components/macro';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 30px;
+  align-items: center;  
   padding: 4px;
   font-size: 12px;
   line-height: 25px;
@@ -15,6 +16,15 @@ const Wrapper = styled.div`
   text-align: center;
   color: ${props => props.theme.normalText};
 `;
+
+const styles = makeStyles(theme => ({
+  votingCell: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '30px',
+  },
+}));
 
 class PostVote extends React.Component {
   constructor(props) {
@@ -72,19 +82,20 @@ class PostVote extends React.Component {
   render() {
 
     return (
-      <Wrapper>
-        <PostVoteUpvote
-          canVote={!!this.props.token}
-          didVote={this.state.didUpvote}
-          onClick={this.upvote}
-        />
-
-        <PostVoteDownvote
-          canVote={!!this.props.token}
-          didVote={this.state.didDownvote}
-          onClick={this.downvote}
-        />
-      </Wrapper>
+      <TableCell align="center">
+        <Wrapper>
+          <PostVoteUpvote
+            canVote={!!this.props.token}
+            didVote={this.state.didUpvote}
+            onClick={this.upvote}
+          />
+          <PostVoteDownvote
+            canVote={!!this.props.token}
+            didVote={this.state.didDownvote}
+            onClick={this.downvote}
+          />
+        </Wrapper>
+      </TableCell>
     );
   }
 }
