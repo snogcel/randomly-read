@@ -11,7 +11,7 @@ import {RESET_ROUTINE_SELECT} from '../actions/routineSelect';
 let availableRoutines;
 const initialState = {
   availableRoutines: [],
-  routine: [],
+  routine: {},
   id: 0,
   name: '',
   isFetchingRoutines: false

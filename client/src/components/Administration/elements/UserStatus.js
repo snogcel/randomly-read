@@ -33,7 +33,7 @@ export default function UserStatus(props) {
           />
         }
         label="Active"
-        labelPlacement="top"
+        labelPlacement="left"
         shrink
       />
     </FormGroup>

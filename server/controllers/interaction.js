@@ -251,7 +251,7 @@ exports.delete = async (req, res) => {
   // if post exists, remove upvote / downvote
   if (post) {
     if (interaction.ease <= 50) {
-      post.vote(post.author, 0); // undo vote
+      post.vote(post.author, -1); // downvote
 
       // record vote
       VoteHistory.create({
@@ -273,7 +273,7 @@ exports.delete = async (req, res) => {
     }
 
     if (interaction.ease > 50) {
-      post.vote(post.author, 0); // undo vote
+      post.vote(post.author, -1); // downvote
 
       // record vote
       VoteHistory.create({

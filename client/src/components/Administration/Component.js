@@ -387,7 +387,7 @@ class Administration extends React.Component {
                             <EditLastName action={this.props.updateLastName} lastname={selectedLastNameObj} error={lastNameError} />
                           </Grid>
 
-                          <Grid item xs={12} sm={4} lg={2}>
+                          <Grid item xs={12} sm={12} lg={2} className={classes.isActiveSelector}>
                             <UserStatus action={this.props.updateActive} active={selectedActiveObj} />
                           </Grid>
 
@@ -411,7 +411,7 @@ class Administration extends React.Component {
 
                     {(selectedUserId) ? (
                       <>
-                      <Card className={classes.userAdminCard}>
+                      <Card elevation={0} className={classes.userAdminCard}>
 
                         <CardContent>
 

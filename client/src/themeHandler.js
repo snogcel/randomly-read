@@ -207,10 +207,12 @@ const styles = theme => ({
     marginBottom: theme.spacing(2)
   },
   RoutineSelector: {
-    paddingLeft: theme.spacing.unit * 2
+    display: "inline-flex",
+    paddingLeft: theme.spacing.unit * 2,
+    paddingRight: theme.spacing.unit * 2
   },
   TimerControls: {
-
+    display: "inline-flex"
   },
   exerciseHistoryMobile: {
     display:'flex',
@@ -222,6 +224,10 @@ const styles = theme => ({
     justifyItems: "center",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
+  },
+  isActiveSelector: {
+    alignItems: "center",
+    marginTop: theme.spacing(2),
   }
 });
 

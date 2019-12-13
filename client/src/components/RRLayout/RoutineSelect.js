@@ -135,17 +135,13 @@ class RoutineSelect extends React.Component {
         const { classes } = this.props;
         const { theme } = this.props;
 
-        /*
-        // set default select option
-        if (typeof this.props.availableRoutines[0] !== "undefined" && this.props.id === 0) {
-          this.props.updateId(this.props.availableRoutines[0].attributes.id);
-          this.props.updateName(this.props.availableRoutines[0].attributes.name);
-          this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
-          this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
+        // reset routine if one was previously selected
+        if (this.props.id === 0 && typeof this.props.routine.subroutine !== "undefined") {
+          this.props.updateId(this.props.routine.id);
+          this.props.updateName(this.props.routine.name);
+          this.props.updateActiveRoutine(this.props.routine);
+          this.props.action(this.props.routine); // pass mode update back to QueryManager
         }
-        */
-
-        console.log(this.props.availableRoutines);
 
         // split into assigned / system generated routines
         let upvotedRoutines = [];

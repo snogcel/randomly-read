@@ -17,7 +17,7 @@ export default function ChangePasswordButton(props) {
 
   return (
     <div>
-      <Button onClick={() => { props.action(); }} className={classes.button} >Edit Password</Button>
+      <Button onClick={() => { props.action(); }} className={classes.button} >Password</Button>
     </div>
   );
 }

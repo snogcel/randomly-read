@@ -33,7 +33,7 @@ export default function StartDatePicker(props) {
           margin="normal"
           id="start-date-picker-dialog"
           label="Start Date"
-          format="MM/dd/yyyy"
+          format="MM/dd/yy"
           value={selectedDate}
           onChange={handleDateChange}
           error={props.error.length === 0 ? false : true }

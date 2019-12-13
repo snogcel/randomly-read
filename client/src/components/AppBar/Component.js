@@ -32,7 +32,10 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   title: {
-    flexGrow: 1,
+    flexGrow: 1
+  },
+  headerLink: {
+    cursor: "pointer"
   },
   list: {
     width: 250,
@@ -75,6 +78,11 @@ export default function MenuAppBar(props) {
     setAnchorEl(null);
   };
 
+  const handleProfile = () => {
+    setAnchorEl(null);
+    props.history.push('/Profile');
+  };
+
   const handleLogout = () => {
     setAnchorEl(null);
     props.logout();
@@ -103,11 +111,6 @@ export default function MenuAppBar(props) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        <ListItem onClick={handleRandomlyRead} button key={"Randomly Read"}>
-          <ListItemIcon><InboxIcon /></ListItemIcon>
-          <ListItemText primary={"Randomly Read"} />
-        </ListItem>
-
         <ListItem onClick={handleRoutineBuilder} button key={"Routine Builder"}>
           <ListItemIcon><InboxIcon /></ListItemIcon>
           <ListItemText primary={"Routine Builder"} />
@@ -143,8 +146,8 @@ export default function MenuAppBar(props) {
             {sideList('left')}
           </SwipeableDrawer>
 
-          <Typography variant="h6" className={classes.title}>
-            Randomly Read
+          <Typography onClick={handleRandomlyRead} variant="h6" className={classes.title}>
+            <span className={classes.headerLink}>Randomly Read</span>
           </Typography>
 
           {user ? (
@@ -173,7 +176,7 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
             </div>
