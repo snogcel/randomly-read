@@ -39,7 +39,7 @@ class UserProfile extends React.Component {
 
     let selectedUserId;
     let selectedUsername;
-    
+
     if (user) {
       selectedUserId = user.id;
       selectedUsername = user.username;
