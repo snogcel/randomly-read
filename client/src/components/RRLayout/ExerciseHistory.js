@@ -171,13 +171,13 @@ class ExerciseHistory extends React.Component {
           if ((width === "xs" || width === "sm" || width === "md") && (currentExerciseNumber === stepNumber)) {
             return(
               <StyledListItem selected={true} className={classes.exerciseHistoryMobile}>
-                <Typography variant="h6" color="secondary"><ListItemText primary={listItemText} /></Typography>
+                <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText + " " + subHeaderText)} /></Typography>
               </StyledListItem>
             );
           } else if (width === "lg" || width === "xl") {
             return(
               <StyledListItem selected={currentExerciseNumber === stepNumber} >
-                <ListItemText primary={listItemText} secondary={(currentExerciseNumber === stepNumber) ? (subHeaderText) : ( null ) } />
+                <ListItemText primary={listItemText} secondary={subHeaderText} />
               </StyledListItem>
             );
           } else {

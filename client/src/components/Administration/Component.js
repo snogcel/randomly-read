@@ -411,7 +411,7 @@ class Administration extends React.Component {
 
                     {(selectedUserId) ? (
                       <>
-                      <Card className={classes.userAdminCard}>
+                      <Card elevation={0} className={classes.userAdminCard}>
 
                         <CardContent>
 

@@ -224,11 +224,32 @@ async function upVotedRoutines(author) {
     let subroutine = [{
       "index": Date.now(),
       "rangeVal": 5,
-      "repetitions": 25,
+      "repetitions": 10,
       "mode": "Word",
       "isIntermission": false,
       "vowels": [posts[i].vowel],
       "consonants": [posts[i].consonant],
+      "syllables": syllables, // posts[i].syllables
+      "position": posts[i].position
+    },{
+      "index": Date.now(),
+      "rangeVal": 5,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": [posts[i].consonant],
+      "syllables": syllables, // posts[i].syllables
+      "position": posts[i].position
+    },
+    {
+      "index": Date.now(),
+      "rangeVal": 5,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [posts[i].vowel],
+      "consonants": [],
       "syllables": syllables, // posts[i].syllables
       "position": posts[i].position
     }];

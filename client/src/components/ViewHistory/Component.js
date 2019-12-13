@@ -35,9 +35,9 @@ const CustomTooltip = props => {
 };
 
 const options = [
+  { "id": "all", name: "Viewed Words" },
   { "id": "upvoted", name: "All Upvoted Words" },
-  { "id": "downvoted", name: "All Downvoted Words" },
-  { "id": "all", name: "Viewed Words" }
+  { "id": "downvoted", name: "All Downvoted Words" }
 ];
 
 class ViewHistory extends React.Component {

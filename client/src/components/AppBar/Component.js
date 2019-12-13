@@ -111,11 +111,6 @@ export default function MenuAppBar(props) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        <ListItem onClick={handleRandomlyRead} button key={"Randomly Read"}>
-          <ListItemIcon><InboxIcon /></ListItemIcon>
-          <ListItemText primary={"Randomly Read"} />
-        </ListItem>
-
         <ListItem onClick={handleRoutineBuilder} button key={"Routine Builder"}>
           <ListItemIcon><InboxIcon /></ListItemIcon>
           <ListItemText primary={"Routine Builder"} />

@@ -496,6 +496,8 @@ class Timer extends React.Component {
 
      */
 
+    console.log("Current Exercise: ", this.props.currentExercise);
+
     let start = (this.state.time === 0) ?
       <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;
     let stop = (this.state.time === 0 || !this.state.isOn) ?
@@ -514,14 +516,18 @@ class Timer extends React.Component {
           </div>
         </Grid>
 
-        <Grid item>
-          <div className={classes.TimerControls}>
-            {start}
-            {resume}
-            {stop}
-            {reset}
-          </div>
-        </Grid>
+        {(this.props.currentExercise.length > 0) ? (
+          <>
+            <Grid item>
+              <div className={classes.TimerControls}>
+                {start}
+                {resume}
+                {stop}
+                {reset}
+              </div>
+            </Grid>
+          </>
+        ) : ( <> </> )}
 
       </Grid>
     )
