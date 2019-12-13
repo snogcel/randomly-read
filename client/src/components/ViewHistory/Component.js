@@ -16,6 +16,10 @@ const CustomTooltip = props => {
     return null
   }
 
+  if (!props.payload[0]) {
+    return null
+  }
+
   const newPayload = [
     {
       value: props.payload[0].payload.fullDate,
