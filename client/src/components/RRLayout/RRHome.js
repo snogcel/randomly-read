@@ -67,7 +67,7 @@ const RRHome = props => {
 
   return (
 
-      <div className={classes.root}>
+      <Grid className={classes.root}>
 
         {user ? (
           <>
@@ -101,7 +101,7 @@ const RRHome = props => {
           </>
         ) : ( props.history.push("/login") )}
 
-      </div>
+      </Grid>
 
   )};
 

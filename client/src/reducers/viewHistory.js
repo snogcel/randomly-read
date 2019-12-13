@@ -11,7 +11,7 @@ const initialState = {
   startDate: null,
   endDate: null,
   dataSet: [],
-  filter: "upvoted",
+  filter: "all",
   isFetching: false
 };
 
