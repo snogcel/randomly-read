@@ -514,20 +514,19 @@ class Timer extends React.Component {
           <div className={classes.RoutineSelector}>
             <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
           </div>
-        </Grid>
 
-        {(this.props.currentExercise.length > 0) ? (
-          <>
-            <Grid item>
+          {(this.props.currentExercise.length > 0) ? (
+            <>
               <div className={classes.TimerControls}>
                 {start}
                 {resume}
                 {stop}
                 {reset}
               </div>
-            </Grid>
-          </>
-        ) : ( <> </> )}
+            </>
+          ) : ( <> </> )}
+
+        </Grid>
 
       </Grid>
     )
