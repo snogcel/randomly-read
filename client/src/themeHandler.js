@@ -222,6 +222,10 @@ const styles = theme => ({
     justifyItems: "center",
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
+  },
+  isActiveSelector: {
+    alignItems: "center",
+    marginTop: theme.spacing(2),
   }
 });
 

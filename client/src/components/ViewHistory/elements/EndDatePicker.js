@@ -30,7 +30,7 @@ export default function EndDatePicker(props) {
           margin="normal"
           id="end-date-picker-dialog"
           label="End Date"
-          format="MM/dd/yyyy"
+          format="MM/dd/yy"
           value={selectedDate}
           onChange={handleDateChange}
           error={props.error.length === 0 ? false : true }

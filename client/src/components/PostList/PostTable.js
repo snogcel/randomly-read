@@ -205,14 +205,14 @@ export default function PostTable(props) {
   return (
     <Paper className={classes.root}>
       <div className={classes.tableWrapper}>
-        <Table className={classes.table}>
+        <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
               <TableCell align="right"></TableCell>
               <TableCell>Word</TableCell>
-              <Hidden mdDown><TableCell align="center">Position</TableCell></Hidden>
-              <Hidden mdDown><TableCell align="center">Consonant</TableCell></Hidden>
-              <Hidden mdDown><TableCell align="center">Vowel</TableCell></Hidden>
+              <Hidden xsDown><TableCell align="center">Position</TableCell></Hidden>
+              <Hidden xsDown><TableCell align="center">Consonant</TableCell></Hidden>
+              <Hidden xsDown><TableCell align="center">Vowel</TableCell></Hidden>
             </TableRow>
           </TableHead>
           <TableBody>

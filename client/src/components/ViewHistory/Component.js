@@ -7,6 +7,9 @@ import StartDatePicker from './elements/StartDatePicker';
 import EndDatePicker from './elements/EndDatePicker';
 import WordViewFilter from './elements/WordViewFilter';
 
+import PropTypes from 'prop-types';
+import withWidth from '@material-ui/core/withWidth';
+
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
 import PostListContainer from '../PostList/Container';
@@ -16,7 +19,7 @@ const CustomTooltip = props => {
     return null
   }
 
-  if (!props.payload[0]) {
+  if (!props.payload) {
     return null
   }
 
@@ -32,9 +35,9 @@ const CustomTooltip = props => {
 };
 
 const options = [
-  { "id": "all", name: "Words by Date Range" },
   { "id": "upvoted", name: "All Upvoted Words" },
-  { "id": "downvoted", name: "All Downvoted Words" }
+  { "id": "downvoted", name: "All Downvoted Words" },
+  { "id": "all", name: "Viewed Words" }
 ];
 
 class ViewHistory extends React.Component {
@@ -96,65 +99,80 @@ class ViewHistory extends React.Component {
 
   render() {
 
-    /*
-
-          <Grid item style={{ flexGrow: 1, align: "left" }}>
-            <Typography variant="h5" color="textSecondary">
-              All Viewed Words
-            </Typography>
-          </Grid>
-
-     */
-
     let selectedFilterObj = this.parseSelectedFilter(this.props.filter);
     let dataSet = this.props.dataSet || [];
+
+    const { width } = this.props;
+
+    console.log(width);
+
+    let graphHeight = 300;
+    let graphMargins = {
+      top: 20,
+      right: 20,
+      left: 0,
+      bottom: 20
+    };
+
+    if (width === "xs") {
+      graphHeight = 150;
+      graphMargins.top = 40;
+      graphMargins.left = 0;
+      graphMargins.right = 0;
+      graphMargins.bottom = 0;
+    }
 
     let error = ""; // TODO - validate that startDate < endDate?
 
     return (
       <div>
 
-        <Grid container alignItems="flex-start" justify="flex-end" direction="row" spacing={2}>
+        <Grid container spacing={2}>
 
-          <Grid item style={{ flexGrow: 1, align: "left" }}>
-            <Typography variant="h5" color="textSecondary">
-              Word View Statistics
-            </Typography>
+          <Grid item xs={12} md={6} justify="center">
+
+            <Grid container spacing={2} justify="center">
+
+              <Grid item xs={6} sm={5}>
+                <StartDatePicker action={this.startDateHandler} startDate={this.props.startDate} error={error} />
+              </Grid>
+
+              <Grid item xs={6} sm={5}>
+                <EndDatePicker action={this.endDateHandler} endDate={this.props.endDate} error={error} />
+              </Grid>
+
+            </Grid>
+
+            <ResponsiveContainer width='100%' height={graphHeight}>
+              <BarChart data={dataSet} margin={{top: graphMargins.top, right: graphMargins.right, left: graphMargins.left, bottom: graphMargins.bottom}}>
+                <CartesianGrid strokeDasharray="1 1"/>
+                <XAxis dataKey="name"/>
+                <YAxis/>
+                <Tooltip content={<CustomTooltip />}/>
+                <Bar dataKey="count" fill="#2f8eed" />
+              </BarChart>
+            </ResponsiveContainer>
+
           </Grid>
 
-          <Grid item>
-            <StartDatePicker action={this.startDateHandler} startDate={this.props.startDate} error={error} />
-          </Grid>
+          <Grid item xs={12} md={6}>
 
-          <Grid item>
-            <EndDatePicker action={this.endDateHandler} endDate={this.props.endDate} error={error} />
+            <Grid container alignItems="flex-start" justify="flex-end" direction="row" spacing={2}>
+
+              <Grid item>
+
+                <WordViewFilter options={options} filter={selectedFilterObj} action={this.filterHandler} />
+
+              </Grid>
+
+            </Grid>
+
+            <PostListContainer username={this.props.username} startDate={this.props.startDate} endDate={this.props.endDate} category={this.props.filter} />
+
           </Grid>
 
         </Grid>
 
-        <ResponsiveContainer width='100%' height={300}>
-          <BarChart data={dataSet} margin={{top: 20, right: 20, left: 20, bottom: 20}}>
-            <CartesianGrid strokeDasharray="1 1"/>
-            <XAxis dataKey="name"/>
-            <YAxis/>
-            <Tooltip content={<CustomTooltip />}/>
-            <Bar dataKey="count" fill="#2f8eed" />
-          </BarChart>
-        </ResponsiveContainer>
-
-        <Grid container alignItems="flex-start" justify="flex-end" direction="row" spacing={2}>
-
-
-
-          <Grid item>
-
-            <WordViewFilter options={options} filter={selectedFilterObj} action={this.filterHandler} />
-
-          </Grid>
-
-        </Grid>
-
-        <PostListContainer username={this.props.username} startDate={this.props.startDate} endDate={this.props.endDate} category={this.props.filter} />
 
       </div>
     );
@@ -162,6 +180,10 @@ class ViewHistory extends React.Component {
   }
 }
 
+ViewHistory.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const ViewHistoryWrapped = withStyles(styles)(ViewHistory);
 
-export default ViewHistoryWrapped;
+export default withWidth()(ViewHistoryWrapped);

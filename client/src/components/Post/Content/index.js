@@ -99,7 +99,7 @@ const PostContent = ({
         {title}
       </Typography>
     </TableCell>
-    <Hidden mdDown>
+    <Hidden xsDown>
       <TableCell align="center">
         <Typography
           color="textSecondary">
@@ -107,7 +107,7 @@ const PostContent = ({
         </Typography>
       </TableCell>
     </Hidden>
-    <Hidden mdDown>
+    <Hidden xsDown>
       <TableCell align="center">
         <Typography
           color="textSecondary">
@@ -115,7 +115,7 @@ const PostContent = ({
         </Typography>
       </TableCell>
     </Hidden>
-    <Hidden mdDown>
+    <Hidden xsDown>
       <TableCell align="center">
         <Typography
           color="textSecondary">
