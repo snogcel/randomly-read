@@ -128,7 +128,7 @@ export default function InteractionForm(props) {
 
                 <TextField
                   id="outlined-word-name"
-                  label="Focus Words"
+                  label="Word Lookup"
                   className={classes.textField}
                   style={{ margin: 8 }}
                   margin="normal"

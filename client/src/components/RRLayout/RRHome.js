@@ -75,13 +75,15 @@ const RRHome = props => {
 
               <Grid item xs={exerciseHistoryContainerWidth}>
 
+                <TimerContainer />
+
                 <ExerciseHistoryContainer />
 
               </Grid>
 
               <Grid item xs={timerContainerWidth}>
 
-                <TimerContainer />
+
 
                 <WordCardContainer />
 

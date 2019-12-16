@@ -9,8 +9,12 @@ import Grid from '@material-ui/core/Grid';
 import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
-
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
+
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 
@@ -29,6 +33,7 @@ import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore'
 
 
 import { styles } from '../../themeHandler';
+import InteractionForm from "../Interactions/InteractionsHome";
 
 class Timer extends React.Component {
   constructor(props){
@@ -453,7 +458,7 @@ class Timer extends React.Component {
   render() {
 
     const { classes } = this.props;
-
+    const { width } = this.props;
     const { rangeVal } = this.state;
 
     let currentExercise = null;
@@ -494,9 +499,9 @@ class Timer extends React.Component {
     let reset = (this.state.time === 0 || this.state.isOn) ?
       null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
 
+    console.log("Current Exercise: ", this.props.currentExercise);
      */
 
-    console.log("Current Exercise: ", this.props.currentExercise);
 
     let start = (this.state.time === 0) ?
       <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;
@@ -505,32 +510,98 @@ class Timer extends React.Component {
     let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
       null : <IconButton onClick={this.resumeTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton>;
     let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <IconButton onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"}><ReplayIcon fontSize="large" /></IconButton>;
+      null : <IconButton disableFocusRipple onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"} style={{ backgroundColor: 'transparent' }} ><ReplayIcon /></IconButton>;
 
-    return (
-      <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
+    let TimerFragment = <React.Fragment>
+      <div className={classes.RoutineSelector}>
+        <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
+      </div>
 
-        <Grid item>
-          <div className={classes.RoutineSelector}>
-            <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
+      {(this.props.currentExercise.length > 0) ? (
+        <>
+          <div className={classes.TimerControls}>
+            {start}
+            {resume}
+            {stop}
+            {reset}
           </div>
+        </>
+      ) : ( <> </> )}
+    </React.Fragment>;
 
-          {(this.props.currentExercise.length > 0) ? (
+
+    if (width === "lg" || width === "xl") {
+
+      return (
+        <Card className={classes.userAdminCard}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2">
+              Practice Routines
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Use the dropdown menu to select a practice routine or to focus on a specific word.
+            </Typography>
+            <br />
+            {TimerFragment}
+          </CardContent>
+        </Card>
+      )
+
+    } else {
+
+      return (
+        <React.Fragment>
+
+          {(this.props.currentExerciseNumber === null) ? (
             <>
-              <div className={classes.TimerControls}>
-                {start}
-                {resume}
-                {stop}
-                {reset}
-              </div>
+
+              <Card className={classes.userAdminCard}>
+                <CardContent>
+
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Practice Routines
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary" component="p">
+                    Use the dropdown menu to select a practice routine or to focus on a specific word.
+                  </Typography>
+
+                </CardContent>
+              </Card>
+
             </>
-          ) : ( <> </> )}
+          ) : (
+            <>
+            </>
+          )}
 
-        </Grid>
+          <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
+            <Grid item>
+              <br />
+              {TimerFragment}
+            </Grid>
+          </Grid>
+        </React.Fragment>
+      )
 
-      </Grid>
-    )
+    }
+
   }
 }
 
-export default withStyles(styles)(Timer);
+/*
+
+<Grid container className={classes.timerControlGrid} spacing={0} justify="center">
+          <Grid item>
+            {TimerFragment}
+          </Grid>
+        </Grid>
+
+ */
+
+Timer.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
+const TimerWrapped = withStyles(styles)(Timer);
+
+export default withWidth()(TimerWrapped);

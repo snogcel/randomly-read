@@ -99,7 +99,7 @@ class InteractionsHome extends React.Component {
             {(this.props.currentExerciseNumber === null) ? (
               <>
 
-                <Card elevation={0} className={classes.userAdminCard}>
+                <Card className={classes.userAdminCard}>
                   <CardContent>
                     <Grid container justify="center">
                       <Grid item xs={11} sm={11} md={10}>
@@ -119,7 +119,7 @@ class InteractionsHome extends React.Component {
               <>
 
                 <Hidden mdDown>
-                  <Card elevation={0} className={classes.userAdminCard}>
+                  <Card className={classes.userAdminCard}>
                     <CardContent>
                       <Grid container justify="center">
                         <Grid item xs={11} sm={11} md={10}>

@@ -3,26 +3,28 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import Checkbox from '@material-ui/core/Checkbox';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
 import { styles } from '../../themeHandler';
 
+
 const StyledListItem = withStyles({
   root: {
-    border: "1px solid #E0E0F5",
-    marginTop: 10,
-    marginBottom: 10,
+    border: "0px solid #E0E0F5",
+    marginTop: 2,
+    marginBottom: 2,
     "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "#82BBF3"
+      backgroundColor: "#ECECEC"
     }
   },
   selected: {}
@@ -102,7 +104,7 @@ class ExerciseHistory extends React.Component {
     const { width } = this.props;
 
     let exerciseHistory = <React.Fragment>
-      <List>
+      <List dense={true}>
 
         {this.props.currentExercise.map(function(step, stepNumber) {
 
@@ -171,12 +173,15 @@ class ExerciseHistory extends React.Component {
           if ((width === "xs" || width === "sm" || width === "md") && (currentExerciseNumber === stepNumber)) {
             return(
               <StyledListItem selected={true} className={classes.exerciseHistoryMobile}>
-                <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText + " " + subHeaderText)} /></Typography>
+                <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText)} /></Typography>
               </StyledListItem>
             );
           } else if (width === "lg" || width === "xl") {
             return(
-              <StyledListItem selected={currentExerciseNumber === stepNumber} >
+              <StyledListItem selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
+                <ListItemIcon>
+                  {(currentExerciseNumber <= stepNumber) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
+                </ListItemIcon>
                 <ListItemText primary={listItemText} secondary={subHeaderText} />
               </StyledListItem>
             );
@@ -193,11 +198,19 @@ class ExerciseHistory extends React.Component {
 
       exerciseHistoryWrapped = <React.Fragment>
 
-        <div className={classes.exerciseStepsCard}>
+        <Card className={classes.userAdminCard} justify="center">
+          <CardContent>
+            <Grid container>
 
-            {exerciseHistory}
+              <div className={classes.exerciseStepsCard}>
 
-        </div>
+                {exerciseHistory}
+
+              </div>
+
+            </Grid>
+          </CardContent>
+        </Card>
 
       </React.Fragment>;
 
