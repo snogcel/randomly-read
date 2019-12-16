@@ -141,6 +141,11 @@ class RoutineSelect extends React.Component {
           this.props.updateName(this.props.routine.name);
           this.props.updateActiveRoutine(this.props.routine);
           this.props.action(this.props.routine); // pass mode update back to QueryManager
+        } else if (this.props.id === 0 && typeof this.props.availableRoutines[0] !== "undefined") {
+          this.props.updateId(this.props.availableRoutines[0].attributes.id);
+          this.props.updateName(this.props.availableRoutines[0].attributes.name);
+          this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
+          this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
         }
 
         // split into assigned / system generated routines
