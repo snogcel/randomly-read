@@ -350,12 +350,15 @@ class Administration extends React.Component {
 
                     <Card className={classes.userAdminCard}>
 
-                      <CardHeader
-                        titleTypographyProps={{color:"textSecondary"}}
-                        title="User Details"
-                      />
-
                       <CardContent>
+
+                        <Typography gutterBottom variant="h5" component="h2">
+                          Selected User Details
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+
+                        </Typography>
+                        <br />
 
                         <Grid container>
 
@@ -406,30 +409,25 @@ class Administration extends React.Component {
 
                         </Grid>
 
-                      </CardContent>
-                    </Card>
+                        {(selectedUserId) ? (
+                          <>
 
-                    {(selectedUserId) ? (
-                      <>
-                      <Card elevation={0} className={classes.userAdminCard}>
-
-                        <CardContent>
-
-                          <Grid container>
+                            <br />
 
                             <Grid item xs={12}>
+
+
+                              <br />
 
                               <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
 
                             </Grid>
 
-                          </Grid>
+                          </>
+                        ) : ( <> </> )}
 
-                        </CardContent>
-                      </Card>
-
-                      </>
-                    ) : ( <> </> )}
+                      </CardContent>
+                    </Card>
 
                   </Grid>
 
