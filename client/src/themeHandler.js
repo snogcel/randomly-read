@@ -235,6 +235,14 @@ const styles = theme => ({
   isActiveSelector: {
     alignItems: "center",
     marginTop: theme.spacing(2),
+  },
+  focusWordCardMobile: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
   }
 });
 

@@ -73,7 +73,7 @@ const App = props => (
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
               <Route path='/FluencyReport' component={FluencyReport} />
-              <Route path='/Interactions' component={Interactions} />
+              <Route path='/FocusWords' component={Interactions} />
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/Administration' component={Administration} />
               <Route path='/Profile' component={UserProfile} />

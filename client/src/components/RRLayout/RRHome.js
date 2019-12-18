@@ -95,7 +95,7 @@ const RRHome = props => {
 
               <Grid item xs={interactionContainerWidth}>
 
-                <Interactions />
+                <Hidden smDown><Interactions /></Hidden>
 
               </Grid>
 
