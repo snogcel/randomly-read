@@ -181,7 +181,7 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleFocusWords}>Focus Words</MenuItem>
+                <MenuItem onClick={handleFocusWords}>Words</MenuItem>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>

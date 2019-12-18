@@ -17,7 +17,7 @@ import Grid from '@material-ui/core/Grid';
 import TableCell from "./InteractionTable";
 import MenuItem from '@material-ui/core/MenuItem';
 import InputBase from '@material-ui/core/InputBase';
-import { withStyles } from "@material-ui/core/styles";
+import { fade, withStyles } from "@material-ui/core/styles";
 import InputLabel from '@material-ui/core/InputLabel';
 
 const BootstrapInput = withStyles(theme => ({
@@ -73,6 +73,7 @@ const useStyles = makeStyles(theme => ({
   },
   submitButton: {
     margin: theme.spacing(1),
+    marginTop: theme.spacing(4)
   },
   interactionSlider: {
     alignItems: "center",
@@ -82,9 +83,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: theme.spacing(4)
   },
   wordEntry: {
-    alignItems: "center",
-    display:"grid",
-    justifyItems: "center",
+    fontSize:"12px"
   },
   formControlLabel: {
     fontSize:"12px"
@@ -183,28 +182,29 @@ export default function InteractionForm(props) {
 
             <Grid container justify="center">
 
-              <Grid item xs={12} className={classes.wordEntry}>
-
-                <TextField
-                  id="outlined-word-name"
-                  className={classes.textField}
-                  style={{ margin: 8 }}
-                  margin="normal"
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                  variant="outlined"
-                  defaultValue={state.word}
-                  value={state.word}
-                  onChange={handleChange('word')}
-                />
+              <Grid item xs={12} sm={6} md={12} className={classes.wordEntry}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel shrink htmlFor="admin-user-input">Word Search</InputLabel>
+                  <BootstrapInput
+                    id="outlined-word-name"
+                    className={classes.textField}
+                    margin="normal"
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                    variant="outlined"
+                    defaultValue={state.word}
+                    value={state.word}
+                    onChange={handleChange('word')}
+                  />
+                </FormControl>
 
               </Grid>
 
-              <Grid item xs={12} justify="center">
+              <Grid item xs={12} sm={6} md={12} justify="center">
 
                 <FormControl className={classes.formControl}>
-
+                  <InputLabel htmlFor="admin-user-input">Position</InputLabel>
                   <Select
                     defaultValue={"initial"}
                     value={state.position}
@@ -215,8 +215,8 @@ export default function InteractionForm(props) {
                       id: 'position-input',
                     }}
                   >
-                    <MenuItem key={"initial"} value={"initial"}>Start of Word</MenuItem>
-                    <MenuItem key={"final"} value={"final"}>Ending of Word</MenuItem>
+                    <MenuItem key={"initial"} value={"initial"}>Beginning</MenuItem>
+                    <MenuItem key={"final"} value={"final"}>Ending</MenuItem>
                   </Select>
                 </FormControl>
 
