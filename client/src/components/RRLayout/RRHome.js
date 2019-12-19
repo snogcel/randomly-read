@@ -75,13 +75,15 @@ const RRHome = props => {
 
               <Grid item xs={exerciseHistoryContainerWidth}>
 
+                <TimerContainer />
+
                 <ExerciseHistoryContainer />
 
               </Grid>
 
               <Grid item xs={timerContainerWidth}>
 
-                <TimerContainer />
+
 
                 <WordCardContainer />
 
@@ -93,7 +95,7 @@ const RRHome = props => {
 
               <Grid item xs={interactionContainerWidth}>
 
-                <Interactions />
+                <Hidden smDown><Interactions /></Hidden>
 
               </Grid>
 

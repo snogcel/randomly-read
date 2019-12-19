@@ -257,8 +257,8 @@ async function upVotedRoutines(author) {
     if (posts[i].consonant !== null) consonant = availableCharacters.find(o => o.id === posts[i].consonant);
     if (posts[i].vowel !== null) vowel = availableCharacters.find(o => o.id === posts[i].vowel);
 
-    if (posts[i].position === "initial") name = "Words starting with " + consonant.name + " and " + vowel.name + " ('" + posts[i].title + "')";
-    if (posts[i].position === "final") name = "Words ending with " + vowel.name + " and " + consonant.name + " ('" + posts[i].title + "')";
+    if (posts[i].position === "initial") name = "Similar to '" + posts[i].title + "' (starting with " + consonant.name + " and " + vowel.name + ")";
+    if (posts[i].position === "final") name = "Similar to '" + posts[i].title + "' (ending with " + consonant.name + " and " + vowel.name + ")";
 
     routines.push({
       "id": posts[i]._id,

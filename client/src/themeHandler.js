@@ -83,8 +83,7 @@ const styles = theme => ({
     backgroundColor:"#FBFBFB",
   },
   exerciseStepsCard: {
-    maxWidth: 300,
-    margin: "auto",
+    width: "100%",
     transition: "0.3s",
   },
   routineSelectCard: {
@@ -163,7 +162,8 @@ const styles = theme => ({
     backgroundColor: '#33a0ff',
   },
   iconButton: {
-    margin: theme.spacing(1)
+    margin: theme.spacing(0),
+    padding: theme.spacing(1)
   },
   button: {
     margin: 4,
@@ -208,8 +208,8 @@ const styles = theme => ({
   },
   RoutineSelector: {
     display: "inline-flex",
-    paddingLeft: theme.spacing.unit * 2,
-    paddingRight: theme.spacing.unit * 2
+    paddingLeft: theme.spacing.unit * 1,
+    paddingRight: theme.spacing.unit * 1
   },
   TimerControls: {
     display: "inline-flex"
@@ -217,6 +217,13 @@ const styles = theme => ({
   exerciseHistoryMobile: {
     display:'flex',
     justifyContent:'center'
+  },
+  exerciseHistoryDesktop: {
+    display:'flex',
+    justifyContent:'left'
+  },
+  exerciseHistoryHeader: {
+    textAlign: "center"
   },
   interactionSlider: {
     alignItems: "center",
@@ -228,6 +235,14 @@ const styles = theme => ({
   isActiveSelector: {
     alignItems: "center",
     marginTop: theme.spacing(2),
+  },
+  focusWordCardMobile: {
+    margin: 0,
+    top: 'auto',
+    right: 20,
+    bottom: 20,
+    left: 'auto',
+    position: 'fixed',
   }
 });
 

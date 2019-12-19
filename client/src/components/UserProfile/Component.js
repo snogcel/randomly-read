@@ -51,12 +51,17 @@ class UserProfile extends React.Component {
 
         {user ? (
           <>
-            <Grid container justify="center">
-              <Grid item xs={10}>
-                <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
-              </Grid>
-            </Grid>
+            <Card className={classes.userAdminCard}>
+              <CardContent>
 
+                <Grid container justify="center">
+                  <Grid item xs={12}>
+                    <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
+                  </Grid>
+                </Grid>
+
+              </CardContent>
+            </Card>
           </>
         ) : ( this.props.history.push("/login") )}
 

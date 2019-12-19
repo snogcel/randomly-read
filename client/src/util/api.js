@@ -15,7 +15,10 @@ const methods = {
     const response = await fetch(`${baseUrl}/${endpoint}`, options);
     const json = await response.json();
 
-    if (!response.ok) throw Error(json.message);
+    if (!response.ok) {
+      if (response.status === 401) throw Error('unauthorized');
+      throw Error(json.message);
+    }
 
     return json;
   },
@@ -40,6 +43,7 @@ const methods = {
         });
       }
 
+      if (response.status === 401) throw Error('unauthorized');
       throw Error(json.message);
     }
 
@@ -66,6 +70,7 @@ const methods = {
         });
       }
 
+      if (response.status === 401) throw Error('unauthorized');
       throw Error(json.message);
     }
 

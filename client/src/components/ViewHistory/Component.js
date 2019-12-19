@@ -131,6 +131,15 @@ class ViewHistory extends React.Component {
 
           <Grid item xs={12} md={6} justify="center">
 
+            <Typography gutterBottom variant="h5" component="h2">
+              User Profile
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              The following information outlines site usage and viewed words.
+            </Typography>
+
+            <br />
+
             <Grid container spacing={2} justify="center">
 
               <Grid item xs={6} sm={5}>

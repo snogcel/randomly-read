@@ -99,8 +99,17 @@ class InteractionsHome extends React.Component {
             {(this.props.currentExerciseNumber === null) ? (
               <>
 
-                <Card elevation={0} className={classes.userAdminCard}>
+                <Card className={classes.userAdminCard}>
                   <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      Focus Words
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                      Enter a word using the following search box, a practice routine will be available until it is removed from this list.
+                    </Typography>
+
+                    <br />
+
                     <Grid container justify="center">
                       <Grid item xs={11} sm={11} md={10}>
                         <InteractionForm action={this.interactionHandler}/>
@@ -119,13 +128,23 @@ class InteractionsHome extends React.Component {
               <>
 
                 <Hidden mdDown>
-                  <Card elevation={0} className={classes.userAdminCard}>
+                  <Card className={classes.userAdminCard}>
                     <CardContent>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Focus Words
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        Enter a word using the following search box, a practice routine will be available until it is removed from this list.
+                      </Typography>
+
+                      <br />
+
                       <Grid container justify="center">
                         <Grid item xs={11} sm={11} md={10}>
                           <InteractionForm action={this.interactionHandler}/>
                         </Grid>
                       </Grid>
+
                       <Grid container justify="center">
                         <Grid item xs={11} sm={11} md={10}>
                           <InteractionTable interactions={items} action={this.removeInteractionHandler}/>

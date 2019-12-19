@@ -83,6 +83,11 @@ export default function MenuAppBar(props) {
     props.history.push('/Profile');
   };
 
+  const handleFocusWords = () => {
+    setAnchorEl(null);
+    props.history.push('/FocusWords');
+  };
+
   const handleLogout = () => {
     setAnchorEl(null);
     props.logout();
@@ -176,6 +181,7 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
+                <MenuItem onClick={handleFocusWords}>Words</MenuItem>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>

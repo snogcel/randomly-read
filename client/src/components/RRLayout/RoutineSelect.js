@@ -22,6 +22,7 @@ const BootstrapInput = withStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
+    maxWidth: 125,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.
@@ -141,6 +142,11 @@ class RoutineSelect extends React.Component {
           this.props.updateName(this.props.routine.name);
           this.props.updateActiveRoutine(this.props.routine);
           this.props.action(this.props.routine); // pass mode update back to QueryManager
+        } else if (this.props.id === 0 && typeof this.props.availableRoutines[0] !== "undefined") {
+          this.props.updateId(this.props.availableRoutines[0].attributes.id);
+          this.props.updateName(this.props.availableRoutines[0].attributes.name);
+          this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
+          this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
         }
 
         // split into assigned / system generated routines
@@ -161,22 +167,22 @@ class RoutineSelect extends React.Component {
 
         return (
             <React.Fragment>
-                 <FormControl style={{minWidth: 150 }}>
-                  <Select
-                  classes={{select: theme === true ? classes.select : undefined}}
-                  value={this.props.id}
-                  onChange={this.handleChange}
-                  displayEmpty
-                  input={<BootstrapInput name="routine" id="routine-customized-select" />}
-                  >
-                    <MenuItem value="0" disabled>
-                      Select a routine...
-                    </MenuItem>
-                    { routines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
-                    { ((upvotedRoutines.length > 0) && <ListSubheader>System Generated</ListSubheader> ) }
-                    { upvotedRoutines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
-                  </Select>
+
+                 <FormControl style={{minWidth: 125 }}>
+                    <Select
+                    classes={{select: theme === true ? classes.select : undefined}}
+                    value={this.props.id}
+                    onChange={this.handleChange}
+                    displayEmpty
+                    input={<BootstrapInput name="routine" id="routine-customized-select" />}
+                    >
+
+                      { routines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
+                      { ((upvotedRoutines.length > 0) && <ListSubheader>System Generated</ListSubheader> ) }
+                      { upvotedRoutines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
+                    </Select>
                   </FormControl>
+
             </React.Fragment>
         );
     }

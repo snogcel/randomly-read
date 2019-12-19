@@ -1016,6 +1016,14 @@ class RoutineBuilder extends React.Component {
                   <Card className={classes.routineBuilderCard}>
                     <CardContent>
 
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Routine Editor
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        Use the form options below to configure a custom routine.
+                      </Typography>
+                      <br />
+
                       <Grid container spacing={0}>
 
                         <Grid item xs={6}>

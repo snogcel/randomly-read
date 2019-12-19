@@ -178,6 +178,7 @@ exports.create = async (req, res, next) => {
 
       if (err.code === 11000) {
         let response = {"error" : true, "message" : "Duplicate Word"};
+        console.log(response);
         return res.status(422).json(response);
       } else {
         return res.status(422).json(err.message);
@@ -196,7 +197,7 @@ exports.create = async (req, res, next) => {
 exports.list = async (req, res) => {
   const author = req.user.id;
   const a_id = new ObjectId(author);
-  const interactions =  await Interaction.find({"author":a_id,"createdAt":{$gt:new Date(Date.now() - (12 * 60* 60 * 1000 * 7))}}).sort({"createdAt":-1});
+  const interactions =  await Interaction.find({"author":a_id}).sort({"createdAt":-1});
   res.json(interactions);
 };
 

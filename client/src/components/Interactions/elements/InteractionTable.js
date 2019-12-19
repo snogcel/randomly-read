@@ -35,9 +35,10 @@ const useStyles1 = makeStyles(theme => ({
 const useStyles2 = makeStyles(theme => ({
   root: {
     width: '100%',
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(4),
   },
   table: {
+
   },
   tableWrapper: {
     overflowX: 'auto',
@@ -197,7 +198,7 @@ export default function InteractionTable(props) {
   return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
-          <Table className={classes.table}>
+          <Table size="small" className={classes.table}>
             <TableHead>
               <TableRow>
                 <TableCell align="center">Word</TableCell>
