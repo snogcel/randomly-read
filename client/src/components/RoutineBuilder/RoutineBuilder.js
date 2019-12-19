@@ -1020,7 +1020,7 @@ class RoutineBuilder extends React.Component {
                         Routine Editor
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
-                        Use the form options below to configure a custom routine. 
+                        Use the form options below to configure a custom routine.
                       </Typography>
                       <br />
 
