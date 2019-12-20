@@ -16,6 +16,10 @@ const mapStateToProps = state => ({
   syllables: state.word.syllables,
   mode: state.word.mode,
   limit: state.word.limit,
+  currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
+  currentExercise: state.exerciseHistory.currentExercise,
+  name: state.routineSelect.name,
+  description: state.routineSelect.description
 });
 
 const mapDispatchToProps = dispatch => ({

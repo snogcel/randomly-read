@@ -83,8 +83,6 @@ const RRHome = props => {
 
               <Grid item xs={timerContainerWidth}>
 
-
-
                 <WordCardContainer />
 
                 <ProgressIndicator />

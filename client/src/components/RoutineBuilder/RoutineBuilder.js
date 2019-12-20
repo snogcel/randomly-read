@@ -32,8 +32,9 @@ import DeleteButton from './elements/DeleteButton';
 import SaveButton from './elements/SaveButton';
 import PreviewButton from './elements/PreviewButton';
 
-import StepList from './elements/StepList';
+import DescriptionEditor from './elements/DescriptionEditor';
 
+import StepList from './elements/StepList';
 import UserSelect from './elements/UserSelect';
 import RoutinesSelect from './elements/RoutinesSelect';
 import RoutineName from './elements/RoutineName';
@@ -187,6 +188,7 @@ class RoutineBuilder extends React.Component {
     this.userSelectHandler = this.userSelectHandler.bind(this);
 
     this.nameHandler = this.nameHandler.bind(this);
+    this.descriptionHandler = this.descriptionHandler.bind(this);
     this.vowelHandler = this.vowelHandler.bind(this);
     this.consonantHandler = this.consonantHandler.bind(this);
     this.modeHandler = this.modeHandler.bind(this);
@@ -263,6 +265,10 @@ class RoutineBuilder extends React.Component {
 
     let id = this.props.id;
     let name = this.props.name;
+    let description = JSON.stringify(this.props.description);
+    
+    console.log("saving description: ", this.props.description);
+
     let routine = this.props.routine;
 
     let body = {
@@ -271,6 +277,7 @@ class RoutineBuilder extends React.Component {
         "attributes": {
           "id": id,
           "name": name,
+          "description": description,
           "subroutine": routine
         }
       }
@@ -295,6 +302,10 @@ class RoutineBuilder extends React.Component {
 
   nameHandler(name) {
     this.props.updateName(name); // pass to redux
+  }
+
+  descriptionHandler(description) {
+    this.props.updateDescription(description);
   }
 
   vowelHandler(vowels) {
@@ -554,6 +565,12 @@ class RoutineBuilder extends React.Component {
         // set name
         this.props.updateName(this.props.availableRoutines[i].attributes.name);
 
+        // set description
+
+        console.log("Attempting to parse description: ", this.props.availableRoutines[i].attributes.description);
+
+        this.props.updateDescription(JSON.parse(this.props.availableRoutines[i].attributes.description));
+
         // iterate through subroutines
         for (let j = 0; j < this.props.availableRoutines[i].attributes.subroutine.length; j++) {
 
@@ -749,6 +766,12 @@ class RoutineBuilder extends React.Component {
     return selectedUserObj;
   }
 
+  parseDescription(description) {
+    let descriptionObj = { content: description };
+
+    return descriptionObj;
+  }
+
   parseName(name) {
     let nameObj = { name: name };
 
@@ -788,8 +811,6 @@ class RoutineBuilder extends React.Component {
        */
 
     }
-
-    console.log(consonants);
 
     return consonants;
   }
@@ -916,7 +937,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { userId, name, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+    const { userId, name, description, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
     const { width } = this.props;
@@ -937,6 +958,7 @@ class RoutineBuilder extends React.Component {
     let selectedRoutineObj = this.parseSelectedRoutine(id, availableRoutines);
 
     let nameObj = this.parseName(name);
+    let descriptionObj = this.parseDescription(description);
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
@@ -1017,20 +1039,44 @@ class RoutineBuilder extends React.Component {
                     <CardContent>
 
                       <Typography gutterBottom variant="h5" component="h2">
-                        Routine Editor
+                        Routine Description
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
-                        Use the form options below to configure a custom routine.
+                        Use the rich text editor below to provide instructions on how to use this exercise routine.
                       </Typography>
                       <br />
 
                       <Grid container spacing={0}>
 
-                        <Grid item xs={6}>
+                        <Grid item xs={12}>
 
                           <RoutineName action={this.nameHandler} name={nameObj} />
 
                         </Grid>
+
+                        <Grid item xs={12} className={classes.DescriptionEditor}>
+
+                          <DescriptionEditor action={this.descriptionHandler} description={descriptionObj}/>
+
+                        </Grid>
+
+                      </Grid>
+
+                    </CardContent>
+                  </Card>
+
+                  <Card className={classes.routineBuilderCard}>
+                    <CardContent>
+
+                      <Typography gutterBottom variant="h5" component="h2">
+                        Routine Step Editor
+                      </Typography>
+                      <Typography variant="body2" color="textSecondary" component="p">
+                        Use the options below to configure each step in this custom routine.
+                      </Typography>
+                      <br />
+
+                      <Grid container spacing={0}>
 
                         <Grid item xs={12}>
 

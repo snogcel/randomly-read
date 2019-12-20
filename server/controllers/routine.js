@@ -263,6 +263,7 @@ async function upVotedRoutines(author) {
     routines.push({
       "id": posts[i]._id,
       "name": name,
+      "description": "",
       "upvoted": true,
       "subroutine": subroutine
     })

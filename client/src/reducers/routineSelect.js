@@ -4,6 +4,7 @@ import {FETCH_ASSIGNED_ROUTINES_ERROR} from '../actions/routineSelect';
 
 import {UPDATE_ROUTINE_ID} from '../actions/routineSelect';
 import {UPDATE_ROUTINE_NAME} from '../actions/routineSelect';
+import {UPDATE_ROUTINE_DESCRIPTION} from '../actions/routineSelect';
 import {UPDATE_ACTIVE_ROUTINE} from '../actions/routineSelect';
 
 import {RESET_ROUTINE_SELECT} from '../actions/routineSelect';
@@ -14,6 +15,7 @@ const initialState = {
   routine: {},
   id: 0,
   name: '',
+  description: '',
   isFetchingRoutines: false
 };
 
@@ -33,6 +35,8 @@ export default (state = initialState, action) => {
       return {...state, id: action.id};
     case UPDATE_ROUTINE_NAME:
       return {...state, name: action.name};
+    case UPDATE_ROUTINE_DESCRIPTION:
+      return {...state, description: action.description};
     case UPDATE_ACTIVE_ROUTINE:
       return {...state, routine: action.routine};
 

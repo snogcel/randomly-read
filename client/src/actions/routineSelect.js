@@ -7,6 +7,7 @@ export const FETCH_ASSIGNED_ROUTINES_ERROR = 'FETCH_ASSIGNED_ROUTINES_ERROR';
 export const RESET_ROUTINE_SELECT = 'RESET_ROUTINE_SELECT';
 export const UPDATE_ROUTINE_ID = 'UPDATE_ROUTINE_ID';
 export const UPDATE_ROUTINE_NAME = 'UPDATE_ROUTINE_NAME';
+export const UPDATE_ROUTINE_DESCRIPTION = 'UPDATE_ROUTINE_DESCRIPTION';
 export const UPDATE_ACTIVE_ROUTINE = 'UPDATE_ACTIVE_ROUTINE';
 
 const fetchAssignedRoutinesRequest = { type: FETCH_ASSIGNED_ROUTINES_REQUEST };
@@ -39,6 +40,12 @@ export function updateId(id) {
 export function updateName(name) {
   return {
     type: UPDATE_ROUTINE_NAME, name
+  }
+}
+
+export function updateDescription(description) {
+  return {
+    type: UPDATE_ROUTINE_DESCRIPTION, description
   }
 }
 
