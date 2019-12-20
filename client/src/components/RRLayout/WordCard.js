@@ -251,10 +251,25 @@ class WordCard extends React.Component  {
     const { classes } = this.props;
 
     if (this.props.currentExercise.length > 0 && this.props.currentExerciseNumber === null) {
-      console.log("Current routine name: ", this.props.name); // displays current routine name
-      console.log("Current routine description: ", this.props.description); // displays current routine description
-      console.log("Current exercise number: ", this.props.currentExerciseNumber); // if null, routine is selected but not started
-      console.log("Current exercise: ", this.props.currentExercise);
+
+      // calculate and format routine duration
+      let duration = 0;
+
+      for (let i = 0; i < this.props.currentExercise.length; i++) {
+        duration += (this.props.currentExercise[i].rangeVal * this.props.currentExercise[i].repetitions);
+      }
+
+      let minutes = Math.floor(duration / 60);
+      let seconds = duration - (minutes * 60);
+
+      let formattedDuration;
+      if (minutes === 0) {
+        formattedDuration = seconds + " seconds";
+      } else if (minutes === 1) {
+        formattedDuration = "Duration: " + minutes + " minute and " + seconds + " seconds";
+      } else {
+        formattedDuration = "Duration: " + minutes + " minutes and " + seconds + " seconds";
+      }
 
       return (
 
@@ -264,7 +279,7 @@ class WordCard extends React.Component  {
             <Paper className={classes.routineDetails}>
 
               <Typography variant="h5" component="h2">{this.props.name}</Typography>
-              <Typography gutterBottom variant="body2" color="textSecondary" component="p">Duration: 5 minutes and 15 seconds</Typography>
+              <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
 
               <RoutineDescription description={this.props.description} />
 
