@@ -6,6 +6,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -17,6 +18,7 @@ import Intermission from './IntermissionContainer';
 import VowelCheckboxes from './VowelCheckboxes';
 import { styles } from '../../themeHandler';
 
+import RoutineDescription from './RoutineDescription';
 import VowelCheckbox from './elements/VowelCheckbox';
 import Word from './elements/Word';
 import Sentence from './elements/Sentence';
@@ -247,6 +249,47 @@ class WordCard extends React.Component  {
 
   render() {
     const { classes } = this.props;
+
+    if (this.props.currentExercise.length > 0 && this.props.currentExerciseNumber === null) {
+
+      // calculate and format routine duration
+      let duration = 0;
+
+      for (let i = 0; i < this.props.currentExercise.length; i++) {
+        duration += (this.props.currentExercise[i].rangeVal * this.props.currentExercise[i].repetitions);
+      }
+
+      let minutes = Math.floor(duration / 60);
+      let seconds = duration - (minutes * 60);
+
+      let formattedDuration;
+      if (minutes === 0) {
+        formattedDuration = "Duration: " + seconds + " seconds";
+      } else if (minutes === 1) {
+        formattedDuration = "Duration: " + minutes + " minute and " + seconds + " seconds";
+      } else {
+        formattedDuration = "Duration: " + minutes + " minutes and " + seconds + " seconds";
+      }
+
+      return (
+
+        <Grid container justify="center">
+          <Grid item xs={10} sm={12}>
+
+            <Paper className={classes.routineDetails}>
+
+              <Typography variant="h5" component="h2">{this.props.name}</Typography>
+              <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
+
+              <br />
+              <RoutineDescription description={this.props.description} />
+
+            </Paper>
+
+          </Grid>
+        </Grid>
+      )
+    }
 
     if (this.props.vowel === null || this.props.consonant === null) return null;
 

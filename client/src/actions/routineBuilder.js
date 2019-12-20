@@ -5,6 +5,7 @@ export const RESET = 'RESET';
 export const RESET_STEP_LIST = 'RESET_STEP_LIST';
 export const RESET_FORM = 'RESET_FORM';
 export const UPDATE_NAME = 'UPDATE_NAME';
+export const UPDATE_DESCRIPTION = 'UPDATE_DESCRIPTION';
 export const UPDATE_ID = 'UPDATE_ID';
 export const UPDATE_INDEX = 'UPDATE_INDEX';
 export const INSERT_STEP = 'INSERT_STEP';
@@ -144,6 +145,12 @@ export function resetForm() {
 export function updateName(name) {
   return {
     type: UPDATE_NAME, name
+  }
+}
+
+export function updateDescription(description) {
+  return {
+    type: UPDATE_DESCRIPTION, description
   }
 }
 

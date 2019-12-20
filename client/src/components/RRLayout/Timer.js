@@ -536,7 +536,7 @@ class Timer extends React.Component {
         <Card className={classes.userAdminCard}>
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              Practice Routines
+              Available Routines
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               Use the dropdown menu to select a practice routine or to focus on a specific word.
@@ -552,34 +552,12 @@ class Timer extends React.Component {
       return (
         <React.Fragment>
 
-          {(this.props.currentExerciseNumber === null) ? (
-            <>
-
-              <Card className={classes.userAdminCard}>
-                <CardContent>
-
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Practice Routines
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary" component="p">
-                    Use the dropdown menu to select a practice routine or to focus on a specific word.
-                  </Typography>
-
-                </CardContent>
-              </Card>
-
-            </>
-          ) : (
-            <>
-            </>
-          )}
-
           <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
             <Grid item>
-              <br />
               {TimerFragment}
             </Grid>
           </Grid>
+
         </React.Fragment>
       )
 

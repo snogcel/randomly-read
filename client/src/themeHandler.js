@@ -65,6 +65,7 @@ const styles = theme => ({
   wordGrid: {
     alignItems: "center",
     minHeight:150,
+    marginTop: theme.spacing(4),
   },
   wordHistoryGrid: {
     alignItems: "center"
@@ -243,6 +244,13 @@ const styles = theme => ({
     bottom: 20,
     left: 'auto',
     position: 'fixed',
+  },
+  DescriptionEditor: {
+    margin: theme.spacing(1),
+  },
+  routineDetails: {
+    padding: theme.spacing(3, 2),
+    marginTop: theme.spacing(4),
   }
 });
 

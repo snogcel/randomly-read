@@ -33,6 +33,12 @@ const resolvers = {
                 if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
+            // Randomly select consonant if none provided (prevents massive queries)
+            if (typeof filter.consonant === "undefined") {
+              let defaultConsonants = ["B","CH","D","DH","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","ZH"];
+              filter.consonant = [defaultConsonants[Math.floor(Math.random()*defaultConsonants.length)]];
+            }
+
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {

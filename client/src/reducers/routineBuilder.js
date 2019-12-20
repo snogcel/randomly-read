@@ -8,6 +8,7 @@ import {UPDATE_USER_ID} from '../actions/routineBuilder';
 import {RESET} from '../actions/routineBuilder';
 import {RESET_FORM} from '../actions/routineBuilder';
 import {UPDATE_NAME} from '../actions/routineBuilder';
+import {UPDATE_DESCRIPTION} from '../actions/routineBuilder';
 import {UPDATE_ID} from '../actions/routineBuilder';
 import {UPDATE_INDEX} from '../actions/routineBuilder';
 import {UPDATE_VOWELS} from '../actions/routineBuilder';
@@ -48,6 +49,7 @@ const initialState = {
   userId: 0,
   availableRoutines: [],
   name: '',
+  description: '',
   id: 0,
   routine: [],
   index: 0,
@@ -126,10 +128,13 @@ export default (state = initialState, action) => {
         userId: state.userId,
         routine: state.routine,
         name: state.name,
+        description: state.description,
         id: state.id
       };
     case UPDATE_NAME:
       return {...state, lastUpdated: Date.now(), name: action.name};
+    case UPDATE_DESCRIPTION:
+      return {...state, lastUpdated: Date.now(), description: action.description};
     case UPDATE_ID:
       return {...state, id: action.id};
     case UPDATE_INDEX:

@@ -128,6 +128,7 @@ class RoutineSelect extends React.Component {
 
         this.props.updateId(selectedRoutine.id);
         this.props.updateName(selectedRoutine.name);
+        this.props.updateDescription(selectedRoutine.description);
         this.props.updateActiveRoutine(selectedRoutine);
         this.props.action(selectedRoutine); // pass mode update back to QueryManager
     }
@@ -141,10 +142,12 @@ class RoutineSelect extends React.Component {
           this.props.updateId(this.props.routine.id);
           this.props.updateName(this.props.routine.name);
           this.props.updateActiveRoutine(this.props.routine);
+          this.props.updateDescription(this.props.description);
           this.props.action(this.props.routine); // pass mode update back to QueryManager
         } else if (this.props.id === 0 && typeof this.props.availableRoutines[0] !== "undefined") {
           this.props.updateId(this.props.availableRoutines[0].attributes.id);
           this.props.updateName(this.props.availableRoutines[0].attributes.name);
+          this.props.updateDescription(this.props.availableRoutines[0].attributes.description);
           this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
           this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
         }

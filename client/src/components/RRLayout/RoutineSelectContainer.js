@@ -1,12 +1,13 @@
 import { connect } from 'react-redux';
 import RoutineSelect from './RoutineSelect';
-import { fetchAssignedRoutines, updateId, updateName, updateActiveRoutine } from '../../actions/routineSelect';
+import { fetchAssignedRoutines, updateId, updateName, updateDescription, updateActiveRoutine } from '../../actions/routineSelect';
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
 
 const mapStateToProps = state => ({
   availableRoutines: state.routineSelect.availableRoutines,
   name: state.routineSelect.name,
+  description: state.routineSelect.description,
   id: state.routineSelect.id,
   routine: state.routineSelect.routine,
   isVoting: state.posts.isVoting,
@@ -14,7 +15,7 @@ const mapStateToProps = state => ({
   isFetching: state.routineSelect.isFetching
 });
 
-const mapDispatchToProps = { fetchAssignedRoutines, updateId, updateName, updateActiveRoutine }; // TODO - replace with relevant actions
+const mapDispatchToProps = { fetchAssignedRoutines, updateId, updateName, updateDescription, updateActiveRoutine }; // TODO - replace with relevant actions
 
 const enhance = compose(
   withAuth,

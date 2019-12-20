@@ -1,3 +1,4 @@
+import 'draft-js/dist/Draft.css';
 import './style.css';
 import './config/moment';
 import React from 'react';
