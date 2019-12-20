@@ -86,6 +86,7 @@ const defaultRoutines = [
   {
     "id": "rand_words",
     "name": "25 Random Words",
+    "description": "",
     "subroutine": [{
       "index": Date.now(),
       "rangeVal": 5,
@@ -101,6 +102,7 @@ const defaultRoutines = [
   {
     "id": "rand_sentences",
     "name": "25 Random Sentences",
+    "description": "",
     "subroutine": [{
       "index": Date.now(),
       "rangeVal": 5,
