@@ -281,6 +281,7 @@ class WordCard extends React.Component  {
               <Typography variant="h5" component="h2">{this.props.name}</Typography>
               <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
 
+              <br />
               <RoutineDescription description={this.props.description} />
 
             </Paper>

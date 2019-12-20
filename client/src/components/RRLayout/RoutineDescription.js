@@ -39,7 +39,7 @@ class RoutineDescription extends Component {
   render() {
 
     return (
-      <div className='article-container'>
+      <div className='routineDescriptionContainer'>
         {renderHTML(this.state.text)}
       </div>
     )
