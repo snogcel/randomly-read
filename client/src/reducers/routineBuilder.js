@@ -128,6 +128,7 @@ export default (state = initialState, action) => {
         userId: state.userId,
         routine: state.routine,
         name: state.name,
+        description: state.description,
         id: state.id
       };
     case UPDATE_NAME:

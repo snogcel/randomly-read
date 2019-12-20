@@ -32,6 +32,10 @@ import DeleteButton from './elements/DeleteButton';
 import SaveButton from './elements/SaveButton';
 import PreviewButton from './elements/PreviewButton';
 
+import IconButton from '@material-ui/core/IconButton';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 import DescriptionEditor from './elements/DescriptionEditor';
 
 import StepList from './elements/StepList';
@@ -170,7 +174,8 @@ class RoutineBuilder extends React.Component {
     super(props);
 
     this.state = {
-      index: 0
+      index: 0,
+      showDescriptionEditor: true
     };
 
     this.saveHandler = this.saveHandler.bind(this);
@@ -197,6 +202,9 @@ class RoutineBuilder extends React.Component {
     this.repetitionHandler = this.repetitionHandler.bind(this);
     this.syllableHandler = this.syllableHandler.bind(this);
     this.intermissionHandler = this.intermissionHandler.bind(this);
+
+    this.expandLessHandler = this.expandLessHandler.bind(this);
+    this.expandMoreHandler = this.expandMoreHandler.bind(this);
 
     this.routinePreview = React.createRef();
 
@@ -227,6 +235,14 @@ class RoutineBuilder extends React.Component {
 
   componentDidMount() {
 
+  }
+
+  expandLessHandler() {
+    this.setState({showDescriptionEditor: false});
+  }
+
+  expandMoreHandler() {
+    this.setState({showDescriptionEditor: true});
   }
 
   createHandler(routineName) {
@@ -1034,7 +1050,6 @@ class RoutineBuilder extends React.Component {
                 <>
 
                 <Grid item xs={routineBuilderContainerWidth}>
-
                   <Card className={classes.routineBuilderCard}>
                     <CardContent>
 
@@ -1042,7 +1057,7 @@ class RoutineBuilder extends React.Component {
                         Routine Description
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
-                        Use the rich text editor below to provide instructions on how to use this exercise routine.
+                        Use the fields below to define a name of this routine as well as provide the user instructions on how to use it.
                       </Typography>
                       <br />
 
@@ -1050,13 +1065,21 @@ class RoutineBuilder extends React.Component {
 
                         <Grid item xs={12}>
 
-                          <RoutineName action={this.nameHandler} name={nameObj} />
+                          { this.state.showDescriptionEditor ? <RoutineName action={this.nameHandler} name={nameObj} /> : <Hidden xlDown><RoutineName action={this.nameHandler} name={nameObj} /></Hidden> }
 
                         </Grid>
 
                         <Grid item xs={12} className={classes.DescriptionEditor}>
 
-                          <DescriptionEditor action={this.descriptionHandler} description={descriptionObj}/>
+                          { this.state.showDescriptionEditor ? <DescriptionEditor action={this.descriptionHandler} description={descriptionObj}/> : <Hidden xlDown><DescriptionEditor action={this.descriptionHandler} description={descriptionObj}/></Hidden> }
+
+                        </Grid>
+
+                        <Grid container alignItems="flex-start" justify="flex-end" direction="row">
+
+                          <Grid item>
+                            { this.state.showDescriptionEditor ? <IconButton aria-label="less" onClick={() => { this.expandLessHandler(); }}><ExpandLessIcon /></IconButton> : <IconButton aria-label="more" onClick={() => { this.expandMoreHandler(); }}><ExpandMoreIcon /></IconButton> }
+                          </Grid>
 
                         </Grid>
 
