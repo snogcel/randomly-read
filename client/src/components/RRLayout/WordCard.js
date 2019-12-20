@@ -264,7 +264,7 @@ class WordCard extends React.Component  {
 
       let formattedDuration;
       if (minutes === 0) {
-        formattedDuration = seconds + " seconds";
+        formattedDuration = "Duration: " + seconds + " seconds";
       } else if (minutes === 1) {
         formattedDuration = "Duration: " + minutes + " minute and " + seconds + " seconds";
       } else {
