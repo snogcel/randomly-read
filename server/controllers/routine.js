@@ -42,44 +42,44 @@ function transformRoutineSet(data, type) {
 }
 
 const availableCharacters = [
-  { id: "AA", name: "ɑ"},
-  { id: "AE", name: "æ"},
-  { id: "AH", name: "ʌ"},
-  { id: "AO", name: "ɔ"},
-  { id: "AW", name: "aʊ"},
-  { id: "AY", name: "aɪ"},
-  { id: "EH", name: "ɛ"},
-  { id: "ER", name: "ɝ"},
-  { id: "EY", name: "eɪ"},
-  { id: "IH", name: "ɪ"},
-  { id: "IY", name: "i"},
-  { id: "OW", name: "oʊ"},
-  { id: "OY", name: "ɔɪ"},
-  { id: "UH", name: "ʊ"},
-  { id: "UW", name: "u"},
-  { id: "B", name: "b"},
-  { id: "CH", name: "tʃ"},
-  { id: "D", name: "d"},
-  { id: "DH", name: "ð"},
-  { id: "F", name: "f"},
-  { id: "G", name: "g"},
-  { id: "HH", name: "h"},
-  { id: "JH", name: "dʒ"},
-  { id: "K", name: "k"},
-  { id: "L", name: "l"},
-  { id: "M", name: "m"},
-  { id: "N", name: "n"},
-  { id: "P", name: "p"},
-  { id: "R", name: "ɹ"},
-  { id: "S", name: "s"},
-  { id: "SH", name: "ʃ"},
-  { id: "T", name: "t"},
-  { id: "TH", name: "θ"},
-  { id: "V", name: "v"},
-  { id: "W", name: "w"},
-  { id: "Y", name: "j"},
-  { id: "Z", name: "Z"},
-  { id: "ZH", name: "ʒ"}
+  { id: "AA", name: "ɑ", example: "b<u>o</u>t"},
+  { id: "AE", name: "æ", example: "b<u>a</u>t"},
+  { id: "AH", name: "ʌ", example: "wh<u>a</u>t"},
+  { id: "AO", name: "ɔ", example: "st<u>o</u>ry"},
+  { id: "AW", name: "aʊ", example: "b<u>ou</u>t"},
+  { id: "AY", name: "aɪ", example: "b<u>i</u>te"},
+  { id: "EH", name: "ɛ", example: "b<u>e</u>t"},
+  { id: "ER", name: "ɝ", example: "b<u>i</u>rd"},
+  { id: "EY", name: "eɪ", example: "b<u>ai</u>t"},
+  { id: "IH", name: "ɪ", example: "b<u>i</u>t"},
+  { id: "IY", name: "i", example: "b<u>ea</u>t"},
+  { id: "OW", name: "oʊ", example: "b<u>oa</u>t"},
+  { id: "OY", name: "ɔɪ", example: "b<u>oy</u>"},
+  { id: "UH", name: "ʊ", example: "b<u>oo</u>k"},
+  { id: "UW", name: "u", example: "b<u>oo</u>t"},
+  { id: "B", name: "b", example: "<u>b</u>uy"},
+  { id: "CH", name: "tʃ", example: "<u>ch</u>ild"},
+  { id: "D", name: "d", example: "<u>d</u>ate"},
+  { id: "DH", name: "ð", example: "<u>th</u>y"},
+  { id: "F", name: "f", example: "<u>f</u>ight"},
+  { id: "G", name: "g", example: "<u>g</u>uy"},
+  { id: "HH", name: "h", example: "<u>h</u>eight"},
+  { id: "JH", name: "dʒ", example: "<u>j</u>ive"},
+  { id: "K", name: "k", example: "<u>k</u>ite"},
+  { id: "L", name: "l", example: "<u>l</u>ie"},
+  { id: "M", name: "m", example: "<u>m</u>y"},
+  { id: "N", name: "n", example: "<u>n</u>ear"},
+  { id: "P", name: "p", example: "<u>p</u>ie"},
+  { id: "R", name: "ɹ", example: "<u>r</u>ye"},
+  { id: "S", name: "s", example: "<u>s</u>igh"},
+  { id: "SH", name: "ʃ", example: "<u>sh</u>y"},
+  { id: "T", name: "t", example: "<u>t</u>ie"},
+  { id: "TH", name: "θ", example: "<u>th</u>igh"},
+  { id: "V", name: "v", example: "<u>v</u>ie"},
+  { id: "W", name: "w", example: "<u>w</u>ise"},
+  { id: "Y", name: "j", example: "<u>y</u>acht"},
+  { id: "Z", name: "Z", example: "<u>z</u>oo"},
+  { id: "ZH", name: "ʒ", example: "plea<u>s</u>ure"}
 ];
 
 const defaultRoutines = [
@@ -206,6 +206,7 @@ async function upVotedRoutines(author) {
   let name;
   let consonant;
   let vowel;
+  let description;
   let routines = [];
 
   // parse through posts to create upvoted routines
@@ -257,13 +258,19 @@ async function upVotedRoutines(author) {
     if (posts[i].consonant !== null) consonant = availableCharacters.find(o => o.id === posts[i].consonant);
     if (posts[i].vowel !== null) vowel = availableCharacters.find(o => o.id === posts[i].vowel);
 
-    if (posts[i].position === "initial") name = "Similar to '" + posts[i].title + "' (starting with " + consonant.name + " and " + vowel.name + ")";
-    if (posts[i].position === "final") name = "Similar to '" + posts[i].title + "' (ending with " + consonant.name + " and " + vowel.name + ")";
+    if (posts[i].position === "initial") {
+      name = "Words similar to '" + posts[i].title + "'";
+      description = "This routine is based on the opening sounds of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "') and the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "').";
+    }
+    if (posts[i].position === "final") {
+      name = "Word similar to '" + posts[i].title + "'";
+      description = "This routine is based on the ending sounds of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "') and the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "').";
+    }
 
     routines.push({
       "id": posts[i]._id,
       "name": name,
-      "description": "",
+      "description": description,
       "upvoted": true,
       "subroutine": subroutine
     })
