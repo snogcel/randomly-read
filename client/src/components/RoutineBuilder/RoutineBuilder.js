@@ -1053,7 +1053,7 @@ class RoutineBuilder extends React.Component {
                   <Card className={classes.routineBuilderCard}>
                     <CardContent>
 
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
                         Routine Description
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">
@@ -1091,7 +1091,7 @@ class RoutineBuilder extends React.Component {
                   <Card className={classes.routineBuilderCard}>
                     <CardContent>
 
-                      <Typography gutterBottom variant="h5" component="h2">
+                      <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
                         Routine Step Editor
                       </Typography>
                       <Typography variant="body2" color="textSecondary" component="p">

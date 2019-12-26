@@ -101,7 +101,7 @@ class InteractionsHome extends React.Component {
 
                 <Card className={classes.userAdminCard}>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
+                    <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
                       Focus Words
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">

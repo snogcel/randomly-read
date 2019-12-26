@@ -290,12 +290,11 @@ class Administration extends React.Component {
 
                 <Card className={classes.userAdminCard}>
 
-                  <CardHeader
-                    titleTypographyProps={{color:"textSecondary"}}
-                    title="Create User"
-                  />
-
                   <CardContent>
+
+                    <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
+                      Create New User
+                    </Typography>
 
                     <Grid container>
 
@@ -352,7 +351,7 @@ class Administration extends React.Component {
 
                       <CardContent>
 
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
                           Selected User Details
                         </Typography>
                         <Typography variant="body2" color="textSecondary" component="p">

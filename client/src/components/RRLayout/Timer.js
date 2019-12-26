@@ -535,7 +535,7 @@ class Timer extends React.Component {
       return (
         <Card className={classes.userAdminCard}>
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
               Available Routines
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
