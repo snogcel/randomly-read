@@ -16,7 +16,7 @@ const methods = {
     const json = await response.json();
 
     if (!response.ok) {
-      if (response.status === 401) throw Error('unauthorized');
+      if (response.status === 401) throw Error(json.message);
       throw Error(json.message);
     }
 
@@ -43,7 +43,7 @@ const methods = {
         });
       }
 
-      if (response.status === 401) throw Error('unauthorized');
+      if (response.status === 401) throw Error(json.message);
       throw Error(json.message);
     }
 
@@ -70,7 +70,7 @@ const methods = {
         });
       }
 
-      if (response.status === 401) throw Error('unauthorized');
+      if (response.status === 401) throw Error(json.message);
       throw Error(json.message);
     }
 
@@ -90,7 +90,7 @@ const methods = {
     const json = await response.json();
 
     if (!response.ok) {
-      if (response.status === 401) throw Error('unauthorized');
+      if (response.status === 401) throw Error(json.message);
       throw Error(json.message);
     }
 
