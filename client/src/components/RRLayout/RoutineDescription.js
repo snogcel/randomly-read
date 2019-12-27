@@ -30,10 +30,10 @@ class RoutineDescription extends Component {
   componentWillMount() {
 
     if (typeof this.props.description !== 'undefined') {
-	let description = this.props.description;
-	let trimmed = description.replace(/^"|"$/g, '');
+    	let description = this.props.description;
+	    let trimmed = description.replace(/^"|"$/g, '');
 
-	this.setState({text: trimmed });
+	    this.setState({text: trimmed });
     }
 
   }
