@@ -93,6 +93,10 @@ export default function MenuAppBar(props) {
     props.logout();
   };
 
+  const handleLogin = () => {
+    props.history.push('/login');
+  };
+
   const handleRandomlyRead = () => {
     props.history.push('/');
   };
@@ -129,8 +133,6 @@ export default function MenuAppBar(props) {
 
     </div>
   );
-
-  console.log(user);
 
   return (
     <div className={classes.root}>
@@ -186,7 +188,11 @@ export default function MenuAppBar(props) {
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
             </div>
-          ) : ( null )}
+          ) : (
+            <div>
+              <Button onClick={handleLogin} color="inherit">Login</Button>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>
