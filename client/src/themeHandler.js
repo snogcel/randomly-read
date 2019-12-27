@@ -4,12 +4,12 @@ let MuiTheme = createMuiTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#2f8eed'
+      main: '#14197E'
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      main: '#14197E',
+      main: '#2f8eed',
       // dark: will be calculated from palette.secondary.main,
       contrastText: '#ffcc00',
     },
@@ -27,6 +27,10 @@ MuiTheme = responsiveFontSizes(MuiTheme);
 const styles = theme => ({
   root: {
     flexGrow: 1
+  },
+  heading: {
+    color: "#14197E",
+    fontWeight: "bold"
   },
   sliderRoot:{
     width: 500,

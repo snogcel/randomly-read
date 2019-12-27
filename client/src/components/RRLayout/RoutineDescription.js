@@ -11,7 +11,7 @@ class RoutineDescription extends Component {
     super(props);
 
     this.state = {
-      text: null
+      text: ""
     }
   }
 
@@ -29,10 +29,12 @@ class RoutineDescription extends Component {
 
   componentWillMount() {
 
-    let description = this.props.description;
-    let trimmed = description.replace(/^"|"$/g, '');
+    if (typeof this.props.description !== 'undefined') {
+    	let description = this.props.description;
+	    let trimmed = description.replace(/^"|"$/g, '');
 
-    this.setState({text: trimmed });
+	    this.setState({text: trimmed });
+    }
 
   }
 

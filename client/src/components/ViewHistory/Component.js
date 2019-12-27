@@ -103,6 +103,7 @@ class ViewHistory extends React.Component {
     let dataSet = this.props.dataSet || [];
 
     const { width } = this.props;
+    const { classes } = this.props;
 
     console.log(width);
 
@@ -131,7 +132,7 @@ class ViewHistory extends React.Component {
 
           <Grid item xs={12} md={6} justify="center">
 
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
               User Profile
             </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
