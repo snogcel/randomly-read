@@ -33,6 +33,13 @@ class SignupForm extends React.Component {
             onSubmit={this.props.handleSubmit(this.onSubmit)}
           >
             <Field
+              name='email'
+              label='email'
+              type='text'
+              component={renderField}
+              validate={emailValidator}
+            />
+            <Field
               name='username'
               label='username'
               type='text'

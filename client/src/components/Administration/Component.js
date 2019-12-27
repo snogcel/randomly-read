@@ -435,7 +435,7 @@ class Administration extends React.Component {
           </Grid>
 
           </>
-        ) : ( this.props.history.push("/login") )}
+        ) : ( this.props.history.push("/") )}
 
       </Grid>
 

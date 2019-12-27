@@ -157,7 +157,7 @@ class InteractionsHome extends React.Component {
               </>
             )}
           </>
-        ) : ( this.props.history.push("/login") )}
+        ) : ( this.props.history.push("/") )}
 
       </Grid>
 

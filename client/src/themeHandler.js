@@ -255,6 +255,54 @@ const styles = theme => ({
   routineDetails: {
     padding: theme.spacing(3, 2),
     marginTop: theme.spacing(4),
+  },
+  homePageContainer: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3)
+  },
+  homePageHeader: {
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
+    textAlign: "center"
+  },
+  homePageHeaderBox: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
+    textAlign: "center"
+  },
+  homePageItems: {
+    backgroundColor: "#F7F7F7",
+  },
+  homePageSubHeader: {
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
+  },
+  homePageBulletPointContainer: {
+    marginBottom: theme.spacing(3)
+  },
+  homePageBulletPoint: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    marginLeft: theme.spacing(3)
+  },
+  contactFormContainer: {
+
+  },
+  signupHeading: {
+    color: "#14197E",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  signupContainer: {
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
   }
 });
 

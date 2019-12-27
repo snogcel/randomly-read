@@ -1,6 +1,9 @@
 import React from 'react';
 //import styled from 'styled-components/macro';
 import { withStyles } from "@material-ui/core/styles";
+
+import SignupForm from '../SignupForm/Container';
+
 import WordCardContainer from './WordCardContainer';
 import TimerContainer from './TimerContainer';
 import Interactions from '../Interactions/InteractionsHomeContainer';
@@ -9,6 +12,8 @@ import Grid from '@material-ui/core/Grid';
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
+
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -99,7 +104,105 @@ const RRHome = props => {
 
             </Grid>
           </>
-        ) : ( props.history.push("/login") )}
+        ) : (
+          <>
+            <Grid container className={classes.homePageContainer}>
+
+              <Grid item xs={12} className={classes.homePageHeader}>
+
+                <Typography variant="h4" component="h1" className={classes.heading}>
+                  Practice smarter with exercise routines that focus on specific sounds
+                </Typography>
+                <Typography variant="body1" color="textSecondary" component="p">
+                  Tactical practice routines allow you to practice smarter, not harder
+                </Typography>
+
+              </Grid>
+
+              <Grid item xs={12} className={classes.homePageItems}>
+
+                <Grid container justify="center">
+
+                  <Grid item xs={12} sm={4} md={3} xl={2} className={classes.homePageHeaderBox}>
+
+                    <Typography variant="h6" component="h2" className={classes.heading}>
+                      Customizable
+                    </Typography>
+
+                    <Typography variant="body2" color="textPrimary" component="p">
+                      Using specific consonant and vowel sounds as well as placements, practice routines can be fully tailored to client needs.
+                    </Typography>
+
+                  </Grid>
+
+                  <Grid item xs={12} sm={4} md={3} xl={2} className={classes.homePageHeaderBox}>
+
+                    <Typography variant="h6" component="h2" className={classes.heading}>
+                      Structured
+                    </Typography>
+
+                    <Typography variant="body2" color="textPrimary" component="p">
+                      Words and Sentences are displayed in sequence, enabling a structured practice routine leading to greater success.
+                    </Typography>
+
+                  </Grid>
+
+                  <Grid item xs={12} sm={4} md={3} xl={2} className={classes.homePageHeaderBox}>
+
+                    <Typography variant="h6" component="h2" className={classes.heading}>
+                      Focused
+                    </Typography>
+
+                    <Typography variant="body2" color="textPrimary" component="p">
+                      Randomly Read is fully automated, allowing the client to better focus on speaking techniques and posture.
+                    </Typography>
+                  </Grid>
+
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12} className={classes.homePageSubHeader}>
+
+                <Grid container justify="center">
+
+                  <Grid item xs={12} sm={5} xl={3} className={classes.homePageBulletPointContainer}>
+
+                    <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
+                      Randomly Read is designed to enable greater success
+                    </Typography>
+
+                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                      <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Practice anywhere, anytime using a desktop or mobile device.</div>
+                    </Typography>
+
+                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                      <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Mark words for more practice using system generated routines.</div>
+                    </Typography>
+
+                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                      <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Gain better visibility over practice habits with system reporting.</div>
+                    </Typography>
+
+                  </Grid>
+
+                  <Grid item xs={12} sm={4} xl={3} className={classes.signupContainer}>
+
+                    <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
+                      Sign up for a free demo account
+                    </Typography>
+
+                    <SignupForm />
+
+                  </Grid>
+
+                </Grid>
+
+              </Grid>
+
+            </Grid>
+          </>
+        )}
 
       </Grid>
 

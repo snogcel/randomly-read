@@ -26,7 +26,7 @@ import MailIcon from '@material-ui/icons/Mail';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(0)
   },
   menuButton: {
     marginRight: theme.spacing(2),
