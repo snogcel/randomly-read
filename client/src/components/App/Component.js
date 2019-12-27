@@ -26,6 +26,7 @@ import Interactions from '../Interactions/InteractionsHomeContainer';
 import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
 import Administration from '../Administration/Container';
 import UserProfile from '../UserProfile/Container';
+import UserHome from '../UserHome/Container';
 
 const AuthLink = (operation, next) => {
   const token = localStorage.getItem('token');
