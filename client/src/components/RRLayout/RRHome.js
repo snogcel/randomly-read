@@ -139,7 +139,7 @@ const RRHome = props => {
                   Practice smarter with exercise routines that focus on specific sounds
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  Tactical practice routines that allow you to practice smarter, not harder
+                  Speech therapy exercise routines that allow you to practice smarter, not harder
                 </Typography>
 
               </Grid>
