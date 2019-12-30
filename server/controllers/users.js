@@ -1,5 +1,6 @@
 const { body, validationResult } = require('express-validator/check');
 const { login, createAuthToken } = require('../auth');
+const { notify } = require('../util/mailer');
 const User = require('../models/user');
 
 exports.login = (req, res, next) => {
@@ -23,6 +24,7 @@ exports.register = async (req, res, next) => {
     const { username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age } = req.body;
     const user = await User.create({ username, password, email, firstName, lastName, address, city, stateProvince, postalCode, country, gender, age });
     const token = createAuthToken(user.toJSON());
+    notify(email, username); // notify site owner of new registration
     res.status(201).json({ token });
   } catch (err) {
     next(err);
