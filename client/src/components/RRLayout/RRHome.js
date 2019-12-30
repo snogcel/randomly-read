@@ -167,7 +167,7 @@ const RRHome = props => {
                     </Typography>
 
                     <Typography variant="body2" color="textPrimary" component="p">
-                      Words and Sentences are displayed in sequence which allows for a structured practice session which leads to greater success.
+                      Words and Sentences are displayed in a timed sequence allowing for a more structured practice session which leads to greater success.
                     </Typography>
 
                   </Grid>
