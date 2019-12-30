@@ -183,31 +183,35 @@ const RRHome = props => {
 
                 <Grid container justify="center">
 
-                  <Grid item xs={12} sm={5} lg={6} xl={3} className={classes.homePageBulletPointContainer}>
+                  <Grid item xs={12} sm={5} lg={6} xl={3}>
 
-                    <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
-                      Engineered for client success
-                    </Typography>
+                    <div  className={classes.homePageBulletPointContainer}>
 
-                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                      <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div><strong>Allow your client to practice anywhere using a desktop or mobile device</strong></div>
-                    </Typography>
+                      <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
+                        Engineered for client success
+                      </Typography>
 
-                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                      <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div><strong>Track words that your client has trouble with and practice similar words</strong></div>
-                    </Typography>
+                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                        <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Allow your client to practice anywhere using a desktop or mobile device</div>
+                      </Typography>
 
-                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                      <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div><strong>Generate words or complete sentences with a focus on specific sounds</strong></div>
-                    </Typography>
+                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                        <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Track words that your client has trouble with and practice similar words</div>
+                      </Typography>
 
-                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                      <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div><strong>Draw from 155,000 words to create variety and flexibility in exercise routines</strong></div>
-                    </Typography>
+                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                        <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div>Generate words or complete sentences with a focus on specific sounds</div>
+                      </Typography>
 
-                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                      <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div><strong>Create accountability for client practice habits with system usage reporting</strong></div>
-                    </Typography>
+                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                        <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div>Draw from 155,000 words to create variety and flexibility in exercise routines</div>
+                      </Typography>
+
+                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
+                        <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Create accountability for client practice habits with system usage reporting</div>
+                      </Typography>
+
+                    </div>
 
                     <br />
 
@@ -216,13 +220,19 @@ const RRHome = props => {
                     </Typography>
 
                     <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      Use the sign up form to create a free demonstration account.
+                      <strong>Use the sign up form to create a free demonstration account.</strong>
                     </Typography>
 
                     <br />
 
                     <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      This limited demonstration provides a pre-defined set of exercise routines and is meant to preview the features that Randomly Read could provide to your clients. We'll contact you at the provided email address to open a conversation on how to tailor these routines to your clients' needs, how to report on client usage of the tool, and to answer any questions you have.
+                      This limited demonstration provides a pre-defined set of exercise routines and is meant to preview the features that Randomly Read could provide to your clients.
+                    </Typography>
+
+                    <br />
+
+                    <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
+                      We'll contact you at the provided email address to open a conversation on how to tailor these routines to your clients' needs, how to report on client usage of the tool, and to answer any questions you have.
                     </Typography>
 
                     <br />

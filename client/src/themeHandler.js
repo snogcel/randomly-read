@@ -276,9 +276,15 @@ const styles = theme => ({
   homePageHeaderBox: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(6),
-    paddingBottom: theme.spacing(6),
-    textAlign: "center"
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    textAlign: "center",
+    backgroundColor: "#EFEFEF",
+    borderRadius: 10
   },
   homePageItems: {
     backgroundColor: "#F7F7F7",
@@ -288,7 +294,13 @@ const styles = theme => ({
     paddingBottom: theme.spacing(6),
   },
   homePageBulletPointContainer: {
-    marginBottom: theme.spacing(3)
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(1),
+    marginBottom: theme.spacing(3),
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10
   },
   homePageBulletPoint: {
     display: "flex",
