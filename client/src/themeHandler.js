@@ -287,10 +287,15 @@ const styles = theme => ({
     alignItems: "center",
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
-    marginLeft: theme.spacing(3)
+    marginLeft: theme.spacing(2)
   },
   contactFormContainer: {
 
+  },
+  homePageHeading: {
+    color: "#14197E",
+    fontWeight: "bold",
+    textAlign: "left"
   },
   signupHeading: {
     color: "#14197E",
@@ -303,6 +308,9 @@ const styles = theme => ({
     paddingBottom: theme.spacing(4),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
+  },
+  homePageSignupText: {
+    textAlign: "center"
   }
 });
 

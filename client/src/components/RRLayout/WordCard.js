@@ -48,6 +48,10 @@ class WordCard extends React.Component  {
 
   }
 
+  componentDidMount() {
+    window.scrollTo(0, 0); // solves case of registration from splash page / scroll
+  }
+
   refreshQuery() {
     if (this.refresh) this.refresh();
   }
