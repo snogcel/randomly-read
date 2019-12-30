@@ -32,6 +32,14 @@ const styles = theme => ({
     color: "#14197E",
     fontWeight: "bold"
   },
+  mobileRoutineSelectContainer: {
+    textAlign: "center",
+  },
+  mobileHeading: {
+    marginTop: theme.spacing(2),
+    color: "#14197E",
+    fontWeight: "bold"
+  },
   sliderRoot:{
     width: 500,
     margin: 50
@@ -217,7 +225,7 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 1
   },
   TimerControls: {
-    display: "inline-flex"
+    display: "inline-flex",
   },
   exerciseHistoryMobile: {
     display:'flex',
@@ -311,6 +319,10 @@ const styles = theme => ({
   },
   homePageSignupText: {
     textAlign: "center"
+  },
+  routineSelectContainer: {
+    display: "flex",
+    alignItems: "center",
   }
 });
 

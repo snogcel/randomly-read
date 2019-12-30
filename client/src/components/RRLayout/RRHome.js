@@ -48,11 +48,25 @@ const RRHome = props => {
   let timerContainerWidth = 12;
   let interactionContainerWidth = 12;
 
+  console.log("detected width: ", width);
+
   // laptop or desktop
   if (width === "xl" || width === "lg") {
     exerciseHistoryContainerWidth = 3;
     timerContainerWidth = 6;
     interactionContainerWidth = 3;
+  }
+
+  // tablet - horizontal
+  if (width === "md") {
+    timerContainerWidth = 10;
+    interactionContainerWidth = 10;
+  }
+
+  // tablet - vertical
+  if (width === "sm") {
+    console.log("-sm-");
+    timerContainerWidth = 10;
   }
 
   /*
@@ -79,7 +93,7 @@ const RRHome = props => {
 
         {user ? (
           <>
-            <Grid container spacing={0}>
+            <Grid container spacing={0} justify="center">
 
               <Grid item xs={exerciseHistoryContainerWidth}>
 
@@ -101,7 +115,7 @@ const RRHome = props => {
 
               <Grid item xs={interactionContainerWidth}>
 
-                <Hidden smDown><Interactions /></Hidden>
+                <Hidden mdDown><Interactions /></Hidden>
 
               </Grid>
 
@@ -169,7 +183,7 @@ const RRHome = props => {
 
                 <Grid container justify="center">
 
-                  <Grid item xs={12} sm={5} xl={3} className={classes.homePageBulletPointContainer}>
+                  <Grid item xs={12} sm={5} lg={6} xl={3} className={classes.homePageBulletPointContainer}>
 
                     <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
                       Engineered for client success
@@ -215,7 +229,7 @@ const RRHome = props => {
 
                   </Grid>
 
-                  <Grid item xs={12} sm={4} xl={3} className={classes.signupContainer}>
+                  <Grid item xs={12} sm={4} lg={3} xl={3} className={classes.signupContainer}>
 
                     <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
                       Sign up for a free account

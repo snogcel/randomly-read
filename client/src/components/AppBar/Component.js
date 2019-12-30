@@ -23,6 +23,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+import Hidden from '@material-ui/core/Hidden';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -183,7 +185,7 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleFocusWords}>Words</MenuItem>
+                <Hidden lgUp><MenuItem onClick={handleFocusWords}>Words</MenuItem></Hidden>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
