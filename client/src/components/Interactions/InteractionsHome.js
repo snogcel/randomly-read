@@ -94,69 +94,32 @@ class InteractionsHome extends React.Component {
       <Grid className={classes.root}>
 
         {user ? (
-          <>
 
-            {(this.props.currentExerciseNumber === null) ? (
-              <>
+          <Card className={classes.userAdminCard}>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
+                Focus Words
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Enter a word using the following search box, a practice routine will be available until it is removed from this list.
+              </Typography>
 
-                <Card className={classes.userAdminCard}>
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
-                      Focus Words
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
-                      Enter a word using the following search box, a practice routine will be available until it is removed from this list.
-                    </Typography>
+              <br />
 
-                    <br />
+              <Grid container justify="center">
+                <Grid item xs={11} sm={11} md={10}>
+                  <InteractionForm action={this.interactionHandler}/>
+                </Grid>
+              </Grid>
 
-                    <Grid container justify="center">
-                      <Grid item xs={11} sm={11} md={10}>
-                        <InteractionForm action={this.interactionHandler}/>
-                      </Grid>
-                    </Grid>
-                    <Grid container justify="center">
-                      <Grid item xs={11} sm={11} md={10}>
-                        <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
-                      </Grid>
-                    </Grid>
-                  </CardContent>
-                </Card>
+              <Grid container justify="center">
+                <Grid item xs={11} sm={11} md={10}>
+                  <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
 
-              </>
-            ) : (
-              <>
-
-                <Hidden mdDown>
-                  <Card className={classes.userAdminCard}>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
-                        Focus Words
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        Enter a word using the following search box, a practice routine will be available until it is removed from this list.
-                      </Typography>
-
-                      <br />
-
-                      <Grid container justify="center">
-                        <Grid item xs={11} sm={11} md={10}>
-                          <InteractionForm action={this.interactionHandler}/>
-                        </Grid>
-                      </Grid>
-
-                      <Grid container justify="center">
-                        <Grid item xs={11} sm={11} md={10}>
-                          <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
-                        </Grid>
-                      </Grid>
-                    </CardContent>
-                  </Card>
-                </Hidden>
-
-              </>
-            )}
-          </>
         ) : ( this.props.history.push("/") )}
 
       </Grid>
