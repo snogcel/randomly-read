@@ -208,7 +208,7 @@ const RRHome = props => {
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div>Generate words or complete sentences with a focus on specific sounds</div>
+                        <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div>Generate words or partial sentences with a focus on specific sounds</div>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
