@@ -50,8 +50,16 @@ const RRHome = props => {
 
   console.log("detected width: ", width);
 
+
+  // desktop - widescreen
+  if (width === "xl") {
+    exerciseHistoryContainerWidth = 2;
+    timerContainerWidth = 6;
+    interactionContainerWidth = 2;
+  }
+
   // laptop or desktop
-  if (width === "xl" || width === "lg") {
+  if (width === "lg") {
     exerciseHistoryContainerWidth = 3;
     timerContainerWidth = 6;
     interactionContainerWidth = 3;
