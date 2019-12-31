@@ -136,10 +136,10 @@ const RRHome = props => {
               <Grid item xs={12} className={classes.homePageHeader}>
 
                 <Typography variant="h4" component="h1" className={classes.heading}>
-                  Practice smarter with exercise routines that focus on specific sounds
+                  Practice smarter with automated speech therapy exercises
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  Speech therapy that allows you to practice smarter, not harder
+                  Speech therapy that allows you to focus your effort on specific consonant and vowel sounds
                 </Typography>
 
               </Grid>
