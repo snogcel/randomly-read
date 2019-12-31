@@ -227,6 +227,9 @@ const styles = theme => ({
   TimerControls: {
     display: "inline-flex",
   },
+  RoutineBuilderControls: {
+    display: "inline-flex",
+  },
   exerciseHistoryMobile: {
     display:'flex',
     justifyContent:'center'
@@ -335,6 +338,12 @@ const styles = theme => ({
   routineSelectContainer: {
     display: "flex",
     alignItems: "center",
+  },
+  routineBuilderSelectContainer: {
+    display: "flex",
+  },
+  RoutineBuilderSelector: {
+    display: "inline-flex",
   }
 });
 

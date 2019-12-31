@@ -962,9 +962,14 @@ class RoutineBuilder extends React.Component {
     let routineBuilderContainerWidth = 12;
 
     // laptop or desktop
-    if (width === "xl" || width === "lg") {
-      exerciseContainerWidth = 3;
-      routineBuilderContainerWidth = 9;
+    if (width === "xl") {
+      exerciseContainerWidth = 2;
+      routineBuilderContainerWidth = 6;
+    }
+
+    if (width === "lg") {
+      exerciseContainerWidth = 4;
+      routineBuilderContainerWidth = 8;
     }
 
     let availableUsers = this.parseAvailableUsers(this.props.availableUsers);
@@ -995,11 +1000,9 @@ class RoutineBuilder extends React.Component {
         {user ? (
           <>
 
-            <Grid container spacing={0}>
+            <Grid container spacing={0} justify="center">
 
               <Grid item xs={exerciseContainerWidth}>
-
-
 
                   <Grid container spacing={0} justify="center">
 
@@ -1015,7 +1018,7 @@ class RoutineBuilder extends React.Component {
                             <>
 
                               <Typography variant="body2" color="textSecondary" component="p">
-                                Use the dropdown menu to select a user.
+                                Use the menu to select a user and routine.
                               </Typography>
                               <br />
                               <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
@@ -1023,23 +1026,22 @@ class RoutineBuilder extends React.Component {
                             </> ) : ( null )
                           }
 
-                          <Grid container justify="center">
+                          <Grid container className={classes.routineBuilderSelectContainer}>
 
-                            <Grid item xs={8}>
+                            <Grid item>
 
-                              <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
-
-                            </Grid>
-
-                            <Grid item xs={2} justify="center">
-
-                              <NewRoutineButton action={this.createHandler} />
+                              <div className={classes.RoutineBuilderSelector}>
+                                <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
+                              </div>
 
                             </Grid>
 
-                            <Grid item xs={2} justify="center">
+                            <Grid item>
 
-                              <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
+                              <div className={classes.RoutineBuilderControls}>
+                                <NewRoutineButton action={this.createHandler} />
+                                <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
+                              </div>
 
                             </Grid>
 
@@ -1182,12 +1184,11 @@ class RoutineBuilder extends React.Component {
 
                           </Grid>
 
-
                         </Grid>
 
                         <Grid item xs={12}>
 
-                          <Grid container spacing={2}>
+                          <Grid container spacing={2} justify="center">
 
                             <Grid item>
 
@@ -1246,7 +1247,7 @@ class RoutineBuilder extends React.Component {
 
                 </> ) : ( <>
 
-                  <Grid item xs={9}>
+                  <Grid item xs={routineBuilderContainerWidth}>
 
                     <Grid container spacing={0}>
 

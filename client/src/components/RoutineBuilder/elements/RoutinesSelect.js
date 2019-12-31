@@ -51,7 +51,7 @@ const useStyles = makeStyles(theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 200,
+    minWidth: 200
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -84,9 +84,9 @@ export default function RoutinesSelect(props) {
             name: 'routine',
             id: 'routine-select',
           }}
-        >
+        >s
           <MenuItem value="">
-            <em>Select a routine...</em>
+            <em>Select routine...</em>
           </MenuItem>
           {props.options.map(routine => (
             <MenuItem key={routine.id} value={routine.id}>{routine.name}</MenuItem>
