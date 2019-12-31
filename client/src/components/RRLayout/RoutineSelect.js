@@ -101,6 +101,8 @@ class RoutineSelect extends React.Component {
 
           this.props.fetchAssignedRoutines();
           this.props.updateId(prevProps.id);
+          this.props.updateName(prevProps.name);
+          this.props.updateDescription(prevProps.description);
 
         }
       }
@@ -110,6 +112,8 @@ class RoutineSelect extends React.Component {
 
           this.props.fetchAssignedRoutines();
           this.props.updateId(prevProps.id);
+          this.props.updateName(prevProps.name);
+          this.props.updateDescription(prevProps.description);
 
         }
       }
@@ -170,10 +174,6 @@ class RoutineSelect extends React.Component {
             routines.push(this.props.availableRoutines[i]);
           }
         }
-
-        // defaultValue={this.props.id}
-
-      console.log(this.props.id);
 
         return (
             <React.Fragment>
