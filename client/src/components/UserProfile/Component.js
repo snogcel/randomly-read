@@ -36,9 +36,15 @@ class UserProfile extends React.Component {
 
     const { user } = this.props;
     const { classes } = this.props;
+    const { width } = this.props;
 
     let selectedUserId;
     let selectedUsername;
+    let pageWrapperWidth = 12;
+
+    if (width === "xl") {
+      pageWrapperWidth = 8;
+    }
 
     if (user) {
       selectedUserId = user.id;
@@ -49,21 +55,29 @@ class UserProfile extends React.Component {
 
       <Grid className={classes.root}>
 
-        {user ? (
-          <>
-            <Card className={classes.userAdminCard}>
-              <CardContent>
+        <Grid container spacing={0} justify="center">
 
-                <Grid container justify="center">
-                  <Grid item xs={12}>
-                    <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
-                  </Grid>
-                </Grid>
+          <Grid item xs={pageWrapperWidth}>
 
-              </CardContent>
-            </Card>
-          </>
-        ) : ( this.props.history.push("/") )}
+            {user ? (
+              <>
+                <Card className={classes.userAdminCard}>
+                  <CardContent>
+
+                    <Grid container justify="center">
+                      <Grid item xs={12}>
+                        <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
+                      </Grid>
+                    </Grid>
+
+                  </CardContent>
+                </Card>
+              </>
+            ) : ( this.props.history.push("/") )}
+
+          </Grid>
+
+        </Grid>
 
       </Grid>
 
@@ -72,6 +86,10 @@ class UserProfile extends React.Component {
   }
 }
 
+UserProfile.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const UserProfileWrapped = withStyles(styles)(UserProfile);
 
-export default UserProfileWrapped;
+export default withWidth()(UserProfileWrapped);
