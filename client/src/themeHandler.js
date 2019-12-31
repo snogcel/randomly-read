@@ -344,6 +344,9 @@ const styles = theme => ({
   },
   RoutineBuilderSelector: {
     display: "inline-flex",
+  },
+  userAdminSelectContainer: {
+    display: "flex",
   }
 });
 
