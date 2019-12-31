@@ -999,49 +999,66 @@ class RoutineBuilder extends React.Component {
 
               <Grid item xs={exerciseContainerWidth}>
 
-                <div className={classes.routineSelectCard}>
 
-                  <Grid container spacing={0}>
 
-                    {user.superuser ? (
-                      <>
-                      <Grid item xs={12}>
-
-                        <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
-
-                      </Grid>
-                      </> ) : ( null )
-                    }
-
-                    <Grid item xs={8}>
-
-                      <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
-
-                    </Grid>
-
-                    <Grid item xs={2} justify="center">
-
-                      <NewRoutineButton action={this.createHandler} />
-
-                    </Grid>
-
-                    <Grid item xs={2} justify="center">
-
-                      <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
-
-                    </Grid>
+                  <Grid container spacing={0} justify="center">
 
                     <Grid item xs={12}>
 
-                      <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
+                      <Card className={classes.userAdminCard}>
+                        <CardContent>
+
+                          <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
+                            Routine Builder
+                          </Typography>
+                          {user.superuser ? (
+                            <>
+
+                              <Typography variant="body2" color="textSecondary" component="p">
+                                Use the dropdown menu to select a user.
+                              </Typography>
+                              <br />
+                              <UserSelect action={this.userSelectHandler} options={availableUsers} user={selectedUserObj} />
+
+                            </> ) : ( null )
+                          }
+
+                          <Grid container justify="center">
+
+                            <Grid item xs={8}>
+
+                              <RoutinesSelect action={this.routineSelectHandler} options={availableRoutines} routine={selectedRoutineObj} />
+
+                            </Grid>
+
+                            <Grid item xs={2} justify="center">
+
+                              <NewRoutineButton action={this.createHandler} />
+
+                            </Grid>
+
+                            <Grid item xs={2} justify="center">
+
+                              <DeleteRoutineButton action={this.deleteRoutineHandler} routineId={this.props.id} />
+
+                            </Grid>
+
+                            <Grid item xs={12}>
+
+                              <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
+
+                            </Grid>
+
+                          </Grid>
+
+                        </CardContent>
+                      </Card>
 
                     </Grid>
 
+
+
                   </Grid>
-
-                </div>
-
-
 
               </Grid>
 
@@ -1053,13 +1070,21 @@ class RoutineBuilder extends React.Component {
                   <Card className={classes.routineBuilderCard}>
                     <CardContent>
 
-                      <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
-                        Routine Description
-                      </Typography>
-                      <Typography variant="body2" color="textSecondary" component="p">
-                        Use the fields below to define a name of this routine as well as provide the user instructions on how to use it.
-                      </Typography>
-                      <br />
+                      <Grid container justify="space-between">
+
+                        <Grid item>
+                          <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
+                            Routine Description
+                          </Typography>
+                        </Grid>
+
+                        <Grid item>
+                          { this.state.showDescriptionEditor ? <IconButton aria-label="less" onClick={() => { this.expandLessHandler(); }}><ExpandLessIcon /></IconButton> : <IconButton aria-label="more" onClick={() => { this.expandMoreHandler(); }}><ExpandMoreIcon /></IconButton> }
+                        </Grid>
+
+                      </Grid>
+
+                      { this.state.showDescriptionEditor && <Typography variant="body2" color="textSecondary" component="p">Use the fields below to define a name of this routine as well as provide the user instructions on how to use it.<br /><br /></Typography> }
 
                       <Grid container spacing={0}>
 
@@ -1072,14 +1097,6 @@ class RoutineBuilder extends React.Component {
                         <Grid item xs={12} className={classes.DescriptionEditor}>
 
                           { this.state.showDescriptionEditor ? <DescriptionEditor action={this.descriptionHandler} description={descriptionObj}/> : <Hidden xlDown><DescriptionEditor action={this.descriptionHandler} description={descriptionObj}/></Hidden> }
-
-                        </Grid>
-
-                        <Grid container alignItems="flex-start" justify="flex-end" direction="row">
-
-                          <Grid item>
-                            { this.state.showDescriptionEditor ? <IconButton aria-label="less" onClick={() => { this.expandLessHandler(); }}><ExpandLessIcon /></IconButton> : <IconButton aria-label="more" onClick={() => { this.expandMoreHandler(); }}><ExpandMoreIcon /></IconButton> }
-                          </Grid>
 
                         </Grid>
 
