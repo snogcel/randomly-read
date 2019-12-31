@@ -513,20 +513,28 @@ class Timer extends React.Component {
       null : <IconButton disableFocusRipple onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"} style={{ backgroundColor: 'transparent' }} ><ReplayIcon /></IconButton>;
 
     let TimerFragment = <React.Fragment>
-      <div className={classes.RoutineSelector}>
-        <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
-      </div>
+      <Grid container justify="center" className={classes.routineSelectContainer}>
 
-      {(this.props.currentExercise.length > 0) ? (
-        <>
-          <div className={classes.TimerControls}>
-            {start}
-            {resume}
-            {stop}
-            {reset}
+        <Grid item>
+          <div className={classes.RoutineSelector}>
+            <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
           </div>
-        </>
-      ) : ( <> </> )}
+        </Grid>
+
+        <Grid item>
+          {(this.props.currentExercise.length > 0) ? (
+            <>
+              <div className={classes.TimerControls}>
+                {start}
+                {resume}
+                {stop}
+                {reset}
+              </div>
+            </>
+          ) : ( <> </> )}
+        </Grid>
+
+      </Grid>
     </React.Fragment>;
 
 
@@ -553,7 +561,17 @@ class Timer extends React.Component {
         <React.Fragment>
 
           <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
-            <Grid item>
+
+            <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
+              <Typography variant="h5" component="h2" className={classes.mobileHeading}>
+                Available Routines
+              </Typography>
+              <Typography gutterBottom variant="body2" color="textSecondary" component="p">
+                Use the menu to select a practice routine.
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
               {TimerFragment}
             </Grid>
           </Grid>

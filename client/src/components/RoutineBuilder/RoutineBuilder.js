@@ -282,7 +282,7 @@ class RoutineBuilder extends React.Component {
     let id = this.props.id;
     let name = this.props.name;
     let description = JSON.stringify(this.props.description);
-    
+
     console.log("saving description: ", this.props.description);
 
     let routine = this.props.routine;
@@ -1248,7 +1248,7 @@ class RoutineBuilder extends React.Component {
             </Grid>
 
           </>
-        ) : ( this.props.history.push("/login") )}
+        ) : ( this.props.history.push("/") )}
 
       </Grid>
 

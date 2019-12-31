@@ -23,10 +23,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
+import Hidden from '@material-ui/core/Hidden';
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(0)
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -93,6 +95,10 @@ export default function MenuAppBar(props) {
     props.logout();
   };
 
+  const handleLogin = () => {
+    props.history.push('/login');
+  };
+
   const handleRandomlyRead = () => {
     props.history.push('/');
   };
@@ -129,8 +135,6 @@ export default function MenuAppBar(props) {
 
     </div>
   );
-
-  console.log(user);
 
   return (
     <div className={classes.root}>
@@ -181,12 +185,16 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleFocusWords}>Words</MenuItem>
+                <Hidden lgUp><MenuItem onClick={handleFocusWords}>Words</MenuItem></Hidden>
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
             </div>
-          ) : ( null )}
+          ) : (
+            <div>
+              <Button onClick={handleLogin} color="inherit">Login</Button>
+            </div>
+          )}
         </Toolbar>
       </AppBar>
     </div>

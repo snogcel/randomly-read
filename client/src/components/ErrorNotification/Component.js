@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   ${transition('opacity', 'transform')};
 
   position: fixed;
-  top: 16px;
+  top: 70px;
   left: 0;
   right: 0;
   z-index: 100;
@@ -18,7 +18,7 @@ const Wrapper = styled.div`
   pointer-events: none;
 
   &.${className}-enter {
-    opacity: 0;
+    opacity: 1;
     transform: translateY(-25%);
   }
 
@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   }
 
   &.${className}-exit-active {
-    opacity: 0;
+    opacity: 1;
   }
 `;
 
@@ -41,7 +41,7 @@ class ErrorNotification extends React.Component {
     return (
       <TransitionGroup component={null}>
         {this.props.error && (
-          <CSSTransition classNames={className} timeout={300}>
+          <CSSTransition classNames={className} timeout={1000}>
             <Wrapper>
               <ErrorNotificationMessage>
                 {this.props.error.message}

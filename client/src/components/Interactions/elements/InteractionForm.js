@@ -182,7 +182,7 @@ export default function InteractionForm(props) {
 
             <Grid container justify="center">
 
-              <Grid item xs={12} sm={6} md={12} className={classes.wordEntry}>
+              <Grid item xs={12} sm={6} md={6} lg={12} className={classes.wordEntry}>
                 <FormControl className={classes.formControl}>
                   <InputLabel shrink htmlFor="admin-user-input">Word Search</InputLabel>
                   <BootstrapInput
@@ -201,7 +201,7 @@ export default function InteractionForm(props) {
 
               </Grid>
 
-              <Grid item xs={12} sm={6} md={12} justify="center">
+              <Grid item xs={12} sm={6} md={6} lg={12} justify="center">
 
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="admin-user-input">Position</InputLabel>

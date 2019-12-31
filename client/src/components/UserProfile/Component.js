@@ -63,7 +63,7 @@ class UserProfile extends React.Component {
               </CardContent>
             </Card>
           </>
-        ) : ( this.props.history.push("/login") )}
+        ) : ( this.props.history.push("/") )}
 
       </Grid>
 

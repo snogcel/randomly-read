@@ -28,13 +28,6 @@ const Wrapper = styled.header`
   }
 `;
 
-/*
-
-
-<HeaderNavLink to='/Interactions'>Interactions</HeaderNavLink>
-
- */
-
 const Header = ({ user, logout }) => (
   <Wrapper>
     <HeaderLogo />

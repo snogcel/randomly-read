@@ -32,6 +32,14 @@ const styles = theme => ({
     color: "#14197E",
     fontWeight: "bold"
   },
+  mobileRoutineSelectContainer: {
+    textAlign: "center",
+  },
+  mobileHeading: {
+    marginTop: theme.spacing(2),
+    color: "#14197E",
+    fontWeight: "bold"
+  },
   sliderRoot:{
     width: 500,
     margin: 50
@@ -217,7 +225,7 @@ const styles = theme => ({
     paddingRight: theme.spacing.unit * 1
   },
   TimerControls: {
-    display: "inline-flex"
+    display: "inline-flex",
   },
   exerciseHistoryMobile: {
     display:'flex',
@@ -255,6 +263,78 @@ const styles = theme => ({
   routineDetails: {
     padding: theme.spacing(3, 2),
     marginTop: theme.spacing(4),
+  },
+  homePageContainer: {
+    paddingLeft: theme.spacing(3),
+    paddingRight: theme.spacing(3)
+  },
+  homePageHeader: {
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
+    textAlign: "center"
+  },
+  homePageHeaderBox: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(3),
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2),
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    textAlign: "center",
+    backgroundColor: "#EFEFEF",
+    borderRadius: 10
+  },
+  homePageItems: {
+    backgroundColor: "#F7F7F7",
+  },
+  homePageSubHeader: {
+    paddingTop: theme.spacing(6),
+    paddingBottom: theme.spacing(6),
+  },
+  homePageBulletPointContainer: {
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    paddingTop: theme.spacing(3),
+    paddingBottom: theme.spacing(1),
+    marginBottom: theme.spacing(3),
+    backgroundColor: "#FFFFFF",
+    borderRadius: 10
+  },
+  homePageBulletPoint: {
+    display: "flex",
+    alignItems: "center",
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    marginLeft: theme.spacing(2)
+  },
+  contactFormContainer: {
+
+  },
+  homePageHeading: {
+    color: "#14197E",
+    fontWeight: "bold",
+    textAlign: "left"
+  },
+  signupHeading: {
+    color: "#14197E",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  signupContainer: {
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2)
+  },
+  homePageSignupText: {
+    textAlign: "center"
+  },
+  routineSelectContainer: {
+    display: "flex",
+    alignItems: "center",
   }
 });
 
