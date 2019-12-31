@@ -5,6 +5,7 @@ import {UPDATE_FILTER} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_REQUEST} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_SUCCESS} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_ERROR} from '../actions/viewHistory';
+import {LOGOUT} from "../actions/auth";
 
 let dataSet;
 const initialState = {
@@ -32,6 +33,9 @@ export default (state = initialState, action) => {
 
     case UPDATE_FILTER:
       return {...state, filter: action.filter };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

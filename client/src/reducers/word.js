@@ -11,6 +11,7 @@ import {ADD_SYLLABLES} from '../actions/word';
 import {ADD_ROUTINE_VOWEL} from '../actions/word';
 import {ADD_INTERMISSION_TEXT} from '../actions/word';
 import {REMOVE_CONSONANT} from '../actions/word';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = {
     text: [],
@@ -51,6 +52,10 @@ export default (state = initialState, action) => {
           return {...state, mode: action.text};
         case ADD_INTERMISSION_TEXT:
           return {...state, intermissionText: action.text};
+
+        case LOGOUT:
+          return initialState;
+
         default:
           return state;
     }

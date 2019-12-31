@@ -8,6 +8,7 @@ import {SET_RANGE} from '../actions/exerciseHistory';
 import {UPDATE_TIMELEFT} from '../actions/exerciseHistory';
 import {ADD_QUERY_RESULT} from '../actions/exerciseHistory';
 import {CLEAR_QUERY_RESULTS} from '../actions/exerciseHistory';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = {
     currentExercise: [],
@@ -43,6 +44,10 @@ export default (state = initialState, action) => {
         return {...state, total: action.text};
       case UPDATE_TIMELEFT:
         return {...state, timeLeft: action.text};
+
+      case LOGOUT:
+        return initialState;
+
       default:
         return state;
     }

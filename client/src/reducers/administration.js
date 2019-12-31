@@ -29,6 +29,7 @@ import {UPDATE_USER_ERROR} from '../actions/administration';
 import {CREATE_USER_REQUEST} from '../actions/administration';
 import {CREATE_USER_SUCCESS} from '../actions/administration';
 import {CREATE_USER_ERROR} from '../actions/administration';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = {
   availableUsers: [],
@@ -178,6 +179,9 @@ export default (state = initialState, action) => {
 
     case CHANGE_PASSWORD:
       return {...state, mode: 'password'};
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

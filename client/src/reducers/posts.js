@@ -24,6 +24,7 @@ import {
   VOTE_SUCCESS,
   VOTE_ERROR
 } from '../actions/posts';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = { isFetching: false, items: [] };
 
@@ -95,6 +96,9 @@ export default (state = initialState, action) => {
       };
     case VOTE_ERROR:
       return { ...state, isVoting: false };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

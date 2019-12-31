@@ -12,6 +12,7 @@ import {
   DELETE_INTERACTION_SUCCESS,
   DELETE_INTERACTION_ERROR
 } from '../actions/interaction';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = { isFetching: false, settings: [], items: [] };
 
@@ -46,6 +47,9 @@ export default (state = initialState, action) => {
       return { ...state, isDeleting: false, isInteractionVoting: false, items, post: null };
     case DELETE_INTERACTION_ERROR:
       return { ...state, isDeleting: false, isInteractionVoting: false };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;
