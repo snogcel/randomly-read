@@ -172,8 +172,6 @@ class Administration extends React.Component {
 
     const { width } = this.props;
 
-    console.log(selectedUserId);
-
     let pageWrapperWidth = 12;
     let userSelectContainerWidth = 12;
     let userAdministrationContainerWidth = 12;
