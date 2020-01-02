@@ -9,12 +9,10 @@ const WordHistory = function({ wordid, id, votes, score, comments, full, title, 
 
   if (type === "sentence") {
 
-    console.log(title);
-
     let sentence = [];
 
     for (let i = 0; i < title.length; i++) {
-      sentence.push(<PostVoteContainer wordid={title[i].wordid} id={title[i].id} votes={title[i].votes} score={title[i].score} title={title[i].title}/>);
+      sentence.push(<PostVoteContainer key={title[i].id} wordid={title[i].wordid} id={title[i].id} votes={title[i].votes} score={title[i].score} title={title[i].title}/>);
     }
 
     return (
@@ -26,7 +24,7 @@ const WordHistory = function({ wordid, id, votes, score, comments, full, title, 
   } else {
 
     return (
-      <PostVoteContainer wordid={wordid} id={id} votes={votes} score={score} title={title}/>
+      <PostVoteContainer key={id} wordid={wordid} id={id} votes={votes} score={score} title={title}/>
     )
 
   }

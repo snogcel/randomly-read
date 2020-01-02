@@ -14,16 +14,16 @@ const styles = theme => ({
       padding: 25
     },
     column: {
-      marginTop: theme.spacing.unit * 4,
+      marginTop: theme.spacing(4),
       position: 'center',
       bottomPadding: 50,
       width: 1150,
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary
     },
     sideColumn: {
-      padding: theme.spacing.unit * 2,
+      padding: theme.spacing(2),
       textAlign: "center",
       color: theme.palette.text.secondary
     },
@@ -42,17 +42,17 @@ const FluencyReport = props => {
             <div className={classes.root}>
             <Grid container spacing={0} direction="row" alignItems="center" justify="center">
               <Grid item>
-              <Card elevation="1" className={classes.column}>      
-              <Typography className={classes.title} variant="h4" align="center">Speaking at Work or School</Typography>  
+              <Card elevation="1" className={classes.column}>
+              <Typography className={classes.title} variant="h4" align="center">Speaking at Work or School</Typography>
                 <CardContent>
                     <FluencyReportForm form={"Setting1Form"} initialValues={{"setting": "1",}} setting={"1"}/>
                 </CardContent>
               </Card>
-              </Grid>      
+              </Grid>
 
             <Grid item>
               <Card elevation="1" className={classes.column}>
-              <Typography className={classes.title} variant="h4" align="center">Speaking on the Phone</Typography>  
+              <Typography className={classes.title} variant="h4" align="center">Speaking on the Phone</Typography>
                 <CardContent>
                     <FluencyReportForm form={"Setting2Form"} initialValues={{"setting": "2",}}/>
                 </CardContent>
@@ -60,7 +60,7 @@ const FluencyReport = props => {
               </Grid>
               <Grid item>
               <Card elevation="1" className={classes.column}>
-              <Typography className={classes.title} variant="h4" align="center">Presenting a Topic</Typography>  
+              <Typography className={classes.title} variant="h4" align="center">Presenting a Topic</Typography>
                 <CardContent>
                     <FluencyReportForm form={"Setting3Form"} initialValues={{"setting": "3",}}/>
                 </CardContent>
@@ -68,7 +68,7 @@ const FluencyReport = props => {
               </Grid>
               <Grid item>
               <Card elevation="1" className={classes.column}>
-              <Typography className={classes.title} variant="h4" align="center">Attending a Social Event</Typography>  
+              <Typography className={classes.title} variant="h4" align="center">Attending a Social Event</Typography>
                 <CardContent>
                     <FluencyReportForm form={"Setting4Form"} initialValues={{"setting": "4",}} setting={"4"}/>
                 </CardContent>
@@ -76,7 +76,7 @@ const FluencyReport = props => {
               </Grid>
               <Grid item>
               <Card elevation="1" className={classes.column}>
-              <Typography className={classes.title} variant="h4" align="center">Relaxing with Friends</Typography>  
+              <Typography className={classes.title} variant="h4" align="center">Relaxing with Friends</Typography>
                 <CardContent>
                     <FluencyReportForm form={"Setting5Form"} initialValues={{"setting": "5",}} setting={"5"}/>
                 </CardContent>
@@ -84,7 +84,7 @@ const FluencyReport = props => {
               </Grid>
               <Grid item>
               <Card elevation="1" className={classes.column}>
-              <Typography className={classes.title} variant="h4" align="center">Relaxing at Home</Typography>  
+              <Typography className={classes.title} variant="h4" align="center">Relaxing at Home</Typography>
                 <CardContent>
                     <FluencyReportForm form={"Setting6Form"} initialValues={{"setting": "6","intention": 0}} setting={"6"}/>
                 </CardContent>
@@ -93,9 +93,9 @@ const FluencyReport = props => {
               {props.combinedData.length !== 0 ?
               <Grid item>
               <Card elevation="1" className={classes.column}>
-              <Typography className={classes.title} variant="h4" align="center">History</Typography>  
+              <Typography className={classes.title} variant="h4" align="center">History</Typography>
                 <CardContent>
-                <FluencyReportHistory/> 
+                <FluencyReportHistory/>
                 </CardContent>
               </Card>
               </Grid> : null }
@@ -119,4 +119,4 @@ const FluencyReportContainer = connect(
   mapDispatchToProps
 )(FluencyReportWrapped);
 
-export default FluencyReportContainer; 
+export default FluencyReportContainer;

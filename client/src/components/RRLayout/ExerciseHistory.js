@@ -172,13 +172,13 @@ class ExerciseHistory extends React.Component {
 
           if ((width === "xs" || width === "sm" || width === "md") && (currentExerciseNumber === stepNumber)) {
             return(
-              <StyledListItem selected={true} className={classes.exerciseHistoryMobile}>
+              <StyledListItem key={stepNumber} selected={true} className={classes.exerciseHistoryMobile}>
                 <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText)} /></Typography>
               </StyledListItem>
             );
           } else if (width === "lg" || width === "xl") {
             return(
-              <StyledListItem selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
+              <StyledListItem key={stepNumber} selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
                 <ListItemIcon>
                   {(currentExerciseNumber <= stepNumber) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
                 </ListItemIcon>

@@ -118,6 +118,21 @@ class RoutineSelect extends React.Component {
         }
       }
 
+      // reset routine if one was previously selected
+      if (this.props.id === 0 && typeof this.props.routine.subroutine !== "undefined") {
+        this.props.updateId(this.props.routine.id);
+        this.props.updateName(this.props.routine.name);
+        this.props.updateActiveRoutine(this.props.routine);
+        this.props.updateDescription(this.props.description);
+        this.props.action(this.props.routine); // pass mode update back to QueryManager
+      } else if (this.props.id === 0 && typeof this.props.availableRoutines[0] !== "undefined") {
+        this.props.updateId(this.props.availableRoutines[0].attributes.id);
+        this.props.updateName(this.props.availableRoutines[0].attributes.name);
+        this.props.updateDescription(this.props.availableRoutines[0].attributes.description);
+        this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
+        this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
+      }
+
     }
 
     componentDidMount() {
@@ -148,21 +163,6 @@ class RoutineSelect extends React.Component {
         const { classes } = this.props;
         const { theme } = this.props;
 
-        // reset routine if one was previously selected
-        if (this.props.id === 0 && typeof this.props.routine.subroutine !== "undefined") {
-          this.props.updateId(this.props.routine.id);
-          this.props.updateName(this.props.routine.name);
-          this.props.updateActiveRoutine(this.props.routine);
-          this.props.updateDescription(this.props.description);
-          this.props.action(this.props.routine); // pass mode update back to QueryManager
-        } else if (this.props.id === 0 && typeof this.props.availableRoutines[0] !== "undefined") {
-          this.props.updateId(this.props.availableRoutines[0].attributes.id);
-          this.props.updateName(this.props.availableRoutines[0].attributes.name);
-          this.props.updateDescription(this.props.availableRoutines[0].attributes.description);
-          this.props.updateActiveRoutine(this.props.availableRoutines[0].attributes);
-          this.props.action(this.props.availableRoutines[0].attributes); // pass mode update back to QueryManager
-        }
-
         // split into assigned / system generated routines
         let upvotedRoutines = [];
         let routines = [];
@@ -187,9 +187,9 @@ class RoutineSelect extends React.Component {
                     input={<BootstrapInput name="routine" id="routine-customized-select" />}
                     >
 
-                      { routines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
+                      { routines.map((item, i) => ( <MenuItem key={item.attributes.id} value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
                       { ((upvotedRoutines.length > 0) && <ListSubheader>System Generated</ListSubheader> ) }
-                      { upvotedRoutines.map((item, i) => ( <MenuItem value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
+                      { upvotedRoutines.map((item, i) => ( <MenuItem key={item.attributes.id} value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
                     </Select>
                   </FormControl>
 

@@ -45,10 +45,10 @@ const styles = theme => ({
     margin: 50
   },
   margin: {
-    height: theme.spacing.unit * 3
+    height: theme.spacing(3)
   },
   formTable: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing(3)
   },
   form: {
     textAlign: "left",
@@ -57,21 +57,21 @@ const styles = theme => ({
     marginRight: 40,
   },
   column: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   sideColumn: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 50,
+    width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
     outline: "none"
   },
   wordGrid: {
@@ -110,14 +110,14 @@ const styles = theme => ({
     transition: "0.3s",
   },
   routineBuilderCard: {
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 4,
-    marginRight: theme.spacing.unit * 4,
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
   },
   userAdminCard: {
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 4,
-    marginRight: theme.spacing.unit * 4,
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
   },
   sideCard: {
     marginBottom: 20
@@ -137,10 +137,10 @@ const styles = theme => ({
     fontSize: 24,
     fontFamily: "'Noto Sans', sans-serif",
     fontWeight: "bold",
-    marginLeft: theme.spacing.unit * 4,
-    marginRight: theme.spacing.unit * 4,
-    marginTop: theme.spacing.unit * 1,
-    marginBottom: theme.spacing.unit * 1,
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     textAlign: "center"
   },
   historyTitle: {
@@ -206,10 +206,10 @@ const styles = theme => ({
     margin: "0.25em"
   },
   actionsContainer: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing(2)
   },
   resetContainer: {
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing(3)
   },
   wordHistoryWrapper: {
     textAlign: "center",
@@ -221,8 +221,8 @@ const styles = theme => ({
   },
   RoutineSelector: {
     display: "inline-flex",
-    paddingLeft: theme.spacing.unit * 1,
-    paddingRight: theme.spacing.unit * 1
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   TimerControls: {
     display: "inline-flex",
