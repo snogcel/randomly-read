@@ -118,21 +118,22 @@ const resolvers = {
 
            */
 
-            /*
+
             let templates = [
               "{{ noun }} is {{ adjective }}",
               "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
             ];
-            */
 
-            let templates = [];
 
-            let templateAnimal = "{{ an_adjective }} {{ noun_animal }}";
-            let templateArtifact = "the {{ adjective }} {{ noun_artifact }}";
-            let templateLocation = "the {{ noun }} is in {{ noun_location }}";
-            let templateFood = "the {{ noun_food }} is {{ an_adjective }} {{ noun }}";
-            let templatePerson = "the {{ noun_person }} is {{ an_adjective }} {{ noun }}";
+            let templateAnimal = ["{{ an_adjective }} {{ noun_animal }}"];
+            let templateArtifact = ["the {{ adjective }} {{ noun_artifact }}", "{{ an_adjective }} {{ noun_artifact }}"];
+            let templateLocation = ["the {{ noun_location }} {{ noun }} is {{ adjective }}"];
+
+            let templateFood = ["the {{ noun_food }} is {{ adjective }}", "{{ an_adjective }} {{ noun_food }}"];
+            let templatePerson = ["the {{ noun_person }} is {{ adjective }}", "{{ an_adjective }} {{ noun_person }}"];
+
+            let templateFoodAndPerson = ["{{ noun_person }} with a {{ noun_food }}"]; // find other examples of this?
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -205,11 +206,15 @@ const resolvers = {
 
                       if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
 
-                      // if (filteredNouns["animal"].length > 0) templates.push(templateAnimal);
-                      // if (filteredNouns["location"].length > 0) templates.push(templateLocation);
-                      // if (filteredNouns["artifact"].length > 0) templates.push(templateArtifact);
-                      // if (filteredNouns["food"].length > 0) templates.push(templateFood);
-                      if (filteredNouns["person"].length > 0 ) templates.push(templatePerson);
+                      if (filteredNouns["food"].length > 0 && filteredNouns["person"].length > 0) templates = templates.concat(templateFoodAndPerson);
+
+                      if (filteredNouns["animal"].length > 0) templates = templates.concat(templateAnimal);
+                      if (filteredNouns["location"].length > 0) templates = templates.concat(templateLocation);
+                      if (filteredNouns["artifact"].length > 0) templates = templates.concat(templateArtifact);
+                      if (filteredNouns["food"].length > 0) templates = templates.concat(templateFood);
+                      if (filteredNouns["person"].length > 0 ) templates = templates.concat(templatePerson);
+
+                      console.log(templates);
 
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;
@@ -307,8 +312,6 @@ const resolvers = {
 
                     Promise.all(promises)
                       .then(() => {
-
-                        console.log(result);
 
                         let obj = { words: result };
 
