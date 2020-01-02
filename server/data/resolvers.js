@@ -7,7 +7,8 @@ const resolvers = {
     Query: {
         words(_, args, req) {
             let filter = {
-              syllables: [1,2,3,4,5]
+              syllables: [1,2,3,4,5],
+              type: ["noun", "verb", "adj", "adv"]
             };
 
             // type: ["noun", "verb", "adj", "adv"]
@@ -42,7 +43,7 @@ const resolvers = {
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter }).then(function(data) {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
 
                       let wordsWithType = [];
                       let queryResult = [];
