@@ -118,15 +118,21 @@ const resolvers = {
 
            */
 
+            /*
             let templates = [
               "{{ noun }} is {{ adjective }}",
               "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
             ];
+            */
+
+            let templates = [];
 
             let templateAnimal = "{{ an_adjective }} {{ noun_animal }}";
             let templateArtifact = "the {{ adjective }} {{ noun_artifact }}";
-            let templateLocation = "{{ noun }} in {{ noun_location }}";
+            let templateLocation = "the {{ noun }} is in {{ noun_location }}";
+            let templateFood = "the {{ noun_food }} is {{ an_adjective }} {{ noun }}";
+            let templatePerson = "the {{ noun_person }} is {{ an_adjective }} {{ noun }}";
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -199,9 +205,11 @@ const resolvers = {
 
                       if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
 
-                      if (filteredNouns["animal"].length > 0) templates.push(templateAnimal);
-                      if (filteredNouns["location"].length > 0) templates.push(templateLocation);
-                      if (filteredNouns["artifact"].length > 0) templates.push(templateArtifact);
+                      // if (filteredNouns["animal"].length > 0) templates.push(templateAnimal);
+                      // if (filteredNouns["location"].length > 0) templates.push(templateLocation);
+                      // if (filteredNouns["artifact"].length > 0) templates.push(templateArtifact);
+                      // if (filteredNouns["food"].length > 0) templates.push(templateFood);
+                      if (filteredNouns["person"].length > 0 ) templates.push(templatePerson);
 
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;
@@ -271,7 +279,9 @@ const resolvers = {
 
                                   promises.push(new Promise((resolve, reject) => {
 
-                                    let obj = { lexeme: text[i] };
+                                    let id = text[i] + "_" + Date.now();
+
+                                    let obj = { id: id, lexeme: text[i] };
 
                                     result[i] = obj;
                                     resolve();
@@ -298,9 +308,9 @@ const resolvers = {
                     Promise.all(promises)
                       .then(() => {
 
-                        let obj = { words: result };
+                        console.log(result);
 
-                        console.log(obj);
+                        let obj = { words: result };
 
                         resolve(obj);
 

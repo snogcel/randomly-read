@@ -5,14 +5,16 @@ import PostContent from './Content';
 import Grid from '@material-ui/core/Grid';
 import WordHistoryListItem from "../WordHistoryList/Component";
 
-const WordHistory = function({ id, votes, score, comments, full, title, type, ...content }) {
+const WordHistory = function({ wordid, id, votes, score, comments, full, title, type, ...content }) {
 
   if (type === "sentence") {
+
+    console.log(title);
 
     let sentence = [];
 
     for (let i = 0; i < title.length; i++) {
-      sentence.push(<PostVoteContainer id={title[i].id} votes={title[i].votes} score={title[i].score} title={title[i].title}/>);
+      sentence.push(<PostVoteContainer wordid={title[i].wordid} id={title[i].id} votes={title[i].votes} score={title[i].score} title={title[i].title}/>);
     }
 
     return (
@@ -24,7 +26,7 @@ const WordHistory = function({ id, votes, score, comments, full, title, type, ..
   } else {
 
     return (
-      <PostVoteContainer id={id} votes={votes} score={score} title={title}/>
+      <PostVoteContainer wordid={wordid} id={id} votes={votes} score={score} title={title}/>
     )
 
   }

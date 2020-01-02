@@ -33,14 +33,12 @@ function WordHistory(props) {
 
   const {classes} = props;
 
-  console.log(props.exerciseResults);
-
   return (
     <React.Fragment>
       <Grid spacing={8}>
         { exerciseResults.map((item, i) => (
           <Grid item xs={12}>
-            <Card square elevation="0" style={{backgroundColor: 'transparent'}}>
+            <Card square elevation={0} style={{backgroundColor: 'transparent'}}>
               <CardContent>
                 <Typography className={classes.historyTitle} color="textPrimary" variant="h6">{item.title}</Typography>
               </CardContent>
