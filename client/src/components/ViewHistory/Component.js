@@ -130,7 +130,7 @@ class ViewHistory extends React.Component {
 
         <Grid container spacing={2}>
 
-          <Grid item xs={12} md={6} justify="center">
+          <Grid item xs={12} md={6}>
 
             <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
               User Profile

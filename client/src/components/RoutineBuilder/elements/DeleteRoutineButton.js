@@ -82,8 +82,8 @@ export default function DeleteRoutineButton(props) {
 
   return (
     <div>
-      <IconButton disableFocusRipple style={{ backgroundColor: 'transparent' }} aria-label="add" className={classes.margin}>
-        <DeleteIcon onClick={handleOpen}/>
+      <IconButton onClick={handleOpen} disableFocusRipple style={{ backgroundColor: 'transparent' }} aria-label="add" className={classes.margin}>
+        <DeleteIcon />
       </IconButton>
 
       <Modal
@@ -94,7 +94,7 @@ export default function DeleteRoutineButton(props) {
       >
         <div style={modalStyle} className={classes.paper}>
 
-          <Grid container xs={12}>
+          <Grid container>
 
             <Grid item xs={8}>
 
@@ -103,7 +103,7 @@ export default function DeleteRoutineButton(props) {
 
             </Grid>
 
-            <Grid item xs={4} justify="center">
+            <Grid item xs={4}>
 
               <br />
 

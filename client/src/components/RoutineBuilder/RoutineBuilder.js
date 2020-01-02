@@ -1249,9 +1249,9 @@ class RoutineBuilder extends React.Component {
 
                   <Grid item xs={routineBuilderContainerWidth}>
 
-                    <Grid container spacing={0}>
+                    <Grid container spacing={0} justify="center">
 
-                      <Grid item xs={12} justify="center">
+                      <Grid item xs={12}>
 
                       </Grid>
 

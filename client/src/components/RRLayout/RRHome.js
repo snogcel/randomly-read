@@ -193,30 +193,30 @@ const RRHome = props => {
 
                   <Grid item xs={12} sm={5} lg={6} xl={3}>
 
-                    <div  className={classes.homePageBulletPointContainer}>
+                    <div className={classes.homePageBulletPointContainer}>
 
                       <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
                         Engineered for client success
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Allow your client to practice anywhere using a desktop or mobile device</div>
+                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Allow your client to practice anywhere using a desktop or mobile device</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Track words that your client has trouble with and practice similar words</div>
+                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Track words that your client has trouble with and practice similar words</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div>Generate words or partial sentences with a focus on specific sounds</div>
+                        <span><CheckBoxIcon fontSize="small"/></span>&nbsp;&nbsp;<span>Generate words or partial sentences with a focus on specific sounds</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <div><CheckBoxIcon fontSize="small"/></div>&nbsp;&nbsp;<div>Draw from 155,000 words to create variety and flexibility in exercise routines</div>
+                        <span><CheckBoxIcon fontSize="small"/></span>&nbsp;&nbsp;<span>Draw from 155,000 words to create variety and flexibility in exercise routines</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <div><CheckBoxIcon fontSize="small" /></div>&nbsp;&nbsp;<div>Create accountability for client practice habits with system usage reporting</div>
+                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Create accountability for client practice habits with system usage reporting</span>
                       </Typography>
 
                     </div>
