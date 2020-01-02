@@ -165,8 +165,8 @@ class ExerciseHistory extends React.Component {
 
           } else {
 
-            listItemText += "Intermission for " + step.rangeVal + " seconds";
-            subHeaderText += step.intermissionText;
+            listItemText += "Intermission (" + step.rangeVal + " seconds)";
+            // subHeaderText += step.intermissionText;
 
           }
 
