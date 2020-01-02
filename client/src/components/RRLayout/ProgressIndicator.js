@@ -14,9 +14,11 @@ function ProgressIndicator(props) {
   const {classes} = props;
 
   let status = null;
+  let progressClass = classes.intermissionIndicator;
 
   if (typeof props.currentExercise !== "undefined" && typeof props.currentExerciseNumber !== "undefined" && props.currentExerciseNumber !== null) {
     if (!props.currentExercise[props.currentExerciseNumber].isIntermission) {
+      progressClass = classes.exerciseIndicator;
       status = 'Exercise ' + (parseInt(props.completed) + 1) + ' of ' + props.total;
     }
   }
@@ -41,7 +43,7 @@ function ProgressIndicator(props) {
 
       {(props.currentExerciseNumber !== null) ? (
         <>
-          <CircularProgress size={size} variant="static" value={value} color="secondary" />
+          <CircularProgress size={size} variant="static" value={value} color="inherit" className={progressClass} />
           <br />
           <Typography variant="h6" color="secondary">{status}</Typography>
         </>

@@ -75,8 +75,8 @@ const styles = theme => ({
     outline: "none"
   },
   wordGrid: {
-    alignItems: "center",
-    minHeight:150,
+    alignItems: "end",
+    minHeight: 150,
     marginTop: theme.spacing(4),
   },
   wordHistoryGrid: {
@@ -128,6 +128,12 @@ const styles = theme => ({
   word: {
     fontWeight: "bold",
     color: "#2f8eed"
+  },
+  exerciseIndicator: {
+    color: "#2f8eed"
+  },
+  intermissionIndicator: {
+    color: "#dba987",
   },
   intermission: {
     fontWeight: "bold",
