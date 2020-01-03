@@ -146,7 +146,7 @@ const resolvers = {
 
             let templateAnimal = ["{{ an_adjective }} {{ noun_animal }}"];
             let templateArtifact = ["the {{ adjective }} {{ noun_artifact }}", "{{ an_adjective }} {{ noun_artifact }}"];
-            let templateLocation = ["the {{ noun_location }} {{ noun }} is {{ adjective }}"];
+            let templateLocation = ["{{ noun_location }} is {{ adjective }}"];
 
             let templateFood = ["the {{ noun_food }} is {{ adjective }}", "{{ an_adjective }} {{ noun_food }}"];
             let templatePerson = ["the {{ noun_person }} is {{ adjective }}", "{{ an_adjective }} {{ noun_person }}"];
@@ -231,8 +231,6 @@ const resolvers = {
                       if (filteredNouns["artifact"].length > 0) templates = templates.concat(templateArtifact);
                       if (filteredNouns["food"].length > 0) templates = templates.concat(templateFood);
                       if (filteredNouns["person"].length > 0 ) templates = templates.concat(templatePerson);
-
-                      console.log(templates);
 
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;
