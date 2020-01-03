@@ -15,10 +15,12 @@ function ProgressIndicator(props) {
 
   let status = null;
   let progressClass = classes.intermissionIndicator;
+  let intermissionMultiplier = 0.66;
 
   if (typeof props.currentExercise !== "undefined" && typeof props.currentExerciseNumber !== "undefined" && props.currentExerciseNumber !== null) {
     if (!props.currentExercise[props.currentExerciseNumber].isIntermission) {
       progressClass = classes.exerciseIndicator;
+      intermissionMultiplier = 1;
       status = 'Exercise ' + (parseInt(props.completed) + 1) + ' of ' + props.total;
     }
   }
@@ -37,6 +39,8 @@ function ProgressIndicator(props) {
   let size = 36;
 
   if (width === "md" || width === "sm" || width === "xs") size = 28;
+
+  size = size * intermissionMultiplier;
 
   return (
     <div className={classes.column}>
