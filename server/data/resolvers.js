@@ -3,12 +3,17 @@ const Sentencer = require('sentencer');
 const Word = require('./connectors');
 const Lexeme = require('./lexeme');
 
+const whitelist = {
+  initial: ["CH", "TH", "Y", "Z", "ZH", "DH"],
+  medial: ["CH", "HH", "JH", "SH", "TH", "ZH", "DH"],
+  final: ["B", "CH", "G", "HH", "JH", "SH", "TH", "W", "Y", "ZH", "DH"]
+};
+
 const resolvers = {
     Query: {
         words(_, args, req) {
             let filter = {
-              syllables: [1,2,3,4,5],
-              type: ["noun", "verb", "adj", "adv"]
+              syllables: [1,2,3,4,5]
             };
 
             // type: ["noun", "verb", "adj", "adv"]
@@ -36,8 +41,20 @@ const resolvers = {
 
             // Randomly select consonant if none provided (prevents massive queries)
             if (typeof filter.consonant === "undefined") {
-              let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"]; // removing "DH" and "ZH" until full blacklist functionality is applied here
+              let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","DH","ZH"]; // removing "DH" and "ZH" until full blacklist functionality is applied here
               filter.consonant = [defaultConsonants[Math.floor(Math.random()*defaultConsonants.length)]];
+            }
+
+            // for cases where a very specific vowel + consonant is being searched
+            if (filter.consonant.length === 1 && (typeof filter.vowel !== "undefined" && filter.vowel.length === 1)) {
+
+              // apply filter if whitelist criteria is not met and single consonant is being searched
+              if (whitelist[location].indexOf(filter.consonant[0]) === -1) { // if consonant is not in whitelist
+                filter.type = ["noun", "verb", "adj", "adv"];
+              }
+
+            } else {
+              filter.type = ["noun", "verb", "adj", "adv"]; // default filter (returns better words overall)
             }
 
             // Fetch Query Data
