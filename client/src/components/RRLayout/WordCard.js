@@ -306,7 +306,7 @@ class WordCard extends React.Component  {
       <Grid container className={classes.wordGrid} justify="center">
         <Grid item>
 
-              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
+              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="no-cache" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
                 {({ loading, error, data, refetch }) => {
 
                   this.refresh = refetch;
