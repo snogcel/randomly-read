@@ -182,6 +182,17 @@ function parseUserObj (obj) {
 
 async function upVotedRoutines(author) {
 
+  function GetSortOrder(prop) {
+    return function(a, b) {
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
+    }
+  }
+
   const category = "upvoted";
   const posts = await Post.find({ author: new ObjectId(author), category: category }).sort('-created');
 
@@ -242,11 +253,11 @@ async function upVotedRoutines(author) {
 
     if (posts[i].position === "initial") {
       name = "Words similar to '" + posts[i].title + "'";
-      description = "This routine is based on the opening sounds of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "') and the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "').";
+      description = "This routine is based on the beginning of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "') and the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "').";
     }
     if (posts[i].position === "final") {
-      name = "Word similar to '" + posts[i].title + "'";
-      description = "This routine is based on the ending sounds of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "') and the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "').";
+      name = "Words similar to '" + posts[i].title + "'";
+      description = "This routine is based on the ending of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "') and the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "').";
     }
 
     routines.push({
@@ -258,6 +269,8 @@ async function upVotedRoutines(author) {
     })
 
   }
+
+  routines.sort(GetSortOrder("description"));
 
   return routines;
 
