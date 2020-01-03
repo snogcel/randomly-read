@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 
 import isEqual from 'lodash.isequal';
 
+import Modal from '@material-ui/core/Modal';
+
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
@@ -169,13 +171,15 @@ const availablePositions = [
   { id: "final", name: "Closing"},
 ];
 
+
 class RoutineBuilder extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       index: 0,
-      showDescriptionEditor: true
+      showDescriptionEditor: true,
+      open: false
     };
 
     this.saveHandler = this.saveHandler.bind(this);
@@ -274,8 +278,15 @@ class RoutineBuilder extends React.Component {
   }
 
   previewHandler() {
-    if (this.routinePreview.current) this.routinePreview.current.refreshQuery();
+    if (this.routinePreview.current) {
+      this.setState({"open": true});
+      this.routinePreview.current.refreshQuery();
+    }
   }
+
+  handlePreviewClose = () => {
+    this.setState({"open": false});
+  };
 
   saveHandler() {
 
@@ -1237,11 +1248,17 @@ class RoutineBuilder extends React.Component {
                     </CardContent>
                   </Card>
 
-                  <Grid item xs={12}>
-
-                    <RoutinePreview routineStep={routineStep} ref={this.routinePreview}/>
-
-                  </Grid>
+                  <Modal
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                    open={this.state.open}
+                    onClose={this.handlePreviewClose}
+                    keepMounted
+                  >
+                    <div className={classes.previewPaper}>
+                      <RoutinePreview routineStep={routineStep} ref={this.routinePreview}/>
+                    </div>
+                  </Modal>
 
                 </Grid>
 

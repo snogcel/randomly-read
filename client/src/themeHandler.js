@@ -66,6 +66,18 @@ const styles = theme => ({
     textAlign: "center",
     color: theme.palette.text.secondary
   },
+  previewPaper: {
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    position: 'absolute',
+    minWidth: 400,
+    minHeight: 200,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
   paper: {
     position: "absolute",
     width: theme.spacing(50),
