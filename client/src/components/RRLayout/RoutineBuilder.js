@@ -133,7 +133,12 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
-      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
+      if ((exerciseConfig.consonants.length === 1 && exerciseConfig.vowels.length === 1)) {
+        console.log("-blacklist bypassed-");
+        verified = true; // bypass blacklist if one vowel and one consonant have been provided (assumes system generated routine)
+      } else {
+        verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
+      }
 
       while (!verified) {
         rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));
