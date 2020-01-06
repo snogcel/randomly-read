@@ -39,7 +39,7 @@ const resolvers = {
                 if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
-            // Randomly select consonant if none provided (prevents massive queries)
+            // Randomly select consonant if none provided (prevents massive queries) -- or is this even needed?!?
             if (typeof filter.consonant === "undefined") {
               let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"]; // removing "DH" and "ZH" until full blacklist functionality is applied here
               filter.consonant = [defaultConsonants[Math.floor(Math.random()*defaultConsonants.length)]];

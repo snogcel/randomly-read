@@ -127,6 +127,8 @@ class Timer extends React.Component {
 
     // Stub out exerciseConfig
     let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
+    let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","DH","ZH"]; // 23
+    let defaultVowels = ["AA","AE","AH","AO","AW","AY","EH","ER","EY","IH","IY","OW","OY","UW"]; // 14
 
     exercise.duration = duration; // calculation exercise duration
     exercise.templates = []; // for future functionality
@@ -139,7 +141,15 @@ class Timer extends React.Component {
       exercise.syllables = [];
       exercise.map = "intermission";
       exercise.mode = "Intermission";
+    } else {
+
+      if (exercise.vowels.length === 0) exercise.vowels = defaultVowels;
+      if (exercise.consonants.length === 0) exercise.consonants = defaultConsonants;
+
     }
+
+    console.log("Consonant Array Length: ", exercise.consonants.length);
+    console.log("Vowel Array Length: ", exercise.vowels.length);
 
     // Update Timer Value
     this.setState({ rangeVal: exercise.rangeVal });
