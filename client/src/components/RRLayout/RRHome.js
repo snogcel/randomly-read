@@ -240,7 +240,13 @@ const RRHome = props => {
                     <br />
 
                     <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      We'll contact you at the provided email address to open a conversation on how to tailor these routines to your clients' needs, how to report on client usage of the tool, and to answer any questions you have. You can reach us by phone at (303) 946-8829 or through email at <a href="mailto:contact@randomlyread.com">contact@randomlyread.com</a>.
+                      We'll contact you at the provided email address to open a conversation on how to tailor these routines to your clients' needs, how to report on client usage of the tool, and to answer any questions you have.
+                    </Typography>
+
+                    <br />
+
+                    <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
+                      You can reach us by phone at (303) 946-8829 or through email at <a href="mailto:contact@randomlyread.com">contact@randomlyread.com</a>.
                     </Typography>
 
                     <br />
