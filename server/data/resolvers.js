@@ -3,7 +3,7 @@ const Sentencer = require('sentencer');
 const Word = require('./connectors');
 const Lexeme = require('./lexeme');
 
-const whitelist = {
+const consonantWhitelist = {
   initial: ["CH", "TH", "Y", "Z", "ZH", "DH"],
   medial: ["CH", "HH", "JH", "SH", "TH", "ZH", "DH"],
   final: ["B", "CH", "G", "HH", "JH", "SH", "TH", "W", "Y", "ZH", "DH"]
@@ -13,7 +13,8 @@ const resolvers = {
     Query: {
         words(_, args, req) {
             let filter = {
-              syllables: [1,2,3,4,5]
+              syllables: [1,2,3,4,5],
+              type: ["noun", "verb", "adj", "adv"]
             };
 
             // type: ["noun", "verb", "adj", "adv"]
@@ -49,12 +50,12 @@ const resolvers = {
             if (filter.consonant.length === 1 && (typeof filter.vowel !== "undefined" && filter.vowel.length === 1)) {
 
               // apply filter if whitelist criteria is not met and single consonant is being searched
-              if (whitelist[location].indexOf(filter.consonant[0]) === -1) { // if consonant is not in whitelist
-                filter.type = ["noun", "verb", "adj", "adv"];
+              if (consonantWhitelist[location].indexOf(filter.consonant[0]) === -1) { // if consonant is not in whitelist
+                // filter.type = ["noun", "verb", "adj", "adv"];
               }
 
             } else {
-              filter.type = ["noun", "verb", "adj", "adv"]; // default filter (returns better words overall)
+              // filter.type = ["noun", "verb", "adj", "adv"]; // default filter (returns better words overall)
             }
 
             // Fetch Query Data
@@ -93,17 +94,67 @@ const resolvers = {
                         lexeme.votes = doc.votes;
                         lexeme.score = doc.score;
 
-                        // console.log(queryResult);
-
-                        console.log(lexeme);
-
                         resolve(lexeme);
 
-                      }, function(err) { reject(err); });
+                      }, function(err) {
+
+                        // fallback to broader query?
+                        reject(err);
+
+                      });
 
                   }).catch(function(err) {
 
-                    console.log(err);
+                    // no results found - remove type filter and try again
+                    delete filter["type"];
+
+                    Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
+
+                      let wordsWithType = [];
+                      let queryResult = [];
+
+                      for (let i = 0; i < data.length; i++) {
+                        if (data[i].dataValues.type === "noun" || data[i].dataValues.type === "verb" || data[i].dataValues.type === "adv" || data[i].dataValues.type === "adj") {
+                          wordsWithType.push(data[i]);
+                        }
+                      }
+
+                      if (wordsWithType.length >= typeLimit) {
+                        queryResult.push(wordsWithType[Math.floor(Math.random()*wordsWithType.length)]);
+                      } else {
+                        queryResult.push(data[Math.floor(Math.random()*data.length)]);
+                      }
+
+                      console.log(wordsWithType.length + " typed results found (" + data.length + " total)");
+                      let lexeme = new Lexeme(queryResult, location, id);
+
+                      lexeme.submitPost().then(function(doc) {
+
+                        lexeme.submitViewHistory(doc._id);
+
+                        // TODO - handle empty doc
+                        queryResult[0].dataValues.id = doc._id; // mongo id of post
+                        queryResult[0].votes = doc.votes;
+                        queryResult[0].score = doc.score;
+
+                        lexeme.id = doc._id;
+                        lexeme.votes = doc.votes;
+                        lexeme.score = doc.score;
+
+                        resolve(lexeme);
+
+                      }, function(err) {
+
+                        reject(err);
+
+                      });
+
+                    }).catch(function(err) {
+
+                      console.log("-no results found-");
+                      console.log(err);
+
+                    });
 
                   });
 
