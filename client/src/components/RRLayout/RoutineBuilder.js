@@ -36,21 +36,16 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
   if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
 
-  // iterate through vowel array (in cases where more than one vowel is being filtered on)
-  for (let i = 0; i < vowels.length; i++) {
+  // determine overlap
+  for (let j = 0; j < syllables.length; j++) {
 
-    // determine overlap
-    for (let j = 0; j < syllables.length; j++) {
-
-      if (j === 0 && i === 0) { // for first iteration, include full array
-        result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
-      } else { // find intersection of arrays
-        result = result.filter(function(value) {
-          return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
-        });
-      }
+    if (j === 0) { // for first iteration, include full array
+      result = blacklist[vowel].consonants[(syllables[j] - 1)];
+    } else { // find intersection of arrays
+      result = result.filter(function(value) {
+        return blacklist[vowel].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+      });
     }
-
   }
 
   if (result.indexOf(consonant) > -1) {
