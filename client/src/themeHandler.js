@@ -289,13 +289,22 @@ const styles = theme => ({
     marginTop: theme.spacing(4),
   },
   homePageContainer: {
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3)
+
   },
   homePageHeader: {
-    paddingTop: theme.spacing(6),
-    paddingBottom: theme.spacing(6),
-    textAlign: "center"
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
+    textAlign: "center",
+    backgroundImage: "url(./connect-20333.png)",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat"
+  },
+  homePageMobileHeader: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    textAlign: "center",
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
   },
   homePageHeaderBox: {
     paddingLeft: theme.spacing(2),
@@ -314,27 +323,59 @@ const styles = theme => ({
     backgroundColor: "#F7F7F7",
   },
   homePageSubHeader: {
-    paddingTop: theme.spacing(6),
-    paddingBottom: theme.spacing(6),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
   homePageBulletPointContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(1),
-    marginBottom: theme.spacing(3),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(2),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
     backgroundColor: "#FFFFFF",
     borderRadius: 10
+  },
+  homePageGetStartedContainer: {
+    marginTop: theme.spacing(3),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
   },
   homePageBulletPoint: {
     display: "flex",
     alignItems: "center",
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    marginTop: theme.spacing(3.5),
+    marginBottom: theme.spacing(3.5),
     marginLeft: theme.spacing(2)
   },
   contactFormContainer: {
 
+  },
+  homepageTitleHeading: {
+    color: "#14197E",
+    fontWeight: "bold"
+  },
+  homepageTitleHeadingContainer: {
+    backgroundColor: "#fbfbfb",
+    padding: theme.spacing(1)
+  },
+  homepageTitleSubheading: {
+    color: "#FFF",
+    marginTop: theme.spacing(1)
+  },
+  homepageTitleSubheadingContainer: {
+    backgroundColor: "#2f8eed",
+    padding: theme.spacing(1)
+  },
+  homepageScreenshotContainer: {
+    textAlign: "center",
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    color: "#2f8eed",
   },
   homePageHeading: {
     color: "#14197E",
@@ -347,14 +388,31 @@ const styles = theme => ({
     textAlign: "center"
   },
   signupContainer: {
+    marginBottom: theme.spacing(3),
     marginLeft: theme.spacing(4),
     marginRight: theme.spacing(4),
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(4),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
   },
   homePageSignupText: {
     textAlign: "center"
+  },
+  homePagePreviewImage: {
+    cursor: "pointer",
+    backgroundColor: "#FFFFFF",
+    padding: theme.spacing(2),
+    borderRadius: 10
+  },
+  previewImage: {
+    position: 'absolute',
+    width: 800,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
   },
   routineSelectContainer: {
     display: "flex",

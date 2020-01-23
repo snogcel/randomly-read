@@ -38,6 +38,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.5",
     "react-transition-group": "^2.5.3",
+    "react-youtube": "^7.9.0",
     "recharts": "^1.8.5",
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
@@ -83,5 +84,6 @@
   },
   "jscsConfig": {
     "extends": "dev"
-  }
+  },
+  "homepage": "https://randomlyread.com"
 }

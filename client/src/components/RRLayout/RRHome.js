@@ -1,6 +1,7 @@
 import React from 'react';
 //import styled from 'styled-components/macro';
 import { withStyles } from "@material-ui/core/styles";
+import YouTube from 'react-youtube';
 
 import SignupForm from '../SignupForm/Container';
 
@@ -8,7 +9,7 @@ import WordCardContainer from './WordCardContainer';
 import TimerContainer from './TimerContainer';
 import Interactions from '../Interactions/InteractionsHomeContainer';
 import Grid from '@material-ui/core/Grid';
-
+import Modal from '@material-ui/core/Modal';
 import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
@@ -44,6 +45,9 @@ const RRHome = props => {
   const {classes, user} = props;
   const { width } = props;
 
+  const [open_1, setOpen_1] = React.useState(false);
+  const [open_2, setOpen_2] = React.useState(false);
+
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
   let interactionContainerWidth = 12;
@@ -77,6 +81,13 @@ const RRHome = props => {
     timerContainerWidth = 10;
   }
 
+  const opts = {
+    width: '100%',
+    playerVars: { // https://developers.google.com/youtube/player_parameters
+      autoplay: 0
+    }
+  };
+
   /*
 
   <Grid className={classes.root}>
@@ -93,7 +104,32 @@ const RRHome = props => {
 
     </Grid>
 
+
+
+    <div >
+                      <YouTube
+                        videoId="2g811Eo7K8U"
+                        opts={opts}
+                      />
+                    </div>
+
    */
+
+  const handleOpen_1 = () => {
+    setOpen_1(true);
+  };
+
+  const handleClose_1 = () => {
+    setOpen_1(false);
+  };
+
+  const handleOpen_2 = () => {
+    setOpen_2(true);
+  };
+
+  const handleClose_2 = () => {
+    setOpen_2(false);
+  };
 
   return (
 
@@ -133,16 +169,29 @@ const RRHome = props => {
           <>
             <Grid container className={classes.homePageContainer}>
 
-              <Grid item xs={12} className={classes.homePageHeader}>
+              {(width == "xs") ? (
+                <Grid item xs={12} className={classes.homePageMobileHeader}>
 
-                <Typography variant="h4" component="h1" className={classes.heading}>
-                  Practice smarter with automated speech therapy exercises
-                </Typography>
-                <Typography variant="body1" color="textSecondary" component="p">
-                  Speech therapy that allows you to focus your effort on specific consonant and vowel sounds
-                </Typography>
+                  <Typography variant="h4" component="h1" className={classes.heading}>
+                    Practice smarter with automated therapy exercises
+                  </Typography>
+                  <Typography variant="body1" color="textSecondary" component="p">
+                    Speech therapy with a focus on specific consonant and vowel sounds
+                  </Typography>
 
-              </Grid>
+                </Grid>
+              ) : (
+                <Grid item xs={12} className={classes.homePageHeader}>
+
+                  <Typography variant="h4" component="h1" className={classes.homepageTitleHeading}>
+                    <span className={classes.homepageTitleHeadingContainer}>Practice smarter with automated therapy exercises</span>
+                  </Typography>
+                  <Typography variant="body1" component="p" className={classes.homepageTitleSubheading}>
+                    <span className={classes.homepageTitleSubheadingContainer}>Speech therapy with a focus on specific consonant and vowel sounds</span>
+                  </Typography>
+
+                </Grid>
+              )}
 
               <Grid item xs={12} className={classes.homePageItems}>
 
@@ -200,11 +249,11 @@ const RRHome = props => {
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Allow your client to practice anywhere using a desktop or mobile device</span>
+                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Practice anywhere, anytime, using a desktop or mobile device</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Track words that your client has trouble with and practice similar words</span>
+                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Track words that your client has trouble with outside of therapy</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
@@ -212,14 +261,56 @@ const RRHome = props => {
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small"/></span>&nbsp;&nbsp;<span>Draw from 155,000 words to create variety and flexibility in exercise routines</span>
+                        <span><CheckBoxIcon fontSize="small"/></span>&nbsp;&nbsp;<span>155,000+ word database provides variety in exercise routines</span>
                       </Typography>
 
                       <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Create accountability for client practice habits with system usage reporting</span>
+                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Create accountability for client practice habits with reporting</span>
                       </Typography>
 
                     </div>
+
+                  </Grid>
+
+                  <Hidden xsDown>
+                  <Grid item xs={12} sm={4} lg={3} xl={3} className={classes.homepageScreenshotContainer}>
+
+                      <img src="./rr_preview_1.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} />
+
+                      <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={open_1}
+                        onClose={handleClose_1}
+                      >
+                        <div className={classes.previewImage}>
+                          <img src="./rr_preview_1_large.png" />
+                        </div>
+                      </Modal>
+
+                      <br /><br />
+
+                      <img src="./rr_preview_2.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} />
+
+                      <Modal
+                        aria-labelledby="simple-modal-title"
+                        aria-describedby="simple-modal-description"
+                        open={open_2}
+                        onClose={handleClose_2}
+                      >
+                        <div className={classes.previewImage}>
+                          <img src="./rr_preview_2_large.png" />
+                        </div>
+                      </Modal>
+
+                  </Grid>
+                  </Hidden>
+
+                </Grid>
+
+                <Grid container justify="center">
+
+                  <Grid item xs={12} sm={5} lg={6} xl={3} className={classes.homePageGetStartedContainer}>
 
                     <br />
 
