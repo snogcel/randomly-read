@@ -31,12 +31,14 @@
     "react-apollo": "^2.5.5",
     "react-awesome-button": "^6.1.0",
     "react-dom": "^16.12.0",
+    "react-ga": "^2.7.0",
     "react-markdown": "^4.0.6",
     "react-redux": "^5.1.1",
     "react-render-html": "^0.6.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.1.5",
     "react-transition-group": "^2.5.3",
+    "react-youtube": "^7.9.0",
     "recharts": "^1.8.5",
     "redux": "^4.0.1",
     "redux-form": "^7.4.2",
@@ -48,6 +50,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "publish": "serve -s build -l 3000",
     "now-build": "npm run build && mv build dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -82,5 +85,6 @@
   },
   "jscsConfig": {
     "extends": "dev"
-  }
+  },
+  "homepage": "https://randomlyread.com"
 }

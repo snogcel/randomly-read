@@ -8,6 +8,7 @@ import {UPDATE_ROUTINE_DESCRIPTION} from '../actions/routineSelect';
 import {UPDATE_ACTIVE_ROUTINE} from '../actions/routineSelect';
 
 import {RESET_ROUTINE_SELECT} from '../actions/routineSelect';
+import {LOGOUT} from "../actions/auth";
 
 let availableRoutines;
 const initialState = {
@@ -39,6 +40,9 @@ export default (state = initialState, action) => {
       return {...state, description: action.description};
     case UPDATE_ACTIVE_ROUTINE:
       return {...state, routine: action.routine};
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

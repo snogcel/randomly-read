@@ -45,10 +45,10 @@ const styles = theme => ({
     margin: 50
   },
   margin: {
-    height: theme.spacing.unit * 3
+    height: theme.spacing(3)
   },
   formTable: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing(3)
   },
   form: {
     textAlign: "left",
@@ -57,26 +57,38 @@ const styles = theme => ({
     marginRight: 40,
   },
   column: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   sideColumn: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
+  previewPaper: {
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    position: 'absolute',
+    minWidth: 400,
+    minHeight: 200,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+  },
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 50,
+    width: theme.spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
     outline: "none"
   },
   wordGrid: {
-    alignItems: "center",
-    minHeight:150,
+    alignItems: "end",
+    minHeight: 150,
     marginTop: theme.spacing(4),
   },
   wordHistoryGrid: {
@@ -110,14 +122,14 @@ const styles = theme => ({
     transition: "0.3s",
   },
   routineBuilderCard: {
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 4,
-    marginRight: theme.spacing.unit * 4,
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
   },
   userAdminCard: {
-    marginTop: theme.spacing.unit * 4,
-    marginLeft: theme.spacing.unit * 4,
-    marginRight: theme.spacing.unit * 4,
+    marginTop: theme.spacing(4),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
   },
   sideCard: {
     marginBottom: 20
@@ -129,18 +141,27 @@ const styles = theme => ({
     fontWeight: "bold",
     color: "#2f8eed"
   },
+  exerciseIndicator: {
+    color: "#2f8eed"
+  },
+  intermissionIndicator: {
+    color: "#dba987",
+  },
   intermission: {
     fontWeight: "bold",
-    color: "#dba987"
+    color: "#dba987",
+    textAlign: "center",
+    marginLeft: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   vowelButton: {
     fontSize: 24,
     fontFamily: "'Noto Sans', sans-serif",
     fontWeight: "bold",
-    marginLeft: theme.spacing.unit * 4,
-    marginRight: theme.spacing.unit * 4,
-    marginTop: theme.spacing.unit * 1,
-    marginBottom: theme.spacing.unit * 1,
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     textAlign: "center"
   },
   historyTitle: {
@@ -206,10 +227,10 @@ const styles = theme => ({
     margin: "0.25em"
   },
   actionsContainer: {
-    marginBottom: theme.spacing.unit * 2
+    marginBottom: theme.spacing(2)
   },
   resetContainer: {
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing(3)
   },
   wordHistoryWrapper: {
     textAlign: "center",
@@ -221,10 +242,13 @@ const styles = theme => ({
   },
   RoutineSelector: {
     display: "inline-flex",
-    paddingLeft: theme.spacing.unit * 1,
-    paddingRight: theme.spacing.unit * 1
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   TimerControls: {
+    display: "inline-flex",
+  },
+  RoutineBuilderControls: {
     display: "inline-flex",
   },
   exerciseHistoryMobile: {
@@ -265,13 +289,22 @@ const styles = theme => ({
     marginTop: theme.spacing(4),
   },
   homePageContainer: {
-    paddingLeft: theme.spacing(3),
-    paddingRight: theme.spacing(3)
+
   },
   homePageHeader: {
-    paddingTop: theme.spacing(6),
-    paddingBottom: theme.spacing(6),
-    textAlign: "center"
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
+    textAlign: "center",
+    backgroundImage: "url(./connect-20333.png)",
+    backgroundSize: "cover",
+    backgroundRepeat: "no-repeat"
+  },
+  homePageMobileHeader: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
+    textAlign: "center",
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
   },
   homePageHeaderBox: {
     paddingLeft: theme.spacing(2),
@@ -290,27 +323,59 @@ const styles = theme => ({
     backgroundColor: "#F7F7F7",
   },
   homePageSubHeader: {
-    paddingTop: theme.spacing(6),
-    paddingBottom: theme.spacing(6),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4),
   },
   homePageBulletPointContainer: {
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(1),
-    marginBottom: theme.spacing(3),
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(2),
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
     backgroundColor: "#FFFFFF",
     borderRadius: 10
+  },
+  homePageGetStartedContainer: {
+    marginTop: theme.spacing(3),
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4),
   },
   homePageBulletPoint: {
     display: "flex",
     alignItems: "center",
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    marginTop: theme.spacing(3.5),
+    marginBottom: theme.spacing(3.5),
     marginLeft: theme.spacing(2)
   },
   contactFormContainer: {
 
+  },
+  homepageTitleHeading: {
+    color: "#14197E",
+    fontWeight: "bold"
+  },
+  homepageTitleHeadingContainer: {
+    backgroundColor: "#fbfbfb",
+    padding: theme.spacing(1)
+  },
+  homepageTitleSubheading: {
+    color: "#FFF",
+    marginTop: theme.spacing(1)
+  },
+  homepageTitleSubheadingContainer: {
+    backgroundColor: "#2f8eed",
+    padding: theme.spacing(1)
+  },
+  homepageScreenshotContainer: {
+    textAlign: "center",
+    marginLeft: theme.spacing(4),
+    marginRight: theme.spacing(4),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    color: "#2f8eed",
   },
   homePageHeading: {
     color: "#14197E",
@@ -323,8 +388,10 @@ const styles = theme => ({
     textAlign: "center"
   },
   signupContainer: {
+    marginBottom: theme.spacing(3),
     marginLeft: theme.spacing(4),
     marginRight: theme.spacing(4),
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(4),
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2)
@@ -332,9 +399,33 @@ const styles = theme => ({
   homePageSignupText: {
     textAlign: "center"
   },
+  homePagePreviewImage: {
+    cursor: "pointer",
+    backgroundColor: "#FFFFFF",
+    padding: theme.spacing(2),
+    borderRadius: 10
+  },
+  previewImage: {
+    position: 'absolute',
+    width: 800,
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+  },
   routineSelectContainer: {
     display: "flex",
     alignItems: "center",
+  },
+  routineBuilderSelectContainer: {
+    display: "flex",
+  },
+  RoutineBuilderSelector: {
+    display: "inline-flex",
+  },
+  userAdminSelectContainer: {
+    display: "flex",
   }
 });
 

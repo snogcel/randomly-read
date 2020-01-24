@@ -12,18 +12,17 @@ import FormControlLabel from "./ConsonantCheckboxes";
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    maxWidth: 360
+    width: '100%'
   },
 }));
 
 const StyledListItem = withStyles({
   root: {
-    border: "1px solid #E0E0F5",
+    border: "1px solid #D7D7D7",
     marginTop: 10,
     marginBottom: 10,
     "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "#82BBF3"
+      backgroundColor: "#D9D9DA"
     }
   },
   selected: {}

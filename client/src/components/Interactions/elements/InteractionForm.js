@@ -188,12 +188,11 @@ export default function InteractionForm(props) {
                   <BootstrapInput
                     id="outlined-word-name"
                     className={classes.textField}
-                    margin="normal"
-                    InputLabelProps={{
+                    margin="dense"
+                    inputlabelprops={{
                       shrink: true,
                     }}
                     variant="outlined"
-                    defaultValue={state.word}
                     value={state.word}
                     onChange={handleChange('word')}
                   />
@@ -201,12 +200,11 @@ export default function InteractionForm(props) {
 
               </Grid>
 
-              <Grid item xs={12} sm={6} md={6} lg={12} justify="center">
+              <Grid item xs={12} sm={6} md={6} lg={12}>
 
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="admin-user-input">Position</InputLabel>
                   <Select
-                    defaultValue={"initial"}
                     value={state.position}
                     onChange={handleChange('position')}
                     input={<BootstrapInput name="user" id="position-customized-select" />}

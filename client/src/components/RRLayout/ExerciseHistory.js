@@ -127,7 +127,7 @@ class ExerciseHistory extends React.Component {
               listItemText += step.repetitions + " " + step.mode;
             }
 
-            if (step.vowels.length > 0) {
+            if (step.vowels.length > 0 && step.vowels.length !== 14) {
               let vowels = "";
               for (let i = 0; i < step.vowels.length; i++) {
 
@@ -142,7 +142,7 @@ class ExerciseHistory extends React.Component {
               listItemText += " focused on " + vowels;
             }
 
-            if (step.consonants.length > 0) {
+            if (step.consonants.length > 0 && step.consonants.length !== 23) {
 
               if (step.position === "initial") subHeaderText += "that start with ";
               if (step.position === "medial") subHeaderText += "that contain ";
@@ -165,20 +165,19 @@ class ExerciseHistory extends React.Component {
 
           } else {
 
-            listItemText += "Intermission for " + step.rangeVal + " seconds";
-            subHeaderText += step.intermissionText;
+            return null;
 
           }
 
           if ((width === "xs" || width === "sm" || width === "md") && (currentExerciseNumber === stepNumber)) {
             return(
-              <StyledListItem selected={true} className={classes.exerciseHistoryMobile}>
+              <StyledListItem key={stepNumber} selected={true} className={classes.exerciseHistoryMobile}>
                 <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText)} /></Typography>
               </StyledListItem>
             );
           } else if (width === "lg" || width === "xl") {
             return(
-              <StyledListItem selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
+              <StyledListItem key={stepNumber} selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
                 <ListItemIcon>
                   {(currentExerciseNumber <= stepNumber) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
                 </ListItemIcon>

@@ -42,6 +42,7 @@ import {DELETE_ROUTINE_ERROR} from '../actions/routineBuilder';
 import {FETCH_USERS_REQUEST} from '../actions/routineBuilder';
 import {FETCH_USERS_SUCCESS} from '../actions/routineBuilder';
 import {FETCH_USERS_ERROR} from '../actions/routineBuilder';
+import {LOGOUT} from "../actions/auth";
 
 let availableRoutines;
 const initialState = {
@@ -72,7 +73,7 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName };
+      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName, description: initialState.description };
     case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 
@@ -167,6 +168,10 @@ export default (state = initialState, action) => {
       return {...state, intermissionText: action.intermissionText};
     case UPDATE_IS_INTERMISSION:
       return {...state, isIntermission: action.isIntermission};
+
+    case LOGOUT:
+      return initialState;
+
     default:
       return state;
   }

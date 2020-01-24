@@ -117,6 +117,7 @@ class InteractionsHome extends React.Component {
                   <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
                 </Grid>
               </Grid>
+
             </CardContent>
           </Card>
 

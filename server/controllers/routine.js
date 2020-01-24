@@ -82,7 +82,7 @@ const availableCharacters = [
   { id: "ZH", name: "ʒ", example: "plea<u>s</u>ure"}
 ];
 
-const defaultRoutines = [
+const defaultRoutines_old = [
   {
     "id": "full_humdronian",
     "subroutine" : [ { "index" : 1577416034435, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "AA" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034437, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "AE" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034438, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "AH" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034440, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "AO" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034441, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "AW" ], "consonants" : [ ], "syllables" : [ 2, 1 ], "position" : "initial" }, { "index" : 1577416034442, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "AY" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034443, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "EH" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034444, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "ER" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034446, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "EY" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034447, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "IH" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034448, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "IY" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034449, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "OW" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034450, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "OY" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034451, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "UH" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" }, { "index" : 1577416034452, "rangeVal" : 5, "repetitions" : 5, "mode" : "Word", "isIntermission" : false, "vowels" : [ "UW" ], "consonants" : [ ], "syllables" : [ 1, 2 ], "position" : "initial" } ], "name" : "Full Humdronian Routine", "__v" : 0, "description" : "\"<div>The following exercise is intended to get you accustomed to using <strong>Full Humdronian Speech</strong>, and will sound somewhat weird at first. The idea is for you to create a humming type sound which resonates through your nasal cavities while simply mouthing the words. </div><br/><div>The steps for performing this type of breathing are as follows:</div><ol><li>Push out your stomach to draw in air through your nose. Your stomach and the muscles located towards the bottom of your stomach will begin to tense slightly as you reach the top of your breath.</li><li>Begin to exhale through your nose while remaining mindful not to pause between breaths. Completely relax your pelvic muscles as you exhale.</li><li>Place your index finger against your right nostril and feel the vibration as you begin to create a <em>droning </em>sound through your nose.</li><li>Mouth the word with your lips using this “droning” sound to complete each word (think of the word &quot;<em>mmmmmm</em>&quot;).</li><li>Pinch your thumb and middle finger as you focus on the vowel sound of each word, ignoring the opening consonant.</li></ol>\""
@@ -94,6 +94,737 @@ const defaultRoutines = [
   {
     "id": "resonant_humdronian",
     "subroutine" : [ { "index" : 1577416992979, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "AA" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417249551, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "AE" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417273684, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "AH" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417286594, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "AO" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417299084, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "AW" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417310267, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "AY" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417318466, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "EH" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417340778, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "ER" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417353827, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "EY" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417369123, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "IH" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417388248, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "IY" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417405041, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "OW" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417418124, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "OY" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417429842, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "UH" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" }, { "index" : 1577417441824, "rangeVal" : 6, "repetitions" : 3, "mode" : "Sentence", "isIntermission" : false, "vowels" : [ "UW" ], "consonants" : [ ], "syllables" : [ 1, 2, 3 ], "position" : "initial" } ], "name" : "Resonant Humdronian Speech", "__v" : 0, "description" : "\"<div>The final step after the <strong>Transitional Humdronian Speech</strong> exercise and will be referred to as <strong>Resonant Humdronian Speech</strong>. This exercise is intended to get you accustomed to transitioning the voicing of words from your nasal cavities to your layrnx in an almost imperceptible way. </div><br/><div>The idea is for you to create a humming type sound which resonates through your nasal cavities at the initial onset of the sentence, and to quickly transition that sound to your vocal chords. With enough practice it will feel like the word only begins with a very short &quot;<em>hmm</em>&quot; and that your speech sounds natural. Try to keep your breathing steady through the entire sentence.</div><br/><div>The steps for performing this type of breathing are as follows:</div><ol><li>Push out your stomach to draw in air through your nose. Your stomach and the muscles located towards the bottom of your stomach will begin to tense slightly as you reach the top of your breath.</li><li>Begin to exhale through your nose while remaining mindful not to pause between breaths. Completely relax your pelvic muscles as you exhale.</li><li>Pinch your thumb and middle finger as you focus on the vowel sound of each word, and as you speak the sentence allow the your voice to transition from your nasal cavities to your throat while smoothly sailing through the entire sentence.</li></ol>\""
+  }
+];
+
+const defaultRoutines = [
+  {
+    "subroutine": [{
+      "index": 1578343888725,
+      "rangeVal": 3,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "to begin we'll focus on a specific consonant sound",
+      "position": "initial"
+    }, {
+      "index": 1578343888727,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["P"],
+      "syllables": [2, 3],
+      "position": "initial"
+    }, {
+      "index": 1578343888729,
+      "rangeVal": 3,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "next we'll focus on a specific vowel sound",
+      "position": "initial"
+    }, {
+      "index": 1578343888730,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AA"],
+      "consonants": ["AA"],
+      "syllables": [2, 3],
+      "position": "initial"
+    }, {
+      "index": 1578343888731,
+      "rangeVal": 3,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "finally we'll work on specific consonant-vowel pairings",
+      "position": "initial"
+    }, {
+      "index": 1578343888732,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AA"],
+      "consonants": ["P"],
+      "syllables": [2, 3],
+      "position": "initial"
+    }, {
+      "index": 1578343888734,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AA"],
+      "consonants": ["P"],
+      "syllables": [2, 3],
+      "position": "initial"
+    }, {
+      "index": 1578343888735,
+      "rangeVal": 1,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "exercise complete",
+      "position": "initial"
+    }],
+    "name": "Word Openings",
+    "id": "word_openings",
+    "description": "\"<div>This exercise routine is intended to highlight core functionalities of <em>RandomlyRead</em> by focusing on the <strong>opening sounds </strong>of the words that are being displayed. </div><br/><div>This routine has been customized to demonstrate some of the options that can be personalized for your client:</div><br/><ul><li>Display 5 words that begin with the /p/ sound (e.g. <u>p</u>ie or <u>p</u>eter)</li><li>Display 5 words that begin with the /a/ sound (e.g. b<u>al</u>m or b<u>o</u>t)</li><li>Display 5 words that begin with a combination of the /p/ and /s/ sound</li><li>Display 5 sentences that begin with a combination of the /p/ and /s/ sound</li></ul><br/><div><u>Note</u>: This approach can be reproduced by searching for a specific word you’d like to practice. </div><br/><div>On desktop browsers, this can be accomplished by using the search box to your right. On mobile you can access the same feature by selecting the &quot;Words&quot; option from the menu located at the upper-right of your screen. Once the word has been recorded a system generated routine will be displayed in the routines drop-down menu.</div>\""
+  },
+  {
+    "subroutine": [{
+      "index": 1578343896366,
+      "rangeVal": 3,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "to begin we'll focus on a specific consonant sound",
+      "position": "initial"
+    }, {
+      "index": 1578343896369,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["Z"],
+      "syllables": [2, 1],
+      "position": "final"
+    }, {
+      "index": 1578343896371,
+      "rangeVal": 3,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "next we'll focus on a specific vowel sound",
+      "position": "initial"
+    }, {
+      "index": 1578343896373,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["ER"],
+      "consonants": ["ER"],
+      "syllables": [1, 2],
+      "position": "final"
+    }, {
+      "index": 1578343896374,
+      "rangeVal": 3,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "finally we'll work on specific consonant-vowel pairings",
+      "position": "initial"
+    }, {
+      "index": 1578343896375,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["ER"],
+      "consonants": ["Z"],
+      "syllables": [1, 2, 3],
+      "position": "final"
+    }, {
+      "index": 1578343896376,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["ER"],
+      "consonants": ["Z"],
+      "syllables": [],
+      "position": "final"
+    }, {
+      "index": 1578343896377,
+      "rangeVal": 1,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "exercise complete",
+      "position": "initial"
+    }],
+    "name": "Word Endings",
+    "id": "word_endings",
+    "description": "\"<div>This exercise routine is intended to highlight core functionalities of <em>RandomlyRead</em> by focusing on the <strong>ending sounds</strong> of the words that are being displayed. </div><br/><div>This routine has been customized to demonstrate some of the options that can be personalized for your client:</div><br/><ul><li>Display 5 words that end with the /z/ sound (e.g. clockwi<u>se</u> or ja<u>zz</u>)</li><li>Display 5 words that end with the /er/ sound (e.g. b<u>ir</u>d or ten<u>or</u>)</li><li>Display 5 words that end with a combination of the /er/ and /z/ sound</li><li>Display 5 sentences that begin with a combination of the /er/ and /z/ sound</li></ul><br/><div><u>Note</u>: This approach can be reproduced by searching for a specific word you’d like to practice. </div><br/><div>On desktop browsers, this can be accomplished by using the search box to your right. On mobile you can access the same feature by selecting the &quot;Words&quot; option from the menu located at the upper-right of your screen. Once the word has been recorded a system generated routine will be displayed in the routines drop-down menu.</div>\""
+  },
+  {
+    "subroutine": [{
+      "index": 1578345825018,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AA"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825024,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AE"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825025,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AH"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825027,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AO"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825028,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AW"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825030,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["AY"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825032,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["EH"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825033,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["ER"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825035,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["EY"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825037,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["IH"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825038,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["IY"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825040,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["OW"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825041,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["OY"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825042,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["UH"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825043,
+      "rangeVal": 6,
+      "repetitions": 10,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": ["UW"],
+      "consonants": [],
+      "syllables": [2],
+      "position": "initial"
+    }, {
+      "index": 1578345825044,
+      "rangeVal": 1,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "exercise completed",
+      "position": "initial"
+    }],
+    "name": "Vowel Routine 1",
+    "id": "vowel_routine_1",
+    "description": "\"<div>This exercise routine is intended to demonstrate how <em>RandomlyRead</em> can be utilized to create a structured environment for practicing speaking techniques.</div><br/><div>In this example the platform will iterate through all the vowel sounds in the English language and display an individual word to the client. <strong>Each vowel sound is displayed 10 times using a randomly selected consonant.</strong> The intent of this practice routine is to ensure that all vowel sounds are being practiced equally while also providing a paced environment for practice.</div>\""
+  },
+  {
+    "subroutine": [{
+      "index": 1578345764402,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AA"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764403,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AE"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764404,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AH"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764405,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AO"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764407,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AW"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764408,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["AY"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764409,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["EH"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764410,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["ER"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764412,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["EY"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764413,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["IH"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764414,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["IY"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764415,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["OW"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764416,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["OY"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764417,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["UH"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764418,
+      "rangeVal": 7,
+      "repetitions": 4,
+      "mode": "Sentence",
+      "isIntermission": false,
+      "vowels": ["UW"],
+      "consonants": [],
+      "syllables": [],
+      "position": "initial"
+    }, {
+      "index": 1578345764419,
+      "rangeVal": 1,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "exercise complete",
+      "position": "initial"
+    }],
+    "name": "Vowel Routine 2",
+    "id": "vowel_routine_2",
+    "description": "\"<div>This exercise routine is intended to demonstrate how <em>RandomlyRead</em> can be utilized to create a structured environment for practicing speaking techniques.</div><br/><div>In this example the platform will iterate through all the vowel sounds in the English language and display a sentence fragment centered on that sound. <strong>Each sentence fragment is displayed 4 times using a randomly selected consonant.</strong> The intent of this practice routine is to ensure that all vowel sounds are being practiced equally and in natural sentences. This approach takes the place of reading books or magazines out loud and provides a structured environment where the client can focus their time according to their needs.</div>\""
+  },
+  {
+    "subroutine": [{
+      "index": 1578345853371,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["B"],
+      "syllables": [2, 1],
+      "position": "initial"
+    }, {
+      "index": 1578345853372,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["CH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853373,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["D"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853375,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["DH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853376,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["F"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853377,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["G"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853379,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["HH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853380,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["JH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853381,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["K"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853382,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["L"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853383,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["M"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853384,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["N"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853385,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["P"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853386,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["R"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853387,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["S"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853389,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["SH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853390,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["T"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853391,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["TH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853392,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["V"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853393,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["W"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853394,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["Y"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853396,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["Z"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853398,
+      "rangeVal": 5,
+      "repetitions": 5,
+      "mode": "Word",
+      "isIntermission": false,
+      "vowels": [],
+      "consonants": ["ZH"],
+      "syllables": [1, 2],
+      "position": "initial"
+    }, {
+      "index": 1578345853399,
+      "rangeVal": 1,
+      "repetitions": 10,
+      "mode": "Intermission",
+      "isIntermission": true,
+      "intermissionText": "exercise complete",
+      "position": "initial"
+    }],
+    "name": "Consonant Routine",
+    "id": "consonant_routine",
+    "description": "\"<div>This exercise routine is intended to demonstrate how <em>RandomlyRead </em>can be utilized to create a structured environment for practicing speaking techniques.</div><br/><div>In this example the platform will work through each consonant sound in the English language, pairing it with a randomly selected vowel sound. <strong>Each consonant sound will be practiced 5 times.</strong> The goal of this exercise routine is to ensure that all consonant sounds are practiced equally while maintaining a structured pace and routine.</div>\""
   }
 ];
 
@@ -182,6 +913,17 @@ function parseUserObj (obj) {
 
 async function upVotedRoutines(author) {
 
+  function GetSortOrder(prop) {
+    return function(a, b) {
+      if (a[prop] > b[prop]) {
+        return 1;
+      } else if (a[prop] < b[prop]) {
+        return -1;
+      }
+      return 0;
+    }
+  }
+
   const category = "upvoted";
   const posts = await Post.find({ author: new ObjectId(author), category: category }).sort('-created');
 
@@ -242,11 +984,11 @@ async function upVotedRoutines(author) {
 
     if (posts[i].position === "initial") {
       name = "Words similar to '" + posts[i].title + "'";
-      description = "This routine is based on the opening sounds of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "') and the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "').";
+      description = "This routine is based on the beginning of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "') and the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "').";
     }
     if (posts[i].position === "final") {
-      name = "Word similar to '" + posts[i].title + "'";
-      description = "This routine is based on the ending sounds of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "') and the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "').";
+      name = "Words similar to '" + posts[i].title + "'";
+      description = "This routine is based on the ending of the word <strong>" + posts[i].title + "</strong>. The words that will be displayed to you will focus on the vowel <strong>" + vowel.name + "</strong> (e.g. '" + vowel.example + "') and the consonant <strong>" + consonant.name + "</strong> (e.g. '" + consonant.example + "').";
     }
 
     routines.push({
@@ -258,6 +1000,8 @@ async function upVotedRoutines(author) {
     })
 
   }
+
+  routines.sort(GetSortOrder("description"));
 
   return routines;
 

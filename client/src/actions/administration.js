@@ -8,7 +8,7 @@ export const NEW_PASSWORD = 'NEW_PASSWORD';
 export const NEW_FIRST_NAME = 'NEW_FIRST_NAME';
 export const NEW_LAST_NAME = 'NEW_LAST_NAME';
 
-export const UPDATE_USER_ID = 'UPDATE_USER_ID';
+export const UPDATE_ADMIN_USER_ID = 'UPDATE_ADMIN_USER_ID';
 export const UPDATE_USERNAME = 'UPDATE_USERNAME';
 export const UPDATE_FIRST_NAME = 'UPDATE_FIRST_NAME';
 export const UPDATE_LAST_NAME = 'UPDATE_LAST_NAME';
@@ -16,13 +16,13 @@ export const UPDATE_ACTIVE = 'UPDATE_ACTIVE';
 export const UPDATE_PASSWORD = 'UPDATE_PASSWORD';
 export const CHANGE_PASSWORD = 'CHANGE_PASSWORD';
 
-export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
-export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
-export const FETCH_USERS_ERROR = 'FETCH_USERS_ERROR';
+export const FETCH_ADMIN_USERS_REQUEST = 'FETCH_ADMIN_USERS_REQUEST';
+export const FETCH_ADMIN_USERS_SUCCESS = 'FETCH_ADMIN_USERS_SUCCESS';
+export const FETCH_ADMIN_USERS_ERROR = 'FETCH_ADMIN_USERS_ERROR';
 
-const fetchUsersRequest = { type: FETCH_USERS_REQUEST };
-const fetchUsersSuccess = users => ({ type: FETCH_USERS_SUCCESS, users });
-const fetchUsersError = error => ({ type: FETCH_USERS_ERROR, error });
+const fetchUsersRequest = { type: FETCH_ADMIN_USERS_REQUEST };
+const fetchUsersSuccess = users => ({ type: FETCH_ADMIN_USERS_SUCCESS, users });
+const fetchUsersError = error => ({ type: FETCH_ADMIN_USERS_ERROR, error });
 
 export const fetchUsers = () => async (dispatch, getState) => {
   dispatch(fetchUsersRequest);
@@ -97,7 +97,7 @@ export const attemptCreateUser = user => async (dispatch, getState) => {
 
 export function updateUserId(userId) {
   return {
-    type: UPDATE_USER_ID, userId
+    type: UPDATE_ADMIN_USER_ID, userId
   }
 }
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from 'react-ga';
 import { ThemeProvider } from 'styled-components';
 import { Router, Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -58,6 +59,9 @@ const client = new ApolloClient({
 });
 
 // <Route component={HeaderContainer} />
+
+ReactGA.initialize('UA-109552567-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const App = props => (
   <MuiThemeProvider theme={MuiTheme}>

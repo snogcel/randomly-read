@@ -77,7 +77,6 @@ export default function WordViewFilter(props) {
       <FormControl className={classes.formControl}>
         <InputLabel htmlFor="filter-option-input">Filtering Options</InputLabel>
         <Select
-          defaultValue={props.options[0]}
           value={props.filter.filter}
           onChange={handleChange}
           input={<BootstrapInput name="filter" id="filter-option-customized-select" />}

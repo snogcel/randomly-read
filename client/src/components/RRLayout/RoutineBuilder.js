@@ -36,21 +36,16 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
   if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
 
-  // iterate through vowel array (in cases where more than one vowel is being filtered on)
-  for (let i = 0; i < vowels.length; i++) {
+  // determine overlap
+  for (let j = 0; j < syllables.length; j++) {
 
-    // determine overlap
-    for (let j = 0; j < syllables.length; j++) {
-
-      if (j === 0 && i === 0) { // for first iteration, include full array
-        result = blacklist[vowels[i]].consonants[(syllables[j] - 1)];
-      } else { // find intersection of arrays
-        result = result.filter(function(value) {
-          return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
-        });
-      }
+    if (j === 0) { // for first iteration, include full array
+      result = blacklist[vowel].consonants[(syllables[j] - 1)];
+    } else { // find intersection of arrays
+      result = result.filter(function(value) {
+        return blacklist[vowel].consonants[(syllables[j] - 1)].indexOf(value) > -1;
+      });
     }
-
   }
 
   if (result.indexOf(consonant) > -1) {
@@ -133,7 +128,12 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
 
     if (typeof vowel !== "undefined") {
 
-      verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
+      if ((exerciseConfig.consonants.length === 1 && exerciseConfig.vowels.length === 1)) {
+        console.log("-blacklist bypassed-");
+        verified = true; // bypass blacklist if one vowel and one consonant have been provided (assumes system generated routine)
+      } else {
+        verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
+      }
 
       while (!verified) {
         rand = Math.floor(Math.random() * (exerciseConfig.consonants.length));

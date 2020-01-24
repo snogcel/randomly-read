@@ -5,12 +5,12 @@ const mapStateToProps = state => ({
 
     currentExercise: state.exerciseHistory.currentExercise,
     currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
-    isPaused: state.exerciseHistory.isPaused,
+    isIntermission: state.exerciseHistory.isIntermission,
     completed: state.exerciseHistory.completed,
     total: state.exerciseHistory.total,
     range: state.exerciseHistory.range,
     timeLeft: state.exerciseHistory.timeLeft
-    
+
     });
 
     const mapDispatchToProps = dispatch => ({

@@ -3,11 +3,18 @@ const Sentencer = require('sentencer');
 const Word = require('./connectors');
 const Lexeme = require('./lexeme');
 
+const consonantWhitelist = {
+  initial: ["CH", "TH", "Y", "Z", "ZH", "DH"],
+  medial: ["CH", "HH", "JH", "SH", "TH", "ZH", "DH"],
+  final: ["B", "CH", "G", "HH", "JH", "SH", "TH", "W", "Y", "ZH", "DH"]
+};
+
 const resolvers = {
     Query: {
         words(_, args, req) {
             let filter = {
-              syllables: [1,2,3,4,5]
+              syllables: [1,2,3,4,5],
+              type: ["noun", "verb", "adj", "adv"]
             };
 
             // type: ["noun", "verb", "adj", "adv"]
@@ -33,16 +40,28 @@ const resolvers = {
                 if (args.position === 'final') location = 'final'; // maps to 'wordlist_final'
             }
 
-            // Randomly select consonant if none provided (prevents massive queries)
+            // Randomly select consonant if none provided (prevents massive queries) -- or is this even needed?!?
             if (typeof filter.consonant === "undefined") {
               let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z"]; // removing "DH" and "ZH" until full blacklist functionality is applied here
               filter.consonant = [defaultConsonants[Math.floor(Math.random()*defaultConsonants.length)]];
             }
 
+            // for cases where a very specific vowel + consonant is being searched
+            if (filter.consonant.length === 1 && (typeof filter.vowel !== "undefined" && filter.vowel.length === 1)) {
+
+              // apply filter if whitelist criteria is not met and single consonant is being searched
+              if (consonantWhitelist[location].indexOf(filter.consonant[0]) === -1) { // if consonant is not in whitelist
+                // filter.type = ["noun", "verb", "adj", "adv"];
+              }
+
+            } else {
+              // filter.type = ["noun", "verb", "adj", "adv"]; // default filter (returns better words overall)
+            }
+
             // Fetch Query Data
             let fetchData = () => {
               return new Promise((resolve, reject) => {
-                  Word[location].findAll({ where: filter }).then(function(data) {
+                  Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
 
                       let wordsWithType = [];
                       let queryResult = [];
@@ -75,17 +94,67 @@ const resolvers = {
                         lexeme.votes = doc.votes;
                         lexeme.score = doc.score;
 
-                        // console.log(queryResult);
-
-                        console.log(lexeme);
-
                         resolve(lexeme);
 
-                      }, function(err) { reject(err); });
+                      }, function(err) {
+
+                        // fallback to broader query?
+                        reject(err);
+
+                      });
 
                   }).catch(function(err) {
 
-                    console.log(err);
+                    // no results found - remove type filter and try again
+                    delete filter["type"];
+
+                    Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
+
+                      let wordsWithType = [];
+                      let queryResult = [];
+
+                      for (let i = 0; i < data.length; i++) {
+                        if (data[i].dataValues.type === "noun" || data[i].dataValues.type === "verb" || data[i].dataValues.type === "adv" || data[i].dataValues.type === "adj") {
+                          wordsWithType.push(data[i]);
+                        }
+                      }
+
+                      if (wordsWithType.length >= typeLimit) {
+                        queryResult.push(wordsWithType[Math.floor(Math.random()*wordsWithType.length)]);
+                      } else {
+                        queryResult.push(data[Math.floor(Math.random()*data.length)]);
+                      }
+
+                      console.log(wordsWithType.length + " typed results found (" + data.length + " total)");
+                      let lexeme = new Lexeme(queryResult, location, id);
+
+                      lexeme.submitPost().then(function(doc) {
+
+                        lexeme.submitViewHistory(doc._id);
+
+                        // TODO - handle empty doc
+                        queryResult[0].dataValues.id = doc._id; // mongo id of post
+                        queryResult[0].votes = doc.votes;
+                        queryResult[0].score = doc.score;
+
+                        lexeme.id = doc._id;
+                        lexeme.votes = doc.votes;
+                        lexeme.score = doc.score;
+
+                        resolve(lexeme);
+
+                      }, function(err) {
+
+                        reject(err);
+
+                      });
+
+                    }).catch(function(err) {
+
+                      console.log("-no results found-");
+                      console.log(err);
+
+                    });
 
                   });
 
@@ -118,15 +187,22 @@ const resolvers = {
 
            */
 
+
             let templates = [
               "{{ noun }} is {{ adjective }}",
               "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
             ];
 
-            let templateAnimal = "{{ an_adjective }} {{ noun_animal }}";
-            let templateArtifact = "the {{ adjective }} {{ noun_artifact }}";
-            let templateLocation = "{{ noun }} in {{ noun_location }}";
+
+            let templateAnimal = ["{{ an_adjective }} {{ noun_animal }}"];
+            let templateArtifact = ["the {{ adjective }} {{ noun_artifact }}", "{{ an_adjective }} {{ noun_artifact }}"];
+            let templateLocation = ["{{ noun_location }} is {{ adjective }}"];
+
+            let templateFood = ["the {{ noun_food }} is {{ adjective }}", "{{ an_adjective }} {{ noun_food }}"];
+            let templatePerson = ["the {{ noun_person }} is {{ adjective }}", "{{ an_adjective }} {{ noun_person }}"];
+
+            let templateFoodAndPerson = ["{{ noun_person }} with a {{ noun_food }}"]; // find other examples of this?
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -199,9 +275,13 @@ const resolvers = {
 
                       if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
 
-                      if (filteredNouns["animal"].length > 0) templates.push(templateAnimal);
-                      if (filteredNouns["location"].length > 0) templates.push(templateLocation);
-                      if (filteredNouns["artifact"].length > 0) templates.push(templateArtifact);
+                      if (filteredNouns["food"].length > 0 && filteredNouns["person"].length > 0) templates = templates.concat(templateFoodAndPerson);
+
+                      if (filteredNouns["animal"].length > 0) templates = templates.concat(templateAnimal);
+                      if (filteredNouns["location"].length > 0) templates = templates.concat(templateLocation);
+                      if (filteredNouns["artifact"].length > 0) templates = templates.concat(templateArtifact);
+                      if (filteredNouns["food"].length > 0) templates = templates.concat(templateFood);
+                      if (filteredNouns["person"].length > 0 ) templates = templates.concat(templatePerson);
 
                       // create new instance of Sentencer
                       let _sentencer = Sentencer;
@@ -271,7 +351,9 @@ const resolvers = {
 
                                   promises.push(new Promise((resolve, reject) => {
 
-                                    let obj = { lexeme: text[i] };
+                                    let id = text[i] + "_" + Date.now();
+
+                                    let obj = { id: id, lexeme: text[i] };
 
                                     result[i] = obj;
                                     resolve();
@@ -299,8 +381,6 @@ const resolvers = {
                       .then(() => {
 
                         let obj = { words: result };
-
-                        console.log(obj);
 
                         resolve(obj);
 

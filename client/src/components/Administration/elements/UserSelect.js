@@ -87,7 +87,6 @@ export default function UserSelectAdmin(props) {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="admin-user-input">Users</InputLabel>
         <Select
           defaultValue={props.options[0]}
           value={props.user.user}

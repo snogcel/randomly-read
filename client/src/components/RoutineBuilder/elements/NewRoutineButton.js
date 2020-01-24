@@ -34,6 +34,8 @@ const useStyles = makeStyles(theme => ({
   },
   margin: {
     margin: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1)
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -86,8 +88,8 @@ export default function NewRoutineButton(props) {
 
   return (
     <div>
-      <IconButton aria-label="add" className={classes.margin}>
-        <AddIcon onClick={handleOpen}/>
+      <IconButton onClick={handleOpen} disableFocusRipple style={{ backgroundColor: 'transparent' }} aria-label="add" className={classes.margin}>
+        <AddIcon />
       </IconButton>
 
       <Modal
@@ -116,7 +118,7 @@ export default function NewRoutineButton(props) {
 
             </Grid>
 
-            <Grid item justify="center">
+            <Grid item>
 
               <br />
 

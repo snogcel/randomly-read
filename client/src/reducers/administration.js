@@ -3,7 +3,7 @@ import {NEW_PASSWORD} from '../actions/administration';
 import {NEW_FIRST_NAME} from '../actions/administration';
 import {NEW_LAST_NAME} from '../actions/administration';
 
-import {UPDATE_USER_ID} from '../actions/administration';
+import {UPDATE_ADMIN_USER_ID} from '../actions/administration';
 import {UPDATE_USERNAME} from '../actions/administration';
 import {UPDATE_FIRST_NAME} from '../actions/administration';
 import {UPDATE_LAST_NAME} from '../actions/administration';
@@ -14,9 +14,9 @@ import {CHANGE_PASSWORD} from '../actions/administration';
 import {CREATE_NEW_USER} from '../actions/administration';
 import {CANCEL_CREATE_NEW_USER} from '../actions/administration';
 
-import {FETCH_USERS_REQUEST} from '../actions/administration';
-import {FETCH_USERS_SUCCESS} from '../actions/administration';
-import {FETCH_USERS_ERROR} from '../actions/administration';
+import {FETCH_ADMIN_USERS_REQUEST} from '../actions/administration';
+import {FETCH_ADMIN_USERS_SUCCESS} from '../actions/administration';
+import {FETCH_ADMIN_USERS_ERROR} from '../actions/administration';
 
 import {FETCH_USER_REQUEST} from '../actions/administration';
 import {FETCH_USER_SUCCESS} from '../actions/administration';
@@ -29,6 +29,7 @@ import {UPDATE_USER_ERROR} from '../actions/administration';
 import {CREATE_USER_REQUEST} from '../actions/administration';
 import {CREATE_USER_SUCCESS} from '../actions/administration';
 import {CREATE_USER_ERROR} from '../actions/administration';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = {
   availableUsers: [],
@@ -74,11 +75,11 @@ export default (state = initialState, action) => {
     case CREATE_USER_ERROR:
       return { ...state, isFetching: false, error: action.error };
 
-    case FETCH_USERS_REQUEST:
+    case FETCH_ADMIN_USERS_REQUEST:
       return { ...state, isFetching: true, error: initialState.error };
-    case FETCH_USERS_SUCCESS:
+    case FETCH_ADMIN_USERS_SUCCESS:
       return { ...state, isFetching: false, error: initialState.error, availableUsers: action.users };
-    case FETCH_USERS_ERROR:
+    case FETCH_ADMIN_USERS_ERROR:
       return { ...state, isFetching: false, error: action.error };
 
     case FETCH_USER_REQUEST:
@@ -146,7 +147,7 @@ export default (state = initialState, action) => {
         error: initialState.error,
         mode: 'view'};
 
-    case UPDATE_USER_ID:
+    case UPDATE_ADMIN_USER_ID:
       return {...state, selectedUserId: action.userId, mode: 'view'};
 
     case NEW_USERNAME:
@@ -178,6 +179,9 @@ export default (state = initialState, action) => {
 
     case CHANGE_PASSWORD:
       return {...state, mode: 'password'};
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

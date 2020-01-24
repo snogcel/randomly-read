@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import history from '../../util/history';
 import AppBar from '@material-ui/core/AppBar';
@@ -24,6 +25,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 
 import Hidden from '@material-ui/core/Hidden';
+import withWidth from '@material-ui/core/withWidth';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,8 +49,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function MenuAppBar(props) {
+function MenuAppBar(props) {
   const classes = useStyles();
+  const { width } = props;
+
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -185,7 +189,7 @@ export default function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                <Hidden lgUp><MenuItem onClick={handleFocusWords}>Words</MenuItem></Hidden>
+                {(width !== "lg" && width !== "xl") && (<MenuItem onClick={handleFocusWords}>Words</MenuItem>)}
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
@@ -200,3 +204,10 @@ export default function MenuAppBar(props) {
     </div>
   );
 }
+
+
+MenuAppBar.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
+export default withWidth()(MenuAppBar);

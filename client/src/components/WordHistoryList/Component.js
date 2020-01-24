@@ -23,7 +23,7 @@ class WordHistoryList extends React.Component {
 
   mapPosts = (posts) =>
     posts.map((post, index) => (
-      <Grid item xs={12}><WordHistoryListItem key={post.time} {...post} /></Grid>
+      <Grid item xs={12} key={index}><WordHistoryListItem {...post} /></Grid>
     ));
 
   render() {

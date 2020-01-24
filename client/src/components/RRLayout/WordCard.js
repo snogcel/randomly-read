@@ -107,7 +107,7 @@ class WordCard extends React.Component  {
                             vote
                           }
                           score
-                          cmudict_id
+                          wordid
                           lexeme
                         }                       
                     }
@@ -124,7 +124,7 @@ class WordCard extends React.Component  {
                             vote
                           }
                           score
-                          cmudict_id
+                          wordid
                           lexeme
                         }                       
                     }
@@ -141,7 +141,7 @@ class WordCard extends React.Component  {
                             vote
                           }
                           score
-                          cmudict_id
+                          wordid
                           lexeme
                         }                       
                     }
@@ -158,7 +158,7 @@ class WordCard extends React.Component  {
                             vote
                           }
                           score
-                          cmudict_id
+                          wordid
                           lexeme
                         }
                     }
@@ -177,7 +177,7 @@ class WordCard extends React.Component  {
                           vote
                         }
                         score
-                        cmudict_id
+                        wordid
                         lexeme                        
                     }
                 }
@@ -192,7 +192,7 @@ class WordCard extends React.Component  {
                           vote
                         }
                         score
-                        cmudict_id
+                        wordid
                         lexeme                        
                     }
                 }
@@ -207,7 +207,7 @@ class WordCard extends React.Component  {
                           vote
                         }
                         score
-                        cmudict_id
+                        wordid
                         lexeme                        
                     }
                 }
@@ -222,7 +222,7 @@ class WordCard extends React.Component  {
                           vote
                         }
                         score
-                        cmudict_id
+                        wordid
                         lexeme                        
                     }
                 }
@@ -306,7 +306,7 @@ class WordCard extends React.Component  {
       <Grid container className={classes.wordGrid} justify="center">
         <Grid item>
 
-              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="cache-and-network" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
+              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="no-cache" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
                 {({ loading, error, data, refetch }) => {
 
                   this.refresh = refetch;
@@ -350,6 +350,7 @@ class WordCard extends React.Component  {
 
                         let fetched = {
                           id: data.words.id,
+                          wordid: data.words.wordid,
                           title: data.words.lexeme,
                           score: data.words.score,
                           votes: data.words.votes,
@@ -386,6 +387,7 @@ class WordCard extends React.Component  {
                         for (let i = 0; i < data.sentences.words.length; i++) {
                           fetched.push({
                             id: data.sentences.words[i].id,
+                            wordid: data.sentences.words[i].wordid,
                             title: data.sentences.words[i].lexeme,
                             score: data.sentences.words[i].score,
                             votes: data.sentences.words[i].votes,
@@ -413,7 +415,7 @@ class WordCard extends React.Component  {
                   if (this.props.mode === 'Sentence') {
 
                     return (
-                      <Card elevation="1" className={classes.card}>
+                      <Card elevation={1} className={classes.card}>
                         <CardContent>
                           <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
                         </CardContent>
@@ -423,7 +425,7 @@ class WordCard extends React.Component  {
                   } else if (this.props.mode === 'Word') {
 
                     return (
-                      <Card elevation="1" className={classes.card}>
+                      <Card elevation={1} className={classes.card}>
                         <CardContent>
                           <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
                         </CardContent>
@@ -433,7 +435,7 @@ class WordCard extends React.Component  {
                   } else {
 
                     return (
-                      <Card elevation="0" className={classes.card}>
+                      <Card elevation={0} className={classes.card}>
                         <CardContent>
                           <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
                         </CardContent>
