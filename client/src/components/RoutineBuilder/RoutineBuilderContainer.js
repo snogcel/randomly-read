@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import RoutineBuilder from './RoutineBuilder';
-import { resetRoutineBuilder, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateDescription, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep } from '../../actions/routineBuilder';
+import { resetRoutineBuilder, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateDescription, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateGradeLevel, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep } from '../../actions/routineBuilder';
 import { resetRoutineSelect } from '../../actions/routineSelect';
 import { resetWordCard } from "../../actions/word";
 
@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
   repetitions: state.routineBuilder.repetitions,
   syllables: state.routineBuilder.syllables,
   position: state.routineBuilder.position,
+  age: state.routineBuilder.age,
   intermissionText: state.routineBuilder.intermissionText,
   isIntermission: state.routineBuilder.isIntermission,
   lastUpdated: state.routineBuilder.lastUpdated,
@@ -30,7 +31,7 @@ const mapStateToProps = state => ({
   isFetchingRoutines: state.routineSelect.isFetchingRoutines
 });
 
-const mapDispatchToProps = { resetRoutineBuilder, resetRoutineSelect, resetWordCard, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateDescription, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions
+const mapDispatchToProps = { resetRoutineBuilder, resetRoutineSelect, resetWordCard, fetchRoutines, attemptUpdateRoutine, attemptCreateRoutine, attemptDeleteRoutine, fetchUsers, updateUserId, resetStepList, resetForm, updateName, updateDescription, updateId, updateVowels, updateConsonants, addConsonant, removeConsonant, updateMode, updateRangeVal, updateRepetitions, updateSyllables, updatePosition, updateGradeLevel, updateIntermissionText, updateIsIntermission, updateIndex, insertStep, removeStep, updateStep }; // TODO - replace with relevant actions
 
 const enhance = compose(
   withAuth,

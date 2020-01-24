@@ -20,6 +20,7 @@ import {UPDATE_RANGEVAL} from '../actions/routineBuilder';
 import {UPDATE_REPETITIONS} from '../actions/routineBuilder';
 import {UPDATE_SYLLABLES} from '../actions/routineBuilder';
 import {UPDATE_POSITION} from '../actions/routineBuilder';
+import {UPDATE_GRADE_LEVEL} from '../actions/routineBuilder';
 import {UPDATE_INTERMISSION_TEXT} from '../actions/routineBuilder';
 import {UPDATE_IS_INTERMISSION} from '../actions/routineBuilder';
 
@@ -61,6 +62,7 @@ const initialState = {
   repetitions: 10,
   syllables: [],
   position: 'initial',
+  age: 0,
   intermissionText: '',
   isIntermission: false,
   lastUpdated: null,
@@ -164,6 +166,8 @@ export default (state = initialState, action) => {
       return {...state, syllables: action.syllables};
     case UPDATE_POSITION:
       return {...state, position: action.position};
+    case UPDATE_GRADE_LEVEL:
+      return {...state, age: action.gradeLevel};
     case UPDATE_INTERMISSION_TEXT:
       return {...state, intermissionText: action.intermissionText};
     case UPDATE_IS_INTERMISSION:

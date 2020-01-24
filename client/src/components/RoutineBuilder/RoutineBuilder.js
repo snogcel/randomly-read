@@ -46,6 +46,7 @@ import RoutinesSelect from './elements/RoutinesSelect';
 import RoutineName from './elements/RoutineName';
 import ModeSelect from './elements/ModeSelect';
 import SyllableSelect from './elements/SyllableSelect';
+import GradeLevelSelect from './elements/GradeSelect';
 import PositionSelect from './elements/PositionSelect';
 import DurationSlider from './elements/DurationSlider';
 import RepetitionSlider from './elements/RepetitionSlider';
@@ -171,6 +172,22 @@ const availablePositions = [
   { id: "final", name: "Closing"},
 ];
 
+const availableGradeLevels = [
+  { id: 0, name: "All"},
+  { id: 7, name: "1st Grade" },
+  { id: 8, name: "2nd Grade" },
+  { id: 9, name: "3rd Grade" },
+  { id: 10, name: "4th Grade" },
+  { id: 11, name: "5th Grade" },
+  { id: 12, name: "6th Grade" },
+  { id: 13, name: "7th Grade" },
+  { id: 14, name: "8th Grade" },
+  { id: 15, name: "9th Grade" },
+  { id: 16, name: "10th Grade" },
+  { id: 17, name: "11th Grade" },
+  { id: 18, name: "12th Grade" },
+  { id: 22, name: "College" }
+];
 
 class RoutineBuilder extends React.Component {
   constructor(props) {
@@ -202,6 +219,7 @@ class RoutineBuilder extends React.Component {
     this.consonantHandler = this.consonantHandler.bind(this);
     this.modeHandler = this.modeHandler.bind(this);
     this.positionHandler = this.positionHandler.bind(this);
+    this.gradeLevelHandler = this.gradeLevelHandler.bind(this);
     this.rangeValHandler = this.rangeValHandler.bind(this);
     this.repetitionHandler = this.repetitionHandler.bind(this);
     this.syllableHandler = this.syllableHandler.bind(this);
@@ -387,6 +405,12 @@ class RoutineBuilder extends React.Component {
     this.routinePreview.current.state.query = null; // clear preview window
   }
 
+  gradeLevelHandler(age) {
+    this.props.updateGradeLevel(age);
+
+    this.routinePreview.current.state.query = null; // clear preview window
+  }
+
   rangeValHandler(rangeVal) {
     this.props.updateRangeVal(rangeVal);
 
@@ -547,7 +571,7 @@ class RoutineBuilder extends React.Component {
       let index = this.state.index;
       let routineStack = this.props.routine;
 
-      let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+      let { vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
 
       for (let i = 0; i < routineStack.length; i++) {
         if (index === routineStack[i].index) {
@@ -567,6 +591,7 @@ class RoutineBuilder extends React.Component {
             step.consonants = consonants;
             step.syllables = syllables;
             step.position = position;
+            step.age = age;
           }
 
           routineStack[i] = step;
@@ -728,6 +753,15 @@ class RoutineBuilder extends React.Component {
     if (obj) positionObj.position = obj.id;
 
     return positionObj;
+  }
+
+  parseGradeLevel(age) {
+    let gradeLevelObj = { gradeLevel: '' };
+
+    let obj = availableGradeLevels.find(o => o.id === age);
+    if (obj) gradeLevelObj.gradeLevel = obj.id;
+
+    return gradeLevelObj;
   }
 
   parseAvailableRoutines(routines) {
@@ -967,7 +1001,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { userId, name, description, id, routine, index, vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+    const { userId, name, description, id, routine, index, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
     const { classes } = this.props;
 
     const { width } = this.props;
@@ -997,6 +1031,7 @@ class RoutineBuilder extends React.Component {
 
     let modeObj = this.parseMode(mode);
     let positionObj = this.parsePosition(position);
+    let gradeLevelObj = this.parseGradeLevel(age);
     let vowelArr = this.parseVowels(vowels); // convert routine format into MUI format
     let consonantObj = this.parseConsonants(consonants); // convert routine format into MUI format
     let consonantCheckboxOptions = this.parseConsonantCheckboxOptions(vowels); // display available consonants + vowels
@@ -1173,6 +1208,8 @@ class RoutineBuilder extends React.Component {
                               <Grid item><ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} /></Grid>
 
                               <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
+
+                              <Grid item><GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /></Grid>
 
                               <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
 
