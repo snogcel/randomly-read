@@ -50,6 +50,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "publish": "serve -s build -l 3000",
     "now-build": "npm run build && mv build dist",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
