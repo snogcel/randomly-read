@@ -860,6 +860,9 @@ class RoutineBuilder extends React.Component {
     // apply relevant blacklist to mode + position
     console.log("Mode: ", mode);
 
+    // search for all syllables if none defined
+    if (syllables.length === 0) syllables = [1, 2, 3, 4, 5];
+
     // sentences
     if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
 
