@@ -18,7 +18,8 @@ database.define('initial', {
     type: {type: Sequelize.STRING},
     subtype: {type: Sequelize.STRING},
     stress: {type: Sequelize.INTEGER},
-    syllables: {type: Sequelize.INTEGER}
+    syllables: {type: Sequelize.INTEGER},
+    age_of_acquisition: {type: Sequelize.FLOAT}
 },{
     timestamps: false,
     tableName: 'wordlist_initial'
@@ -34,7 +35,8 @@ database.define('medial', {
     type: {type: Sequelize.STRING},
     subtype: {type: Sequelize.STRING},
     stress: {type: Sequelize.INTEGER},
-    syllables: {type: Sequelize.INTEGER}
+    syllables: {type: Sequelize.INTEGER},
+    age_of_acquisition: {type: Sequelize.FLOAT}
 },{
     timestamps: false,
     tableName: 'wordlist_medial'
@@ -50,7 +52,8 @@ database.define('final', {
     type: {type: Sequelize.STRING},
     subtype: {type: Sequelize.STRING},
     stress: {type: Sequelize.INTEGER},
-    syllables: {type: Sequelize.INTEGER}
+    syllables: {type: Sequelize.INTEGER},
+    age_of_acquisition: {type: Sequelize.FLOAT}
 },{
     timestamps: false,
     tableName: 'wordlist_final'

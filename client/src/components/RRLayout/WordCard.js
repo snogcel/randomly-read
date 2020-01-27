@@ -93,13 +93,14 @@ class WordCard extends React.Component  {
     let limit = parseInt(this.props.limit);
 
     let position = JSON.stringify(this.props.position);
+    let age = JSON.stringify(this.props.age);
 
     switch(this.props.mode) {
         case 'Sentence':
             if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
                 return gql`
                 {
-                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         words {
                           id
                           votes {
@@ -116,7 +117,7 @@ class WordCard extends React.Component  {
             } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
               return gql`
                 {
-                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         words {
                           id
                           votes {
@@ -133,7 +134,7 @@ class WordCard extends React.Component  {
             } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
               return gql`
                 {
-                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         words {
                           id
                           votes {
@@ -150,7 +151,7 @@ class WordCard extends React.Component  {
             } else {
                 return gql`
                 {
-                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         words {
                           id
                           votes {
@@ -170,7 +171,7 @@ class WordCard extends React.Component  {
             if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
                 return gql`
                 {
-                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         id
                         votes {
                           user
@@ -185,7 +186,7 @@ class WordCard extends React.Component  {
             } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
               return gql`
                 {
-                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         id
                         votes {
                           user
@@ -200,7 +201,7 @@ class WordCard extends React.Component  {
             } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
               return gql`
                 {
-                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         id
                         votes {
                           user
@@ -215,7 +216,7 @@ class WordCard extends React.Component  {
             } else {
                 return gql`
                 {
-                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}) {                    
+                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
                         id
                         votes {
                           user

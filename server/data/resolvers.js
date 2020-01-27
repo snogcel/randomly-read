@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const { Op } = require("sequelize");
 const Sentencer = require('sentencer');
 const Word = require('./connectors');
 const Lexeme = require('./lexeme');
@@ -32,6 +33,14 @@ const resolvers = {
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
             if (typeof args.type !== 'undefined' && Array.isArray(args.type)) filter.type = args.type;
             if (typeof args.subtype !== 'undefined' && Array.isArray(args.subtype)) filter.subtype = args.subtype;
+
+            // age of acquisition filtering
+            if (typeof args.age !== 'undefined' && args.age !== 0) {
+              filter.age_of_acquisition = {
+                [Op.gt]: 0,
+                [Op.lte]: parseInt(args.age)
+              };
+            }
 
             // Assign Data Source to Query
             if (typeof args.position !== 'undefined' && typeof args.position === 'string') {
@@ -105,8 +114,9 @@ const resolvers = {
 
                   }).catch(function(err) {
 
-                    // no results found - remove type filter and try again
+                    // no results found - remove type and AoA filter and try again
                     delete filter["type"];
+                    delete filter["age_of_acquisition"];
 
                     Word[location].findAll({ where: filter, order: Sequelize.literal('rand()'), limit: limit }).then(function(data) {
 
@@ -209,6 +219,14 @@ const resolvers = {
             if (typeof args.consonant !== 'undefined' && Array.isArray(args.consonant)) filter.consonant = args.consonant;
             if (typeof args.syllables !== 'undefined' && Array.isArray(args.syllables) && args.syllables.length !== 0) filter.syllables = args.syllables;
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
+
+            // age of acquisition filtering
+            if (typeof args.age !== 'undefined' && args.age !== 0) {
+              filter.age_of_acquisition = {
+                [Op.gt]: 0,
+                [Op.lte]: parseInt(args.age)
+              };
+            }
 
             // Apply Default Filter
             filter.type = ["adj", "noun"];
