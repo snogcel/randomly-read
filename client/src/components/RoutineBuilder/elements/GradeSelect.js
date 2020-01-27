@@ -72,7 +72,7 @@ export default function GradeSelect(props) {
   return (
     <form className={classes.root} autoComplete="off">
       <FormControl className={classes.formControl}>
-        <InputLabel htmlFor="mode-input">Complexity</InputLabel>
+        <InputLabel htmlFor="mode-input">Reading Level</InputLabel>
         <Select
           defaultValue={props.gradeLevel}
           value={props.gradeLevel.gradeLevel}

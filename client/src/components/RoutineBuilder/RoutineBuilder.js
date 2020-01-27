@@ -1117,7 +1117,7 @@ class RoutineBuilder extends React.Component {
 
                         <Grid item>
                           <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
-                            Routine Description
+                            Routine Settings
                           </Typography>
                         </Grid>
 
@@ -1127,17 +1127,25 @@ class RoutineBuilder extends React.Component {
 
                       </Grid>
 
-                      { this.state.showDescriptionEditor && <Typography variant="body2" color="textSecondary" component="p">Use the fields below to define a name of this routine as well as provide the user instructions on how to use it.<br /><br /></Typography> }
+                      { this.state.showDescriptionEditor && <Typography variant="body2" color="textSecondary" component="p">Use the fields below to define the name of this routine, reading level, as well as user instructions on how to use it.<br /><br /></Typography> }
 
                       <Grid container spacing={0}>
 
-                        <Grid item xs={12}>
+                        <Grid item>
 
                           { this.state.showDescriptionEditor ? <RoutineName action={this.nameHandler} name={nameObj} /> : <Hidden xlDown><RoutineName action={this.nameHandler} name={nameObj} /></Hidden> }
+
+                        </Grid>
+
+                        <Grid item>
 
                           { this.state.showDescriptionEditor ? <GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /> : <Hidden xlDown><GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /></Hidden> }
 
                         </Grid>
+
+                      </Grid>
+
+                      <Grid container spacing={0}>
 
                         <Grid item xs={12} className={classes.DescriptionEditor}>
 

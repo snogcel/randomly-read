@@ -145,7 +145,7 @@ class PostEditor extends Component {
           <br />
 
           <Button onClick={() => { this.publishPost(); }} variant="contained" color="primary">
-            Save Description
+            Save Settings
           </Button>
 
         </div>
