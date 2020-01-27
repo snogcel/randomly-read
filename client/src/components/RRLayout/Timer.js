@@ -99,7 +99,12 @@ class Timer extends React.Component {
 
     } else {
 
+      // populate subroutine with word complexity (age)
+      let age = routine.age || "0";
+
       for (let i = 0; i < routine.subroutine.length; i++) {
+        routine.subroutine[i].age = age;
+
         this.exerciseStack.push(routine.subroutine[i]);
       }
 
