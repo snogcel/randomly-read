@@ -173,20 +173,20 @@ const availablePositions = [
 ];
 
 const availableGradeLevels = [
-  { id: 0, name: "All"},
-  { id: 7, name: "1st Grade" },
-  { id: 8, name: "2nd Grade" },
-  { id: 9, name: "3rd Grade" },
-  { id: 10, name: "4th Grade" },
-  { id: 11, name: "5th Grade" },
-  { id: 12, name: "6th Grade" },
-  { id: 13, name: "7th Grade" },
-  { id: 14, name: "8th Grade" },
-  { id: 15, name: "9th Grade" },
-  { id: 16, name: "10th Grade" },
-  { id: 17, name: "11th Grade" },
-  { id: 18, name: "12th Grade" },
-  { id: 22, name: "College" }
+  { id: "0", name: "All"},
+  { id: "7", name: "1st Grade" },
+  { id: "8", name: "2nd Grade" },
+  { id: "9", name: "3rd Grade" },
+  { id: "10", name: "4th Grade" },
+  { id: "11", name: "5th Grade" },
+  { id: "12", name: "6th Grade" },
+  { id: "13", name: "7th Grade" },
+  { id: "14", name: "8th Grade" },
+  { id: "15", name: "9th Grade" },
+  { id: "16", name: "10th Grade" },
+  { id: "17", name: "11th Grade" },
+  { id: "18", name: "12th Grade" },
+  { id: "22", name: "College" }
 ];
 
 class RoutineBuilder extends React.Component {
@@ -311,6 +311,7 @@ class RoutineBuilder extends React.Component {
     let id = this.props.id;
     let name = this.props.name;
     let description = JSON.stringify(this.props.description);
+    let age = this.props.age;
 
     console.log("saving description: ", this.props.description);
 
@@ -323,6 +324,7 @@ class RoutineBuilder extends React.Component {
           "id": id,
           "name": name,
           "description": description,
+          "age": age,
           "subroutine": routine
         }
       }
@@ -555,6 +557,7 @@ class RoutineBuilder extends React.Component {
         this.props.updateConsonants(consonants);
         this.props.updateSyllables(syllables);
         this.props.updatePosition(position);
+
       }
 
       this.setState({ "index": index });
@@ -571,7 +574,7 @@ class RoutineBuilder extends React.Component {
       let index = this.state.index;
       let routineStack = this.props.routine;
 
-      let { vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+      let { vowels, consonants, mode, position, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
 
       for (let i = 0; i < routineStack.length; i++) {
         if (index === routineStack[i].index) {
@@ -591,7 +594,6 @@ class RoutineBuilder extends React.Component {
             step.consonants = consonants;
             step.syllables = syllables;
             step.position = position;
-            step.age = age;
           }
 
           routineStack[i] = step;
@@ -618,10 +620,10 @@ class RoutineBuilder extends React.Component {
         this.props.updateName(this.props.availableRoutines[i].attributes.name);
 
         // set description
-
-        console.log("Attempting to parse description: ", this.props.availableRoutines[i].attributes.description);
-
         this.props.updateDescription(JSON.parse(this.props.availableRoutines[i].attributes.description));
+
+        // set grade level / complexity
+        this.props.updateGradeLevel(this.props.availableRoutines[i].attributes.age);
 
         // iterate through subroutines
         for (let j = 0; j < this.props.availableRoutines[i].attributes.subroutine.length; j++) {
@@ -756,7 +758,7 @@ class RoutineBuilder extends React.Component {
   }
 
   parseGradeLevel(age) {
-    let gradeLevelObj = { gradeLevel: '' };
+    let gradeLevelObj = { "gradeLevel": "0" }; // default
 
     let obj = availableGradeLevels.find(o => o.id === age);
     if (obj) gradeLevelObj.gradeLevel = obj.id;
@@ -880,6 +882,7 @@ class RoutineBuilder extends React.Component {
 
     console.log("Mode: ", this.props.mode);
     console.log("Position:", this.props.position);
+    console.log("Age:", this.props.age);
     console.log("Syllables: ", this.props.syllables);
     console.log("Vowels: ", this.props.vowels);
 
@@ -1143,6 +1146,8 @@ class RoutineBuilder extends React.Component {
 
                           { this.state.showDescriptionEditor ? <RoutineName action={this.nameHandler} name={nameObj} /> : <Hidden xlDown><RoutineName action={this.nameHandler} name={nameObj} /></Hidden> }
 
+                          { this.state.showDescriptionEditor ? <GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /> : <Hidden xlDown><GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /></Hidden> }
+
                         </Grid>
 
                         <Grid item xs={12} className={classes.DescriptionEditor}>
@@ -1208,8 +1213,6 @@ class RoutineBuilder extends React.Component {
                               <Grid item><ModeSelect action={this.modeHandler} options={availableModes} mode={modeObj} /></Grid>
 
                               <Grid item><PositionSelect action={this.positionHandler} options={availablePositions} position={positionObj} /></Grid>
-
-                              <Grid item><GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /></Grid>
 
                               <Grid item><SyllableSelect action={this.syllableHandler} options={availableSyllables} syllables={syllableArr} /></Grid>
 
