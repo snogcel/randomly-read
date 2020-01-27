@@ -7,6 +7,7 @@ export const ADD_CONSONANT = 'ADD_CONSONANT';
 export const REMOVE_CONSONANT = 'REMOVE_CONSONANT';
 export const ADD_SYLLABLES = 'ADD_SYLLABLES';
 export const SET_POSITION = 'SET_POSITION';
+export const SET_AGE = 'SET_AGE';
 export const SET_LIMIT = 'SET_LIMIT';
 export const SET_MODE = 'SET_MODE';
 export const ADD_ROUTINE_VOWEL = 'ADD_ROUTINE_VOWEL';
@@ -69,6 +70,12 @@ export function addSyllables(text) {
 export function setPosition(text) {
   return {
     type: SET_POSITION, text
+  }
+}
+
+export function setAge(text) {
+  return {
+    type: SET_AGE, text
   }
 }
 

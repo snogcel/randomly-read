@@ -5,6 +5,7 @@ import {REMOVE_VOWEL} from '../actions/word';
 import {REMOVE_WORD} from '../actions/word';
 import {ADD_CONSONANT} from '../actions/word';
 import {SET_POSITION} from '../actions/word';
+import {SET_AGE} from '../actions/word';
 import {SET_LIMIT} from '../actions/word';
 import {SET_MODE} from '../actions/word';
 import {ADD_SYLLABLES} from '../actions/word';
@@ -18,6 +19,7 @@ const initialState = {
     vowel: null,
     consonant: null,
     position: "initial",
+    age: "0",
     syllables: [],
     limit: 1,
     mode: "Word",
@@ -46,6 +48,8 @@ export default (state = initialState, action) => {
           return {...state, syllables: !Array.isArray(state.syllables) ? action.text : action.text.map(Number)}; //state.syllables.concat([parseInt(action.integer)])}
         case SET_POSITION:
           return {...state, position: action.text};
+      case SET_AGE:
+          return {...state, age: action.text};
         case SET_LIMIT:
           return {...state, limit: action.text};
         case SET_MODE:
