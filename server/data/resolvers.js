@@ -35,7 +35,7 @@ const resolvers = {
             if (typeof args.subtype !== 'undefined' && Array.isArray(args.subtype)) filter.subtype = args.subtype;
 
             // age of acquisition filtering
-            if (typeof args.age !== 'undefined' && args.age !== 0) {
+            if (typeof args.age !== 'undefined' && args.age !== "0") {
               filter.age_of_acquisition = {
                 [Op.gt]: 0,
                 [Op.lte]: parseInt(args.age)
@@ -221,7 +221,7 @@ const resolvers = {
             if (typeof args.limit !== 'undefined' && typeof args.limit === 'number') limit = parseInt(args.limit);
 
             // age of acquisition filtering
-            if (typeof args.age !== 'undefined' && args.age !== 0) {
+            if (typeof args.age !== 'undefined' && args.age !== "0") {
               filter.age_of_acquisition = {
                 [Op.gt]: 0,
                 [Op.lte]: parseInt(args.age)
