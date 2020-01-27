@@ -62,7 +62,7 @@ const initialState = {
   repetitions: 10,
   syllables: [],
   position: 'initial',
-  age: 0,
+  age: "0",
   intermissionText: '',
   isIntermission: false,
   lastUpdated: null,
@@ -75,7 +75,7 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName, description: initialState.description };
+      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName, description: initialState.description, age: initialState.age };
     case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 
