@@ -64,6 +64,8 @@ import InitialWordBlacklist from '../RRLayout/InitialWordBlacklist';
 import MedialWordBlacklist from '../RRLayout/MedialWordBlacklist';
 import FinalWordBlacklist from '../RRLayout/FinalWordBlacklist';
 
+import getBlacklist from '../../util/blacklists'
+
 import { styles } from '../../themeHandler';
 
 // TODO - set up constants for all form options, for now these are stored in each element.
@@ -448,7 +450,7 @@ class RoutineBuilder extends React.Component {
       mode: 'Word',
       rangeVal: 5,
       repetitions: 10,
-      syllables: [1,2,3],
+      syllables: [],
       position: 'initial',
       intermissionText: '',
       isIntermission: false,
@@ -886,6 +888,7 @@ class RoutineBuilder extends React.Component {
     console.log("Syllables: ", this.props.syllables);
     console.log("Vowels: ", this.props.vowels);
 
+    let age = this.props.age;
     let mode = this.props.mode;
     let position = this.props.position;
     let syllables = this.props.syllables;
@@ -894,25 +897,11 @@ class RoutineBuilder extends React.Component {
     let result = [];
     let blacklist = {};
 
-    // apply relevant blacklist to mode + position
-    console.log("Mode: ", mode);
+    // apply relevant blacklist to age + mode + position
+    blacklist = getBlacklist(age, mode, position);
 
     // search for all syllables if none defined
     if (syllables.length === 0) syllables = [1, 2, 3, 4, 5];
-
-    // sentences
-    if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
-
-    if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
-
-    if (mode === "Sentence" && position === "final") blacklist = FinalSentenceBlacklist;
-
-    // words
-    if (mode === "Word" && position === "initial") blacklist = InitialWordBlacklist;
-
-    if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
-
-    if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
 
     if (mode === "Intermission" || typeof mode === "undefined") return result;
 
