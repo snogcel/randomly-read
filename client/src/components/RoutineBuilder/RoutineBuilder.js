@@ -169,9 +169,9 @@ const availableModes = [
 ];
 
 const availablePositions = [
-  { id: "initial", name: "Opening"},
-  { id: "medial", name: "Middle"},
-  { id: "final", name: "Closing"},
+  { id: "initial", name: "Initial"},
+  { id: "medial", name: "Medial"},
+  { id: "final", name: "Final"},
 ];
 
 const availableGradeLevels = [
