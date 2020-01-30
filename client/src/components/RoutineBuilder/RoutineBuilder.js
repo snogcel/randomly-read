@@ -610,6 +610,8 @@ class RoutineBuilder extends React.Component {
 
   routineSelectHandler(id) {
 
+    console.log("crashing here?");
+
     this.resetStepList();
 
     for (let i = 0; i < this.props.availableRoutines.length; i++) {
@@ -621,9 +623,11 @@ class RoutineBuilder extends React.Component {
         // set name
         this.props.updateName(this.props.availableRoutines[i].attributes.name);
 
-        // set description
-        this.props.updateDescription(JSON.parse(this.props.availableRoutines[i].attributes.description));
-
+        try {
+          // set description
+          this.props.updateDescription(JSON.parse(this.props.availableRoutines[i].attributes.description));
+        } catch {}
+        
         // set grade level / complexity
         this.props.updateGradeLevel(this.props.availableRoutines[i].attributes.age);
 
