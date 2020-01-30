@@ -167,7 +167,7 @@ const availablePositions = [
 ];
 
 const availableGradeLevels = [
-  { id: "0", name: "All"},
+  { id: "0", name: "All Grade Levels"},
   { id: "7", name: "1st Grade" },
   { id: "8", name: "2nd Grade" },
   { id: "9", name: "3rd Grade" },
