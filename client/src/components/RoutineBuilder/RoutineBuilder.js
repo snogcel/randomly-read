@@ -56,14 +56,6 @@ import IntermissionText from './elements/IntermissionText';
 
 import RoutinePreview from './elements/RoutinePreview';
 
-import InitialSentenceBlacklist from '../RRLayout/InitialSentenceBlacklist';
-import MedialSentenceBlacklist from '../RRLayout/MedialSentenceBlacklist';
-import FinalSentenceBlacklist from '../RRLayout/FinalSentenceBlacklist';
-
-import InitialWordBlacklist from '../RRLayout/InitialWordBlacklist';
-import MedialWordBlacklist from '../RRLayout/MedialWordBlacklist';
-import FinalWordBlacklist from '../RRLayout/FinalWordBlacklist';
-
 import getBlacklist from '../../util/blacklists'
 
 import { styles } from '../../themeHandler';
