@@ -627,7 +627,7 @@ class RoutineBuilder extends React.Component {
           // set description
           this.props.updateDescription(JSON.parse(this.props.availableRoutines[i].attributes.description));
         } catch {}
-        
+
         // set grade level / complexity
         this.props.updateGradeLevel(this.props.availableRoutines[i].attributes.age);
 

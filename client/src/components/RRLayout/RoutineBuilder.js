@@ -20,6 +20,8 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
 
   let blacklist = getBlacklist(age, mode, position);
 
+  if (syllables.length === 0) syllables = [1, 2, 3, 4, 5];
+
   // determine overlap
   for (let j = 0; j < syllables.length; j++) {
 
