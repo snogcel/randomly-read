@@ -20,7 +20,9 @@ const mapStateToProps = state => ({
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
   currentExercise: state.exerciseHistory.currentExercise,
   name: state.routineSelect.name,
-  description: state.routineSelect.description
+  description: state.routineSelect.description,
+  isVoting: state.posts.isVoting,
+  isInteractionVoting: state.interaction.isInteractionVoting,
 });
 
 const mapDispatchToProps = dispatch => ({

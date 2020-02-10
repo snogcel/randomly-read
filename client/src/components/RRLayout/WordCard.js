@@ -36,16 +36,15 @@ function getModalStyle() {
 
 class WordCard extends React.Component  {
 
-    constructor(props) {
-      super(props);
-      this.state = {
-        open: false,
-        buttonColor: 'White'
-      };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+      buttonColor: 'White'
+    };
 
-      this.refreshQuery = this.refreshQuery.bind(this);
-      this.fetching = false;
-
+    this.refreshQuery = this.refreshQuery.bind(this);
+    this.fetching = false;
   }
 
   componentDidMount() {
@@ -84,6 +83,21 @@ class WordCard extends React.Component  {
     this.props.addWord(obj);
   }
 
+  shouldComponentUpdate(nextProps) {
+
+    if (this.props.currentExercise.length > 0 && this.props.currentExerciseNumber === null) {
+
+      return true;
+
+    } else {
+
+      if (nextProps.isVoting !== this.props.isVoting) return false;
+      if (nextProps.isInteractionVoting !== this.props.isInteractionVoting) return false;
+
+    }
+
+    return true;
+  }
 
   buildQuery() {
 
