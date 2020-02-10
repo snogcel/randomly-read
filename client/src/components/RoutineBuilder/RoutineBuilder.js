@@ -229,17 +229,12 @@ class RoutineBuilder extends React.Component {
   componentDidUpdate(prevProps) {
 
     if (prevProps.lastUpdated !== this.props.lastUpdated) {
-
-      console.log("-- auto save --");
       if (this.props.id !== 0) this.saveHandler();
-
     }
 
     if (prevProps.id !== this.props.id) {
       // routine select change
-      console.log("-- routine select handler --");
       this.routineSelectHandler(this.props.id);
-
     }
 
   }
@@ -312,8 +307,6 @@ class RoutineBuilder extends React.Component {
     let name = this.props.name;
     let description = JSON.stringify(this.props.description);
     let age = this.props.age;
-
-    console.log("saving description: ", this.props.description);
 
     let routine = this.props.routine;
 
@@ -608,8 +601,6 @@ class RoutineBuilder extends React.Component {
 
   routineSelectHandler(id) {
 
-    console.log("crashing here?");
-
     this.resetStepList();
 
     for (let i = 0; i < this.props.availableRoutines.length; i++) {
@@ -867,15 +858,11 @@ class RoutineBuilder extends React.Component {
 
     let blacklistedConsonants = this.filterAvailableConsonants(consonants);
 
-    console.log("blacklisted consonants: ", blacklistedConsonants);
+    // console.log("blacklisted consonants: ", blacklistedConsonants);
 
     for (let i = 0; i < blacklistedConsonants.length; i++) {
 
       consonants = consonants.filter(o => o.id !== blacklistedConsonants[i]);
-
-      /*
-      delete consonantObj[blacklistedConsonants[i]]; // remove blacklisted item
-       */
 
     }
 
@@ -884,12 +871,14 @@ class RoutineBuilder extends React.Component {
 
   filterAvailableConsonants(consonantArr) {
 
+    /*
     console.log("Mode: ", this.props.mode);
     console.log("Position:", this.props.position);
     console.log("Age:", this.props.age);
     console.log("Syllables: ", this.props.syllables);
     console.log("Vowels: ", this.props.vowels);
     console.log("Selected Consonants: ", this.props.consonants);
+    */
 
     let age = this.props.age;
     let mode = this.props.mode;
@@ -930,7 +919,6 @@ class RoutineBuilder extends React.Component {
     for (let i = 0; i < consonants.length; i++) {
 
       if (result.indexOf(consonants[i]) > -1) {
-        console.log(consonants[i] + " is on blacklist!");
         this.props.removeConsonant(consonants[i]); // remove consonant from state
       }
 
@@ -1104,6 +1092,12 @@ class RoutineBuilder extends React.Component {
 
                               <StepList action={this.stepListHandler} index={this.state.index} routine={routine} />
 
+                              { id !== 0 ? (
+                                <>
+                                  <InsertButton action={this.insertHandler} />
+                                </>
+                              ) : ( null )}
+
                             </Grid>
 
                           </Grid>
@@ -1140,8 +1134,6 @@ class RoutineBuilder extends React.Component {
                         </Grid>
 
                       </Grid>
-
-                      { this.state.showDescriptionEditor && <Typography variant="body2" color="textSecondary" component="p">Use the fields below to define the name of this routine, reading level, as well as user instructions on how to use it.<br /><br /></Typography> }
 
                       <Grid container spacing={0}>
 
@@ -1253,15 +1245,7 @@ class RoutineBuilder extends React.Component {
 
                         <Grid item xs={12}>
 
-                          <Grid container spacing={2} justify="center">
-
-                            <Grid item>
-
-                              <br />
-
-                              <InsertButton action={this.insertHandler} />
-
-                            </Grid>
+                          <Grid container spacing={2}>
 
                             {(this.state.index > 0) ? (
                               <>
@@ -1275,6 +1259,17 @@ class RoutineBuilder extends React.Component {
 
                             {(this.state.index > 0) ? (
                               <>
+                                <Grid item>
+
+                                  <br />
+                                  <PreviewButton action={this.previewHandler} />
+
+                                </Grid>
+                              </> ) : ( <> </> )}
+
+
+                            {(this.state.index > 0) ? (
+                              <>
                               <Grid item>
 
                                 <br />
@@ -1283,15 +1278,6 @@ class RoutineBuilder extends React.Component {
                               </Grid>
                               </> ) : ( <> </> )}
 
-                            {(this.state.index > 0) ? (
-                              <>
-                                <Grid item>
-
-                                  <br />
-                                  <PreviewButton action={this.previewHandler} />
-
-                                </Grid>
-                              </> ) : ( <> </> )}
 
                           </Grid>
 

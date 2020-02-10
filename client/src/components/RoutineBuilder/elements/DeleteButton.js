@@ -17,8 +17,8 @@ export default function DeleteButton(props) {
 
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
-        Delete Step
+      <Button onClick={() => { props.action(); }} variant="outlined" className={classes.button}>
+        Delete Exercise Step
       </Button>
     </div>
   );
