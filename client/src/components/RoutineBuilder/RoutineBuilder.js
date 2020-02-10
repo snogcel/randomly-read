@@ -239,7 +239,7 @@ class RoutineBuilder extends React.Component {
       // routine select change
       console.log("-- routine select handler --");
       this.routineSelectHandler(this.props.id);
-      
+
     }
 
   }
@@ -889,12 +889,14 @@ class RoutineBuilder extends React.Component {
     console.log("Age:", this.props.age);
     console.log("Syllables: ", this.props.syllables);
     console.log("Vowels: ", this.props.vowels);
+    console.log("Selected Consonants: ", this.props.consonants);
 
     let age = this.props.age;
     let mode = this.props.mode;
     let position = this.props.position;
     let syllables = this.props.syllables;
     let vowels = this.props.vowels;
+    let consonants = this.props.consonants;
 
     let result = [];
     let blacklist = {};
@@ -920,6 +922,16 @@ class RoutineBuilder extends React.Component {
             return blacklist[vowels[i]].consonants[(syllables[j] - 1)].indexOf(value) > -1;
           });
         }
+      }
+
+    }
+
+    // iterate through selected consonants and remove if exist on blacklist array
+    for (let i = 0; i < consonants.length; i++) {
+
+      if (result.indexOf(consonants[i]) > -1) {
+        console.log(consonants[i] + " is on blacklist!");
+        this.props.removeConsonant(consonants[i]); // remove consonant from state
       }
 
     }
