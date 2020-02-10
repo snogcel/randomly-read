@@ -235,6 +235,13 @@ class RoutineBuilder extends React.Component {
 
     }
 
+    if (prevProps.id !== this.props.id) {
+      // routine select change
+      console.log("-- routine select handler --");
+      this.routineSelectHandler(this.props.id);
+      
+    }
+
   }
 
   componentWillMount() {
@@ -267,7 +274,6 @@ class RoutineBuilder extends React.Component {
 
       let userId = this.props.userId;
       this.props.attemptCreateRoutine(userId, routineName);
-      // this.resetStepList();
 
     }
 
