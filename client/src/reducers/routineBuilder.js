@@ -167,7 +167,7 @@ export default (state = initialState, action) => {
     case UPDATE_POSITION:
       return {...state, position: action.position};
     case UPDATE_GRADE_LEVEL:
-      return {...state, age: action.gradeLevel};
+      return {...state, lastUpdated: Date.now(), age: action.gradeLevel};
     case UPDATE_INTERMISSION_TEXT:
       return {...state, intermissionText: action.intermissionText};
     case UPDATE_IS_INTERMISSION:

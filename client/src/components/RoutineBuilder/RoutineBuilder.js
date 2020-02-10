@@ -1147,13 +1147,13 @@ class RoutineBuilder extends React.Component {
 
                         <Grid item>
 
-                          { this.state.showDescriptionEditor ? <RoutineName action={this.nameHandler} name={nameObj} /> : <Hidden xlDown><RoutineName action={this.nameHandler} name={nameObj} /></Hidden> }
+                          { true ? <RoutineName action={this.nameHandler} name={nameObj} /> : <Hidden xlDown><RoutineName action={this.nameHandler} name={nameObj} /></Hidden> }
 
                         </Grid>
 
                         <Grid item>
 
-                          { this.state.showDescriptionEditor ? <GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /> : <Hidden xlDown><GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /></Hidden> }
+                          { true ? <GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /> : <Hidden xlDown><GradeLevelSelect action={this.gradeLevelHandler} options={availableGradeLevels} gradeLevel={gradeLevelObj} /></Hidden> }
 
                         </Grid>
 
