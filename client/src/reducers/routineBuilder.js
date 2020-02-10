@@ -131,6 +131,7 @@ export default (state = initialState, action) => {
         userId: state.userId,
         routine: state.routine,
         name: state.name,
+        age: state.age,
         description: state.description,
         id: state.id
       };
