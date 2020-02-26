@@ -17,8 +17,8 @@ export default function PreviewButton(props) {
 
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
-        Preview Step
+      <Button onClick={() => { props.action(); }} variant="outlined" className={classes.button}>
+        Preview Exercise Step
       </Button>
     </div>
   );

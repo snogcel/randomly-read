@@ -20,6 +20,7 @@ export const UPDATE_RANGEVAL = 'UPDATE_RANGEVAL';
 export const UPDATE_REPETITIONS = 'UPDATE_REPETITIONS';
 export const UPDATE_SYLLABLES = 'UPDATE_SYLLABLES';
 export const UPDATE_POSITION = 'UPDATE_POSITION';
+export const UPDATE_GRADE_LEVEL = 'UPDATE_GRADE_LEVEL';
 export const UPDATE_INTERMISSION_TEXT = 'UPDATE_INTERMISSION_TEXT';
 export const UPDATE_IS_INTERMISSION = 'UPDATE_IS_INTERMISSION';
 
@@ -235,6 +236,12 @@ export function updateSyllables(syllables) {
 export function updatePosition(position) {
   return {
     type: UPDATE_POSITION, position
+  }
+}
+
+export function updateGradeLevel(gradeLevel) {
+  return {
+    type: UPDATE_GRADE_LEVEL, gradeLevel
   }
 }
 

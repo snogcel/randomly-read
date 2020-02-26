@@ -1,11 +1,4 @@
-import InitialSentenceBlacklist from "./InitialSentenceBlacklist";
-import MedialSentenceBlacklist from "./MedialSentenceBlacklist";
-import FinalSentenceBlacklist from "./FinalSentenceBlacklist";
-import InitialWordBlacklist from "./InitialWordBlacklist";
-import MedialWordBlacklist from "./MedialWordBlacklist";
-import FinalWordBlacklist from "./FinalWordBlacklist";
-
-const vowelArr = ["AA","AE","AH","AO","AW","AY","EH","ER","EY","IH","IY","OW","OY","UW"];
+import getBlacklist from '../../util/blacklists'
 
 const RoutineBuilder = function() {
 
@@ -13,6 +6,7 @@ const RoutineBuilder = function() {
 
 RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseConfig) {
 
+  let age = exerciseConfig.age;
   let syllables = exerciseConfig.syllables;
   let mode = exerciseConfig.mode;
   let position = exerciseConfig.position;
@@ -20,21 +14,13 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
 
   let result = [];
 
-  let blacklist = {};
-
   if (exerciseConfig.vowels.indexOf(consonant) > -1) { // if consonant is a vowel...
     if (consonant !== vowel) return false; // if consonant and vowel are not the same, return false
   }
 
-  // sentences
-  if (mode === "Sentence" && position === "initial") blacklist = InitialSentenceBlacklist;
-  if (mode === "Sentence" && position === "medial") blacklist = MedialSentenceBlacklist;
-  if (mode === "Sentence" && position === "final") blacklist = FinalSentenceBlacklist;
+  let blacklist = getBlacklist(age, mode, position);
 
-  // words
-  if (mode === "Word" && position === "initial") blacklist = InitialWordBlacklist;
-  if (mode === "Word" && position === "medial") blacklist = MedialWordBlacklist;
-  if (mode === "Word" && position === "final") blacklist = FinalWordBlacklist;
+  if (syllables.length === 0) syllables = [1, 2, 3, 4, 5];
 
   // determine overlap
   for (let j = 0; j < syllables.length; j++) {
@@ -57,6 +43,7 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
 
 RoutineBuilder.prototype._buildActionBase = function(exerciseConfig) {
   let actionBase = {
+    age: exerciseConfig.age,
     mode: exerciseConfig.mode,
     vowel: [],
     consonant: [],
@@ -99,6 +86,8 @@ RoutineBuilder.prototype.buildIntermission = function(exerciseConfig) {
 
 RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
   let routine = new Map();
+
+  console.log("Exercise Config: ", exerciseConfig);
 
   // Generate Action Base
   let actionBase = this._buildActionBase(exerciseConfig);

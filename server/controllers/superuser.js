@@ -399,11 +399,7 @@ exports.createRoutine = async (req, res, next) => {
       "isIntermission": false,
       "vowels": [],
       "consonants": [],
-      "syllables": [
-        1,
-        2,
-        3
-      ],
+      "syllables": [],
       "position": "initial"
     }];
 
@@ -413,7 +409,9 @@ exports.createRoutine = async (req, res, next) => {
     // Create Routine
     Routine.create({
       "name": routineName,
-      "subroutine": subroutine
+      "subroutine": subroutine,
+      "description": "",
+      "age": "0"
     }, function (err, data) {
       if (err) {
         next(err);
@@ -452,6 +450,8 @@ exports.createRoutine = async (req, res, next) => {
 
                     response.newRoutineId = routineId;
                     response.newRoutineName = routineName;
+                    response.newRoutineDescription = "";
+                    response.newRoutineAge = "0";
                     response.subroutine = subroutine;
 
                     res.status(201).json(response);

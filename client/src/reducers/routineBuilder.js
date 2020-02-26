@@ -20,6 +20,7 @@ import {UPDATE_RANGEVAL} from '../actions/routineBuilder';
 import {UPDATE_REPETITIONS} from '../actions/routineBuilder';
 import {UPDATE_SYLLABLES} from '../actions/routineBuilder';
 import {UPDATE_POSITION} from '../actions/routineBuilder';
+import {UPDATE_GRADE_LEVEL} from '../actions/routineBuilder';
 import {UPDATE_INTERMISSION_TEXT} from '../actions/routineBuilder';
 import {UPDATE_IS_INTERMISSION} from '../actions/routineBuilder';
 
@@ -61,6 +62,7 @@ const initialState = {
   repetitions: 10,
   syllables: [],
   position: 'initial',
+  age: "0",
   intermissionText: '',
   isIntermission: false,
   lastUpdated: null,
@@ -73,7 +75,7 @@ export default (state = initialState, action) => {
     case CREATE_ROUTINE_REQUEST:
       return { ...state, isFetching: true };
     case CREATE_ROUTINE_SUCCESS:
-      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName, description: initialState.description };
+      return { ...state, isFetching: false, routine: action.newRoutine.subroutine, availableRoutines: action.newRoutine.data, id: action.newRoutine.newRoutineId, name: action.newRoutine.newRoutineName, description: action.newRoutine.newRoutineDescription, age: action.newRoutine.newRoutineAge };
     case CREATE_ROUTINE_ERROR:
       return { ...state, isFetching: false };
 
@@ -129,6 +131,7 @@ export default (state = initialState, action) => {
         userId: state.userId,
         routine: state.routine,
         name: state.name,
+        age: state.age,
         description: state.description,
         id: state.id
       };
@@ -164,6 +167,8 @@ export default (state = initialState, action) => {
       return {...state, syllables: action.syllables};
     case UPDATE_POSITION:
       return {...state, position: action.position};
+    case UPDATE_GRADE_LEVEL:
+      return {...state, lastUpdated: Date.now(), age: action.gradeLevel};
     case UPDATE_INTERMISSION_TEXT:
       return {...state, intermissionText: action.intermissionText};
     case UPDATE_IS_INTERMISSION:

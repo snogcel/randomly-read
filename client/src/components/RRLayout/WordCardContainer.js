@@ -13,13 +13,16 @@ const mapStateToProps = state => ({
   vowel: state.word.vowel,
   consonant: state.word.consonant,
   position: state.word.position,
+  age: state.word.age,
   syllables: state.word.syllables,
   mode: state.word.mode,
   limit: state.word.limit,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
   currentExercise: state.exerciseHistory.currentExercise,
   name: state.routineSelect.name,
-  description: state.routineSelect.description
+  description: state.routineSelect.description,
+  isVoting: state.posts.isVoting,
+  isInteractionVoting: state.interaction.isInteractionVoting,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -17,7 +17,7 @@ export default function SaveButton(props) {
   return (
     <div>
       <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
-        Save Routine
+        Save Settings
       </Button>
     </div>
   );

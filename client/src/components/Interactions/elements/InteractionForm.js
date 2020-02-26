@@ -213,8 +213,8 @@ export default function InteractionForm(props) {
                       id: 'position-input',
                     }}
                   >
-                    <MenuItem key={"initial"} value={"initial"}>Beginning</MenuItem>
-                    <MenuItem key={"final"} value={"final"}>Ending</MenuItem>
+                    <MenuItem key={"initial"} value={"initial"}>Initial</MenuItem>
+                    <MenuItem key={"final"} value={"final"}>Final</MenuItem>
                   </Select>
                 </FormControl>
 

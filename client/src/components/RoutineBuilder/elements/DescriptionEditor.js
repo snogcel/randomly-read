@@ -5,6 +5,7 @@ import { convertToHTML, convertFromHTML } from 'draft-convert';
 import Button from '@material-ui/core/Button';
 
 import '../css/DescriptionEditor.css';
+import Typography from "../RoutineBuilder";
 
 class PostEditor extends Component {
   constructor(props) {
@@ -116,6 +117,8 @@ class PostEditor extends Component {
       }
     }
 
+    // { this.state.showDescriptionEditor && <Typography variant="body2" color="textSecondary" component="p">Use the fields below to define the name of this routine, reading level, as well as user instructions on how to use it.<br /><br /></Typography> }
+
     return (
       <div>
         <div className="RichEditor-root">
@@ -135,6 +138,7 @@ class PostEditor extends Component {
               handleKeyCommand={this.handleKeyCommand}
               keyBindingFn={this.mapKeyToEditorCommand}
               onChange={this.onChange}
+              placeholder="Use this space to optionally provide more information on the exercise routine."
               ref="editor"
               spellCheck={true} />
           </div>
@@ -145,7 +149,7 @@ class PostEditor extends Component {
           <br />
 
           <Button onClick={() => { this.publishPost(); }} variant="contained" color="primary">
-            Save Description
+            Save Settings
           </Button>
 
         </div>

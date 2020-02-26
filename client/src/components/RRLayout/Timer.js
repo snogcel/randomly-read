@@ -99,7 +99,12 @@ class Timer extends React.Component {
 
     } else {
 
+      // populate subroutine with word complexity (age)
+      let age = routine.age || "0";
+
       for (let i = 0; i < routine.subroutine.length; i++) {
+        routine.subroutine[i].age = age;
+
         this.exerciseStack.push(routine.subroutine[i]);
       }
 
@@ -384,6 +389,7 @@ class Timer extends React.Component {
     let vowel = this.state.vowel;
     let consonant = this.state.consonant;
     let position = this.state.position;
+    let age = this.state.age;
     let templates = this.state.templates;
     let syllables = this.state.syllables;
 
@@ -431,6 +437,7 @@ class Timer extends React.Component {
     templates = options.templates;
     syllables = options.syllables;
     position = options.position;
+    age = options.age;
 
     // passes updated variables to redux
     console.log("- passing updated variables to redux..");
@@ -441,6 +448,7 @@ class Timer extends React.Component {
     this.props.setLimit(limitText); // pass to TimerContainer
     this.props.setMode(mode); // pass to TimerContainer
     this.props.setPosition(position); // pass to TimerContainer
+    this.props.setAge(age); // pass to TimerContainer
     this.props.setIntermissionText(options.intermissionText); // pass to TimerContainer
 
     if (this.state.mode === "Intermission") refresh = false;
@@ -450,6 +458,7 @@ class Timer extends React.Component {
       vowel: vowel,
       consonant: consonant,
       position: position,
+      age: age,
       templates: templates,
       syllables: syllables,
       limit: limitText,

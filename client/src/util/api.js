@@ -161,22 +161,18 @@ export async function deleteInteraction (id, token) {
 }
 
 export async function getInteractions (token) {
-  console.log("-fetching interactions-");
   return await methods.get('interaction', token)
 }
 
 export async function getInteractionSettings(token) {
-  console.log("-fetching interaction settings-");
   return await methods.get('settings/interactions', token);
 }
 
 export async function getRoutineSettings (token) {
-  console.log("-fetching routines-");
   return await methods.get('settings/routines', token)
 }
 
 export async function getRoutines (token) {
-  console.log("-fetching routines-");
   return await methods.get('settings/routines', token)
 }
 
@@ -185,17 +181,14 @@ export async function updateRoutine (id, body, token) {
 }
 
 export async function getUsers (token) {
-  console.log("-fetching client users with token: ", token);
   return await methods.get('superuser/users', token)
 }
 
 export async function getUser (id, token) {
-  console.log("-fetching user detail-");
   return await methods.get(`superuser/users/${id}`, token)
 }
 
 export async function getUserRoutines (id, token) {
-  console.log("-fetching routines-");
   return await methods.get(`superuser/routines/${id}`, token)
 }
 
@@ -216,6 +209,5 @@ export async function createUser (user, token) {
 }
 
 export async function getViewHistory (id, startDate, endDate, token) {
-  console.log("-fetching view history-");
   return await methods.get(`history/words/${id}/start/${startDate}/end/${endDate}`, token)
 }

@@ -8,6 +8,7 @@ import {setMode} from '../../actions/word';
 import {addSyllables} from '../../actions/word';
 import {addConsonant} from '../../actions/word'
 import {setPosition} from '../../actions/word';
+import {setAge} from '../../actions/word';
 import {setLimit} from '../../actions/word'
 import {addRoutineVowel} from '../../actions/word';
 import {setIntermissionText} from '../../actions/word';
@@ -49,6 +50,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setPosition: (position) => {
     dispatch(setPosition(position)) // pass through to TimerContainer
+  },
+  setAge: (age) => {
+    dispatch(setAge(age))
   },
   setMode: (mode) => {
     dispatch(setMode(mode)) // pass through to TimerContainer

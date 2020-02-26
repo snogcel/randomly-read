@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const routineSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: false },
+  age: { type: String, required: false },
   subroutine: { type: Array, "default": [], required: true }
 }, { collation: { locale: 'en', strength: 1 } });
 
