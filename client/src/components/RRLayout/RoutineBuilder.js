@@ -87,7 +87,7 @@ RoutineBuilder.prototype.buildIntermission = function(exerciseConfig) {
 RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
   let routine = new Map();
 
-  console.log("Exercise Config: ", exerciseConfig);
+  // console.log("Exercise Config: ", exerciseConfig);
 
   // Generate Action Base
   let actionBase = this._buildActionBase(exerciseConfig);
@@ -99,7 +99,7 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
   let j = 0; // vowel iterator
   let k = 0; // consonant iterator
 
-  console.log("building randomly...");
+  // console.log("building randomly...");
 
   for (let i = 0; i < checkpoints.length; i++) {
 
@@ -118,7 +118,7 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
     if (typeof vowel !== "undefined") {
 
       if ((exerciseConfig.consonants.length === 1 && exerciseConfig.vowels.length === 1)) {
-        console.log("-blacklist bypassed-");
+        // console.log("-blacklist bypassed-");
         verified = true; // bypass blacklist if one vowel and one consonant have been provided (assumes system generated routine)
       } else {
         verified = this._verifyBlacklist(vowel, consonant, exerciseConfig); // set and verify initial matched word
@@ -131,12 +131,12 @@ RoutineBuilder.prototype.buildRandomly = function(exerciseConfig) {
         vowel = exerciseConfig.vowels[randVowel];
         verified = this._verifyBlacklist(vowel, consonant, exerciseConfig);
 
-        if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
+        // if (verified) console.log('Word replaced with: ' + consonant + " and " + vowel);
       }
 
     }
 
-    console.log('Word added with: ' + consonant + " and " + vowel);
+    // console.log('Word added with: ' + consonant + " and " + vowel);
 
     // Set Parameters
     if (typeof consonant !== "undefined") {

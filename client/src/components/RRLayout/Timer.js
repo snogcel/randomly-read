@@ -126,9 +126,9 @@ class Timer extends React.Component {
 
   setExercise(exercise) {
 
-    console.log("Modify exerciseConfig...");
+    // console.log("Modify exerciseConfig...");
 
-    console.log(exercise);
+    // console.log(exercise);
 
     // Stub out exerciseConfig
     let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
@@ -153,8 +153,8 @@ class Timer extends React.Component {
 
     }
 
-    console.log("Consonant Array Length: ", exercise.consonants.length);
-    console.log("Vowel Array Length: ", exercise.vowels.length);
+    // console.log("Consonant Array Length: ", exercise.consonants.length);
+    // console.log("Vowel Array Length: ", exercise.vowels.length);
 
     // Update Timer Value
     this.setState({ rangeVal: exercise.rangeVal });
@@ -164,15 +164,15 @@ class Timer extends React.Component {
     switch (exercise.map) {
       case 'default':
         this.currentRoutine = this.routineBuilder.build(exercise);
-        console.log("Exercise Map", this.currentRoutine);
+        // console.log("Exercise Map", this.currentRoutine);
         break;
       case 'randomly':
         this.currentRoutine = this.routineBuilder.buildRandomly(exercise);
-        console.log("Exercise Map", this.currentRoutine);
+        // console.log("Exercise Map", this.currentRoutine);
         break;
       case 'intermission':
         this.currentRoutine = this.routineBuilder.buildIntermission(exercise);
-        console.log("Exercise Map (Intermission)", this.currentRoutine);
+        // console.log("Exercise Map (Intermission)", this.currentRoutine);
         break;
       default:
         break;
@@ -342,7 +342,7 @@ class Timer extends React.Component {
 
   resetTimerAndQuery() {
 
-    console.log("-reset timer and query-");
+    // console.log("-reset timer and query-");
 
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false});
@@ -364,7 +364,7 @@ class Timer extends React.Component {
 
   resetTimer() {
 
-    console.log("-reset timer and exercise stack-");
+    // console.log("-reset timer and exercise stack-");
 
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false});
@@ -440,7 +440,7 @@ class Timer extends React.Component {
     age = options.age;
 
     // passes updated variables to redux
-    console.log("- passing updated variables to redux..");
+    // console.log("- passing updated variables to redux..");
     this.props.addExerciseNumber(this.exercisePointer);
     this.props.addRoutineVowel(options.vowel); // pass to TimerContainer
     this.props.addConsonant(options.consonant); // pass to TimerContainer
@@ -466,10 +466,10 @@ class Timer extends React.Component {
     });
 
     if (refresh) {
-      console.log("Refetching...");
+      // console.log("Refetching...");
       // this.queryWindow.current.refreshQuery();
     } else {
-      console.log("Fetching...");
+      // console.log("Fetching...");
     }
 
   }

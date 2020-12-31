@@ -52,8 +52,7 @@ const RRHome = props => {
   let timerContainerWidth = 12;
   let interactionContainerWidth = 12;
 
-  console.log("detected width: ", width);
-
+  // console.log("detected width: ", width);
 
   // desktop - widescreen
   if (width === "xl") {
@@ -77,7 +76,6 @@ const RRHome = props => {
 
   // tablet - vertical
   if (width === "sm") {
-    console.log("-sm-");
     timerContainerWidth = 10;
   }
 

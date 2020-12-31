@@ -245,7 +245,7 @@ class WordCard extends React.Component  {
             }
 
         default:
-            console.log("No Query...");
+            // console.log("No Query...");
             return null;
     }
 

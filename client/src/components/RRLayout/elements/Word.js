@@ -23,6 +23,8 @@ class Word extends React.Component {
   render() {
     const { classes } = this.props;
 
+    console.log(this.props.value.name);
+
     return (
       <Typography variant="h1" className={classes.word}>
         {this.props.value.name}
