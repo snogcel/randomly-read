@@ -14,10 +14,12 @@ const fetchAssignedRoutinesRequest = { type: FETCH_ASSIGNED_ROUTINES_REQUEST };
 const fetchAssignedRoutinesSuccess = routines => ({ type: FETCH_ASSIGNED_ROUTINES_SUCCESS, routines });
 const fetchAssignedRoutinesError = error => ({ type: FETCH_ASSIGNED_ROUTINES_ERROR, error });
 
-export const fetchAssignedRoutines = () => async (dispatch, getState) => {
+export const fetchAssignedRoutines = (token) => async (dispatch, getState) => {
   dispatch(fetchAssignedRoutinesRequest);
   try {
-    const { token } = getState().auth;
+    if (typeof(token) === 'undefined') {
+      const { token } = getState().auth;
+    }
     const routines = await getRoutines(token);
     dispatch(fetchAssignedRoutinesSuccess(routines.data));
   } catch (error) {

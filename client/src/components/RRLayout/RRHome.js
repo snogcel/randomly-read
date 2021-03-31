@@ -42,7 +42,7 @@ import { styles } from '../../themeHandler';
 
 const RRHome = props => {
 
-  const {classes, user} = props;
+  const {classes, user, token} = props;
   const { width } = props;
 
   const [open_1, setOpen_1] = React.useState(false);

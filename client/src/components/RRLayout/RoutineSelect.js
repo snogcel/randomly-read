@@ -91,7 +91,7 @@ class RoutineSelect extends React.Component {
     }
 
     prepareRoutineSelect(){
-      this.props.fetchAssignedRoutines();
+      this.props.fetchAssignedRoutines(this.props.token);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
