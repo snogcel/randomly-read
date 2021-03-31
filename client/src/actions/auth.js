@@ -18,6 +18,11 @@ export const attemptLogin = (username, password) => async dispatch => {
   }
 };
 
+export const setToken = (username, token) => async dispatch => {
+  console.log(token);
+  if (token) dispatch(loginSuccess(token));
+};
+
 export const SIGNUP_REQUEST = 'SIGNUP_REQUEST';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_ERROR = 'SIGNUP_ERROR';
