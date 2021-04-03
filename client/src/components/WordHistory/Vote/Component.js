@@ -128,7 +128,7 @@ class PostVote extends React.Component {
     if (this.state.score < 0) title = classes.historyTitleDownvote;
     if (this.props.id === null) title = classes.historyTitleNovote;
 
-    if (this.props.wordid) {
+    if (this.props.wordid && this.props.user.isActive) {
 
       return (
         <Grid item className={classes.wordHistoryWrapper}>

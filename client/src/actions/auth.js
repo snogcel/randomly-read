@@ -19,7 +19,7 @@ export const attemptLogin = (username, password) => async dispatch => {
 };
 
 export const setToken = (username, token) => async dispatch => {
-  console.log(token);
+  // TODO - Improve
   if (token) dispatch(loginSuccess(token));
 };
 

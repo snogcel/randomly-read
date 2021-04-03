@@ -1,45 +1,58 @@
 import React from 'react';
 import ReactGA from 'react-ga';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { Router, Route, Switch } from 'react-router-dom';
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import theme from '../../theme'; // TODO - remove
 import { MuiTheme } from '../../themeHandler';
-import history from '../../util/history';
 
 import GlobalStyle from '../../globalStyle';
 import AppBarContainer from '../AppBar/Container';
 import HeaderContainer from '../Header/Container';
 import ErrorNotificationContainer from '../ErrorNotification/Container';
-
 import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
 import CreatePostFormContainer from '../CreatePostForm/Container';
 
-import Home from '../Home';
-
 import ApolloClient from 'apollo-client';
-
 import { HttpLink } from 'apollo-link-http';
 import { ApolloLink } from 'apollo-link';
 import { InMemoryCache as Cache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
-
-
+import Identities from '../RandomlyRead/Identities/Identities';
+import Exercise1Container from '../RandomlyRead/Exercises/Exercise1/HomeContainer';
 
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
-import RRHomeDevContainer from '../RRLayout/RRHomeContainerDev'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
-// import Interactions from '../Interactions/InteractionsHomeContainer';
 import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
 import Administration from '../Administration/Container';
 import UserProfile from '../UserProfile/Container';
-import UserHome from '../UserHome/Container';
 
-const App = props => {
+const App = (props) => {
 
-  const {user, token} = props;
+  let {user, token} = props;
+
+  let location = useLocation();
+
+  if (location.pathname === '/') {
+      token = null;
+      user = null;
+  }
+
+  for (let i = 0; i < Identities.length; i++) {
+
+    if (location.pathname === Identities[i].pathname) { // override
+
+      if (token !== Identities[i].token) {
+        token = Identities[i].token;
+        user = Identities[i].user;
+
+        props.setToken(user, token);
+      }
+
+    }
+  }
 
   const AuthLink = (operation, next) => {
 
@@ -77,17 +90,18 @@ const App = props => {
   <MuiThemeProvider theme={MuiTheme}>
     <ApolloProvider client={client}>
       <ThemeProvider theme={theme(props.dark)}>
-        <Router history={history}>
           <div>
             <GlobalStyle />
-            <Route component={AppBarContainer} />
+
+            { ((typeof(user) === "undefined") || (user === null) || (typeof(user) !== "undefined" && user.isActive)) && <Route component={AppBarContainer} /> }
+
             <Route component={ErrorNotificationContainer} />
             <Switch>
               <Route path='/login' component={LoginFormContainer} />
               <Route path='/signup' component={SignupFormContainer} />
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
-              <Route path='/RandomlyReadDev' component={RRHomeDevContainer} />
+              <Route path='/Exercise1' component={Exercise1Container} />
               <Route path='/FluencyReport' component={FluencyReport} />
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/Administration' component={Administration} />
@@ -95,7 +109,6 @@ const App = props => {
               <Route path='/' component={RRHomeContainer} />
             </Switch>
           </div>
-        </Router>
       </ThemeProvider>
     </ApolloProvider>
   </MuiThemeProvider>
