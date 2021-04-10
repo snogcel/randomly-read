@@ -15,7 +15,7 @@ function ProgressIndicator(props) {
 
   let status = null;
   let progressClass = classes.intermissionIndicator;
-  let intermissionMultiplier = 0.66;
+  let intermissionMultiplier = 1;
 
   if (typeof props.currentExercise !== "undefined" && typeof props.currentExerciseNumber !== "undefined" && props.currentExerciseNumber !== null) {
     if (!props.currentExercise[props.currentExerciseNumber].isIntermission) {
