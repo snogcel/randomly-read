@@ -8,11 +8,11 @@ import SubmitButton from '../shared/form/SubmitButton';
 
 class SignupForm extends React.Component {
   componentDidMount() {
-    this.redirectIfLoggedIn();
+    // this.redirectIfLoggedIn();
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    this.redirectIfLoggedIn();
+    // this.redirectIfLoggedIn();
   }
 
   redirectIfLoggedIn() {
