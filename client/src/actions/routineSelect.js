@@ -19,9 +19,12 @@ export const fetchAssignedRoutines = (token) => async (dispatch, getState) => {
   try {
     if (typeof(token) === 'undefined') {
       const { token } = getState().auth;
+      const routines = await getRoutines(token);
+      dispatch(fetchAssignedRoutinesSuccess(routines.data));
+    } else {
+      const routines = await getRoutines(token);
+      dispatch(fetchAssignedRoutinesSuccess(routines.data));
     }
-    const routines = await getRoutines(token);
-    dispatch(fetchAssignedRoutinesSuccess(routines.data));
   } catch (error) {
     dispatch(fetchAssignedRoutinesError(error));
   }

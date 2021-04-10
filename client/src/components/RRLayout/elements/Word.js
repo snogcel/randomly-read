@@ -13,6 +13,10 @@ class Word extends React.Component {
 
   }
 
+  shouldComponentUpdate(nextProps) {
+
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
 
     this.name = JSON.stringify([this.props.value.name]);

@@ -32,6 +32,9 @@ export function addRoutineVowel(text) {
 }
 
 export function addWord(text) {
+
+    console.log("-add word-");
+
     return {
         type: ADD_WORD, text
     }

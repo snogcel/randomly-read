@@ -96,8 +96,11 @@ class RoutineSelect extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
+
       if (typeof this.props.isVoting !== "undefined") {
         if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
+
+          console.log("-fetching updated routines-");
 
           this.props.fetchAssignedRoutines();
           this.props.updateId(prevProps.id);
@@ -110,6 +113,8 @@ class RoutineSelect extends React.Component {
       if (typeof this.props.isInteractionVoting !== "undefined") {
         if ((prevProps.isInteractionVoting !== this.props.isInteractionVoting) && !this.props.isInteractionVoting) { // fetch updated routines
 
+          console.log("-fetching updated routines-");
+
           this.props.fetchAssignedRoutines();
           this.props.updateId(prevProps.id);
           this.props.updateName(prevProps.name);
@@ -117,6 +122,7 @@ class RoutineSelect extends React.Component {
 
         }
       }
+
 
       // reset routine if one was previously selected
       if (this.props.id === 0 && typeof this.props.routine.subroutine !== "undefined") {

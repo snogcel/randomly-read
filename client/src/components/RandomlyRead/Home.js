@@ -5,8 +5,8 @@ import YouTube from 'react-youtube';
 
 import SignupForm from '../SignupForm/Container';
 
-import WordCardContainer from '../RRLayout/WordCardContainer';
-import TimerContainer from './Exercises/Exercise1/TimerContainer';
+import WordCardContainer from './Exercises/WordCardContainer';
+
 import Grid from '@material-ui/core/Grid';
 import Modal from '@material-ui/core/Modal';
 import Hidden from '@material-ui/core/Hidden';
@@ -17,345 +17,205 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+
+import Paper from '@material-ui/core/Paper';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
 //import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import ExerciseHistoryContainer from '../RRLayout/ExerciseHistoryContainer';
+import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
 import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
 import WordHistory from '../RRLayout/WordHistoryContainer'
+
+import Subnavigation from './Exercises/SubnavigationContainer';
 
 import WordHistoryList from '../WordHistoryList/Container';
 
 import LoginFormContainer from '../LoginForm/Container';
 
-import { styles } from '../../themeHandler';
+import { styles } from '../../exerciseThemeHandler';
 
 //import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
 
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Box
+      role="tabpanel"
+      hidden={value !== index}
+      id={`nav-tabpanel-${index}`}
+      aria-labelledby={`nav-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box p={3}>
+          {children}
+        </Box>
+      )}
+    </Box>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `nav-tab-${index}`,
+    'aria-controls': `nav-tabpanel-${index}`,
+  };
+}
+
+function LinkTab(props) {
+  return (
+    <Tab
+      component="a"
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper,
+  },
+}));
+
 const RRHome = props => {
 
-  const {classes, user, token} = props;
+  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction } = props;
+  const { classes, user, routineSelectId, token } = props;
+
   const { width } = props;
 
-  const [open_1, setOpen_1] = React.useState(false);
-  const [open_2, setOpen_2] = React.useState(false);
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
   let interactionContainerWidth = 12;
 
-  // console.log("detected width: ", width);
-
   // desktop - widescreen
   if (width === "xl") {
     exerciseHistoryContainerWidth = 2;
-    timerContainerWidth = 6;
-    interactionContainerWidth = 2;
+    timerContainerWidth = 8;
   }
 
   // laptop or desktop
-  if (width === "lg") {
-    exerciseHistoryContainerWidth = 3;
-    timerContainerWidth = 6;
-    interactionContainerWidth = 3;
+  if (width === "lg" || width === "md") {
+    exerciseHistoryContainerWidth = 4;
+    timerContainerWidth = 8;
   }
 
   // tablet - horizontal
+  /*
   if (width === "md") {
     timerContainerWidth = 10;
     interactionContainerWidth = 10;
   }
+  */
 
   // tablet - vertical
   if (width === "sm") {
     timerContainerWidth = 10;
   }
 
-  const opts = {
-    width: '100%',
-    playerVars: { // https://developers.google.com/youtube/player_parameters
-      autoplay: 0
-    }
-  };
-
-  /*
-
-  <Grid className={classes.root}>
-
-      <Card elevation={0} className={classes.userAdminCard}>
-
-        <CardContent>
-
-
-
-        </CardContent>
-
-      </Card>
-
-    </Grid>
-
-
-
-    <div >
-                      <YouTube
-                        videoId="2g811Eo7K8U"
-                        opts={opts}
-                      />
-                    </div>
-
-   */
-
-  const handleOpen_1 = () => {
-    setOpen_1(true);
-  };
-
-  const handleClose_1 = () => {
-    setOpen_1(false);
-  };
-
-  const handleOpen_2 = () => {
-    setOpen_2(true);
-  };
-
-  const handleClose_2 = () => {
-    setOpen_2(false);
-  };
-
   return (
 
       <Grid className={classes.root}>
 
-        {user ? (
-          <>
-            <Grid container spacing={0} justify="center">
+          <Grid container justify="center">
+            <Grid item xs={10}>
 
-              <Grid item xs={exerciseHistoryContainerWidth}>
+              <br /><br />
 
-                <TimerContainer />
+              <Grid container>
 
-                <ExerciseHistoryContainer />
+                <Grid item xs={12}>
 
-              </Grid>
-
-              <Grid item xs={timerContainerWidth}>
-
-                <WordCardContainer />
-
-                <ProgressIndicator />
-
-                <WordHistoryList />
-
-              </Grid>
-
-              <Grid item xs={interactionContainerWidth}>
-
-              </Grid>
-
-            </Grid>
-          </>
-        ) : (
-          <>
-            <Grid container className={classes.homePageContainer}>
-
-              {(width == "xs") ? (
-                <Grid item xs={12} className={classes.homePageMobileHeader}>
-
-                  <Typography variant="h4" component="h1" className={classes.heading}>
-                    Practice smarter with automated therapy exercises
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary" component="p">
-                    Speech therapy with a focus on specific consonant and vowel sounds
-                  </Typography>
-
-                </Grid>
-              ) : (
-                <Grid item xs={12} className={classes.homePageHeader}>
-
-                  <Typography variant="h4" component="h1" className={classes.homepageTitleHeading}>
-                    <span className={classes.homepageTitleHeadingContainer}>Practice smarter with automated therapy exercises</span>
-                  </Typography>
-                  <Typography variant="body1" component="p" className={classes.homepageTitleSubheading}>
-                    <span className={classes.homepageTitleSubheadingContainer}>Speech therapy with a focus on specific consonant and vowel sounds</span>
-                  </Typography>
-
-                </Grid>
-              )}
-
-              <Grid item xs={12} className={classes.homePageItems}>
-
-                <Grid container justify="center">
-
-                  <Grid item xs={12} sm={4} md={3} xl={2} className={classes.homePageHeaderBox}>
-
-                    <Typography variant="h6" component="h2" className={classes.heading}>
-                      Customizable
-                    </Typography>
-
-                    <Typography variant="body2" color="textPrimary" component="p">
-                      Define specific consonant and vowel sounds as well as what part of the word to practice. Exercise routines can be fully tailored to client needs.
-                    </Typography>
-
-                  </Grid>
-
-                  <Grid item xs={12} sm={4} md={3} xl={2} className={classes.homePageHeaderBox}>
-
-                    <Typography variant="h6" component="h2" className={classes.heading}>
-                      Structured
-                    </Typography>
-
-                    <Typography variant="body2" color="textPrimary" component="p">
-                      Words and Sentences are displayed in a timed sequence allowing for a more structured practice session which leads to greater success.
-                    </Typography>
-
-                  </Grid>
-
-                  <Grid item xs={12} sm={4} md={3} xl={2} className={classes.homePageHeaderBox}>
-
-                    <Typography variant="h6" component="h2" className={classes.heading}>
-                      Focused
-                    </Typography>
-
-                    <Typography variant="body2" color="textPrimary" component="p">
-                      Fully automated usage allows your client to focus on their speaking technique without having to flip through flash cards or reading materials.
-                    </Typography>
-                  </Grid>
+                  <Subnavigation />
 
                 </Grid>
 
-              </Grid>
+                <Grid item xs={12}>
 
-              <Grid item xs={12} className={classes.homePageSubHeader}>
-
-                <Grid container justify="center">
-
-                  <Grid item xs={12} sm={5} lg={6} xl={3}>
-
-                    <div className={classes.homePageBulletPointContainer}>
-
-                      <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
-                        Engineered for client success
-                      </Typography>
-
-                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Practice anywhere, anytime, using a desktop or mobile device</span>
-                      </Typography>
-
-                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Track words that your client has trouble with outside of therapy</span>
-                      </Typography>
-
-                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small"/></span>&nbsp;&nbsp;<span>Generate words or partial sentences with a focus on specific sounds</span>
-                      </Typography>
-
-                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small"/></span>&nbsp;&nbsp;<span>155,000+ word database provides variety in exercise routines</span>
-                      </Typography>
-
-                      <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageBulletPoint}>
-                        <span><CheckBoxIcon fontSize="small" /></span>&nbsp;&nbsp;<span>Create accountability for client practice habits with reporting</span>
-                      </Typography>
-
-                    </div>
-
-                  </Grid>
-
-                  <Hidden xsDown>
-                  <Grid item xs={12} sm={4} lg={3} xl={3} className={classes.homepageScreenshotContainer}>
-
-                      <img src="./rr_preview_1.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} />
-
-                      <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={open_1}
-                        onClose={handleClose_1}
-                      >
-                        <div className={classes.previewImage}>
-                          <img src="./rr_preview_1_large.png" />
-                        </div>
-                      </Modal>
-
-                      <br /><br />
-
-                      <img src="./rr_preview_2.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} />
-
-                      <Modal
-                        aria-labelledby="simple-modal-title"
-                        aria-describedby="simple-modal-description"
-                        open={open_2}
-                        onClose={handleClose_2}
-                      >
-                        <div className={classes.previewImage}>
-                          <img src="./rr_preview_2_large.png" />
-                        </div>
-                      </Modal>
-
-                  </Grid>
-                  </Hidden>
+                  <AppBar position="static" color="primary" elevation={0}>
+                    <Tabs value={value} onChange={handleChange}>
+                      <LinkTab disableRipple disableFocusRipple label="Introduction" {...a11yProps(0)} />
+                      <LinkTab disableRipple disableFocusRipple label="Exercises" {...a11yProps(1)} />
+                    </Tabs>
+                  </AppBar>
 
                 </Grid>
 
-                <Grid container justify="center">
+                <Grid item xs={12}>
 
-                  <Grid item xs={12} sm={5} lg={6} xl={3} className={classes.homePageGetStartedContainer}>
+                  <TabPanel value={value} index={0}>
+                    <Grid container spacing={1}>
+                      <Grid item>
+                        <ExerciseIntroduction />
+                      </Grid>
+                    </Grid>
+                  </TabPanel>
 
-                    <br />
+                </Grid>
 
-                    <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
-                      How do I get started?
-                    </Typography>
+                <Grid item xs={12}>
 
-                    <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      <strong>Use the sign up form to create a free demonstration account.</strong>
-                    </Typography>
+                  <TabPanel value={value} index={1}>
 
-                    <br />
+                    <Grid container spacing={5}>
 
-                    <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      This limited demonstration provides a pre-defined set of exercise routines and is meant to preview the features that Randomly Read could provide to your clients.
-                    </Typography>
+                      <Grid item xs={exerciseHistoryContainerWidth}>
 
-                    <br />
+                        <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
 
-                    <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      We'll contact you at the provided email address to open a conversation on how to tailor these routines to your clients' needs, how to report on client usage of the tool, and to answer any questions you have.
-                    </Typography>
+                        <ExerciseHistoryContainer />
 
-                    <br />
+                      </Grid>
 
-                    <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                      You can reach us by phone at (303) 946-8829 or through email at <a href="mailto:contact@randomlyread.com">contact@randomlyread.com</a>.
-                    </Typography>
+                      <Grid item xs={timerContainerWidth}>
 
-                    <br />
+                        <WordCardContainer />
 
-                  </Grid>
+                        <ProgressIndicator />
 
-                  <Grid item xs={12} sm={4} lg={3} xl={3} className={classes.signupContainer}>
+                        <WordHistoryList />
 
-                    <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
-                      Sign up for a free account
-                    </Typography>
+                      </Grid>
 
-                    <SignupForm />
+                    </Grid>
 
-                  </Grid>
+                  </TabPanel>
 
                 </Grid>
 
               </Grid>
 
             </Grid>
-          </>
-        )}
+          </Grid>
 
       </Grid>
 

@@ -15,7 +15,7 @@ import {REMOVE_CONSONANT} from '../actions/word';
 import {LOGOUT} from "../actions/auth";
 
 const initialState = {
-    text: [],
+    text: "",
     vowel: null,
     consonant: null,
     position: "initial",

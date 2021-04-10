@@ -1,14 +1,11 @@
 import RoutineBuilder from '../RRLayout/RoutineBuilder';
+import Box from '@material-ui/core/Box';
 //import Routines from './Routines.js';
 //import { AwesomeButton } from 'react-awesome-button';
 import Button from '@material-ui/core/Button';
 import React from 'react';
 import ms from 'pretty-ms';
 import Grid from '@material-ui/core/Grid';
-
-
-import RoutineSelectContainer from './Exercises/Exercise1/RoutineSelectContainer';
-
 
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
@@ -35,7 +32,7 @@ import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore'
 
 
 
-import { styles } from '../../themeHandler';
+import { styles } from '../../exerciseThemeHandler';
 import InteractionForm from "../Interactions/InteractionsHome";
 
 class Timer extends React.Component {
@@ -57,6 +54,8 @@ class Timer extends React.Component {
       position: 'initial',
       limit: 1,
     };
+
+    console.log("-constructor-");
 
     this.timerHandler = this.timerHandler.bind(this);
 
@@ -93,6 +92,10 @@ class Timer extends React.Component {
 
   routineSelectHandler(routine) {
 
+    console.log("-routine select handler-");
+
+    console.log(this.props);
+
     this.exerciseStack = [];
 
     if(this.isEmpty(routine)) {
@@ -116,12 +119,20 @@ class Timer extends React.Component {
       // add current exercise to props and state
       this.props.addExercise(this.exerciseStack);
       this.setExercise(this.exerciseStack[this.exercisePointer]);
-      this.props.addExerciseNumber(this.exercisePointer);
 
-      this.completed = 0; // TODO - delete?
+      // handle cases where page resume
+      if (this.props.currentExerciseNumber > this.exercisePointer) {
+        this.props.addExerciseNumber(this.props.currentExerciseNumber);
+      } else {
+        this.props.addExerciseNumber(this.exercisePointer);
+      }
 
-      this.stopTimer();
-      this.resetTimerAndQuery();
+
+      // this.completed = 0; // TODO - delete?
+      // this.stopTimer();
+
+      // this.resetTimerAndQuery();
+      this.softResetTimer();
 
     }
 
@@ -220,10 +231,19 @@ class Timer extends React.Component {
   }
 
   startTimer() {
+
+    console.log("-start timer-"); // TODO - restore exerciseNumber
+
     this.props.setRange(this.state.rangeVal);
     this.props.setExercisePause(false);
     this.props.addExercise(this.exerciseStack);
-    this.props.addExerciseNumber(this.exercisePointer);
+
+    // this.props.addExerciseNumber(this.exercisePointer);
+
+    this.props.addExerciseNumber(this.props.currentExerciseNumber);
+
+    console.log("-timer: current exercise number: ", this.props.currentExerciseNumber);
+
 
     this.setExercise(this.exerciseStack[this.exercisePointer]);
 
@@ -256,6 +276,14 @@ class Timer extends React.Component {
     // Updates the total number of Exercises in Routine
     if(this.props.total !== this.total && this.total !== 0) {
       this.props.updateTotal(this.total);
+    }
+
+    // resume exercise set
+    if(this.props.currentExerciseNumber !== null && this.props.currentExerciseNumber !== this.exercisePointer) {
+      this.exercisePointer = this.props.currentExerciseNumber;
+      this.completed = this.props.completed;
+
+      this.setExercise(this.exerciseStack[this.exercisePointer]);
     }
 
     // Allows user to skip ahead in Exercise Set...
@@ -345,7 +373,7 @@ class Timer extends React.Component {
 
   resetTimerAndQuery() {
 
-    // console.log("-reset timer and query-");
+    console.log("-reset timer and query-");
 
     this.exercisePointer = 0;
     this.setState({time: 0, isOn: false});
@@ -365,6 +393,70 @@ class Timer extends React.Component {
 
   }
 
+  softResetTimer() {
+
+    console.log("-reset timer and query-");
+    console.log(this.props);
+
+    /*
+
+    console.log("-currentExercise: ", this.props.currentExercise);
+    console.log("-currentExerciseNumber: ", this.props.currentExerciseNumber);
+
+    console.log("-exerciseStack: ", this.exerciseStack);
+    console.log("-exercisePointer: ", this.exercisePointer);
+    console.log("-total: ", this.total);
+    console.log("-completed: ", this.completed);
+    console.log("-timeLeftLastUpdated: ", this.timeLeftLastUpdated);
+
+    */
+
+
+
+  // if (this.props.currentExerciseNumber > 0) {
+
+
+    /*
+
+
+      this.exercisePointer = this.props.currentExerciseNumber;
+
+      this.props.setMode('Word');
+
+
+     */
+
+
+    let consonant = this.props.consonant;
+    let vowel = this.props.vowel;
+
+    if (typeof(consonant) !== "undefined" && consonant) {
+
+      console.log("-routine in progress-");
+
+    } else {
+
+      console.log("-resetting-");
+
+      this.exercisePointer = 0;
+      this.setState({time: 0, isOn: false});
+
+      this.props.addExerciseNumber(null);
+      this.props.addRoutineVowel([]); // null?
+      this.props.removeConsonant();
+      this.props.addSyllables([1]);
+      this.props.setMode('Word');
+
+      // Clear Query History
+      this.props.clearQueryResults();
+
+      // Reset Current Exercise
+      this.completed = 0;
+      this.props.updateCompleted(0);
+    }
+
+  }
+
   resetTimer() {
 
     // console.log("-reset timer and exercise stack-");
@@ -377,6 +469,11 @@ class Timer extends React.Component {
     this.props.removeConsonant();
     this.props.addSyllables([1]);
     this.props.setMode('Word');
+
+    console.log("-reset timer-");
+
+    // Reset card
+    this.props.removeWord();
 
     // Clear Query History
     this.props.clearQueryResults();
@@ -480,6 +577,7 @@ class Timer extends React.Component {
   render() {
 
     const { classes } = this.props;
+    const { RoutineSelectContainer } = this.props;
     const { width } = this.props;
     const { rangeVal } = this.state;
 
@@ -535,23 +633,23 @@ class Timer extends React.Component {
       null : <IconButton disableFocusRipple onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"} style={{ backgroundColor: 'transparent' }} ><ReplayIcon /></IconButton>;
 
     let TimerFragment = <React.Fragment>
-      <Grid container justify="center" className={classes.routineSelectContainer}>
+      <Grid container className={classes.routineSelectContainer}>
 
         <Grid item>
-          <div className={classes.RoutineSelector}>
+          <Box className={classes.RoutineSelector}>
             <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
-          </div>
+          </Box>
         </Grid>
 
         <Grid item>
           {(this.props.currentExercise.length > 0) ? (
             <>
-              <div className={classes.TimerControls}>
+              <Box className={classes.TimerControls}>
                 {start}
                 {resume}
                 {stop}
                 {reset}
-              </div>
+              </Box>
             </>
           ) : ( <> </> )}
         </Grid>
@@ -560,48 +658,31 @@ class Timer extends React.Component {
     </React.Fragment>;
 
 
-    if (width === "lg" || width === "xl") {
 
-      return (
-        <Card className={classes.userAdminCard}>
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
+    return (
+      <React.Fragment>
+
+        <Grid container className={classes.timerControlGrid} spacing={0}>
+
+          <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
+
+            <Typography variant="h5" component="h2" className={classes.mobileHeading}>
               Available Routines
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Use the dropdown menu to select a practice routine or to focus on a specific word.
+            <Typography gutterBottom variant="body2" color="textSecondary" component="p">
+              Use the menu to select a practice routine.
             </Typography>
             <br />
-            {TimerFragment}
-          </CardContent>
-        </Card>
-      )
-
-    } else {
-
-      return (
-        <React.Fragment>
-
-          <Grid container className={classes.timerControlGrid} spacing={0} justify="center">
-
-            <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
-              <Typography variant="h5" component="h2" className={classes.mobileHeading}>
-                Available Routines
-              </Typography>
-              <Typography gutterBottom variant="body2" color="textSecondary" component="p">
-                Use the menu to select a practice routine.
-              </Typography>
-            </Grid>
-
-            <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
-              {TimerFragment}
-            </Grid>
           </Grid>
 
-        </React.Fragment>
-      )
+          <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
+            {TimerFragment}
+          </Grid>
+        </Grid>
 
-    }
+      </React.Fragment>
+    )
+
 
   }
 }

@@ -3,7 +3,7 @@ import Identities from '../../Identities/Identities';
 
 export default function withAuth (WrappedComponent) {
 
-  const mapStateToProps = state => (Identities[0]);
+  const mapStateToProps = state => (Identities[1]);
 
   return connect(mapStateToProps)(WrappedComponent);
 }

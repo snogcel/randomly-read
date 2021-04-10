@@ -4,11 +4,11 @@ import withAuth from './withDefinedAuth';
 
 import { updateId, resetRoutineSelect } from '../../../../actions/routineSelect';
 
-import Exercise1TimerContainer from '../TimerContainer';
-import Exercise1RoutineSelectContainer from './RoutineSelectContainer';
-import Exercise1Introduction from './Introduction';
+import Exercise2TimerContainer from '../TimerContainer';
+import Exercise2RoutineSelectContainer from './RoutineSelectContainer';
+import Exercise2Introduction from './Introduction';
 
-import Home from '../../Home';
+import Home from '../../Home'
 
 const mapStateToProps = state => ({
   routineSelectId: state.routineSelect.id,
@@ -24,11 +24,11 @@ const enhance = compose(
   )
 );
 
-const Exercise1HomeContainer = enhance(Home);
+const Exercise2HomeContainer = enhance(Home);
 
 export {
-  Exercise1HomeContainer,
-  Exercise1TimerContainer,
-  Exercise1RoutineSelectContainer,
-  Exercise1Introduction
+  Exercise2HomeContainer,
+  Exercise2TimerContainer,
+  Exercise2RoutineSelectContainer,
+  Exercise2Introduction
 };

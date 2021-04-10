@@ -20,8 +20,12 @@ import { ApolloLink } from 'apollo-link';
 import { InMemoryCache as Cache } from 'apollo-cache-inmemory';
 import { ApolloProvider } from 'react-apollo';
 
+import SplashContainer from '../RandomlyRead/Splash/Container';
+
 import Identities from '../RandomlyRead/Identities/Identities';
-import Exercise1Container from '../RandomlyRead/Exercises/Exercise1/HomeContainer';
+
+import { Exercise1HomeContainer, Exercise1TimerContainer, Exercise1RoutineSelectContainer, Exercise1Introduction } from '../RandomlyRead/Exercises/Exercise1/HomeContainer';
+import { Exercise2HomeContainer, Exercise2TimerContainer, Exercise2RoutineSelectContainer, Exercise2Introduction } from '../RandomlyRead/Exercises/Exercise2/HomeContainer';
 
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
@@ -35,9 +39,15 @@ const App = (props) => {
 
   let location = useLocation();
 
-  if (location.pathname === '/') {
-      token = null;
-      user = null;
+  if (location.pathname === '' || location.pathname === '/') {
+
+    token = null;
+    user = null;
+
+    props.setToken(user, token);
+
+    localStorage.removeItem('token');
+
   }
 
   for (let i = 0; i < Identities.length; i++) {
@@ -101,12 +111,22 @@ const App = (props) => {
               <Route path='/signup' component={SignupFormContainer} />
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
-              <Route path='/Exercise1' component={Exercise1Container} />
+
+              <Route
+                path='/Week1'
+                render={props => (<Exercise1HomeContainer TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} {...props}/>)}
+              />
+
+              <Route
+                path='/Week2'
+                render={props => (<Exercise2HomeContainer TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} {...props}/>)}
+              />
+
               <Route path='/FluencyReport' component={FluencyReport} />
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/Administration' component={Administration} />
               <Route path='/Profile' component={UserProfile} />
-              <Route path='/' component={RRHomeContainer} />
+              <Route path='/' component={SplashContainer} />
             </Switch>
           </div>
       </ThemeProvider>
