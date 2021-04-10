@@ -100,9 +100,6 @@ class WordCard extends React.Component  {
     console.log("next timeLeft: ", nextProps.timeLeft);
 
 
-
-
-
     // handle case: exercise selected but not started
     if (nextProps.isPaused && nextProps.currentExerciseNumber === null) {
       console.log("handle case: exercise selected but not started");
@@ -120,7 +117,7 @@ class WordCard extends React.Component  {
     // handle case: timer is resuming
     if (this.props.isPaused && !nextProps.isPaused) {
       console.log("handle case: timer is resuming");
-      return true;
+      return false;
     }
 
 
@@ -165,65 +162,9 @@ class WordCard extends React.Component  {
     }
 
 
-
-
-
     // handle case: default
     console.log("handle case: default");
     return false;
-
-
-
-/*
-    if (this.props.currentExercise.length > 0 && this.props.currentExerciseNumber === null) {
-      console.log("handle case: card should be refreshed?")
-      return true;
-    }
-*/
-
-
-
-
-
-
-
-
-
-
-    // if (nextProps.isPaused) return false;
-
-
-    if (this.props.timeLeft === null) return true;
-
-
-
-    if (this.props.timeLeft > 0) return false;
-
-
-
-
-    // return true;
-
-
-
-    /*
-
-    if (this.props.currentExercise.length > 0 && this.props.currentExerciseNumber === null) {
-
-      return true;
-
-    } else {
-
-      console.log("timeLeft: ", this.props.timeLeft);
-      console.log("next timeLeft: ", nextProps.timeLeft);
-
-      // if (this.props.timeLeft !== null) return false;
-
-
-
-    }
-
-    */
 
   }
 
