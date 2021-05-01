@@ -1,3 +1,6 @@
+import { gql } from '@apollo/client';
+import { useQuery } from "@apollo/react-hooks";
+
 const baseUrl =
   process.env.NODE_ENV === 'development'
     ? 'http://dev.snogcel.com:8080/api'
@@ -22,7 +25,6 @@ const methods = {
 
     return json;
   },
-
   patch: async function (endpoint, body, token = null) {
     const options = {
       method: 'PATCH',
@@ -49,7 +51,6 @@ const methods = {
 
     return json;
   },
-
   post: async function (endpoint, body, token = null) {
     const options = {
       method: 'POST',
@@ -210,4 +211,163 @@ export async function createUser (user, token) {
 
 export async function getViewHistory (id, startDate, endDate, token) {
   return await methods.get(`history/words/${id}/start/${startDate}/end/${endDate}`, token)
+}
+
+export function getGraphQL(query) {
+  const { loading, error, data } = useQuery(query, {
+    variables: { },
+  });
+  if (loading) return null;
+  return data;
+}
+
+export function buildQuery(props) {
+
+  let vowel = JSON.stringify(props.vowel);
+  let consonant = JSON.stringify(props.consonant);
+  let syllables = JSON.stringify(props.syllables);
+  let limit = parseInt(props.limit);
+  let position = JSON.stringify(props.position);
+  let age = JSON.stringify(props.age);
+  let mode = props.mode;
+
+  switch(mode) {
+    case 'Sentence':
+      if (consonant.length > 0 && vowel.length > 0) {
+        return gql`
+                {
+                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          wordid
+                          lexeme
+                        }                       
+                    }
+                }
+                `;
+      } else if (consonant.length > 0 && !vowel.length > 0) {
+        return gql`
+                {
+                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          wordid
+                          lexeme
+                        }                       
+                    }
+                }
+                `;
+      } else if (!consonant.length > 0 && vowel.length > 0) {
+        return gql`
+                {
+                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          wordid
+                          lexeme
+                        }                       
+                    }
+                }
+                `;
+      } else {
+        return gql`
+                {
+                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        words {
+                          id
+                          votes {
+                            user
+                            vote
+                          }
+                          score
+                          wordid
+                          lexeme
+                        }
+                    }
+                }
+                `;
+      }
+
+    case 'Word':
+      if (consonant.length > 0 && vowel.length > 0) {
+        return gql`
+                {
+                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
+                        wordid
+                        lexeme                        
+                    }
+                }
+                `;
+      } else if (consonant.length > 0 && !vowel.length > 0) {
+        return gql`
+                {
+                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
+                        wordid
+                        lexeme                        
+                    }
+                }
+                `;
+      } else if (!consonant.length > 0 && vowel.length > 0) {
+        return gql`
+                {
+                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
+                        wordid
+                        lexeme                        
+                    }
+                }
+                `;
+      } else {
+        return gql`
+                {
+                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                        id
+                        votes {
+                          user
+                          vote
+                        }
+                        score
+                        wordid
+                        lexeme                        
+                    }
+                }
+                `;
+      }
+
+    default:
+      return null;
+  }
+
 }
