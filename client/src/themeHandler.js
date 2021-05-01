@@ -150,9 +150,6 @@ const styles = theme => ({
   intermission: {
     fontWeight: "bold",
     color: "#dba987",
-    textAlign: "center",
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2)
   },
   vowelButton: {
     fontSize: 24,
