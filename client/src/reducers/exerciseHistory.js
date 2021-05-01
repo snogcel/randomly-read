@@ -6,6 +6,9 @@ import {UPDATE_TOTAL} from '../actions/exerciseHistory';
 import {MODAL_OPEN} from '../actions/exerciseHistory';
 import {SET_RANGE} from '../actions/exerciseHistory';
 import {UPDATE_TIMELEFT} from '../actions/exerciseHistory';
+import {UPDATE_TIME} from '../actions/exerciseHistory';
+import {SET_INPROGRESS} from '../actions/exerciseHistory';
+import {SET_ISVISIBLE} from '../actions/exerciseHistory';
 import {ADD_QUERY_RESULT} from '../actions/exerciseHistory';
 import {CLEAR_QUERY_RESULTS} from '../actions/exerciseHistory';
 import {LOGOUT} from "../actions/auth";
@@ -15,11 +18,14 @@ const initialState = {
     currentExerciseNumber: null,
     exerciseResults: [],
     isPaused: true,
+    inProgress: false,
+    isVisible: false,
     isModalOpen: null,
     range: 0,
     completed: 0,
     total: 0,
     timeLeft: null,
+    time: 0
 };
 
 export default (state = initialState, action) => {
@@ -44,6 +50,12 @@ export default (state = initialState, action) => {
         return {...state, total: action.text};
       case UPDATE_TIMELEFT:
         return {...state, timeLeft: action.text};
+      case UPDATE_TIME:
+        return {...state, time: action.text};
+      case SET_INPROGRESS:
+        return {...state, inProgress: action.text};
+      case SET_ISVISIBLE:
+        return {...state, isVisible: action.text};
 
       case LOGOUT:
         return initialState;

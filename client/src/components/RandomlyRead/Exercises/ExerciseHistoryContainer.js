@@ -5,6 +5,9 @@ import {addExerciseNumber} from '../../../actions/exerciseHistory'
 const mapStateToProps = state => ({
     currentExercise: state.exerciseHistory.currentExercise,
     currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
+    time: state.exerciseHistory.time,
+    inProgress: state.exerciseHistory.inProgress,
+    isVisible: state.exerciseHistory.isVisible,
   });
 
   const mapDispatchToProps = dispatch => ({

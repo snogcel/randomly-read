@@ -102,7 +102,7 @@ class ExerciseHistory extends React.Component {
   }
 
   render() {
-    const {classes, currentExerciseNumber} = this.props;
+    const { classes, currentExerciseNumber, inProgress } = this.props;
     const { width } = this.props;
 
     let exerciseHistory = <React.Fragment>
@@ -184,7 +184,7 @@ class ExerciseHistory extends React.Component {
 
           } else if (width === "md" || width === "lg" || width === "xl") {
             return(
-              <StyledListItem key={stepNumber} selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
+              <StyledListItem key={stepNumber} selected={((currentExerciseNumber === stepNumber) && inProgress)} className={classes.exerciseHistoryDesktop}>
                 <ListItemIcon>
                   {(currentExerciseNumber <= stepNumber) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
                 </ListItemIcon>
