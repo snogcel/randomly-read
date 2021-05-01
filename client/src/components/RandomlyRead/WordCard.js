@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
@@ -13,7 +13,11 @@ import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
+
+// import gql from 'graphql-tag';
+
+import { gql, useQuery } from '@apollo/client';
+
 import Intermission from '../RRLayout/IntermissionContainer';
 import VowelCheckboxes from '../RRLayout/VowelCheckboxes';
 import { styles } from '../../exerciseThemeHandler';
@@ -38,331 +42,114 @@ class WordCard extends React.Component  {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      open: false,
-      buttonColor: 'White'
+      updateCard: false
     };
 
-    this.refreshQuery = this.refreshQuery.bind(this);
     this.fetching = false;
+    this.debug = false;
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0); // solves case of registration from splash page / scroll
-  }
-
-  refreshQuery() {
-    if (this.refresh) this.refresh();
-  }
-
-  handleOpen = () => {
-    this.setState({ open: true });
-    this.props.setModalOpen(true)
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-    this.props.setModalOpen(false)
-  };
-
-  handleChange = name => {
-
-      console.log("-state change-");
-      console.log("-fetching:", this.fetching);
-
-      this.props.addRoutineVowel([name]);
-      this.refreshQuery();
-
-      // TODO - determine if query should be refreshed
-
-   };
-
-  setWord(word, definitions) {
-    let obj = {word: word, definitions: definitions};
-
-    console.log("- set word ? -");
-
-    this.props.addWord(obj);
+    if (this.props.mode !== "Intermission") this.props.buildGraphQL(this.props);
   }
 
   shouldComponentUpdate(nextProps) {
 
-    console.log(this.props);
-
-    console.log(nextProps);
-
-    console.log("this isPaused: ", this.props.isPaused);
-    console.log("next isPaused: ", nextProps.isPaused);
-
-    // console.log("next currentExerciseNumber: ", nextProps.currentExerciseNumber);
-
-    console.log("this timeLeft: ", this.props.timeLeft);
-    console.log("next timeLeft: ", nextProps.timeLeft);
-
+    // handle case: query parameter change
+    if (((this.props.vowel !== nextProps.vowel) || (this.props.consonant !== nextProps.consonant)) && (nextProps.vowel !== null && nextProps.vowel.length > 0)) {
+      if (nextProps.mode !== "Intermission") this.props.buildGraphQL(nextProps);
+    }
 
     // handle case: exercise selected but not started
     if (nextProps.isPaused && nextProps.currentExerciseNumber === null) {
-      console.log("handle case: exercise selected but not started");
+      if (this.debug) console.log("handle case: exercise selected but not started");
       return true;
     }
 
-
     // handle case: exercise is starting
     if ((this.props.timeLeft === nextProps.timeLeft) && (nextProps.isPaused === false) && (!this.props.consonant)) {
-      console.log("handle case: exercise is starting");
+      if (this.debug) console.log("handle case: exercise is starting");
+      return true;
+    }
+
+    // handle case: query change (Intermission will return "null")
+    if ((this.props.query !== nextProps.query) && (this.props.query.action !== null) && (nextProps.query.action !== null)) {
+      if (this.debug) console.log("handle case: query change");
+      return true;
+    }
+
+    // handle case: card should be refreshed
+    if (((this.props.timeLeft === 0) && (nextProps.timeLeft === 0))) {
+      if (this.debug) console.log("handle case: card should be refreshed");
+      return true;
+    }
+
+    // handle case: card text has changed
+    if ((this.props.text !== nextProps.text) && !!nextProps.text && this.state.updateCard) {
+      if (this.debug) console.log("handle case: card text has changed");
+      this.setState({ updateCard: false });
+      return true;
+    }
+
+    // handle case: currentExerciseNumber has changed
+    if (this.props.currentExerciseNumber !== nextProps.currentExerciseNumber) {
+      if (this.debug) console.log("handle case: currentExerciseNumber has changed");
       return true;
     }
 
 
     // handle case: timer is resuming
-    if (this.props.isPaused && !nextProps.isPaused) {
-      console.log("handle case: timer is resuming");
+    if (this.props.isPaused && !nextProps.isPaused && this.props.text !== "") {
+      if (this.debug) console.log("handle case: timer is resuming");
+      console.log(this.props);
       return false;
     }
-
 
     // handle case: timer is paused
     if (nextProps.isPaused || this.props.isPaused) {
-      console.log("handle case: timer is paused");
+      if (this.debug) console.log("handle case: timer is paused");
+      console.log(this.props);
       return false;
     }
-
 
     // handle case: resuming from another page
     if (this.props.isPaused && this.props.consonant) {
-      console.log("handle case: resuming from another page");
+      if (this.debug) console.log("handle case: resuming from another page");
       return false;
     }
 
-
     // handle case: intermission
     if (this.props.mode === 'Intermission') {
-      console.log("handle case: intermission");
+      if (this.debug) console.log("handle case: intermission");
       return true;
     }
-
-
-    // handle case: card should be refreshed
-    if (this.props.timeLeft === 0 && nextProps.timeLeft === 0) {
-      console.log("handle case: card should be refreshed");
-      return true;
-    }
-
 
     // handle case: voting should not trigger card update
     if (nextProps.isVoting !== this.props.isVoting) {
-      console.log("handle case: voting should not trigger card update");
+      if (this.debug) console.log("handle case: voting should not trigger card update");
       return false;
     }
 
     // handle case: interaction voting should not trigger card update
     if (nextProps.isInteractionVoting !== this.props.isInteractionVoting) {
-      console.log("handle case: interaction voting should not trigger card update");
+      if (this.debug) console.log("handle case: interaction voting should not trigger card update");
       return false;
     }
 
-
     // handle case: default
-    console.log("handle case: default");
     return false;
 
   }
 
-  buildQuery() {
+  renderDescription(props) {
+    const { currentExercise, classes } = props;
 
-    console.log("-build query-");
-
-    let vowel = JSON.stringify(this.props.vowel);
-    let consonant = JSON.stringify(this.props.consonant);
-    let syllables = JSON.stringify(this.props.syllables);
-    let limit = parseInt(this.props.limit);
-
-    let position = JSON.stringify(this.props.position);
-    let age = JSON.stringify(this.props.age);
-
-    switch(this.props.mode) {
-        case 'Sentence':
-            if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
-                return gql`
-                {
-                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        words {
-                          id
-                          votes {
-                            user
-                            vote
-                          }
-                          score
-                          wordid
-                          lexeme
-                        }                       
-                    }
-                }
-                `;
-            } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
-              return gql`
-                {
-                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        words {
-                          id
-                          votes {
-                            user
-                            vote
-                          }
-                          score
-                          wordid
-                          lexeme
-                        }                       
-                    }
-                }
-                `;
-            } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
-              return gql`
-                {
-                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        words {
-                          id
-                          votes {
-                            user
-                            vote
-                          }
-                          score
-                          wordid
-                          lexeme
-                        }                       
-                    }
-                }
-                `;
-            } else {
-                return gql`
-                {
-                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        words {
-                          id
-                          votes {
-                            user
-                            vote
-                          }
-                          score
-                          wordid
-                          lexeme
-                        }
-                    }
-                }
-                `;
-            }
-
-        case 'Word':
-            if (this.props.consonant.length > 0 && this.props.vowel.length > 0) {
-                return gql`
-                {
-                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        id
-                        votes {
-                          user
-                          vote
-                        }
-                        score
-                        wordid
-                        lexeme                        
-                    }
-                }
-                `;
-            } else if (this.props.consonant.length > 0 && !this.props.vowel.length > 0) {
-              return gql`
-                {
-                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        id
-                        votes {
-                          user
-                          vote
-                        }
-                        score
-                        wordid
-                        lexeme                        
-                    }
-                }
-                `;
-            } else if (!this.props.consonant.length > 0 && this.props.vowel.length > 0) {
-              return gql`
-                {
-                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        id
-                        votes {
-                          user
-                          vote
-                        }
-                        score
-                        wordid
-                        lexeme                        
-                    }
-                }
-                `;
-            } else {
-                return gql`
-                {
-                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
-                        id
-                        votes {
-                          user
-                          vote
-                        }
-                        score
-                        wordid
-                        lexeme                        
-                    }
-                }
-                `;
-            }
-
-        default:
-            console.log("No Query...");
-            return null;
-    }
-
-  }
-
-  checkRefresh(oldQuery, newQuery) {
-
-    let refresh = false;
-
-    function difference(lastProps, newProps) {
-      let newSet = new Set(newProps);
-      return lastProps.filter(function(x) { return !newSet.has(x); });
-    }
-
-    if (refresh) {
-      this.refresh();
-    }
-
-  }
-
-  getCard(text, classes) {
-
-    console.log("generating card: ", text);
-
-    let formattedDuration;
-
-    let duration = 0;
-
-    for (let i = 0; i < this.props.currentExercise.length; i++) {
-      duration += (this.props.currentExercise[i].rangeVal * this.props.currentExercise[i].repetitions);
-    }
-
-    let minutes = Math.floor(duration / 60);
-    let seconds = duration - (minutes * 60);
-
-
-    if (minutes === 0) {
-      formattedDuration = "Duration: " + seconds + " seconds";
-    } else if (minutes === 1) {
-      formattedDuration = "Duration: " + minutes + " minute and " + seconds + " seconds";
-    } else {
-      formattedDuration = "Duration: " + minutes + " minutes and " + seconds + " seconds";
-    }
+    const formattedDuration = this.formatDuration(currentExercise);
 
     return (
-      <React.Fragment>
+      <React.Fragment key={'description'}>
 
         <Grid container>
           <Grid item xs={10} sm={12} md={11}>
@@ -384,13 +171,33 @@ class WordCard extends React.Component  {
 
         <br />
 
+      </React.Fragment>
+    )
+  }
+
+  formatProps(props, text) {
+    let { currentExercise, classes } = props;
+
+    return {
+      currentExercise: currentExercise,
+      classes: classes,
+      text: text
+    };
+  }
+
+  renderCard(props) {
+    const { currentExercise, text, classes } = props;
+
+    return (
+      <React.Fragment key={'card'}>
+
         <Grid container className={classes.wordGrid} justify="center">
           <Grid item>
 
             <Card elevation={1} className={classes.card}>
               <CardContent>
-                { (this.props.mode === 'Intermission' ? <Intermission /> : '')}
-                { (this.props.mode === 'Sentence' ? <Sentence value={{name: this.props.text, selectedVowel: this.props.vowel}} /> : <Word value={{name: this.props.text, selectedVowel: this.props.vowel}} /> ) }
+                { (this.props.mode === 'Intermission' ? <Intermission /> : null)}
+                { (this.props.mode === 'Sentence' ? <Sentence mode={this.props.mode} key={this.props.text} value={{name: this.props.text, selectedVowel: this.props.vowel}} /> : <Word mode={this.props.mode} key={this.props.text} value={{name: this.props.text, selectedVowel: this.props.vowel}} /> ) }
               </CardContent>
             </Card>
 
@@ -398,24 +205,40 @@ class WordCard extends React.Component  {
         </Grid>
 
       </React.Fragment>
-    )
-
+    );
   }
 
-  render() {
-    const { classes } = this.props;
+  renderError(classes) {
 
+    return (
+      <React.Fragment>
+        <Grid container className={classes.wordGrid} justify="center">
+          <Grid item>
+
+            <Card elevation={1} className={classes.card}>
+              <CardContent>
+                <Word mode={this.props.mode} value={{name: "Error", selectedVowel: this.props.vowel}} />
+              </CardContent>
+            </Card>
+
+          </Grid>
+        </Grid>
+      </React.Fragment>
+    );
+  }
+
+  formatDuration(currentExercise) {
     let formattedDuration;
 
     let duration = 0;
 
-    for (let i = 0; i < this.props.currentExercise.length; i++) {
-      duration += (this.props.currentExercise[i].rangeVal * this.props.currentExercise[i].repetitions);
+    for (let i = 0; i < currentExercise.length; i++) {
+      duration += (currentExercise[i].rangeVal * currentExercise[i].repetitions);
     }
 
     let minutes = Math.floor(duration / 60);
-    let seconds = duration - (minutes * 60);
 
+    let seconds = duration - (minutes * 60);
 
     if (minutes === 0) {
       formattedDuration = "Duration: " + seconds + " seconds";
@@ -425,237 +248,181 @@ class WordCard extends React.Component  {
       formattedDuration = "Duration: " + minutes + " minutes and " + seconds + " seconds";
     }
 
-    if (this.props.currentExercise.length > 0 && this.props.currentExerciseNumber === null) {
+    return formattedDuration;
+  }
 
-    // calculate and format routine duration
+  checkRepeat(result, prevResult) {
 
-      return (
-        <React.Fragment>
-          <Grid container>
-            <Grid item xs={10} sm={12} md={11}>
+  }
 
-              <Paper className={classes.exerciseDetails} elevation={0}>
+  parseResult(mode, data, result) {
 
-                <Typography variant="h5" component="h2" className={classes.heading}>{this.props.name}</Typography>
+    if (mode === 'Word') {
 
-                <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
+      const { words } = data;
 
-                <br />
+      let fetched = {
+        id: words.id,
+        wordid: words.wordid,
+        title: words.lexeme,
+        score: words.score,
+        votes: words.votes,
+        comments: [],
+        type: "text",
+        time: Date.now()
+      };
 
-                <RoutineDescription description={this.props.description} />
+      this.props.addWord(this.result);
+      this.props.addQueryResult(fetched);
 
-              </Paper>
+    } else if (mode === 'Sentence') {
 
-            </Grid>
-          </Grid>
-        </React.Fragment>
-      )
+      const { sentences } = data;
+
+      let fetched = [];
+
+      for (let i = 0; i < sentences.words.length; i++) {
+        fetched.push({
+          id: sentences.words[i].id,
+          wordid: sentences.words[i].wordid,
+          title: sentences.words[i].lexeme,
+          score: sentences.words[i].score,
+          votes: sentences.words[i].votes,
+          comments: [],
+          type: "text"
+        })
+      }
+
+      this.props.addWord(this.result);
+      this.props.addQueryResult({
+        "id": null,
+        "title": fetched,
+        "score": null,
+        "votes": null,
+        "comments": [],
+        "type": "sentence",
+        "time": Date.now()
+      });
 
     }
 
-    if (this.props.vowel === null || this.props.consonant === null) return null;
+  }
 
-    this.query = this.buildQuery();
-    this.fetching = true;
+  render() {
+    const props = this.props;
+    const { classes, currentExercise, currentExerciseNumber, mode, text } = props;
 
-    console.log(this.props.text);
+    // Check for empty word card
+    if (currentExercise.length > 0 && currentExerciseNumber === null && text === "") {
+      if (this.debug) console.log("-rendering with empty word card");
+      return [this.renderDescription(props)];
+    }
 
+    // Check for paused word card -- TODO / review
+    if (currentExercise.length > 0 && currentExerciseNumber === null) {
+      if (this.debug) console.log("-rendering with paused word card");
+      return [this.renderDescription(props),this.renderCard(props)];
+    }
 
-    /*
-
-                      <Card elevation={1} className={classes.card}>
-                        <CardContent>
-                          <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
-                        </CardContent>
-                      </Card>
-
-    */
+    if (this.props.isPaused && text === "") {
+      if (this.debug) console.log("-rendering with paused props and empty word card");
+      return [this.renderDescription(props)];
+    }
 
     if (this.props.isPaused) {
-
-      return this.getCard(this.props.text, classes);
-
+      if (this.debug) console.log("-rendering with paused props");
+      return [this.renderDescription(props),this.renderCard(props)];
     }
 
-    return (
+    if (this.state.updateCard) {
+      if (this.debug) console.log("-rendering due to card update");
+      this.state.updateCard = false;
+      return [this.renderDescription(props),this.renderCard(props)];
+    }
 
+    // Set Query
+    if (typeof(props.query) !== 'undefined' && props.query.action !== null) {
+      this.query = props.query.action;
+    } else {
+      return null;
+    }
+
+    this.fetching = true;
+
+    return (
       <React.Fragment>
 
-      <Grid container>
-        <Grid item xs={10} sm={12} md={11}>
+        { this.renderDescription(props) }
 
-          <Paper className={classes.exerciseDetails} elevation={0}>
+        { ((mode === 'Word' || mode === 'Sentence') ?
+          <Query query={this.query} fetchPolicy="no-cache" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => { this.state.updateCard = true; }}>
+            {({ loading, error, data, refetch }) => {
 
-            <Typography variant="h5" component="h2" className={classes.heading}>{this.props.name}</Typography>
+              if (loading) return null;
 
-            <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
+              if (error) return this.renderError(classes); // TODO - improve style?
 
-            <br />
+              if (data) {
 
-            <RoutineDescription description={this.props.description} />
-
-          </Paper>
-
-        </Grid>
-      </Grid>
-
-      <br />
-
-      <Grid container className={classes.wordGrid} justify="center">
-        <Grid item>
-
-              { (!this.props.vowel || (!this.props.vowel.length && !this.props.mode)) ? '' : (this.props.mode === 'Intermission') ? <Intermission /> : <Query query={this.query} fetchPolicy="no-cache" errorPolicy="all" variables={{ v: Math.random() }} onCompleted={() => {  }}>
-                {({ loading, error, data, refetch }) => {
-
-                  this.refresh = refetch;
-
-                  if (error) {
-
-                    this.result = null;
-                    this.fetching = false;
-
-                    if (this.props.mode === 'Word') {
-                      return(<div>
-                        <Word value={{name: "No Result Found", selectedVowel: this.props.vowel}} />
-                      </div>);
-                    }
-
-                    if (this.props.mode === 'Sentence') {
-                      return(<div>
-                        <Word value={{name: "No Result Found", selectedVowel: this.props.vowel}} />
-                      </div>);
-                    }
-
-                  }
-
-                  if (data) {
-
-                    if (this.props.isPaused) { console.log("grab previous result?"); }
-
-                    // check if data object is empty
-                    if (Object.keys(data).length === 0 && data.constructor === Object) {
-                      this.result = null;
-                      refetch();
-                      return null;
-                    }
-
-                    // check if word is a repeat...
-                    if (this.props.mode === 'Word' && data.words) {
-                      if (this.result === data.words.lexeme && this.fetching){ // if repeat word, refetch
-                        refetch();
-                      }
-
-                      if (this.result !== data.words.lexeme && this.fetching) { // if new result, store and display
-                        this.result = data.words.lexeme; // assign word to result
-
-                        let fetched = {
-                          id: data.words.id,
-                          wordid: data.words.wordid,
-                          title: data.words.lexeme,
-                          score: data.words.score,
-                          votes: data.words.votes,
-                          comments: [],
-                          type: "text",
-                          time: Date.now()
-                        };
-
-                        this.fetching = false;
-                        this.props.addWord(fetched.title);
-                        this.props.addQueryResult(fetched);
-                      }
-
-                    } else if (this.props.mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
-
-                      // build result
-                      let result = "";
-
-                      for (let i = 0; i < data.sentences.words.length; i++) {
-                        result += data.sentences.words[i].lexeme;
-                        if (i < (data.sentences.words.length - 1)) result += " ";
-                      }
-
-                      if (this.result === result && this.fetching){ // if repeat sentence, refetch
-                        refetch();
-                      }
-
-                      if (this.result !== result && this.fetching) { // if new result, store and display
-                        this.result = result; // assign newly generated sentence to result
-
-                        this.fetching = false;
-
-                        // parse for WordHistory
-                        let fetched = [];
-                        for (let i = 0; i < data.sentences.words.length; i++) {
-                          fetched.push({
-                            id: data.sentences.words[i].id,
-                            wordid: data.sentences.words[i].wordid,
-                            title: data.sentences.words[i].lexeme,
-                            score: data.sentences.words[i].score,
-                            votes: data.sentences.words[i].votes,
-                            comments: [],
-                            type: "text"
-                          })
-                        }
-
-                        this.props.addQueryResult({
-                          "id": null,
-                          "title": fetched,
-                          "score": null,
-                          "votes": null,
-                          "comments": [],
-                          "type": "sentence",
-                          "time": Date.now()
-                        });
-
-                      }
-                    }
-                  }
-
-                  if (loading) return null;
-
-                  if (this.props.mode === 'Sentence') {
-
-                    return (
-                      <Card elevation={1} className={classes.card}>
-                        <CardContent>
-                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
-                        </CardContent>
-                      </Card>
-                    );
-
-                  } else if (this.props.mode === 'Word') {
-
-                    /*
-                    var msg = new SpeechSynthesisUtterance(this.result);
-                    window.speechSynthesis.speak(msg);
-                    */
-
-                    return (
-                      <Card elevation={1} className={classes.card}>
-                        <CardContent>
-                          <Word value={{name: this.result, selectedVowel: this.props.vowel}} />
-                        </CardContent>
-                      </Card>
-                    );
-
-                  } else {
-
-                    return (
-                      <Card elevation={0} className={classes.card}>
-                        <CardContent>
-                          <Sentence value={{name: this.result, selectedVowel: this.props.vowel}} />
-                        </CardContent>
-                      </Card>
-                    );
-
-                  }
-
-                  }}
-                  </Query>
+                // check if data object is empty
+                if (Object.keys(data).length === 0 && data.constructor === Object) {
+                  this.result = "";
+                  refetch();
                 }
 
-        </Grid>
-      </Grid>
+                if (mode === 'Word' && data.words) {
+
+                  // If duplicate, refetch
+                  if (this.result === data.words.lexeme && this.fetching){
+                    refetch();
+                  }
+
+                  // if new result, store and display
+                  if (this.result !== data.words.lexeme && this.fetching) {
+                    this.result = data.words.lexeme;
+                    this.fetching = false;
+                    this.parseResult(mode, data);
+                    if (this.debug) console.log("-storing word: ", data);
+                  }
+
+                } else if (mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) {
+
+                  // Parse Sentence Result
+                  let result = "";
+
+                  for (let i = 0; i < data.sentences.words.length; i++) {
+                    result += data.sentences.words[i].lexeme;
+                    if (i < (data.sentences.words.length - 1)) result += " ";
+                  }
+
+                  if (this.result === result && this.fetching){ // if repeat sentence, refetch
+                    refetch();
+                  }
+
+                  if (this.result !== result && this.fetching) { // if new result, store and display
+                    this.result = result; // assign newly generated sentence to result
+                    this.fetching = false;
+                    this.parseResult(mode, data);
+                    console.log("-storing sentence: ", data);
+                  }
+                }
+              }
+
+              this.fetching = false;
+
+              console.log("rendering card: ", this.result);
+
+              if (typeof(this.result) !== 'undefined' && this.result !== null && !!this.result) {
+                return (this.renderCard(this.formatProps(props, this.result)));
+              }
+
+              return null;
+
+            }}
+          </Query> : null )
+        }
+
+        { ((mode === 'Intermission') && (this.renderCard(this.formatProps(props, this.result)))) }
 
       </React.Fragment>
 
