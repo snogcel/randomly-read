@@ -17,11 +17,9 @@ const identities = [{
 },{
   alias: "Week 2",
   pathname: "/Week2",
-  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjYwNmEzMzRhY2M5Y2Y1MjM1YzI4MjA3ZSJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDAyIiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDIiLCJpc0FjdGl2ZSI6ZmFsc2UsImlkIjoiNWZlZTZjZjdlZGYzOTIwZDg4ODQ2YTAzIn0sImlhdCI6MTYxODAxNjY4NiwiZXhwIjo4ODAxNzkzMDI4Nn0.U6s6uWH-QajSwvbe1AZ55-W_NK2B3K-go9QBx6hsdX4",
+  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjYwNmEzMzRhY2M5Y2Y1MjM1YzI4MjA3ZSIsIjYwNzM4ODNjZjkzOTgzNTI0MDMzOTk1MSIsIjYwNzM5YzRlZjkzOTgzNTI0MDMzOTk1MiIsIjYwNzM5YzU4ZjkzOTgzNTI0MDMzOTk1MyIsIjYwN2NiNTllMjczZjBhNWQ2OGY1MTBiYSIsIjYwN2NiNWI2MjczZjBhNWQ2OGY1MTBiYiIsIjYwN2NiNWM0MjczZjBhNWQ2OGY1MTBiYyIsIjYwN2NiNWQ0MjczZjBhNWQ2OGY1MTBiZCJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDAyIiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDIiLCJpc0FjdGl2ZSI6ZmFsc2UsImlkIjoiNWZlZTZjZjdlZGYzOTIwZDg4ODQ2YTAzIn0sImlhdCI6MTYxODc4NjM5MywiZXhwIjo4ODAxODY5OTk5M30.jwPltIy4kZuxeu_ViuKvj7uSTNEbisV1Pz9hRWkkF2I",
   user: {
-    "routines": [
-      "606a334acc9cf5235c28207e"
-    ],
+    "routines": [],
     "interactionSettings": [],
     "clients": [],
     "username": "exerciseuser002",
