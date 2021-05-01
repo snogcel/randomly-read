@@ -1,3 +1,6 @@
+import { buildQuery, getGraphQL } from '../util/api';
+import { useQuery } from "@apollo/react-hooks";
+
 export const RESET_WORD_CARD = 'RESET_WORD_CARD';
 export const ADD_VOWEL = 'ADD_VOWEL';
 export const ADD_WORD = 'ADD_WORD';
@@ -12,6 +15,24 @@ export const SET_LIMIT = 'SET_LIMIT';
 export const SET_MODE = 'SET_MODE';
 export const ADD_ROUTINE_VOWEL = 'ADD_ROUTINE_VOWEL';
 export const ADD_INTERMISSION_TEXT = 'ADD_INTERMISSION_TEXT';
+
+export const BUILD_GRAPHQL = 'BUILD_GRAPHQL';
+
+export function buildGraphQL(props) {
+
+  try {
+    return {
+      type: BUILD_GRAPHQL,
+      action: buildQuery(props)
+    };
+  } catch (error) {
+    return {
+      type: BUILD_GRAPHQL,
+      action: null
+    }
+  }
+
+}
 
 export function resetWordCard() {
   return {
@@ -32,9 +53,6 @@ export function addRoutineVowel(text) {
 }
 
 export function addWord(text) {
-
-    console.log("-add word-");
-
     return {
         type: ADD_WORD, text
     }

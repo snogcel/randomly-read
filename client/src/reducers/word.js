@@ -12,6 +12,7 @@ import {ADD_SYLLABLES} from '../actions/word';
 import {ADD_ROUTINE_VOWEL} from '../actions/word';
 import {ADD_INTERMISSION_TEXT} from '../actions/word';
 import {REMOVE_CONSONANT} from '../actions/word';
+import {BUILD_GRAPHQL} from '../actions/word';
 import {LOGOUT} from "../actions/auth";
 
 const initialState = {
@@ -24,6 +25,7 @@ const initialState = {
     limit: 1,
     mode: "Word",
     intermissionText: null,
+    isFetching: false
 };
 
 export default (state = initialState, action) => {
@@ -39,7 +41,7 @@ export default (state = initialState, action) => {
         case REMOVE_VOWEL:
           return {...state, vowel: !Array.isArray(state.vowel) ? null : state.vowel.filter(val => val !== action.text)};
         case REMOVE_WORD:
-          return {...state, text: null};
+          return {...state, text: ""};
         case ADD_CONSONANT:
           return {...state, consonant: action.text}; //state.consonant.concat([action.text])}
         case REMOVE_CONSONANT:
@@ -48,7 +50,7 @@ export default (state = initialState, action) => {
           return {...state, syllables: !Array.isArray(state.syllables) ? action.text : action.text.map(Number)}; //state.syllables.concat([parseInt(action.integer)])}
         case SET_POSITION:
           return {...state, position: action.text};
-      case SET_AGE:
+        case SET_AGE:
           return {...state, age: action.text};
         case SET_LIMIT:
           return {...state, limit: action.text};
@@ -56,11 +58,12 @@ export default (state = initialState, action) => {
           return {...state, mode: action.text};
         case ADD_INTERMISSION_TEXT:
           return {...state, intermissionText: action.text};
-
+        case BUILD_GRAPHQL:
+          return {...state, query: action};
         case LOGOUT:
-          return initialState;
+            return initialState;
 
-        default:
-          return state;
+          default:
+            return state;
     }
 }
