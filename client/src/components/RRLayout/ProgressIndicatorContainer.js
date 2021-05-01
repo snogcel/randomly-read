@@ -9,8 +9,8 @@ const mapStateToProps = state => ({
     completed: state.exerciseHistory.completed,
     total: state.exerciseHistory.total,
     range: state.exerciseHistory.range,
-    timeLeft: state.exerciseHistory.timeLeft
-
+    timeLeft: state.exerciseHistory.timeLeft,
+    text: state.word.text
     });
 
     const mapDispatchToProps = dispatch => ({

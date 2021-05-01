@@ -17,7 +17,7 @@ function ProgressIndicator(props) {
   let progressClass = classes.intermissionIndicator;
   let intermissionMultiplier = 1;
 
-  if (typeof props.currentExercise !== "undefined" && typeof props.currentExerciseNumber !== "undefined" && props.currentExerciseNumber !== null) {
+  if (typeof props.currentExercise !== "undefined" && props.currentExercise.length > 0 && typeof props.currentExerciseNumber !== "undefined" && props.currentExerciseNumber !== null) {
     if (!props.currentExercise[props.currentExerciseNumber].isIntermission) {
       progressClass = classes.exerciseIndicator;
       intermissionMultiplier = 1;
@@ -45,7 +45,7 @@ function ProgressIndicator(props) {
   return (
     <div className={classes.column}>
 
-      {(props.currentExerciseNumber !== null) ? (
+      {(props.currentExerciseNumber !== null && props.text !== "") ? (
         <>
           <CircularProgress size={size} variant="static" value={value} color="inherit" className={progressClass} />
           <br />
