@@ -24,7 +24,9 @@ import {setModalOpen} from '../../../actions/exerciseHistory'; // TODO - remove?
 
 import {setRange} from '../../../actions/exerciseHistory';
 import {updateTimeLeft} from '../../../actions/exerciseHistory';
-
+import {updateTime} from '../../../actions/exerciseHistory';
+import {setInProgress} from '../../../actions/exerciseHistory';
+import {setIsVisible} from '../../../actions/exerciseHistory';
 import {clearQueryResults} from '../../../actions/exerciseHistory';
 
 const mapStateToProps = state => ({
@@ -35,7 +37,12 @@ const mapStateToProps = state => ({
   isPaused: state.exerciseHistory.isPaused,
   completed: state.exerciseHistory.completed,
   total: state.exerciseHistory.total,
-  isModalOpen: state.exerciseHistory.isModalOpen
+  isModalOpen: state.exerciseHistory.isModalOpen,
+  timeLeft: state.exerciseHistory.timeLeft,
+  time: state.exerciseHistory.time,
+  inProgress: state.exerciseHistory.inProgress,
+  isVisible: state.exerciseHistory.isVisible,
+  text: state.word.text,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -86,6 +93,15 @@ const mapDispatchToProps = dispatch => ({
   },
   updateTimeLeft: (timeLeft) => {
     dispatch(updateTimeLeft(timeLeft))
+  },
+  updateTime: (time) => {
+    dispatch(updateTime(time))
+  },
+  setInProgress: (text) => {
+    dispatch(setInProgress(text))
+  },
+  setIsVisible: (text) => {
+    dispatch(setIsVisible(text))
   },
   addConsonant: (consonant) => {
     dispatch(addConsonant(consonant)) // pass through to TimerContainer

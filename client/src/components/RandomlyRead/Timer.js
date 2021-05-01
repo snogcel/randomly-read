@@ -40,9 +40,10 @@ class Timer extends React.Component {
     super(props);
 
     this.state = {
-      time: 0,
-      timeLeft: 0,
-      isOn: false,
+      age: this.props.age || 0,
+      time: this.props.time || 0,
+      timeLeft: this.props.timeLeft,
+      isOn: !!this.props.isPaused,
       start: 0,
       lastUpdated: -1,
       rangeVal: 3,
@@ -54,8 +55,6 @@ class Timer extends React.Component {
       position: 'initial',
       limit: 1,
     };
-
-    console.log("-constructor-");
 
     this.timerHandler = this.timerHandler.bind(this);
 
@@ -70,13 +69,16 @@ class Timer extends React.Component {
 
     this.exerciseStack = [];
     this.exercisePointer = null;
-    this.completed = 0;
+    this.completed = this.props.completed || 0;
     this.total = 0;
     this.timeLeftLastUpdated = 0;
     this.routineBuilder = new RoutineBuilder();
 
     this.currentRoutine = {};
-    this.isEmpty = this.isEmpty.bind(this)
+    this.isEmpty = this.isEmpty.bind(this);
+
+    this.debug = false;
+
   }
 
   isEmpty(obj) {
@@ -90,61 +92,75 @@ class Timer extends React.Component {
 
   }
 
+  componentWillUnmount() {
+    this.stopTimer();
+  }
+
   routineSelectHandler(routine) {
 
-    console.log("-routine select handler-");
+    let routineChange = !(JSON.stringify(this.props.currentExercise) === JSON.stringify(routine.subroutine));
+    let timerReset = false;
 
-    console.log(this.props);
+    if (!routineChange) {
 
-    this.exerciseStack = [];
+      // no change in routine (likely a page refresh)
 
-    if(this.isEmpty(routine)) {
-
-      this.props.addExercise([]);
-      this.props.addExerciseNumber(null);
+      // add current exercise to props and state
+      this.exerciseStack = this.props.currentExercise;
+      this.exercisePointer = this.props.currentExerciseNumber || 0; // TODO? -- confirm this should be 0
+      this.setExercise(this.exerciseStack[this.exercisePointer]);
 
     } else {
 
-      // populate subroutine with word complexity (age)
-      let age = routine.age || "0";
+      // routine change has been detected
 
-      for (let i = 0; i < routine.subroutine.length; i++) {
-        routine.subroutine[i].age = age;
+      // reset timer
+      timerReset = true;
+      this.props.updateTime(0);
+      this.setState({time: 0, timeLeft: 0, isOn: false});
+      this.props.setInProgress(false);
 
-        this.exerciseStack.push(routine.subroutine[i]);
-      }
+      // reset exercise
+      this.exerciseStack = [];
+      this.exercisePointer = 0;
 
-      this.exercisePointer = 0; // fetch first entry in routine stack
+      // remove last displayed word
+      this.props.removeWord();
 
-      // add current exercise to props and state
-      this.props.addExercise(this.exerciseStack);
-      this.setExercise(this.exerciseStack[this.exercisePointer]);
+      if(this.isEmpty(routine)) {
 
-      // handle cases where page resume
-      if (this.props.currentExerciseNumber > this.exercisePointer) {
-        this.props.addExerciseNumber(this.props.currentExerciseNumber);
+        this.exercisePointer = null;
+
       } else {
-        this.props.addExerciseNumber(this.exercisePointer);
+
+        // populate subroutine with word complexity (age)
+        let age = routine.age || "0";
+
+        for (let i = 0; i < routine.subroutine.length; i++) {
+          routine.subroutine[i].age = age;
+          this.exerciseStack.push(routine.subroutine[i]);
+        }
       }
+    }
 
+    // add current exercise to props and state
+    this.props.addExercise(this.exerciseStack);
+    this.props.addExerciseNumber(this.exercisePointer);
 
-      // this.completed = 0; // TODO - delete?
-      // this.stopTimer();
+    // set exercise (if needed)
+    if (this.exercisePointer && timerReset) this.setExercise(this.exerciseStack[this.exercisePointer]);
 
-      // this.resetTimerAndQuery();
-      this.softResetTimer();
-
+    if (timerReset) {
+      this.resetTimer(); // full reset
+    } else {
+      this.softResetTimer(); // soft reset (routine in progress)
     }
 
   }
 
   setExercise(exercise) {
 
-    // console.log("Modify exerciseConfig...");
-
-    // console.log(exercise);
-
-    // Stub out exerciseConfig
+    // Stub out the exercise configuration
     let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
     let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","DH","ZH"]; // 23
     let defaultVowels = ["AA","AE","AH","AO","AW","AY","EH","ER","EY","IH","IY","OW","OY","UW"]; // 14
@@ -166,9 +182,6 @@ class Timer extends React.Component {
       if (exercise.consonants.length === 0) exercise.consonants = defaultConsonants;
 
     }
-
-    // console.log("Consonant Array Length: ", exercise.consonants.length);
-    // console.log("Vowel Array Length: ", exercise.vowels.length);
 
     // Update Timer Value
     this.setState({ rangeVal: exercise.rangeVal });
@@ -223,6 +236,7 @@ class Timer extends React.Component {
       start: time,
       lastUpdated: lastUpdated
     });
+    this.props.setInProgress(true);
 
     this.timer = setInterval(() => this.setState({
       time: Date.now()
@@ -232,20 +246,16 @@ class Timer extends React.Component {
 
   startTimer() {
 
-    console.log("-start timer-"); // TODO - restore exerciseNumber
-
     this.props.setRange(this.state.rangeVal);
     this.props.setExercisePause(false);
     this.props.addExercise(this.exerciseStack);
-
-    // this.props.addExerciseNumber(this.exercisePointer);
-
     this.props.addExerciseNumber(this.props.currentExerciseNumber);
 
-    console.log("-timer: current exercise number: ", this.props.currentExerciseNumber);
-
-
+    this.exercisePointer = this.props.currentExerciseNumber || 0; // TODO -- added in support of L492
     this.setExercise(this.exerciseStack[this.exercisePointer]);
+
+    if (this.debug) console.log("-timer: current exercise pointer: ", this.exercisePointer);
+    if (this.debug) console.log("-timer: current exercise number: ", this.props.currentExerciseNumber);
 
     this.setState({
       isOn: true,
@@ -253,6 +263,8 @@ class Timer extends React.Component {
       start: Date.now(),
       lastUpdated: Date.now()
     });
+
+    this.props.setInProgress(true);
 
     this.timer = setInterval(() => this.setState({
       time: Date.now()
@@ -266,11 +278,24 @@ class Timer extends React.Component {
 
   }
 
+  shouldComponentUpdate(nextProps) {
+
+    if ((JSON.stringify(this.props.currentExercise) !== JSON.stringify(nextProps.currentExercise)) && (this.props.mode !== "Intermission" && nextProps.mode !== "Intermission")) {
+      if (this.debug) console.log("-other resetTimer()-");
+      this.resetTimer();
+    }
+
+    return true;
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
 
     // Updates the total number of Completed Exercises in Routine
-    if(this.props.completed !== this.completed && this.completed !== 0) {
-      this.props.updateCompleted(this.completed);
+    if((this.props.completed !== this.completed) && this.completed !== 0) {
+
+      // TODO -- removed this when troubleshooting routine selector
+
+      // this.props.updateCompleted(this.completed);
     }
 
     // Updates the total number of Exercises in Routine
@@ -278,12 +303,20 @@ class Timer extends React.Component {
       this.props.updateTotal(this.total);
     }
 
-    // resume exercise set
-    if(this.props.currentExerciseNumber !== null && this.props.currentExerciseNumber !== this.exercisePointer) {
-      this.exercisePointer = this.props.currentExerciseNumber;
-      this.completed = this.props.completed;
+    if (JSON.stringify(prevProps.currentExercise) === JSON.stringify(this.props.currentExercise)) {
 
-      this.setExercise(this.exerciseStack[this.exercisePointer]);
+      if (this.props.completed !== null) this.completed = this.props.completed;
+
+      if (this.props.currentExerciseNumber !== null) {
+        this.exercisePointer = this.props.currentExerciseNumber;
+
+        if (this.props.currentExerciseNumber !== this.exercisePointer) {
+          console.log("-resuming exercise stack: ", this.exerciseStack);
+          this.setExercise(this.exerciseStack[this.exercisePointer]);
+        }
+
+      }
+
     }
 
     // Allows user to skip ahead in Exercise Set...
@@ -365,9 +398,9 @@ class Timer extends React.Component {
 
   stopTimer() {
     this.setState({isOn: false});
-
     clearInterval(this.timer);
 
+    this.props.updateTime(this.state.time);
     this.props.setExercisePause(true);
   }
 
@@ -376,7 +409,8 @@ class Timer extends React.Component {
     console.log("-reset timer and query-");
 
     this.exercisePointer = 0;
-    this.setState({time: 0, isOn: false});
+    this.setState({time: 0, timeLeft: 0, isOn: false});
+    this.props.setInProgress(false);
     this.props.addExerciseNumber(null);
 
     this.props.addRoutineVowel([]); // null?
@@ -395,57 +429,24 @@ class Timer extends React.Component {
 
   softResetTimer() {
 
-    console.log("-reset timer and query-");
-    console.log(this.props);
-
-    /*
-
-    console.log("-currentExercise: ", this.props.currentExercise);
-    console.log("-currentExerciseNumber: ", this.props.currentExerciseNumber);
-
-    console.log("-exerciseStack: ", this.exerciseStack);
-    console.log("-exercisePointer: ", this.exercisePointer);
-    console.log("-total: ", this.total);
-    console.log("-completed: ", this.completed);
-    console.log("-timeLeftLastUpdated: ", this.timeLeftLastUpdated);
-
-    */
-
-
-
-  // if (this.props.currentExerciseNumber > 0) {
-
-
-    /*
-
-
-      this.exercisePointer = this.props.currentExerciseNumber;
-
-      this.props.setMode('Word');
-
-
-     */
-
-
     let consonant = this.props.consonant;
     let vowel = this.props.vowel;
 
-    if (typeof(consonant) !== "undefined" && consonant) {
-
-      console.log("-routine in progress-");
-
+    if ((typeof(consonant) !== "undefined" && consonant) || ( vowel === null && consonant === null)) {
+      if (this.debug) console.log("-routine in progress-");
     } else {
 
-      console.log("-resetting-");
-
       this.exercisePointer = 0;
-      this.setState({time: 0, isOn: false});
+      this.setState({time: 0, timeLeft: 0, isOn: false});
 
+      this.props.setInProgress(false);
       this.props.addExerciseNumber(null);
-      this.props.addRoutineVowel([]); // null?
-      this.props.removeConsonant();
-      this.props.addSyllables([1]);
-      this.props.setMode('Word');
+
+      // Reset card
+      if (this.exercisePointer === 0) this.props.removeWord();
+
+      // Reset Exercise Stack
+      this.setExercise(this.exerciseStack[this.exercisePointer]);
 
       // Clear Query History
       this.props.clearQueryResults();
@@ -459,24 +460,22 @@ class Timer extends React.Component {
 
   resetTimer() {
 
-    // console.log("-reset timer and exercise stack-");
+    let consonant = this.props.consonant;
+    let vowel = this.props.vowel;
 
-    this.exercisePointer = 0;
-    this.setState({time: 0, isOn: false});
+    this.exercisePointer = null; // TODO - check this out?
+    this.setState({time: 0, timeLeft: 0, isOn: false});
+
+    this.props.setInProgress(false);
     this.props.addExerciseNumber(null);
-
-    this.props.addRoutineVowel([]); // null?
-    this.props.removeConsonant();
-    this.props.addSyllables([1]);
     this.props.setMode('Word');
 
-    console.log("-reset timer-");
-
-    // Reset card
-    this.props.removeWord();
+    this.setExercise(this.exerciseStack[0]); // TODO -- see L493
 
     // Clear Query History
     this.props.clearQueryResults();
+
+    this.props.removeWord();
 
     // Reset Current Exercise
     this.completed = 0;
@@ -605,32 +604,17 @@ class Timer extends React.Component {
 
     }
 
-    /*
-
-    let start = (this.state.time === 0) ?
-      <Button onClick={this.startTimer} size="small" variant="outlined" color={"default"} ><b>Start</b></Button> : null;
-
-    let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null : <Button onClick={this.stopTimer} size="small" variant="outlined" color={"default"} ><b>Pause</b></Button>;
-
-    let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
-      null : <Button onClick={this.resumeTimer} size="small" variant="outlined" color={"default"} ><b>Resume</b></Button>;
-
-    let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
-
-    console.log("Current Exercise: ", this.props.currentExercise);
-     */
-
-
-    let start = (this.state.time === 0) ?
+    let start = (!this.props.inProgress) ?
       <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;
-    let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null : <IconButton onClick={this.stopTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PauseCircleFilledIcon fontSize="large" /></IconButton>;
-    let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
-      null : <IconButton onClick={this.resumeTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton>;
-    let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <IconButton disableFocusRipple onClick={this.resetTimer} className={classes.iconButton} aria-label="start" color={"primary"} style={{ backgroundColor: 'transparent' }} ><ReplayIcon /></IconButton>;
+
+    let stop = (this.props.isPaused || !this.state.isOn) ?
+      null : <IconButton onClick={this.stopTimer} className={classes.iconButton} aria-label="stop" color={"primary"}><PauseCircleFilledIcon fontSize="large" /></IconButton>;
+
+    let resume = ((this.state.time === 0 || !this.props.isPaused) || !this.props.inProgress) ?
+      null : <IconButton onClick={this.resumeTimer} className={classes.iconButton} aria-label="resume" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton>;
+
+    let reset = (((this.state.time === 0 || !this.props.isPaused) && !this.props.inProgress) || !this.props.inProgress) ?
+      null : <IconButton disableFocusRipple onClick={this.resetTimer} className={classes.iconButton} aria-label="reset" color={"primary"} style={{ backgroundColor: 'transparent' }} ><ReplayIcon /></IconButton>;
 
     let TimerFragment = <React.Fragment>
       <Grid container className={classes.routineSelectContainer}>
@@ -686,16 +670,6 @@ class Timer extends React.Component {
 
   }
 }
-
-/*
-
-<Grid container className={classes.timerControlGrid} spacing={0} justify="center">
-          <Grid item>
-            {TimerFragment}
-          </Grid>
-        </Grid>
-
- */
 
 Timer.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
