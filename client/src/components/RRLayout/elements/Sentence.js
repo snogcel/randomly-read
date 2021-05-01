@@ -21,13 +21,18 @@ class Sentence extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { mode, classes } = this.props;
 
-    return (
-      <Typography variant="h2" className={classes.word}>
-        {this.props.value.name}
-      </Typography>
-    );
+    if (mode === "Sentence") {
+      return (
+        <Typography variant="h1" className={classes.word}>
+          {this.props.value.name}
+        </Typography>
+      );
+    } else {
+      return null;
+    }
+
   }
 }
 

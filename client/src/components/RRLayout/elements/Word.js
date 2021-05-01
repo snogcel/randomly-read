@@ -14,7 +14,7 @@ class Word extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-
+    return true;
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -25,15 +25,18 @@ class Word extends React.Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { mode, classes } = this.props;
 
-    console.log(this.props.value.name);
+    if (mode === "Word") {
+      return (
+        <Typography variant="h1" className={classes.word}>
+          {this.props.value.name}
+        </Typography>
+      );
+    } else {
+      return null;
+    }
 
-    return (
-      <Typography variant="h1" className={classes.word}>
-        {this.props.value.name}
-      </Typography>
-    );
   }
 }
 
