@@ -13,6 +13,7 @@ import {setAge} from '../../../actions/word';
 import {setLimit} from '../../../actions/word'
 import {addRoutineVowel} from '../../../actions/word';
 import {setIntermissionText} from '../../../actions/word';
+import {buildGraphQL} from '../../../actions/word';
 
 import {addExercise} from '../../../actions/exerciseHistory'
 import {addExerciseNumber} from '../../../actions/exerciseHistory'
@@ -26,14 +27,19 @@ import {setRange} from '../../../actions/exerciseHistory';
 import {updateTimeLeft} from '../../../actions/exerciseHistory';
 import {updateTime} from '../../../actions/exerciseHistory';
 import {setInProgress} from '../../../actions/exerciseHistory';
-import {setIsVisible} from '../../../actions/exerciseHistory';
+import {setIsCompleted} from '../../../actions/exerciseHistory';
 import {clearQueryResults} from '../../../actions/exerciseHistory';
 
 const mapStateToProps = state => ({
   currentExercise: state.exerciseHistory.currentExercise,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
-  consonant: state.word.consonant,
   vowel: state.word.vowel,
+  consonant: state.word.consonant,
+  syllables: state.word.syllables,
+  limit: state.word.limit,
+  position: state.word.position,
+  age: state.word.age,
+  mode: state.word.mode,
   isPaused: state.exerciseHistory.isPaused,
   completed: state.exerciseHistory.completed,
   total: state.exerciseHistory.total,
@@ -41,7 +47,7 @@ const mapStateToProps = state => ({
   timeLeft: state.exerciseHistory.timeLeft,
   time: state.exerciseHistory.time,
   inProgress: state.exerciseHistory.inProgress,
-  isVisible: state.exerciseHistory.isVisible,
+  isCompleted: state.exerciseHistory.isCompleted,
   text: state.word.text,
 });
 
@@ -100,8 +106,8 @@ const mapDispatchToProps = dispatch => ({
   setInProgress: (text) => {
     dispatch(setInProgress(text))
   },
-  setIsVisible: (text) => {
-    dispatch(setIsVisible(text))
+  setIsCompleted: (text) => {
+    dispatch(setIsCompleted(text))
   },
   addConsonant: (consonant) => {
     dispatch(addConsonant(consonant)) // pass through to TimerContainer
@@ -111,6 +117,9 @@ const mapDispatchToProps = dispatch => ({
   },
   setIntermissionText: (text) => {
     dispatch(setIntermissionText(text)) // pass through to TimerContainer
+  },
+  buildGraphQL: (text) => {
+    dispatch(buildGraphQL(text))
   },
   clearQueryResults: () => {
     dispatch(clearQueryResults())
