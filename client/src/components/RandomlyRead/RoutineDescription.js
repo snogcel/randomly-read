@@ -78,7 +78,12 @@ class RoutineDescription extends Component {
     let duration = 0;
 
     for (let i = 0; i < currentExercise.length; i++) {
-      duration += (currentExercise[i].rangeVal * currentExercise[i].repetitions);
+
+      if (currentExercise[i].isIntermission) {
+        duration += currentExercise[i].rangeVal;
+      } else {
+        duration += (currentExercise[i].rangeVal * currentExercise[i].repetitions);
+      }
     }
 
     let minutes = Math.floor(duration / 60);
