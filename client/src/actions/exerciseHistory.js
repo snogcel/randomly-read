@@ -8,7 +8,7 @@ export const SET_RANGE = 'SET_RANGE';
 export const UPDATE_TIMELEFT = 'UPDATE_TIMELEFT';
 export const UPDATE_TIME = 'UPDATE_TIME';
 export const SET_INPROGRESS = 'SET_INPROGRESS';
-export const SET_ISVISIBLE = 'SET_ISVISIBLE';
+export const SET_ISCOMPLETED = 'SET_ISCOMPLETED';
 export const ADD_QUERY_RESULT = 'ADD_QUERY_RESULT';
 export const CLEAR_QUERY_RESULTS = 'CLEAR_QUERY_RESULTS';
 
@@ -72,9 +72,9 @@ export function setInProgress(text) {
   }
 }
 
-export function setIsVisible(text) {
+export function setIsCompleted(text) {
   return {
-    type: SET_ISVISIBLE, text
+    type: SET_ISCOMPLETED, text
   }
 }
 

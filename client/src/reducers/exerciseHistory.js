@@ -8,7 +8,7 @@ import {SET_RANGE} from '../actions/exerciseHistory';
 import {UPDATE_TIMELEFT} from '../actions/exerciseHistory';
 import {UPDATE_TIME} from '../actions/exerciseHistory';
 import {SET_INPROGRESS} from '../actions/exerciseHistory';
-import {SET_ISVISIBLE} from '../actions/exerciseHistory';
+import {SET_ISCOMPLETED} from '../actions/exerciseHistory';
 import {ADD_QUERY_RESULT} from '../actions/exerciseHistory';
 import {CLEAR_QUERY_RESULTS} from '../actions/exerciseHistory';
 import {LOGOUT} from "../actions/auth";
@@ -19,7 +19,7 @@ const initialState = {
     exerciseResults: [],
     isPaused: true,
     inProgress: false,
-    isVisible: false,
+    isCompleted: false,
     isModalOpen: null,
     range: 0,
     completed: 0,
@@ -54,8 +54,8 @@ export default (state = initialState, action) => {
         return {...state, time: action.text};
       case SET_INPROGRESS:
         return {...state, inProgress: action.text};
-      case SET_ISVISIBLE:
-        return {...state, isVisible: action.text};
+      case SET_ISCOMPLETED:
+        return {...state, isCompleted: action.text};
 
       case LOGOUT:
         return initialState;
