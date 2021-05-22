@@ -940,11 +940,11 @@ async function upVotedRoutines(author) {
     let syllables = [];
 
     // get similar word length
-    if (posts[i].syllables === "1") syllables = ['1','2'];
-    if (posts[i].syllables === "2") syllables = ['1','2'];
-    if (posts[i].syllables === "3") syllables = ['1','2','3'];
-    if (posts[i].syllables === "4") syllables = ['2','3','4'];
-    if (posts[i].syllables === "5") syllables = ['3','4','5'];
+    if (posts[i].syllables === "1") syllables = [1,2];
+    if (posts[i].syllables === "2") syllables = [1,2];
+    if (posts[i].syllables === "3") syllables = [1,2,3];
+    if (posts[i].syllables === "4") syllables = [2,3,4];
+    if (posts[i].syllables === "5") syllables = [3,4,5];
 
     let subroutine = [{
       "index": Date.now(),
