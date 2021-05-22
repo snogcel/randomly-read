@@ -46,7 +46,7 @@ class WordCard extends React.Component  {
     this.state = { };
 
     this.fetching = false;
-    this.debug = true;
+    this.debug = false;
   }
 
   componentDidMount() {
@@ -91,7 +91,6 @@ class WordCard extends React.Component  {
           this.result = result; // assign newly generated sentence to result
           this.fetching = false;
           this.parseResult(mode, data);
-          console.log("-storing sentence: ", data);
         }
       }
 

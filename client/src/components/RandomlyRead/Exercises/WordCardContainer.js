@@ -41,7 +41,7 @@ class QueryWrapper extends Component {
 
     this.result = "";
     this.fetching = false;
-    this.debug = true;
+    this.debug = false;
 
     if (this.props.mode !== "Intermission") this.props.buildGraphQL(this.props);
 
@@ -58,7 +58,6 @@ class QueryWrapper extends Component {
       if ((JSON.stringify(this.props.query.action) !== JSON.stringify(nextProps.query.action) && !this.fetching)) {
 
         // handle case: query change
-        if (this.debug) console.log("handle case: query change");
 
       } else {
 

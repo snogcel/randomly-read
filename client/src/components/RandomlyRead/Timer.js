@@ -77,7 +77,7 @@ class Timer extends React.Component {
     this.currentRoutine = {};
     this.isEmpty = this.isEmpty.bind(this);
 
-    this.debug = true;
+    this.debug = false;
 
   }
 
@@ -104,7 +104,7 @@ class Timer extends React.Component {
     if (!routineChange) {
 
       // no change in routine (likely a page refresh)
-      console.log("resuming exercise...");
+      if (this.debug) console.log("resuming exercise...");
 
       // add current exercise to props and state
       this.exerciseStack = this.props.currentExercise;
@@ -114,7 +114,7 @@ class Timer extends React.Component {
     } else {
 
       // routine change has been detected
-      console.log("routine change detected");
+      if (this.debug) console.log("routine change detected");
 
       // reset timer
       timerReset = true;
@@ -152,13 +152,10 @@ class Timer extends React.Component {
     this.props.addExercise(this.exerciseStack);
     this.props.addExerciseNumber(this.exercisePointer);
 
-    console.log("exercise pointer: ", this.exercisePointer);
-    console.log("timer reset: ", timerReset);
-
     // set exercise (if needed)
     if (this.exercisePointer >= 0 && timerReset) {
 
-      console.log("-routine select change... ", this.props);
+      if (this.debug) console.log("-routine select change... ", this.props);
 
       // if (this.props.mode !== "Intermission") this.props.buildGraphQL(this.props);
 
@@ -223,7 +220,7 @@ class Timer extends React.Component {
     // Stub out initial query
     let nextAction = this.currentRoutine.get(0);
 
-    console.log("current routine: ", nextAction);
+    if (this.debug) console.log("current routine: ", nextAction);
 
     if (nextAction.mode !== "Intermission") this.props.buildGraphQL(nextAction);
 
