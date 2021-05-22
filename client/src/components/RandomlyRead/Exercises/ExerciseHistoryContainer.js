@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
     currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
     time: state.exerciseHistory.time,
     inProgress: state.exerciseHistory.inProgress,
-    isVisible: state.exerciseHistory.isVisible,
+    isCompleted: state.exerciseHistory.isCompleted,
   });
 
   const mapDispatchToProps = dispatch => ({

@@ -186,7 +186,7 @@ class ExerciseHistory extends React.Component {
             return(
               <StyledListItem key={stepNumber} selected={((currentExerciseNumber === stepNumber) && inProgress)} className={classes.exerciseHistoryDesktop}>
                 <ListItemIcon>
-                  {(currentExerciseNumber <= stepNumber) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
+                  {((!currentExerciseNumber) || (currentExerciseNumber < stepNumber) || (currentExerciseNumber === stepNumber && inProgress)) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
                 </ListItemIcon>
                 <ListItemText primary={listItemText} secondary={subHeaderText} />
               </StyledListItem>
