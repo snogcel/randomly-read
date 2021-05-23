@@ -17,14 +17,14 @@ import {LOGOUT} from "../actions/auth";
 
 const initialState = {
     text: "",
-    vowel: null,
-    consonant: null,
+    vowel: [],
+    consonant: [],
     position: "initial",
     age: "0",
     syllables: [],
     limit: 1,
     mode: "Word",
-    intermissionText: null,
+    intermissionText: "",
     isFetching: false
 };
 

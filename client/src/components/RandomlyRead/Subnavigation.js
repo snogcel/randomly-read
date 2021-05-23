@@ -17,15 +17,17 @@ class Subnavigation extends React.Component {
   }
 
   handleClick(e, pathname, routineId) {
-    this.props.setInProgress(false);
-    this.props.setExercisePause(false);
-    this.props.updateTime(0);
-    this.props.updateTimeLeft(0);
-    this.props.resetRoutineSelect();
-    this.props.clearQueryResults();
-    this.props.resetWordCard();
-    this.props.updateId(routineId);
-    this.props.history.push({pathname})
+    if (this.props.history.location.pathname !== pathname) {
+      this.props.setInProgress(false);
+      this.props.setExercisePause(false);
+      this.props.updateTime(0);
+      this.props.updateTimeLeft(0);
+      this.props.resetRoutineSelect();
+      this.props.clearQueryResults();
+      this.props.resetWordCard();
+      this.props.updateId(routineId);
+      this.props.history.push({pathname})
+    }
   }
 
   render() {
