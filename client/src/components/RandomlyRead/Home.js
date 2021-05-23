@@ -5,6 +5,7 @@ import YouTube from 'react-youtube';
 
 import SignupForm from '../SignupForm/Container';
 
+import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 
 import Grid from '@material-ui/core/Grid';
@@ -102,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
 
 const RRHome = props => {
 
-  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction } = props;
+  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ApolloClient } = props;
   const { classes, user, routineSelectId, token } = props;
 
   const { width } = props;
@@ -198,7 +199,9 @@ const RRHome = props => {
 
                       <Grid item xs={timerContainerWidth}>
 
-                        <WordCardContainer />
+                        <RoutineDescriptionContainer />
+
+                        <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
 
                         <ProgressIndicator />
 
