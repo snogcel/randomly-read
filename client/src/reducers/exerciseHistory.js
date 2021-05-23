@@ -15,16 +15,16 @@ import {LOGOUT} from "../actions/auth";
 
 const initialState = {
     currentExercise: [],
-    currentExerciseNumber: null,
+    currentExerciseNumber: 0,
     exerciseResults: [],
     isPaused: true,
     inProgress: false,
     isCompleted: false,
-    isModalOpen: null,
+    isModalOpen: false,
     range: 0,
     completed: 0,
     total: 0,
-    timeLeft: null,
+    timeLeft: 0,
     time: 0
 };
 
