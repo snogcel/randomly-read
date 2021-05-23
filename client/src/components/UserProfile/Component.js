@@ -24,14 +24,6 @@ class UserProfile extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
-
-  }
-
-  componentDidMount() {
-
-  }
-
   render() {
 
     const { user } = this.props;

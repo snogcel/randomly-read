@@ -86,7 +86,7 @@ class RoutineSelect extends React.Component {
 
     }
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
       if (typeof this.props.user !== "undefined") this.prepareRoutineSelect();
     }
 

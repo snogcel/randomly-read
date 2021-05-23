@@ -95,7 +95,7 @@ class ExerciseHistory extends React.Component {
 
   }
 
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
 
   }
 

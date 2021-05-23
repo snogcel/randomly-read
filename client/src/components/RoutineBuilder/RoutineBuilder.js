@@ -239,7 +239,7 @@ class RoutineBuilder extends React.Component {
 
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
 
     this.props.resetRoutineBuilder();
 

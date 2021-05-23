@@ -19,18 +19,6 @@ class UserHome extends React.Component {
 
   }
 
-  componentDidUpdate(prevProps) {
-
-  }
-
-  componentWillMount() {
-
-  }
-
-  componentDidMount() {
-
-  }
-
   render() {
 
     const { classes } = this.props;

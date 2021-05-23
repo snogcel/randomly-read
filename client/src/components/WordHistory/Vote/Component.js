@@ -41,7 +41,7 @@ class PostVote extends React.Component {
     return existingVote ? existingVote.vote : 0;
   }
 
-  componentWillUpdate(nextProps, nextState, nextContext) {
+  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
     if (this.props.score !== nextProps.score) {
       const didVote = PostVote.existingVote(nextProps);
       this.setState({
@@ -51,9 +51,6 @@ class PostVote extends React.Component {
         didDownvote: didVote === -1
       });
     } else if (this.props.token !== nextProps.token && !nextProps.token) {
-
-      console.log("-is this the problem?");
-
       this.setState({
         didVote: false,
         didUpvote: false,

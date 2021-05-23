@@ -54,7 +54,7 @@ class ViewHistory extends React.Component {
     this.props.fetchViewHistory(userId, startDate, endDate);
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.props.userId && this.props.startDate && this.props.endDate) this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
   }
 

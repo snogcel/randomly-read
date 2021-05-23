@@ -97,10 +97,6 @@ class ExerciseHistory extends React.Component {
 
   }
 
-  componentWillReceiveProps() {
-
-  }
-
   render() {
     const { classes, currentExerciseNumber, inProgress } = this.props;
     const { width } = this.props;

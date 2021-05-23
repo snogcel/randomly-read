@@ -27,7 +27,7 @@ class RoutineDescription extends Component {
 
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
 
     if (typeof this.props.description !== 'undefined') {
     	let description = this.props.description;
