@@ -57,8 +57,6 @@ const App = (props) => {
       if (token !== Identities[i].token) {
         token = Identities[i].token;
         user = Identities[i].user;
-
-        props.setToken(user, token);
       }
 
     }
@@ -114,12 +112,12 @@ const App = (props) => {
 
               <Route
                 path='/Week1'
-                render={props => (<Exercise1HomeContainer TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} {...props}/>)}
+                render={props => (<Exercise1HomeContainer ApolloClient={client} TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} {...props}/>)}
               />
 
               <Route
                 path='/Week2'
-                render={props => (<Exercise2HomeContainer TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} {...props}/>)}
+                render={props => (<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} {...props}/>)}
               />
 
               <Route path='/FluencyReport' component={FluencyReport} />
