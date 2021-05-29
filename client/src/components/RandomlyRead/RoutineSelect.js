@@ -178,13 +178,20 @@ class RoutineSelect extends React.Component {
           }
         }
 
+        let selectValue = this.props.id;
+
+        // clean routine id for Material UI
+        if (typeof(selectValue) === "undefined" || selectValue === 0) {
+          selectValue = "";
+        }
+
         return (
             <React.Fragment>
 
                  <FormControl style={{minWidth: 125 }}>
                     <Select
                     classes={{select: theme === true ? classes.select : undefined}}
-                    value={this.props.id}
+                    value={selectValue}
                     onChange={this.handleChange}
                     displayEmpty
                     input={<BootstrapInput name="routine" id="routine-customized-select" />}
