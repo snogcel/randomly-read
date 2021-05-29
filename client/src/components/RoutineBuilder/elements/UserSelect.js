@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListSubheader from '@material-ui/core/ListSubheader';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -66,7 +65,7 @@ export default function UserSelect(props) {
   const handleChange = event => {
     setValues(oldValues => ({
       ...oldValues,
-      [event.target.name]: event.target.value,
+      [event.target.name]: values,
     }));
 
     props.action(event.target.value); // pass to redux

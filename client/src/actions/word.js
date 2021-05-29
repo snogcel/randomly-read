@@ -1,5 +1,4 @@
-import { buildQuery, getGraphQL } from '../util/api';
-import { useQuery } from "@apollo/react-hooks";
+import { buildQuery } from '../util/api';
 
 export const RESET_WORD_CARD = 'RESET_WORD_CARD';
 export const ADD_VOWEL = 'ADD_VOWEL';

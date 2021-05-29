@@ -8,10 +8,6 @@ import { withStyles } from '@material-ui/core';
 
 class Subnavigation extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
 
   }

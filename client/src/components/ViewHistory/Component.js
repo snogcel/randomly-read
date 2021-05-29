@@ -10,7 +10,7 @@ import WordViewFilter from './elements/WordViewFilter';
 import PropTypes from 'prop-types';
 import withWidth from '@material-ui/core/withWidth';
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
 import PostListContainer from '../PostList/Container';
 

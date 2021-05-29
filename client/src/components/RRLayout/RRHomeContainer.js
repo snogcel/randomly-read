@@ -1,4 +1,3 @@
-import { connect } from 'react-redux';
 import { compose } from 'redux';
 import withAuth from '../../util/withAuth';
 import RRHome from './RRHome'

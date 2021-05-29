@@ -1,7 +1,6 @@
  import { connect } from 'react-redux';
 import FluencyReportHistory from './FluencyReportHistory'
 import { resetFormData } from '../../actions/formData';
-import { addInitialFormData } from '../../actions/formData';
 import { addSetting1FormData } from '../../actions/formData';
 import { addSetting2FormData } from '../../actions/formData';
 import { addSetting3FormData } from '../../actions/formData';
@@ -33,19 +32,19 @@ const mapStateToProps = state => ({
     combinedData: state.formData.combinedData
 });
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
   loadSetting1FormData,
   loadSetting2FormData,
   loadSetting3FormData,
   loadSetting4FormData,
   loadSetting5FormData,
   loadSetting6FormData,
-  addSetting1FormData, 
-  addSetting2FormData, 
+  addSetting1FormData,
+  addSetting2FormData,
   addSetting3FormData,
-  addSetting4FormData, 
-  addSetting5FormData, 
-  addSetting6FormData, 
+  addSetting4FormData,
+  addSetting5FormData,
+  addSetting6FormData,
   deleteSetting1FormData,
   deleteSetting2FormData,
   deleteSetting3FormData,
@@ -53,7 +52,7 @@ const mapDispatchToProps = {
   deleteSetting5FormData,
   deleteSetting6FormData,
   mutateCombinedData,
-  resetFormData, 
+  resetFormData,
   };
 
 const FluencyReportHistoryContainer = connect(
@@ -61,4 +60,4 @@ const FluencyReportHistoryContainer = connect(
     mapDispatchToProps
   )(FluencyReportHistory);
 
-export default FluencyReportHistoryContainer; 
+export default FluencyReportHistoryContainer;

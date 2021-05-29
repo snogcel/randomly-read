@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { styles } from '../../themeHandler';
@@ -6,8 +6,6 @@ import { Typography } from '@material-ui/core';
 
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
-
-import Grid from "./RRHome";
 
 function ProgressIndicator(props) {
 

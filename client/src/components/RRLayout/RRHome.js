@@ -1,8 +1,5 @@
 import React from 'react';
-//import styled from 'styled-components/macro';
 import { withStyles } from "@material-ui/core/styles";
-import YouTube from 'react-youtube';
-
 import SignupForm from '../SignupForm/Container';
 
 import WordCardContainer from './WordCardContainer';
@@ -15,34 +12,16 @@ import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-//import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import ExerciseHistoryContainer from './ExerciseHistoryContainer';
 import ProgressIndicator from './ProgressIndicatorContainer'
-import WordHistory from './WordHistoryContainer'
-
 import WordHistoryList from '../WordHistoryList/Container';
-
-import LoginFormContainer from '../LoginForm/Container';
 
 import { styles } from '../../themeHandler';
 
-//import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
-
-
 const RRHome = props => {
 
-  const {classes, user, token} = props;
+  const { classes, user } = props;
   const { width } = props;
 
   const [open_1, setOpen_1] = React.useState(false);
@@ -78,40 +57,6 @@ const RRHome = props => {
   if (width === "sm") {
     timerContainerWidth = 10;
   }
-
-  const opts = {
-    width: '100%',
-    playerVars: { // https://developers.google.com/youtube/player_parameters
-      autoplay: 0
-    }
-  };
-
-  /*
-
-  <Grid className={classes.root}>
-
-      <Card elevation={0} className={classes.userAdminCard}>
-
-        <CardContent>
-
-
-
-        </CardContent>
-
-      </Card>
-
-    </Grid>
-
-
-
-    <div >
-                      <YouTube
-                        videoId="2g811Eo7K8U"
-                        opts={opts}
-                      />
-                    </div>
-
-   */
 
   const handleOpen_1 = () => {
     setOpen_1(true);
@@ -167,7 +112,7 @@ const RRHome = props => {
           <>
             <Grid container className={classes.homePageContainer}>
 
-              {(width == "xs") ? (
+              {(width === "xs") ? (
                 <Grid item xs={12} className={classes.homePageMobileHeader}>
 
                   <Typography variant="h4" component="h1" className={classes.heading}>
@@ -273,7 +218,7 @@ const RRHome = props => {
                   <Hidden xsDown>
                   <Grid item xs={12} sm={4} lg={3} xl={3} className={classes.homepageScreenshotContainer}>
 
-                      <img src="./rr_preview_1.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} />
+                      <img src="./rr_preview_1.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} alt="Preview 1"/>
 
                       <Modal
                         aria-labelledby="simple-modal-title"
@@ -282,13 +227,13 @@ const RRHome = props => {
                         onClose={handleClose_1}
                       >
                         <div className={classes.previewImage}>
-                          <img src="./rr_preview_1_large.png" />
+                          <img src="./rr_preview_1_large.png" alt="Preview 1"/>
                         </div>
                       </Modal>
 
                       <br /><br />
 
-                      <img src="./rr_preview_2.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} />
+                      <img src="./rr_preview_2.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} alt="Preview 2" />
 
                       <Modal
                         aria-labelledby="simple-modal-title"
@@ -297,7 +242,7 @@ const RRHome = props => {
                         onClose={handleClose_2}
                       >
                         <div className={classes.previewImage}>
-                          <img src="./rr_preview_2_large.png" />
+                          <img src="./rr_preview_2_large.png" alt="Preview 2"/>
                         </div>
                       </Modal>
 

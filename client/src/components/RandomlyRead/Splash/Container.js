@@ -17,4 +17,4 @@ const enhance = compose(
 
 const SplashContainer = enhance(Splash);
 
-export default Splash;
+export default SplashContainer;

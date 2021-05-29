@@ -2,13 +2,7 @@ import React from 'react';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import FormControlLabel from "./ConsonantCheckboxes";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -80,7 +74,7 @@ export default function StepList(props) {
   const [selectedIndex, setSelectedIndex] = React.useState(props.index);
 
   const handleListItemClick = (event, index) => {
-    setSelectedIndex(index);
+    setSelectedIndex(selectedIndex);
     props.action(index); // fetch selected Routine Step
   };
 

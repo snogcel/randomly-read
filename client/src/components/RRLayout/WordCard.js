@@ -1,38 +1,18 @@
 import React from 'react';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import Intermission from './IntermissionContainer';
-import VowelCheckboxes from './VowelCheckboxes';
 import { styles } from '../../themeHandler';
-
 import RoutineDescription from './RoutineDescription';
-import VowelCheckbox from './elements/VowelCheckbox';
 import Word from './elements/Word';
 import Sentence from './elements/Sentence';
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 
 class WordCard extends React.Component  {
 
@@ -247,21 +227,6 @@ class WordCard extends React.Component  {
         default:
             // console.log("No Query...");
             return null;
-    }
-
-  }
-
-  checkRefresh(oldQuery, newQuery) {
-
-    let refresh = false;
-
-    function difference(lastProps, newProps) {
-      let newSet = new Set(newProps);
-      return lastProps.filter(function(x) { return !newSet.has(x); });
-    }
-
-    if (refresh) {
-      this.refresh();
     }
 
   }

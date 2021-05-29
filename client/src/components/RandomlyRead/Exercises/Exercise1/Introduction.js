@@ -6,10 +6,6 @@ import { withStyles } from '@material-ui/core';
 
 class Introduction extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   componentDidUpdate(prevProps, prevState, snapshot) {
 
   }

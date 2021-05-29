@@ -1,39 +1,21 @@
-import RoutineBuilder from '../RRLayout/RoutineBuilder';
-import Box from '@material-ui/core/Box';
-//import Routines from './Routines.js';
-//import { AwesomeButton } from 'react-awesome-button';
-import Button from '@material-ui/core/Button';
 import React from 'react';
-import ms from 'pretty-ms';
+import RoutineBuilder from '../RRLayout/RoutineBuilder';
+
+import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
 import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
 
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-
-
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-
-
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-
 import ReplayIcon from '@material-ui/icons/Replay';
 
-
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
-
-
-
 import { styles } from '../../exerciseThemeHandler';
-import InteractionForm from "../Interactions/InteractionsHome";
 
 class Timer extends React.Component {
   constructor(props){
@@ -263,9 +245,11 @@ class Timer extends React.Component {
       time: Date.now()
     }), 25);
 
+    /*
     let routineKeys = this.currentRoutine.keys();
     let currentKey = routineKeys.next().value;
     let currentRoutine = this.currentRoutine.get(currentKey);
+    */
 
   }
 
@@ -499,9 +483,6 @@ class Timer extends React.Component {
 
   resetTimer() {
 
-    let consonant = this.props.consonant;
-    let vowel = this.props.vowel;
-
     this.stopTimer();
 
     this.exercisePointer = null; // TODO - check this out?
@@ -537,17 +518,19 @@ class Timer extends React.Component {
     let templates = this.state.templates;
     let syllables = this.state.syllables;
 
-    let refresh = false;
+    // let refresh = false;
 
+    /*
     function difference(lastProps, newProps) {
       let newSet = new Set(newProps);
       return lastProps.filter(function(x) { return !newSet.has(x); });
     }
+    */
 
     // Handle Consonants
-    let newConsonants = options.consonant;
-    let removedConsonants = difference(consonant, newConsonants);
-    if (removedConsonants.length === 0) refresh = true;
+    // let newConsonants = options.consonant;
+    // let removedConsonants = difference(consonant, newConsonants);
+    // if (removedConsonants.length === 0) refresh = true;
     // this.consonantCheckboxes.current.unsetMany(removedConsonants);
     // this.consonantCheckboxes.current.setMany(newConsonants);
 
@@ -583,8 +566,6 @@ class Timer extends React.Component {
     this.props.setIntermissionText(options.intermissionText); // pass to TimerContainer
     this.props.updateTimeLeft(0);
 
-    if (this.state.mode === "Intermission") refresh = false;
-
     let graphQL = {
       vowel: vowel,
       consonant: consonant,
@@ -617,31 +598,16 @@ class Timer extends React.Component {
 
     const { classes } = this.props;
     const { RoutineSelectContainer } = this.props;
-    const { width } = this.props;
-    const { rangeVal } = this.state;
 
-    let currentExercise = null;
-
-    if(this.exerciseStack.length === 0) {
-      currentExercise = null;
-    }
-
-    let current = this.exercisePointer;
-    let completed = 0;
-
+    // TODO -- move this, it shouldn't be in render()
     this.total = 0;
 
     if (this.exerciseStack && this.exerciseStack.length > 0) {
-
       for (let i = 0; i < this.exerciseStack.length; i++) {
-
         if (this.exerciseStack[i].mode === 'Word' || this.exerciseStack[i].mode === 'Sentence') {
           this.total++;
-          if (i < current) completed++;
         }
-
       }
-
     }
 
     let start = (this.props.isPaused && !this.props.inProgress && !this.props.isCompleted) ?

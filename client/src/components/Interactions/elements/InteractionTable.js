@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import moment from 'moment-timezone';
-import Hidden from '@material-ui/core/Hidden';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,13 +11,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import DoneIcon from '@material-ui/icons/Done';
 
 
@@ -100,20 +94,12 @@ function TablePaginationActions(props) {
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
-  const handleFirstPageButtonClick = event => {
-    onChangePage(event, 0);
-  };
-
   const handleBackButtonClick = event => {
     onChangePage(event, page - 1);
   };
 
   const handleNextButtonClick = event => {
     onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = event => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
   return (
@@ -154,10 +140,10 @@ export default function InteractionTable(props) {
   };
 
   function parseInteractions(interactions) {
-    
+
     const rows = [];
 
-    interactions.map(function(item) {
+    interactions.forEach(function(item) {
 
       let consonant = "N/A";
       let vowel = "N/A";
@@ -187,6 +173,12 @@ export default function InteractionTable(props) {
         "class": ((item.ease < 50) ? classes.upvote : null)
       });
     });
+
+
+
+
+    //
+
 
     return rows;
   }

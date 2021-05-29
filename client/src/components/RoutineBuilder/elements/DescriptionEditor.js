@@ -5,7 +5,6 @@ import { convertToHTML, convertFromHTML } from 'draft-convert';
 import Button from '@material-ui/core/Button';
 
 import '../css/DescriptionEditor.css';
-import Typography from "../RoutineBuilder";
 
 class PostEditor extends Component {
   constructor(props) {
@@ -97,8 +96,12 @@ class PostEditor extends Component {
             return <div />;
           case 'paragraph':
             return <p />;
+          /*
           case 'header-one':
             return <h1 />;
+          */
+          default:
+            return null;
         }
       }})(this.state.editorState.getCurrentContent());
 

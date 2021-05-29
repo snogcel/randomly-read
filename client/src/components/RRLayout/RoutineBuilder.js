@@ -10,7 +10,7 @@ RoutineBuilder.prototype._verifyBlacklist = function(vowel, consonant, exerciseC
   let syllables = exerciseConfig.syllables;
   let mode = exerciseConfig.mode;
   let position = exerciseConfig.position;
-  let vowels = exerciseConfig.vowels;
+  // let vowels = exerciseConfig.vowels;
 
   let result = [];
 
@@ -189,9 +189,6 @@ RoutineBuilder.prototype.build = function(exerciseConfig) {
   let checkpoints = this._buildCheckpoints(exerciseConfig);
 
   // Iterate Through Checkpoints
-  let j = 0; // vowel iterator
-  let k = 0; // consonant iterator
-
   for (let i = 0; i < checkpoints.length; i++) {
 
     // Set Default Action

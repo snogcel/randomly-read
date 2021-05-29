@@ -1,53 +1,23 @@
 import React from 'react';
-//import styled from 'styled-components/macro';
 import { withStyles } from "@material-ui/core/styles";
-import YouTube from 'react-youtube';
-
-import SignupForm from '../SignupForm/Container';
-
-import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
-import WordCardContainer from './Exercises/WordCardContainer';
 
 import Grid from '@material-ui/core/Grid';
-import Modal from '@material-ui/core/Modal';
-import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
-import Paper from '@material-ui/core/Paper';
-
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-//import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
+import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
 import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
-import WordHistory from '../RRLayout/WordHistoryContainer'
-
 import Subnavigation from './Exercises/SubnavigationContainer';
-
 import WordHistoryList from '../WordHistoryList/Container';
 
-import LoginFormContainer from '../LoginForm/Container';
-
 import { styles } from '../../exerciseThemeHandler';
-
-//import CheckboxOutlinedIcon from "@material-ui/icons/CheckBoxOutlined";
-
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -94,17 +64,10 @@ function LinkTab(props) {
   );
 }
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
-  },
-}));
-
 const RRHome = props => {
 
   const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ApolloClient } = props;
-  const { classes, user, routineSelectId, token } = props;
+  const { classes } = props;
 
   const { width } = props;
 
@@ -116,7 +79,6 @@ const RRHome = props => {
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
-  let interactionContainerWidth = 12;
 
   // desktop - widescreen
   if (width === "xl") {

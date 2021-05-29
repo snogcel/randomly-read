@@ -146,7 +146,7 @@ const SplashPage = props => {
             <Hidden xsDown>
               <Grid item xs={12} sm={4} lg={3} xl={3} className={classes.homepageScreenshotContainer}>
 
-                <img src="./rr_preview_1.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} />
+                <img src="./rr_preview_1.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} alt="Preview 1" />
 
                 <Modal
                   aria-labelledby="simple-modal-title"
@@ -155,13 +155,13 @@ const SplashPage = props => {
                   onClose={handleClose_1}
                 >
                   <div className={classes.previewImage}>
-                    <img src="./rr_preview_1_large.png" />
+                    <img src="./rr_preview_1_large.png" alt="Preview 1" />
                   </div>
                 </Modal>
 
                 <br /><br />
 
-                <img src="./rr_preview_2.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} />
+                <img src="./rr_preview_2.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} alt="Preview 2" />
 
                 <Modal
                   aria-labelledby="simple-modal-title"
@@ -170,7 +170,7 @@ const SplashPage = props => {
                   onClose={handleClose_2}
                 >
                   <div className={classes.previewImage}>
-                    <img src="./rr_preview_2_large.png" />
+                    <img src="./rr_preview_2_large.png" alt="Preview 2" />
                   </div>
                 </Modal>
 

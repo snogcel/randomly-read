@@ -8,7 +8,7 @@ import { MuiTheme } from '../../themeHandler';
 
 import GlobalStyle from '../../globalStyle';
 import AppBarContainer from '../AppBar/Container';
-import HeaderContainer from '../Header/Container';
+// import HeaderContainer from '../Header/Container';
 import ErrorNotificationContainer from '../ErrorNotification/Container';
 import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';

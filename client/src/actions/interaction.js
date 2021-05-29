@@ -1,4 +1,4 @@
-import {createInteraction, deleteInteraction, getInteractions, getInteractionSettings} from "../util/api";
+import { createInteraction, deleteInteraction, getInteractions } from "../util/api";
 
 export const CREATE_INTERACTION_REQUEST = 'CREATE_INTERACTION_REQUEST';
 export const CREATE_INTERACTION_SUCCESS = 'CREATE_INTERACTION_SUCCESS';

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import history from '../../util/history';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -9,22 +8,16 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
-import Hidden from '@material-ui/core/Hidden';
 import withWidth from '@material-ui/core/withWidth';
 
 const useStyles = makeStyles(theme => ({
@@ -53,7 +46,6 @@ function MenuAppBar(props) {
   const classes = useStyles();
   const { width } = props;
 
-  const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -70,10 +62,6 @@ function MenuAppBar(props) {
     }
 
     setState({ ...state, [side]: open });
-  };
-
-  const handleChange = event => {
-    setAuth(event.target.checked);
   };
 
   const handleMenu = event => {
@@ -116,7 +104,6 @@ function MenuAppBar(props) {
   };
 
   let user = props.user;
-  let logout = props.logout;
 
   const sideList = side => (
     <div

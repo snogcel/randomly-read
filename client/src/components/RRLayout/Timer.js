@@ -1,10 +1,5 @@
 import RoutineBuilder from './RoutineBuilder';
-import Range from "./Range";
-//import Routines from './Routines.js';
-//import { AwesomeButton } from 'react-awesome-button';
-import Button from '@material-ui/core/Button';
 import React from 'react';
-import ms from 'pretty-ms';
 import Grid from '@material-ui/core/Grid';
 import RoutineSelectContainer from './RoutineSelectContainer'
 import { Typography } from '@material-ui/core';
@@ -12,28 +7,13 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import IconButton from '@material-ui/core/IconButton';
-
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
-
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-
-
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-
-
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-
 import ReplayIcon from '@material-ui/icons/Replay';
 
-
-import RotateLeftIcon from '@material-ui/icons/RotateLeft';
-import SettingsBackupRestoreIcon from '@material-ui/icons/SettingsBackupRestore';
-
-
-
 import { styles } from '../../themeHandler';
-import InteractionForm from "../Interactions/InteractionsHome";
 
 class Timer extends React.Component {
   constructor(props){
@@ -478,16 +458,6 @@ class Timer extends React.Component {
 
     const { classes } = this.props;
     const { width } = this.props;
-    const { rangeVal } = this.state;
-
-    let currentExercise = null;
-
-    if(this.exerciseStack.length === 0) {
-      currentExercise = null;
-    }
-
-    let current = this.exercisePointer;
-    let completed = 0;
 
     this.total = 0;
 
@@ -497,30 +467,11 @@ class Timer extends React.Component {
 
         if (this.exerciseStack[i].mode === 'Word' || this.exerciseStack[i].mode === 'Sentence') {
           this.total++;
-          if (i < current) completed++;
         }
 
       }
 
     }
-
-    /*
-
-    let start = (this.state.time === 0) ?
-      <Button onClick={this.startTimer} size="small" variant="outlined" color={"default"} ><b>Start</b></Button> : null;
-
-    let stop = (this.state.time === 0 || !this.state.isOn) ?
-      null : <Button onClick={this.stopTimer} size="small" variant="outlined" color={"default"} ><b>Pause</b></Button>;
-
-    let resume = (this.state.time === 0 || this.state.isOn || this.state.timeLeft === null) ?
-      null : <Button onClick={this.resumeTimer} size="small" variant="outlined" color={"default"} ><b>Resume</b></Button>;
-
-    let reset = (this.state.time === 0 || this.state.isOn) ?
-      null : <Button onClick={this.resetTimer} size="small" variant="outlined" color={"default"} ><b>Reset</b></Button>;
-
-    console.log("Current Exercise: ", this.props.currentExercise);
-     */
-
 
     let start = (this.state.time === 0) ?
       <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;

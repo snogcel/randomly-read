@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import Grid from '@material-ui/core/Grid';
 import Form from '../shared/form/Form';
 import renderField from '../shared/form/renderField';
-import { usernameValidator, passwordValidator, emailValidator, firstNameValidator, lastNameValidator, addressValidator, cityValidator, stateProvinceValidator, postalCodeValidator, countryValidator, genderValidator, ageValidator } from '../../util/validators';
+import { usernameValidator, passwordValidator, emailValidator } from '../../util/validators';
 import SubmitButton from '../shared/form/SubmitButton';
 
 class SignupForm extends React.Component {

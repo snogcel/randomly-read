@@ -1,9 +1,6 @@
 import React from 'react';
-import styled from 'styled-components/macro';
 import PostVoteContainer from './Vote/Container';
-import PostContent from './Content';
 import Grid from '@material-ui/core/Grid';
-import WordHistoryListItem from "../WordHistoryList/Component";
 
 const WordHistory = function({ wordid, id, votes, score, comments, full, title, type, ...content }) {
 

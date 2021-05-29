@@ -1,14 +1,10 @@
 import React from 'react';
 import Select from '@material-ui/core/Select';
-// import Routines from './Routines.js';
-import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from "@material-ui/core/styles";
 import ListSubheader from '@material-ui/core/ListSubheader';
-
-let Routines = [];
 
 const BootstrapInput = withStyles(theme => ({
   root: {

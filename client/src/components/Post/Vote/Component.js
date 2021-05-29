@@ -3,7 +3,7 @@ import TableCell from '@material-ui/core/TableCell';
 import styled from 'styled-components/macro';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+// import { makeStyles } from '@material-ui/core/styles';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,6 +17,7 @@ const Wrapper = styled.div`
   color: ${props => props.theme.normalText};
 `;
 
+/*
 const styles = makeStyles(theme => ({
   votingCell: {
     whiteSpace: 'nowrap',
@@ -25,6 +26,7 @@ const styles = makeStyles(theme => ({
     width: '30px',
   },
 }));
+*/
 
 class PostVote extends React.Component {
   constructor(props) {

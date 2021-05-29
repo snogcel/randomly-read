@@ -1,37 +1,7 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
-import styled from 'styled-components/macro';
-import PostContentTitle from './Title';
-import PostContentPreview from './Preview';
-import PostContentFullText from './FullText';
-import PostContentDetail from './Detail';
 import Typography from '@material-ui/core/Typography';
 import Hidden from '@material-ui/core/Hidden';
-
-const Wrapper = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  border-left: 1px solid ${props => props.theme.border};
-  padding: 8px;
-  min-width: 0;
-`;
-
-const renderContent = props => {
-  switch (props.type) {
-    case 'link':
-      return <PostContentPreview>{props.url}</PostContentPreview>;
-
-    case 'text':
-      if (props.showFullPost) {
-        return <PostContentFullText>{props.text}</PostContentFullText>;
-      }
-      return <PostContentPreview>{props.text}</PostContentPreview>;
-
-    default:
-      break;
-  }
-};
 
 const availableCharacters = [
   { id: "AA", name: "ɑ"},
@@ -77,7 +47,7 @@ const availableCharacters = [
 // if (item.consonant !== null) consonant = availableCharacters.find(o => o.id === item.consonant);
 // if (item.vowel !== null) vowel = availableCharacters.find(o => o.id === item.vowel);
 
-let parsedConsonant;
+// let parsedConsonant;
 
 const PostContent = ({
   url,

@@ -1,12 +1,9 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
+import { makeStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
-import Checkbox from '@material-ui/core/Checkbox';
 import Chip from '@material-ui/core/Chip';
 import InputBase from '@material-ui/core/InputBase';
 import { withStyles } from "@material-ui/core/styles";
@@ -91,11 +88,10 @@ const syllables = [
 
 export default function SyllableSelect(props) {
   const classes = useStyles();
-  const theme = useTheme();
   const [selectedSyllables, setSyllable] = React.useState(props.syllables);
 
   const handleChange = event => {
-    setSyllable(event.target.value); // record to internal state
+    setSyllable(selectedSyllables); // record to internal state
     props.action(event.target.value); // pass to redux
   };
 

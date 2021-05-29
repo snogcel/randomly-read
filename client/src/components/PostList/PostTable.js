@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import moment from 'moment-timezone';
 import Hidden from '@material-ui/core/Hidden';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,14 +11,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import Button from '@material-ui/core/Button';
-import DeleteIcon from '@material-ui/icons/Delete';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import DoneIcon from '@material-ui/icons/Done';
 
 import PostListItem from './Item';
 
@@ -59,55 +52,10 @@ const useStyles2 = makeStyles(theme => ({
   },
 }));
 
-const availableCharacters = [
-  { id: "AA", name: "ɑ"},
-  { id: "AE", name: "æ"},
-  { id: "AH", name: "ʌ"},
-  { id: "AO", name: "ɔ"},
-  { id: "AW", name: "aʊ"},
-  { id: "AY", name: "aɪ"},
-  { id: "EH", name: "ɛ"},
-  { id: "ER", name: "ɝ"},
-  { id: "EY", name: "eɪ"},
-  { id: "IH", name: "ɪ"},
-  { id: "IY", name: "i"},
-  { id: "OW", name: "oʊ"},
-  { id: "OY", name: "ɔɪ"},
-  { id: "UH", name: "ʊ"},
-  { id: "UW", name: "u"},
-  { id: "B", name: "b"},
-  { id: "CH", name: "tʃ"},
-  { id: "D", name: "d"},
-  { id: "DH", name: "ð"},
-  { id: "F", name: "f"},
-  { id: "G", name: "g"},
-  { id: "HH", name: "h"},
-  { id: "JH", name: "dʒ"},
-  { id: "K", name: "k"},
-  { id: "L", name: "l"},
-  { id: "M", name: "m"},
-  { id: "N", name: "n"},
-  { id: "P", name: "p"},
-  { id: "R", name: "ɹ"},
-  { id: "S", name: "s"},
-  { id: "SH", name: "ʃ"},
-  { id: "T", name: "t"},
-  { id: "TH", name: "θ"},
-  { id: "V", name: "v"},
-  { id: "W", name: "w"},
-  { id: "Y", name: "j"},
-  { id: "Z", name: "Z"},
-  { id: "ZH", name: "ʒ"}
-];
-
 function TablePaginationActions(props) {
   const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
-
-  const handleFirstPageButtonClick = event => {
-    onChangePage(event, 0);
-  };
 
   const handleBackButtonClick = event => {
     onChangePage(event, page - 1);
@@ -115,10 +63,6 @@ function TablePaginationActions(props) {
 
   const handleNextButtonClick = event => {
     onChangePage(event, page + 1);
-  };
-
-  const handleLastPageButtonClick = event => {
-    onChangePage(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
   };
 
   return (
@@ -157,46 +101,6 @@ export default function PostTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
-  function parseInteractions(interactions) {
-
-    const rows = [];
-
-    interactions.map(function(item) {
-
-      let consonant = "N/A";
-      let vowel = "N/A";
-      let summary = "";
-
-      if (item.consonant !== null) consonant = availableCharacters.find(o => o.id === item.consonant);
-      if (item.vowel !== null) vowel = availableCharacters.find(o => o.id === item.vowel);
-
-      if (consonant.name && vowel.name) {
-        if (item.position === "initial") summary = "(" + consonant.name + " and " + vowel.name + ")";
-        if (item.position === "final") summary = "(" + vowel.name + " and " + consonant.name + ")";
-      }
-
-      let result = "difficult";
-      if (item.ease >= 50) result = "easier";
-      if (item.ease === 100) result = "easy";
-
-      rows.push({
-        "id": item.id,
-        "word": item.word,
-        "vowel": vowel.name,
-        "consonant": consonant.name,
-        "summary": summary,
-        "ease": result,
-        "createdAt": moment(item.createdAt).tz("America/New_York").format('MM/DD'),
-        "updatedAt": item.updatedAt,
-        "class": ((item.ease < 50) ? classes.upvote : null)
-      });
-    });
-
-    return rows;
-  }
-
-  // let rows = parseInteractions(props.interactions);
 
   let rows = props.posts;
 

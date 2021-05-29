@@ -5,10 +5,6 @@ import { withStyles } from '@material-ui/core';
 
 class Intermission extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
 

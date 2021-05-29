@@ -1,22 +1,12 @@
 import React from 'react';
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
 
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import RoutinePreviewBuilder from '../../RRLayout/RoutineBuilder';
-
-import Intermission from '../../RRLayout/IntermissionContainer';
 
 import Word from '../../RRLayout/elements/Word';
 

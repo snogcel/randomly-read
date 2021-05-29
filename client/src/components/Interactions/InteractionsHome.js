@@ -4,22 +4,14 @@ import Grid from '@material-ui/core/Grid';
 
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
 import Typography from '@material-ui/core/Typography';
-
-import withWidth from '@material-ui/core/withWidth';
-import PropTypes from 'prop-types';
 
 import { styles } from '../../themeHandler';
 
 import InteractionForm from './elements/InteractionForm';
 import InteractionTable from './elements/InteractionTable';
 
-import Button from '@material-ui/core/Button';
-import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
-import LoginFormContainer from '../LoginForm/Container';
 import store from "../../store";
-import Hidden from '@material-ui/core/Hidden';
 
 class InteractionsHome extends React.Component {
   constructor(props) {

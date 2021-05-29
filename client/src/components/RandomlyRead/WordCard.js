@@ -1,42 +1,13 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Modal from "@material-ui/core/Modal";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Query } from 'react-apollo';
-
-// import gql from 'graphql-tag';
-
-import { gql, useQuery } from '@apollo/client';
-
 import Intermission from '../RRLayout/IntermissionContainer';
-import VowelCheckboxes from '../RRLayout/VowelCheckboxes';
 import { styles } from '../../exerciseThemeHandler';
-
-import RoutineDescription from './RoutineDescription';
-import VowelCheckbox from '../RRLayout/elements/VowelCheckbox';
 import Word from '../RRLayout/elements/Word';
 import Sentence from '../RRLayout/elements/Sentence';
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 
 class WordCard extends React.Component  {
 
@@ -111,7 +82,7 @@ class WordCard extends React.Component  {
 
   renderCard(props) {
 
-    const { currentExercise, mode, text, vowel, classes } = this.props;
+    const { mode, text, vowel, classes } = this.props;
 
     if (text) {
 
@@ -196,7 +167,7 @@ class WordCard extends React.Component  {
 
   render() {
     const props = this.props;
-    const { classes, currentExercise, currentExerciseNumber, mode, text, data, refetch } = props;
+    const { currentExercise, currentExerciseNumber, mode, text } = props;
 
     this.fetching = true;
 

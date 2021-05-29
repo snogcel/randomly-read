@@ -5,8 +5,6 @@ import { styles } from '../../exerciseThemeHandler';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-import {stateFromHTML} from "draft-js-import-html";
-import {EditorState} from "draft-js";
 
 class RoutineDescription extends Component {
   constructor(props) {
@@ -41,7 +39,7 @@ class RoutineDescription extends Component {
   }
 
   renderDescription(props) {
-    const { currentExercise, classes, description } = props;
+    const { currentExercise, classes } = props;
 
     const formattedDuration = this.formatDuration(currentExercise);
 

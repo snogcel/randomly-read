@@ -82,7 +82,7 @@ class QueryWrapper extends Component {
   render() {
 
     const props = this.props;
-    const { classes, currentExercise, currentExerciseNumber, exerciseResults, mode, text } = props;
+    const { currentExercise, currentExerciseNumber, exerciseResults, mode, text } = props;
 
     if (this.debug) console.log("fetching data...");
 

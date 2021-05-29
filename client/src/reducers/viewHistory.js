@@ -7,7 +7,6 @@ import {FETCH_VIEW_HISTORY_SUCCESS} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_ERROR} from '../actions/viewHistory';
 import {LOGOUT} from "../actions/auth";
 
-let dataSet;
 const initialState = {
   startDate: null,
   endDate: null,

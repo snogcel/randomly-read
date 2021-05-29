@@ -10,7 +10,6 @@ import {UPDATE_ACTIVE_ROUTINE} from '../actions/routineSelect';
 import {RESET_ROUTINE_SELECT} from '../actions/routineSelect';
 import {LOGOUT} from "../actions/auth";
 
-let availableRoutines;
 const initialState = {
   availableRoutines: [],
   routine: {},

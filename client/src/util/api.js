@@ -214,7 +214,7 @@ export async function getViewHistory (id, startDate, endDate, token) {
 }
 
 export function getGraphQL(query) {
-  const { loading, error, data } = useQuery(query, {
+  const { loading, data } = useQuery(query, {
     variables: { },
   });
   if (loading) return null;
