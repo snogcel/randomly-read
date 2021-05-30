@@ -28,6 +28,9 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
+  homeContainer: {
+    marginTop: theme.spacing(10)
+  },
   heading: {
     color: "#14197E",
     fontWeight: "bold"

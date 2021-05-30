@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
@@ -107,12 +108,10 @@ const RRHome = props => {
 
   return (
 
+    <Container maxWidth="lg" className={classes.homeContainer}>
       <Grid className={classes.root}>
-
-          <Grid container justify="center">
-            <Grid item xs={10}>
-
-              <br /><br />
+          <Grid container alignItems="center" justify="center" spacing={0}>
+            <Grid item xs={12} sm={11} md={11} lg={12}>
 
               <Grid container>
 
@@ -183,6 +182,8 @@ const RRHome = props => {
           </Grid>
 
       </Grid>
+
+    </Container>
 
   )};
 
