@@ -1,6 +1,5 @@
 import React from 'react';
 import Select from '@material-ui/core/Select';
-// import Routines from './Routines.js';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from "@material-ui/core/FormControl";
 import InputBase from '@material-ui/core/InputBase';
@@ -19,7 +18,6 @@ const BootstrapInput = withStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 16,
-    maxWidth: 150,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.
@@ -187,8 +185,7 @@ class RoutineSelect extends React.Component {
 
         return (
             <React.Fragment>
-
-                 <FormControl style={{minWidth: 125 }}>
+                 <FormControl fullWidth margin="dense">
                     <Select
                     classes={{select: theme === true ? classes.select : undefined}}
                     value={selectValue}

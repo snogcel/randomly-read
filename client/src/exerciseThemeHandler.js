@@ -15,14 +15,35 @@ let MuiTheme = createMuiTheme({
     },
     overrides: {
 
-    },
-    // error: will use the default color
-  }
+      tabs: {
+        color:"#000000"
+      }
+    }
+  },
+  typography: {
+
+  },
+
 });
 
 // EDEDF3
 
 MuiTheme = responsiveFontSizes(MuiTheme);
+
+MuiTheme.typography.h6 = {
+  fontSize: '1.0rem',
+  [MuiTheme.breakpoints.up('md')]: {
+    fontSize: '1.0rem',
+  },
+};
+
+MuiTheme.typography.h5 = {
+  fontSize: '1.5rem',
+  [MuiTheme.breakpoints.up('md')]: {
+    fontSize: '1.5rem',
+  },
+};
+
 
 const styles = theme => ({
   root: {
@@ -30,6 +51,72 @@ const styles = theme => ({
   },
   homeContainer: {
     marginTop: theme.spacing(10)
+  },
+  introTabPanel: {
+    '& .MuiBox-root': {
+      padding: theme.spacing(0)
+    },
+  },
+  introTabLink: {
+    padding: theme.spacing(0, 2, 0, 2)
+  },
+  introTabIndicator: {
+    padding: theme.spacing(0, 2, 0, 2)
+  },
+  introContainer: {
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1)
+  },
+  homeTabPanel: {
+    '& .MuiBox-root': {
+      padding: theme.spacing(0)
+    },
+  },
+  routineSelector: {
+    backgroundColor: "#FCFCFF",
+    padding: theme.spacing(1.5, 2, 1.5, 2)
+  },
+  routineSelectContainer: {
+    display: "flex",
+    alignItems: "center",
+  },
+  routineSelectorHeading: {
+    color: "#14197E",
+    fontWeight: "500"
+  },
+  RoutineSelector: {
+    marginRight: theme.spacing(2)
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    marginRight: 40,
+  },
+  activeRoutineStep: {
+    fontWeight: "500",
+    fontSize: '0.95rem',
+    color: "#0B0F65"
+  },
+  activeRoutineStepCheckbox: {
+    color: "#0B0F65"
+  },
+  completedRoutineStep: {
+    color: "#D1D1D1"
+  },
+  routineStepCheckbox: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(2),
+    minWidth: "auto"
+  },
+  exerciseHistoryHeading: {
+    marginLeft: theme.spacing(2),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  routineDescriptionHeading: {
+    color: "#0B0F65",
+    fontWeight: "bold",
+    marginTop: theme.spacing(0.5)
   },
   heading: {
     color: "#14197E",
@@ -55,9 +142,6 @@ const styles = theme => ({
   },
   form: {
     textAlign: "left",
-  },
-  formControl: {
-    marginRight: 40,
   },
   column: {
     padding: theme.spacing(2),
@@ -145,7 +229,7 @@ const styles = theme => ({
     marginRight: theme.spacing(4),
   },
   exerciseHistoryCard: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(3),
     marginLeft: theme.spacing(0),
     marginRight: theme.spacing(0),
   },
@@ -211,8 +295,8 @@ const styles = theme => ({
     backgroundColor: '#33a0ff',
   },
   iconButton: {
-    margin: theme.spacing(0),
-    padding: theme.spacing(1)
+    margin: theme.spacing(0.75, 0.25, 0.25, 0.25),
+    padding: theme.spacing(0.75)
   },
   button: {
     margin: 4,
@@ -255,11 +339,7 @@ const styles = theme => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2)
   },
-  RoutineSelector: {
-    display: "inline-flex",
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
-  },
+
   TimerControls: {
     display: "inline-flex",
   },
@@ -304,7 +384,7 @@ const styles = theme => ({
     marginTop: theme.spacing(4),
   },
   exerciseDetails: {
-    padding: theme.spacing(2, 0, 1, 0),
+    padding: theme.spacing(2, 1, 1, 1),
     marginTop: theme.spacing(0),
     backgroundColor: "#FFFFFD"
   },
@@ -434,10 +514,7 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
   },
-  routineSelectContainer: {
-    display: "flex",
-    alignItems: "center",
-  },
+
   routineBuilderSelectContainer: {
     display: "flex",
   },

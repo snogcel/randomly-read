@@ -83,7 +83,7 @@ const RRHome = props => {
 
   // desktop - widescreen
   if (width === "xl") {
-    exerciseHistoryContainerWidth = 2;
+    exerciseHistoryContainerWidth = 4;
     timerContainerWidth = 8;
   }
 
@@ -99,12 +99,14 @@ const RRHome = props => {
     timerContainerWidth = 10;
     interactionContainerWidth = 10;
   }
-  */
+
 
   // tablet - vertical
   if (width === "sm") {
     timerContainerWidth = 10;
   }
+
+  */
 
   return (
 
@@ -113,54 +115,50 @@ const RRHome = props => {
           <Grid container alignItems="center" justify="center" spacing={0}>
             <Grid item xs={12} sm={11} md={11} lg={12}>
 
-              <Grid container>
+              <Grid container spacing={0}>
 
                 <Grid item xs={12}>
-
                   <Subnavigation />
-
                 </Grid>
 
                 <Grid item xs={12}>
-
                   <AppBar position="static" color="primary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
-                      <LinkTab disableRipple disableFocusRipple label="Introduction" {...a11yProps(0)} />
-                      <LinkTab disableRipple disableFocusRipple label="Exercises" {...a11yProps(1)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Introduction" {...a11yProps(0)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Exercises" {...a11yProps(1)} />
                     </Tabs>
                   </AppBar>
-
                 </Grid>
 
                 <Grid item xs={12}>
-
-                  <TabPanel value={value} index={0}>
-                    <Grid container spacing={1}>
-                      <Grid item>
+                  <TabPanel value={value} index={0} className={classes.introTabPanel}>
+                    <Grid container spacing={0} className={classes.introContainer}>
+                      <Grid item xs={12}>
                         <ExerciseIntroduction />
                       </Grid>
                     </Grid>
                   </TabPanel>
-
                 </Grid>
 
                 <Grid item xs={12}>
+                  <TabPanel value={value} index={1} className={classes.homeTabPanel}>
 
-                  <TabPanel value={value} index={1}>
+                      <Grid container spacing={0} className={classes.routineSelector}>
+                        <Grid item xs={12}>
 
-                    <Grid container spacing={5}>
+                          <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
 
-                      <Grid item xs={exerciseHistoryContainerWidth}>
-
-                        <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
-
-                        <ExerciseHistoryContainer />
-
+                        </Grid>
                       </Grid>
+
+
+                    <Grid container spacing={2}>
+
+                        { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
 
                       <Grid item xs={timerContainerWidth}>
 
-                        <RoutineDescriptionContainer />
+                        { (width === "xs" || width === "sm") ? ((!props.inProgress) ? <RoutineDescriptionContainer /> : null) : <RoutineDescriptionContainer /> }
 
                         <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
 

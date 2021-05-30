@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactGA from 'react-ga';
 import { Route, Switch, useLocation } from 'react-router-dom';
+
 import { ThemeProvider } from 'styled-components';
 import { MuiThemeProvider } from '@material-ui/core/styles'
-import theme from '../../theme'; // TODO - remove
-import { MuiTheme } from '../../themeHandler';
+
+import { MuiTheme } from '../../exerciseThemeHandler';
 
 import GlobalStyle from '../../globalStyle';
 import AppBarContainer from '../AppBar/Container';
@@ -97,7 +98,7 @@ const App = (props) => {
   return (
   <MuiThemeProvider theme={MuiTheme}>
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme(props.dark)}>
+      <ThemeProvider theme={MuiTheme}>
           <div>
             <GlobalStyle />
 

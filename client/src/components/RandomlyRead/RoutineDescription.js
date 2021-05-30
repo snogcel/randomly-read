@@ -47,11 +47,11 @@ class RoutineDescription extends Component {
       <React.Fragment key={'description'}>
 
         <Grid container>
-          <Grid item xs={10} sm={12} md={11}>
+          <Grid item xs={12} sm={12} md={11}>
 
             <Paper className={classes.exerciseDetails} elevation={0}>
 
-              <Typography variant="h5" component="h2" className={classes.heading}>{this.props.name}</Typography>
+              <Typography variant="h5" component="h2" className={classes.routineDescriptionHeading}>{this.props.name}</Typography>
 
               <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
 

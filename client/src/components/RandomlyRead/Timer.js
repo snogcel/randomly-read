@@ -625,13 +625,16 @@ class Timer extends React.Component {
     let TimerFragment = <React.Fragment>
       <Grid container className={classes.routineSelectContainer}>
 
-        <Grid item>
+        <Grid item xs={8} sm={4} md={3}>
+
           <Box className={classes.RoutineSelector}>
             <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
           </Box>
+
         </Grid>
 
-        <Grid item>
+        <Grid item xs={4} sm={8} md={9}>
+
           {(this.props.currentExercise.length > 0) ? (
             <>
               <Box className={classes.TimerControls}>
@@ -642,6 +645,7 @@ class Timer extends React.Component {
               </Box>
             </>
           ) : ( <> </> )}
+
         </Grid>
 
       </Grid>
@@ -656,17 +660,14 @@ class Timer extends React.Component {
 
           <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
 
-            <Typography variant="h5" component="h2" className={classes.mobileHeading}>
-              Available Routines
-            </Typography>
-            <Typography gutterBottom variant="body2" color="textSecondary" component="p">
-              Use the menu to select a practice routine.
-            </Typography>
-            <br />
-          </Grid>
+            { TimerFragment }
 
-          <Grid item xs={12} className={classes.mobileRoutineSelectContainer}>
-            {TimerFragment}
+            <Grid container justify="flex-end">
+              <Grid item>
+
+              </Grid>
+            </Grid>
+
           </Grid>
         </Grid>
 

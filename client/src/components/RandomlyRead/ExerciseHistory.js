@@ -1,6 +1,7 @@
 import React from 'react';
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
+import { Typography } from '@material-ui/core';
 import { withStyles } from "@material-ui/core/styles";
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -21,7 +22,7 @@ const StyledListItem = withStyles({
     marginTop: 2,
     marginBottom: 2,
     "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "#FAFAFA"
+      backgroundColor: "transparent"
     }
   },
   selected: {}
@@ -99,7 +100,7 @@ class ExerciseHistory extends React.Component {
     let exerciseHistory = <React.Fragment>
       <List dense={true}>
 
-        {this.props.currentExercise.map(function(step, stepNumber) {
+        { this.props.currentExercise.map(function(step, stepNumber) {
 
           let mode = availableModes.find(o => o.name === step.mode);
 
@@ -171,15 +172,36 @@ class ExerciseHistory extends React.Component {
                 <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText)} /></Typography>
               </StyledListItem>
             );
+
+
+
+            className={((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStep : null}
+
+
+            primaryTypographyProps={{ style: classes.activeRoutineStep }}
+
+            (((currentExerciseNumber < stepNumber) && inProgress) ? classes.completedRoutineStep : null)
+
             */
 
           } else if (width === "md" || width === "lg" || width === "xl") {
             return(
-              <StyledListItem key={stepNumber} selected={((currentExerciseNumber === stepNumber) && inProgress)} className={classes.exerciseHistoryDesktop}>
-                <ListItemIcon>
-                  {((!currentExerciseNumber) || (currentExerciseNumber < stepNumber) || (currentExerciseNumber === stepNumber && inProgress)) ? ( <CheckboxOutlineBlankIcon /> ) : ( <CheckBoxIcon /> )}
+              <StyledListItem key={stepNumber} selected={((currentExerciseNumber === stepNumber) && inProgress)} className={classes.exerciseHistoryDesktop} disableGutters>
+                <ListItemIcon className={classes.routineStepCheckbox}>
+                  {((!currentExerciseNumber) || (currentExerciseNumber < stepNumber) || (currentExerciseNumber === stepNumber && inProgress)) ? (
+                    <CheckboxOutlineBlankIcon
+                      className={((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStepCheckbox : null }
+                    />
+                  ) : (
+                    <CheckBoxIcon
+                      className={classes.completedRoutineStep}
+                    />
+                  )}
                 </ListItemIcon>
-                <ListItemText primary={listItemText} secondary={subHeaderText} />
+                <ListItemText
+                  primaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStep : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : null) }}
+                  primary={listItemText}
+                  secondary={subHeaderText} />
               </StyledListItem>
             );
           } else {
@@ -189,6 +211,11 @@ class ExerciseHistory extends React.Component {
         })}
       </List>
     </React.Fragment>;
+
+
+
+   // Wrap Exercise History
+
     let exerciseHistoryWrapped;
 
     if (width === "md" || width === "lg" || width === "xl") {
@@ -201,6 +228,10 @@ class ExerciseHistory extends React.Component {
 
               <Box className={classes.exerciseStepsCard}>
 
+                <Typography variant="h6" className={classes.exerciseHistoryHeading}>
+                  Practice Routine Outline
+                </Typography>
+
                 {exerciseHistory}
 
               </Box>
@@ -212,7 +243,9 @@ class ExerciseHistory extends React.Component {
       </React.Fragment>;
 
     } else {
+
       exerciseHistoryWrapped = exerciseHistory;
+
     }
 
     return exerciseHistoryWrapped;
