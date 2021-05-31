@@ -95,9 +95,6 @@ const RRHome = props => {
     timerContainerWidth = 8;
   }
 
-  console.log("inProgress: ", props.inProgress);
-  console.log("isCompleted: ", props.isCompleted);
-
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>

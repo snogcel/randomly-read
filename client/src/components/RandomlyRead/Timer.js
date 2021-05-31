@@ -624,7 +624,7 @@ class Timer extends React.Component {
     let TimerFragment = <React.Fragment>
       <Grid container className={classes.routineSelectContainer}>
 
-        <Grid item xs={8} sm={4} md={3}>
+        <Grid item xs={8} sm={5} md={3}>
 
           <Box className={classes.RoutineSelector}>
             <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
@@ -632,7 +632,7 @@ class Timer extends React.Component {
 
         </Grid>
 
-        <Grid item xs={4} sm={8} md={9}>
+        <Grid item xs={4} sm={7} md={9}>
 
           {(this.props.currentExercise.length > 0) ? (
             <>
