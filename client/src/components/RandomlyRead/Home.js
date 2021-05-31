@@ -11,6 +11,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
+import Fade from '@material-ui/core/Fade';
+
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
@@ -125,57 +127,50 @@ const RRHome = props => {
                   <AppBar position="static" color="primary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Introduction" {...a11yProps(0)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Exercises" {...a11yProps(1)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Techniques" {...a11yProps(1)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Practice" {...a11yProps(2)} />
                     </Tabs>
                   </AppBar>
                 </Grid>
 
                 <Grid item xs={12}>
                   <TabPanel value={value} index={0} className={classes.introTabPanel}>
-                    <Grid container spacing={0} className={classes.introContainer}>
-                      <Grid item xs={12}>
-                        <ExerciseIntroduction />
+                    <Fade in={true}>
+                      <Grid container spacing={0} className={classes.introContainer}>
+                        <Grid item xs={12}>
+                          <ExerciseIntroduction />
+                        </Grid>
                       </Grid>
-                    </Grid>
+                    </Fade>
                   </TabPanel>
+
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TabPanel value={value} index={1} className={classes.homeTabPanel}>
-
+                  <TabPanel value={value} index={2} className={classes.homeTabPanel}>
                       <Grid container spacing={0} className={classes.routineSelector}>
                         <Grid item xs={12}>
-
-                          <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
-
+                            <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
                         </Grid>
                       </Grid>
 
+                      <Fade in={true}>
+                        <Grid container spacing={2}>
 
-                    <Grid container spacing={2}>
+                            { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
 
-                        { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
-
-                      <Grid item xs={timerContainerWidth}>
-
-                        { (width === "xs" || width === "sm") ? ((!props.inProgress) ? <RoutineDescriptionContainer /> : null) : <RoutineDescriptionContainer /> }
-
-                        <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
-
-                        <ProgressIndicator />
-
-                        <WordHistoryList />
-
-                      </Grid>
-
-                    </Grid>
-
+                            <Grid item xs={timerContainerWidth}>
+                              { (width === "xs" || width === "sm") ? ((!props.inProgress) ? <RoutineDescriptionContainer /> : null) : <RoutineDescriptionContainer /> }
+                              <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+                              <ProgressIndicator />
+                              <WordHistoryList />
+                            </Grid>
+                        </Grid>
+                      </Fade>
                   </TabPanel>
-
                 </Grid>
 
               </Grid>
-
             </Grid>
           </Grid>
 

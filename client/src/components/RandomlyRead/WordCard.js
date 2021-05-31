@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import Fader from 'react-fader';
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
@@ -59,6 +60,7 @@ class WordCard extends React.Component  {
 
         // if new result, store and display
         if (this.result !== result && this.fetching) {
+        // if (typeof(data.sentences.words) !== "undefined" && result.length > 0 && this.fetching) {
           this.result = result; // assign newly generated sentence to result
           this.fetching = false;
           this.parseResult(mode, data);
@@ -92,13 +94,13 @@ class WordCard extends React.Component  {
           <Grid container className={classes.wordGrid} justify="center">
             <Grid item>
 
-              <Card elevation={1} className={classes.card}>
-                <CardContent>
-                  { (mode === 'Intermission' ? <Intermission /> : null)}
-                  { (mode === 'Word' ? <Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /> : null ) }
-                  { (mode === 'Sentence' ? <Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /> : null ) }
-                </CardContent>
-              </Card>
+                <Card elevation={0} className={classes.card}>
+                  <CardContent>
+                      { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                      { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                      { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                  </CardContent>
+                </Card>
 
             </Grid>
           </Grid>
@@ -107,9 +109,33 @@ class WordCard extends React.Component  {
       );
 
     } else {
-      return null;
+
+      return this.renderEmptyCard();
+
     }
 
+  }
+
+  renderEmptyCard() {
+
+    const { classes } = this.props;
+
+    return (
+      <React.Fragment key={'card'}>
+
+        <Grid container className={classes.wordGrid} justify="center">
+          <Grid item>
+
+            <Card elevation={0} className={classes.card}>
+              <CardContent>
+              </CardContent>
+            </Card>
+
+          </Grid>
+        </Grid>
+
+      </React.Fragment>
+    );
   }
 
   parseResult(mode, data, result) {
@@ -167,14 +193,14 @@ class WordCard extends React.Component  {
 
   render() {
     const props = this.props;
-    const { currentExercise, currentExerciseNumber, mode, text } = props;
+    const { currentExercise, currentExerciseNumber, mode, text, data } = props;
 
     this.fetching = true;
 
     // Check for empty word card
     if (currentExercise.length > 0 && currentExerciseNumber === null && text === "") {
       if (this.debug) console.log("-rendering with empty word card: ", this.props);
-      return null;
+      return this.renderEmptyCard();
     }
 
     // Check for paused word card
@@ -190,11 +216,15 @@ class WordCard extends React.Component  {
       if (this.debug) console.log("-rendering with paused props: ", props);
     }
 
+    if (data === null) {
+      return this.renderEmptyCard();
+    }
+
     // Set Query
     if (typeof(props.query) !== 'undefined' && props.query.action !== null) {
       this.query = props.query.action;
     } else {
-      return null;
+      return this.renderEmptyCard();
     }
 
     this.fetching = true;

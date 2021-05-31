@@ -67,6 +67,7 @@ class QueryWrapper extends Component {
           if (this.debug) console.log("handle case: card should be refreshed");
 
           this.fetching = true;
+
           return true;
 
         }
@@ -127,13 +128,13 @@ class QueryWrapper extends Component {
             onCompleted={() => {  }} >
             {({ loading, error, data, refetch }) => {
 
-              if (loading) return null;
+              if (loading) return ( <WordCardContainer data={null} /> );
 
               if (error) {
 
                 this.fetching = false;
 
-                return null;
+                return ( <WordCardContainer data={null} /> );
 
               }
 
@@ -160,7 +161,8 @@ class QueryWrapper extends Component {
                     if (this.debug) console.log("--last exercise result: ", prevResult);
                     if (this.debug) console.log("--this fetching: ", this.fetching);
 
-                    // refetch(); // TODO -- implement server-side refetch
+                    // TODO -- implement server-side refetch
+                    // refetch();
                     // this.fetching = true;
 
                     return ( <WordCardContainer data={data} refetch={refetch} /> );
@@ -177,18 +179,18 @@ class QueryWrapper extends Component {
 
                 } else if (mode === "Intermission") {
 
-                  return ( <WordCardContainer data={null} refetch={refetch} /> );
+                  return ( <WordCardContainer data={''} refetch={refetch} /> );
 
                 } else {
 
-                  return ( <WordCardContainer data={null} refetch={refetch} /> );
+                  return ( <WordCardContainer data={''} refetch={refetch} /> );
 
                 }
 
               }
 
             }}
-          </Query> : <WordCardContainer data={null} /> ) }
+          </Query> : <WordCardContainer data={''} /> ) }
 
       </>
     )

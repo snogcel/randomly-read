@@ -175,7 +175,7 @@ const styles = theme => ({
   },
   wordGrid: {
     alignItems: "end",
-    minHeight: 150,
+    minHeight: theme.spacing(18),
     marginTop: theme.spacing(4),
   },
   wordHistoryGrid: {
@@ -184,10 +184,12 @@ const styles = theme => ({
   timerControlGrid: {
     alignItems: "center"
   },
+  wordCardContainer: {
+    minHeight: theme.spacing(20),
+  },
   card: {
     textAlign: "center",
-    backgroundColor:"#FBFBFB",
-    boxShadow: "0 4px 20px -6px rgba(0,0,0,0.15)",
+    minHeight: theme.spacing(18),
   },
   previewCard: {
     marginTop: theme.spacing(2),
@@ -241,7 +243,7 @@ const styles = theme => ({
   },
   word: {
     fontWeight: "bold",
-    color: "#2f8eed"
+    color: "#14197E"
   },
   exerciseIndicator: {
     color: "#2f8eed"
