@@ -1,5 +1,5 @@
 import React from 'react';
-import { styles } from '../../../themeHandler';
+import { styles } from '../../../exerciseThemeHandler';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core';
 
@@ -29,7 +29,7 @@ class Word extends React.Component {
 
     if (mode === "Word") {
       return (
-        <Typography variant="h1" className={classes.word}>
+        <Typography variant="h3" component="h3" className={classes.word}>
           {this.props.value.name}
         </Typography>
       );

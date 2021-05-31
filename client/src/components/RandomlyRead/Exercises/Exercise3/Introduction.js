@@ -17,7 +17,7 @@ class Introduction extends React.Component {
       <React.Fragment>
         <Box>
           <Typography variant="h5" component="h2" className={classes.mobileHeading}>
-            Week 2 Introductory Text
+            Introductory Text
           </Typography>
 
           <Typography gutterBottom variant="body2" color="textSecondary" component="p">

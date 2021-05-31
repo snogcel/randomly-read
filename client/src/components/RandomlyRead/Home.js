@@ -95,21 +95,6 @@ const RRHome = props => {
     timerContainerWidth = 8;
   }
 
-  // tablet - horizontal
-  /*
-  if (width === "md") {
-    timerContainerWidth = 10;
-    interactionContainerWidth = 10;
-  }
-
-
-  // tablet - vertical
-  if (width === "sm") {
-    timerContainerWidth = 10;
-  }
-
-  */
-
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>

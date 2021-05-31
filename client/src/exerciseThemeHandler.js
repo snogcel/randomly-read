@@ -26,8 +26,6 @@ let MuiTheme = createMuiTheme({
 
 });
 
-// EDEDF3
-
 MuiTheme = responsiveFontSizes(MuiTheme);
 
 MuiTheme.typography.h6 = {
@@ -41,6 +39,14 @@ MuiTheme.typography.h5 = {
   fontSize: '1.5rem',
   [MuiTheme.breakpoints.up('md')]: {
     fontSize: '1.5rem',
+  },
+};
+
+/* Used for Word Card */
+MuiTheme.typography.h3 = {
+  fontSize: '5.5rem',
+  [MuiTheme.breakpoints.down('sm')]: {
+    fontSize: '4.5rem',
   },
 };
 
@@ -58,7 +64,11 @@ const styles = theme => ({
     },
   },
   introTabLink: {
-    padding: theme.spacing(0, 2, 0, 2)
+    padding: theme.spacing(0, 2, 0, 2),
+    [MuiTheme.breakpoints.down('xs')]: {
+      marginLeft: theme.spacing(0),
+      marginRight: theme.spacing(0),
+    },
   },
   introTabIndicator: {
     padding: theme.spacing(0, 2, 0, 2)
@@ -175,7 +185,7 @@ const styles = theme => ({
   },
   wordGrid: {
     alignItems: "end",
-    minHeight: theme.spacing(18),
+    minHeight: theme.spacing(20),
     marginTop: theme.spacing(4),
   },
   wordHistoryGrid: {
@@ -189,7 +199,7 @@ const styles = theme => ({
   },
   card: {
     textAlign: "center",
-    minHeight: theme.spacing(18),
+    minHeight: theme.spacing(20),
   },
   previewCard: {
     marginTop: theme.spacing(2),
@@ -206,6 +216,10 @@ const styles = theme => ({
   subnavigationLink: {
     marginLeft: theme.spacing(4),
     marginRight: theme.spacing(4),
+    [MuiTheme.breakpoints.down('xs')]: {
+      marginLeft: theme.spacing(2),
+      marginRight: theme.spacing(2),
+    },
   },
   subnavigationLinkSelected: {
     fontWeight: "bold"
@@ -243,7 +257,7 @@ const styles = theme => ({
   },
   word: {
     fontWeight: "bold",
-    color: "#14197E"
+    color: "#2f8eed"
   },
   exerciseIndicator: {
     color: "#2f8eed"
