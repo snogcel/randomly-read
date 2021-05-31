@@ -95,6 +95,9 @@ const RRHome = props => {
     timerContainerWidth = 8;
   }
 
+  console.log("inProgress: ", props.inProgress);
+  console.log("isCompleted: ", props.isCompleted);
+
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>
@@ -145,7 +148,7 @@ const RRHome = props => {
                             { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
 
                             <Grid item xs={timerContainerWidth}>
-                              { (width === "xs" || width === "sm") ? ((!props.inProgress) ? <RoutineDescriptionContainer /> : null) : <RoutineDescriptionContainer /> }
+                              { (width === "xs" || width === "sm") ? (((!props.inProgress) ? ((!props.inProgress && !props.isCompleted) ? ( <RoutineDescriptionContainer /> ) : null ) : null )) : ( <RoutineDescriptionContainer /> ) }
                               <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
                               <ProgressIndicator />
                               <WordHistoryList />
