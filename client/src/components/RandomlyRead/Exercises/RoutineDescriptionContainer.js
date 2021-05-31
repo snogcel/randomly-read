@@ -1,11 +1,15 @@
 import { connect } from 'react-redux';
 import RoutineDescription from '../RoutineDescription';
+import { updateId, updateName, updateDescription, updateActiveRoutine } from '../../../actions/routineSelect';
 
 const mapStateToProps = state => ({
+  availableRoutines: state.routineSelect.availableRoutines,
+  routine: state.routineSelect.routine,
   currentExercise: state.exerciseHistory.currentExercise,
   currentExerciseNumber: state.exerciseHistory.currentExerciseNumber,
   isPaused: state.exerciseHistory.isPaused,
-  completed: state.exerciseHistory.completed,
+  inProgress: state.exerciseHistory.inProgress,
+  isCompleted: state.exerciseHistory.isCompleted,
   total: state.exerciseHistory.total,
   range: state.exerciseHistory.range,
   timeLeft: state.exerciseHistory.timeLeft,
@@ -13,7 +17,7 @@ const mapStateToProps = state => ({
   description: state.routineSelect.description,
 });
 
-const mapDispatchToProps = dispatch => ({ });
+const mapDispatchToProps = { updateId, updateName, updateDescription, updateActiveRoutine };
 
 const RoutineDescriptionContainer = connect(
   mapStateToProps,

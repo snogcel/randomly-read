@@ -153,6 +153,8 @@ class Timer extends React.Component {
 
   setExercise(exercise) {
 
+    if (typeof(exercise) === "undefined") return;
+
     // Stub out the exercise configuration
     let duration = (parseInt(exercise.repetitions) * parseInt(exercise.rangeVal));
     let defaultConsonants = ["B","CH","D","F","G","HH","JH","K","L","M","N","P","R","S","SH","T","TH","V","W","Y","Z","DH","ZH"]; // 23
@@ -290,9 +292,11 @@ class Timer extends React.Component {
 
   shouldComponentUpdate(nextProps) {
 
-    if ((JSON.stringify(this.props.currentExercise) !== JSON.stringify(nextProps.currentExercise))) {
-      if (this.debug) console.log("-other resetTimer()-");
-      this.resetTimerAndQuery();
+    if (typeof(this.props.currentExercise) !== "undefined" && typeof(nextProps.currentExercise) !== "undefined") {
+      if ((JSON.stringify(this.props.currentExercise) !== JSON.stringify(nextProps.currentExercise))) {
+        if (this.debug) console.log("-other resetTimer()-");
+        this.resetTimerAndQuery();
+      }
     }
 
     return true;

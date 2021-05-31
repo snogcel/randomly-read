@@ -4,7 +4,11 @@ import { withStyles } from '@material-ui/core/styles';
 import { styles } from '../../exerciseThemeHandler';
 import { Typography } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
+import withWidth from '@material-ui/core/withWidth';
 import Paper from '@material-ui/core/Paper';
+import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
 
 class RoutineDescription extends Component {
   constructor(props) {
@@ -12,7 +16,13 @@ class RoutineDescription extends Component {
 
     this.state = {
       text: ""
-    }
+    };
+
+    this.canIncrementRoutine = this.canIncrementRoutine.bind(this);
+    this.incrementRoutine = this.incrementRoutine.bind(this);
+
+    this.canDecrementRoutine = this.canDecrementRoutine.bind(this);
+    this.decrementRoutine = this.decrementRoutine.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -38,16 +48,98 @@ class RoutineDescription extends Component {
 
   }
 
+  incrementRoutine(e) {
+    const { routine, availableRoutines } = this.props;
+
+    let position = 0;
+
+    for (let i = 0; i < availableRoutines.length; i++) {
+      if (routine.id === availableRoutines[i].id) position = i;
+    }
+
+    let newRoutine = availableRoutines[position+1].attributes;
+
+    this.props.updateId(newRoutine.id);
+    this.props.updateName(newRoutine.name);
+    this.props.updateDescription(newRoutine.description);
+    this.props.updateActiveRoutine(newRoutine);
+  }
+
+  canIncrementRoutine() {
+
+    const { routine, availableRoutines } = this.props;
+
+    let trimmedRoutines = [];
+
+    for (let i = 0; i < availableRoutines.length; i++) {
+      if (typeof(availableRoutines[i].id) !== "undefined") trimmedRoutines.push(availableRoutines[i]);
+    }
+
+    let position = 0;
+    let length = trimmedRoutines.length - 1;
+
+    for (let i = 0; i < trimmedRoutines.length; i++) {
+      if (routine.id === trimmedRoutines[i].id) position = i;
+    }
+
+    return (position < length);
+
+  }
+
+  canDecrementRoutine() {
+
+    const { routine, availableRoutines } = this.props;
+
+    let trimmedRoutines = [];
+
+    for (let i = 0; i < availableRoutines.length; i++) {
+      if (typeof(availableRoutines[i].id) !== "undefined") trimmedRoutines.push(availableRoutines[i]);
+    }
+
+    let position = 0;
+    let length = trimmedRoutines.length - 1;
+
+    for (let i = 0; i < trimmedRoutines.length; i++) {
+      if (routine.id === trimmedRoutines[i].id) position = i;
+    }
+
+    return (position <= length && position > 0);
+
+  }
+
+  decrementRoutine() {
+    const { routine, availableRoutines } = this.props;
+
+    let position = 0;
+
+    for (let i = 0; i < availableRoutines.length; i++) {
+      if (routine.id === availableRoutines[i].id) position = i;
+    }
+
+    let newRoutine = availableRoutines[position-1].attributes;
+
+    this.props.updateId(newRoutine.id);
+    this.props.updateName(newRoutine.name);
+    this.props.updateDescription(newRoutine.description);
+    this.props.updateActiveRoutine(newRoutine);
+
+  }
+
   renderDescription(props) {
-    const { currentExercise, classes } = props;
+    const { isCompleted, inProgress, currentExercise, classes, width } = props;
 
     const formattedDuration = this.formatDuration(currentExercise);
+
+    let canIncrement = this.canIncrementRoutine();
+
+    // let canDecrement = this.canDecrementRoutine();
+    // { (canDecrement) && <Button variant="contained" color="primary" onClick={e => this.decrementRoutine(e)}>Previous Practice Routine</Button> }
 
     return (
       <React.Fragment key={'description'}>
 
         <Grid container>
-          <Grid item xs={12} sm={12} md={11}>
+          <Grid item xs={12} sm={12} md={12}>
 
             <Paper className={classes.exerciseDetails} elevation={0}>
 
@@ -57,14 +149,14 @@ class RoutineDescription extends Component {
 
               <br />
 
-              {renderHTML(this.state.text)}
+              { (!inProgress || (width !== "xs" && width !== "sm")) && <><Box className={classes.descriptionTextContainer}>{renderHTML(this.state.text)}</Box></> }
+
+              { (isCompleted && canIncrement) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={e => this.incrementRoutine(e)}>Continue</Button> }
 
             </Paper>
 
           </Grid>
         </Grid>
-
-        <br />
 
       </React.Fragment>
     )
@@ -108,6 +200,11 @@ class RoutineDescription extends Component {
   }
 }
 
+
+RoutineDescription.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const RoutineDescriptionWrapped = withStyles(styles)(RoutineDescription);
 
-export default RoutineDescriptionWrapped;
+export default withWidth()(RoutineDescriptionWrapped);

@@ -84,7 +84,11 @@ class WordCard extends React.Component  {
 
   renderCard(props) {
 
-    const { mode, text, vowel, classes } = this.props;
+    const { isCompleted, mode, text, vowel, classes } = this.props;
+
+    if (isCompleted) {
+      return this.renderCompletedCard();
+    }
 
     if (text) {
 
@@ -109,11 +113,34 @@ class WordCard extends React.Component  {
       );
 
     } else {
-
       return this.renderEmptyCard();
-
     }
 
+  }
+
+  renderCompletedCard() {
+
+    const { mode, text, vowel, classes } = this.props;
+
+    return (
+      <React.Fragment key={'card'}>
+
+        <Grid container className={classes.wordGrid} justify="center">
+          <Grid item>
+
+            <Card elevation={0} className={classes.card}>
+              <CardContent>
+                { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+              </CardContent>
+            </Card>
+
+          </Grid>
+        </Grid>
+
+      </React.Fragment>
+    );
   }
 
   renderEmptyCard() {

@@ -145,7 +145,7 @@ const RRHome = props => {
                             { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
 
                             <Grid item xs={timerContainerWidth}>
-                              { (width === "xs" || width === "sm") ? (((!props.inProgress) ? ((!props.inProgress && !props.isCompleted) ? ( <RoutineDescriptionContainer /> ) : null ) : null )) : ( <RoutineDescriptionContainer /> ) }
+                              <RoutineDescriptionContainer />
                               <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
                               <ProgressIndicator />
                               <WordHistoryList />
@@ -164,6 +164,9 @@ const RRHome = props => {
     </Container>
 
   )};
+
+
+// { (width === "xs" || width === "sm") ? (((!props.inProgress) ? ((!props.inProgress && !props.isCompleted) ? ( <RoutineDescriptionContainer /> ) : null ) : null )) : ( <RoutineDescriptionContainer /> ) }
 
 RRHome.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,

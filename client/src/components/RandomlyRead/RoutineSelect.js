@@ -91,6 +91,10 @@ class RoutineSelect extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
 
+      // check if routine has changed
+      if ((prevProps.routine !== this.props.routine)) {
+        this.props.action(this.props.routine); // pass mode update back to QueryManager
+      }
 
       if (typeof this.props.isVoting !== "undefined") {
         if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
@@ -101,7 +105,6 @@ class RoutineSelect extends React.Component {
           this.props.updateId(prevProps.id);
           this.props.updateName(prevProps.name);
           this.props.updateDescription(prevProps.description);
-
         }
       }
 
@@ -114,7 +117,6 @@ class RoutineSelect extends React.Component {
           this.props.updateId(prevProps.id);
           this.props.updateName(prevProps.name);
           this.props.updateDescription(prevProps.description);
-
         }
       }
 
@@ -157,7 +159,7 @@ class RoutineSelect extends React.Component {
         this.props.updateName(selectedRoutine.name);
         this.props.updateDescription(selectedRoutine.description);
         this.props.updateActiveRoutine(selectedRoutine);
-        this.props.action(selectedRoutine); // pass mode update back to QueryManager
+        // this.props.action(selectedRoutine); // pass mode update back to QueryManager
     }
 
     render() {

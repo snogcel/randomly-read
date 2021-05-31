@@ -187,7 +187,7 @@ const styles = theme => ({
   wordGrid: {
     alignItems: "end",
     minHeight: theme.spacing(20),
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(2),
   },
   wordHistoryGrid: {
     alignItems: "center"
@@ -201,6 +201,14 @@ const styles = theme => ({
   card: {
     textAlign: "center",
     minHeight: theme.spacing(20),
+  },
+  descriptionTextContainer: {
+    marginBottom: theme.spacing(2)
+  },
+  incrementButton: {
+    marginTop: theme.spacing(6),
+    margin: "0 auto",
+    display: "flex"
   },
   previewCard: {
     marginTop: theme.spacing(2),
