@@ -179,44 +179,6 @@ const SplashPage = props => {
 
           </Grid>
 
-          <Grid container justify="center">
-
-            <Grid item xs={12} sm={5} lg={6} xl={3} className={classes.homePageGetStartedContainer}>
-
-              <br />
-
-              <Typography gutterBottom variant="h5" component="h3" className={classes.signupHeading}>
-                How do I get started?
-              </Typography>
-
-              <Typography variant="body1" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                <strong>Use the sign up form to create a free demonstration account.</strong>
-              </Typography>
-
-              <br />
-
-              <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                This limited demonstration provides a pre-defined set of exercise routines and is meant to preview the features that Randomly Read could provide to your clients.
-              </Typography>
-
-              <br />
-
-              <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                We'll contact you at the provided email address to open a conversation on how to tailor these routines to your clients' needs, how to report on client usage of the tool, and to answer any questions you have.
-              </Typography>
-
-              <br />
-
-              <Typography variant="body2" color="textPrimary" component="p" className={classes.homePageSignupText}>
-                You can reach us by phone at (303) 946-8829 or through email at <a href="mailto:contact@randomlyread.com">contact@randomlyread.com</a>.
-              </Typography>
-
-              <br />
-
-            </Grid>
-
-          </Grid>
-
         </Grid>
 
       </Grid>
