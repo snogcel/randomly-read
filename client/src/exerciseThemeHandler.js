@@ -114,12 +114,13 @@ const styles = theme => ({
     color: "#D1D1D1"
   },
   routineStepCheckbox: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(4),
     marginRight: theme.spacing(2),
     minWidth: "auto"
   },
   exerciseHistoryHeading: {
-    marginLeft: theme.spacing(2),
+    marginLeft: theme.spacing(3),
+    marginBottom: theme.spacing(1),
     color: "#0B0F65",
     fontWeight: "bold"
   },
