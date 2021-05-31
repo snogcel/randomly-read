@@ -53,7 +53,7 @@ const App = (props) => {
 
   for (let i = 0; i < Identities.length; i++) {
 
-    if (location.pathname === Identities[i].pathname) { // override
+    if (Identities[i].pathname.indexOf(location.pathname) !== -1) { // override
 
       if (token !== Identities[i].token) {
         token = Identities[i].token;

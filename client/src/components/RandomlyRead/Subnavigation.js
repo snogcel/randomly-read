@@ -29,11 +29,16 @@ class Subnavigation extends React.Component {
   render() {
     const { history, classes } = this.props;
 
+
+
+
+    // { Identities.map((item, i) => ( <Link href="#" key={i} className={classes.subnavigationLink + " " + ((item.pathname === history.location.pathname) ? classes.subnavigationLinkSelected : '')} onClick={e => this.handleClick(e, item.pathname, item.user.routines[0])}>{item.alias}</Link> )) }
+
     return (
       <React.Fragment>
         <Typography className={classes.root}>
 
-          { Identities.map((item, i) => ( <Link href="#" key={i} className={classes.subnavigationLink + " " + ((item.pathname === history.location.pathname) ? classes.subnavigationLinkSelected : '')} onClick={e => this.handleClick(e, item.pathname, item.user.routines[0])}>{item.alias}</Link> )) }
+          { Identities.map((item, i) => ( <Link href="#" key={i} className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0])}>{item.alias}</Link> )) }
 
         </Typography>
         <br />
