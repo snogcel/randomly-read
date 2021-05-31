@@ -183,6 +183,8 @@ class RoutineSelect extends React.Component {
           selectValue = "";
         }
 
+
+
         return (
             <React.Fragment>
                  <FormControl fullWidth margin="dense">
@@ -190,7 +192,7 @@ class RoutineSelect extends React.Component {
                     classes={{select: theme === true ? classes.select : undefined}}
                     value={selectValue}
                     onChange={this.handleChange}
-                    displayEmpty
+                    disabled={(routines.length === 0)}
                     input={<BootstrapInput name="routine" id="routine-customized-select" />}
                     >
 
