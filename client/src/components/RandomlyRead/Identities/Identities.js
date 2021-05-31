@@ -28,6 +28,23 @@ const identities = [{
     "isActive": false,
     "id": "5fee6cf7edf3920d88846a03"
   }
+},{
+  alias: "Week 3",
+  pathname: ["/Week3","/week3"],
+  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbXSwiaW50ZXJhY3Rpb25TZXR0aW5ncyI6W10sImNsaWVudHMiOltdLCJ1c2VybmFtZSI6ImV4ZXJjaXNldXNlcjAwMyIsImZpcnN0TmFtZSI6IkV4ZXJjaXNlIiwibGFzdE5hbWUiOiJVc2VyMDAzIiwiaXNBY3RpdmUiOnRydWUsImlkIjoiNWZlZTZkMGVlZGYzOTIwZDg4ODQ2YTA0In0sImlhdCI6MTYyMjQzMjQwNiwiZXhwIjo4ODAyMjM0NjAwNn0.hdy4OTQB8NcblDcCPaatbzr_is4zY1k7lOu4UfoLW0I",
+  user: {
+    "routines": [],
+    "interactionSettings": [],
+    "clients": [],
+    "username": "exerciseuser003",
+    "firstName": "Exercise",
+    "lastName": "User003",
+    "isActive": false,
+    "id": "5fee6cf7edf3920d88846a03"
+  }
 }];
 
 export default identities;
+
+
+

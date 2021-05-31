@@ -27,6 +27,7 @@ import Identities from '../RandomlyRead/Identities/Identities';
 
 import { Exercise1HomeContainer, Exercise1TimerContainer, Exercise1RoutineSelectContainer, Exercise1Introduction } from '../RandomlyRead/Exercises/Exercise1/HomeContainer';
 import { Exercise2HomeContainer, Exercise2TimerContainer, Exercise2RoutineSelectContainer, Exercise2Introduction } from '../RandomlyRead/Exercises/Exercise2/HomeContainer';
+import { Exercise3HomeContainer, Exercise3TimerContainer, Exercise3RoutineSelectContainer, Exercise3Introduction } from '../RandomlyRead/Exercises/Exercise3/HomeContainer';
 
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
 import FluencyReport from '../RRFluencyReport/FluencyReport'
@@ -119,6 +120,11 @@ const App = (props) => {
               <Route
                 path='/Week2'
                 render={props => (<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} {...props}/>)}
+              />
+
+              <Route
+                path='/Week3'
+                render={props => (<Exercise3HomeContainer ApolloClient={client} TimerContainer={Exercise3TimerContainer} RoutineSelectContainer={Exercise3RoutineSelectContainer} ExerciseIntroduction={Exercise3Introduction} {...props}/>)}
               />
 
               <Route path='/FluencyReport' component={FluencyReport} />
