@@ -199,9 +199,11 @@ class ExerciseHistory extends React.Component {
                   )}
                 </ListItemIcon>
                 <ListItemText
-                  primaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStep : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : null) }}
                   primary={listItemText}
-                  secondary={subHeaderText} />
+                  primaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStep : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : null) }}
+                  secondary={subHeaderText}
+                  secondaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStepSecondary : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : null) }}
+                />
               </StyledListItem>
             );
           } else {
@@ -228,9 +230,7 @@ class ExerciseHistory extends React.Component {
 
               <Box className={classes.exerciseStepsCard}>
 
-                <Typography variant="h6" className={classes.exerciseHistoryHeading}>
-                  Practice Routine Outline
-                </Typography>
+                <Typography gutterBottom variant="body1" color="textSecondary" component="p" className={classes.exerciseHistoryHeading}>Practice Routine Outline</Typography>
 
                 {exerciseHistory}
 

@@ -948,8 +948,8 @@ async function upVotedRoutines(author) {
 
     let subroutine = [{
       "index": Date.now(),
-      "rangeVal": 5,
-      "repetitions": 10,
+      "rangeVal": 7,
+      "repetitions": 5,
       "mode": "Word",
       "isIntermission": false,
       "vowels": [posts[i].vowel],
@@ -958,8 +958,8 @@ async function upVotedRoutines(author) {
       "position": posts[i].position
     },{
       "index": Date.now(),
-      "rangeVal": 5,
-      "repetitions": 10,
+      "rangeVal": 7,
+      "repetitions": 5,
       "mode": "Word",
       "isIntermission": false,
       "vowels": [],
@@ -969,8 +969,8 @@ async function upVotedRoutines(author) {
     },
     {
       "index": Date.now(),
-      "rangeVal": 5,
-      "repetitions": 10,
+      "rangeVal": 7,
+      "repetitions": 5,
       "mode": "Word",
       "isIntermission": false,
       "vowels": [posts[i].vowel],

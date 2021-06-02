@@ -72,7 +72,7 @@ class RoutineDescription extends Component {
     let trimmedRoutines = [];
 
     for (let i = 0; i < availableRoutines.length; i++) {
-      if (typeof(availableRoutines[i].id) !== "undefined") trimmedRoutines.push(availableRoutines[i]);
+      if (typeof(availableRoutines[i].attributes.upvoted) === "undefined") trimmedRoutines.push(availableRoutines[i]);
     }
 
     let position = 0;
@@ -145,11 +145,11 @@ class RoutineDescription extends Component {
 
               <Typography variant="h5" component="h2" className={classes.routineDescriptionHeading}>{this.props.name}</Typography>
 
-              <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">{formattedDuration}</Typography>
 
               <br />
 
-              { (!inProgress || (width !== "xs" && width !== "sm")) && <><Box className={classes.descriptionTextContainer}>{renderHTML(this.state.text)}</Box></> }
+              { (!inProgress || (width !== "xs" && width !== "sm")) && <><Box className={classes.descriptionTextContainer}><Typography variant="body1" color="textPrimary" component="p">{renderHTML(this.state.text)}</Typography></Box></> }
 
               { (isCompleted && canIncrement) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={e => this.incrementRoutine(e)}>Continue</Button> }
 

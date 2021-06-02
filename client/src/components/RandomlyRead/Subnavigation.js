@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import Identities from './Identities/Identities';
 import { styles } from '../../exerciseThemeHandler';
 import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { withStyles } from '@material-ui/core';
 
@@ -36,11 +37,9 @@ class Subnavigation extends React.Component {
 
     return (
       <React.Fragment>
-        <Typography className={classes.root}>
-
-          { Identities.map((item, i) => ( <Link href="#" key={i} className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0])}>{item.alias}</Link> )) }
-
-        </Typography>
+        <Box className={classes.root}>
+          { Identities.map((item, i) => ( <Typography key={i+"_text"} gutterBottom variant="body1" color="textSecondary" className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} ><Link href="#" onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0])}>{item.alias}</Link></Typography> )) }
+        </Box>
         <br />
       </React.Fragment>
     );

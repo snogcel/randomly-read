@@ -56,7 +56,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   homeContainer: {
-    marginTop: theme.spacing(10)
+    marginTop: theme.spacing(5)
   },
   introTabPanel: {
     '& .MuiBox-root': {
@@ -74,8 +74,7 @@ const styles = theme => ({
     padding: theme.spacing(0, 2, 0, 2)
   },
   introContainer: {
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
+    padding: theme.spacing(1, 2, 1, 2)
   },
   homeTabPanel: {
     '& .MuiBox-root': {
@@ -104,6 +103,10 @@ const styles = theme => ({
   },
   activeRoutineStep: {
     fontWeight: "500",
+    fontSize: '0.95rem',
+    color: "#0B0F65"
+  },
+  activeRoutineStepSecondary: {
     fontSize: '0.95rem',
     color: "#0B0F65"
   },
@@ -136,9 +139,9 @@ const styles = theme => ({
   mobileRoutineSelectContainer: {
     textAlign: "left",
   },
-  mobileHeading: {
+  contentHeading: {
     marginTop: theme.spacing(2),
-    color: "#14197E",
+    color: "#0B0F65",
     fontWeight: "bold"
   },
   sliderRoot:{
@@ -223,15 +226,17 @@ const styles = theme => ({
 
   },
   subnavigationLink: {
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    display: "inline-flex",
+    marginLeft: theme.spacing(3.5),
+    marginRight: theme.spacing(3.5),
     [MuiTheme.breakpoints.down('xs')]: {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2),
+      marginLeft: theme.spacing(1.75),
+      marginRight: theme.spacing(1.75),
     },
   },
   subnavigationLinkSelected: {
-    fontWeight: "bold"
+    fontWeight: "700",
+    fontSize: "1.125rem"
   },
   routineSelectCard: {
     maxWidth: 300,
@@ -410,8 +415,7 @@ const styles = theme => ({
   },
   exerciseDetails: {
     padding: theme.spacing(2, 1, 1, 1),
-    marginTop: theme.spacing(0),
-    backgroundColor: "#FFFFFD"
+    marginTop: theme.spacing(0)
   },
   homePageContainer: {
 
