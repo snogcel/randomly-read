@@ -1,0 +1,143 @@
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { styles } from '../../../../exerciseThemeHandler';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import { withStyles } from '@material-ui/core';
+
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import Technique2 from '../../Techniques/Technique2/Component.js';
+import Technique3 from '../../Techniques/Technique3/Component.js';
+
+const useStyles = makeStyles((theme) => ({
+  techniqueRoot: {
+    flexGrow: 1
+  },
+  contentHeading: {
+    marginTop: theme.spacing(2),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueAccordionSummary: {
+    backgroundColor: "#fdfdfd"
+  },
+  techniqueMainHeading: {
+    marginTop: theme.spacing(0),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueAccordionDetails: {
+    backgroundColor: "#fdfdfd",
+    paddingTop: theme.spacing(0)
+  }
+}));
+
+function Techniques() {
+
+  const classes = useStyles();
+
+  const [expanded, setExpanded] = React.useState(false);
+
+  const handleChange = (panel) => (event, isExpanded) => {
+    setExpanded(isExpanded ? panel : false);
+  };
+
+  return (
+    <Box className={classes.techniqueRoot}>
+
+      <Typography variant="h5" component="h2" className={classes.contentHeading}>
+        Intermediate Techniques
+      </Typography>
+
+      <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+        Weeks 4 - 8
+      </Typography>
+
+      <br />
+
+      <Typography variant="body1" color="textPrimary" component="p" >
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras finibus est vitae sem fringilla varius in vitae tortor. Pellentesque ullamcorper sagittis justo at rutrum. Proin eu semper ligula. Cras maximus nec ligula a accumsan.
+      </Typography>
+
+      <br />
+
+      <Accordion elevation={3} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1bh-content"
+          id="panel1bh-header"
+          className={classes.techniqueAccordionSummary}
+        >
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
+                Technique 2
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+                Stop, Breathe, Relax, Vowel, Pinch, Articulate
+              </Typography>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+        <AccordionDetails className={classes.techniqueAccordionDetails}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="body1" color="textPrimary" component="p" >
+                Curabitur hendrerit ultricies erat, at volutpat nibh pellentesque non.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Technique2 />
+            </Grid>
+          </Grid>
+        </AccordionDetails>
+      </Accordion>
+
+      <Accordion elevation={3} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2bh-content"
+          id="panel2bh-header"
+          className={classes.techniqueAccordionSummary}
+        >
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
+                Technique 3
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+                Stop, Breathe, Relax, Vowel, Articulate, Transfer, Pinch
+              </Typography>
+            </Grid>
+          </Grid>
+        </AccordionSummary>
+        <AccordionDetails className={classes.techniqueAccordionDetails}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography variant="body1" color="textPrimary" component="p" >
+                Fusce interdum hendrerit ipsum eget euismod.
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Technique3 />
+            </Grid>
+          </Grid>
+        </AccordionDetails>
+      </Accordion>
+
+    </Box>
+  );
+}
+
+const TechniquesWrapped = withStyles(styles)(Techniques);
+
+export default TechniquesWrapped;

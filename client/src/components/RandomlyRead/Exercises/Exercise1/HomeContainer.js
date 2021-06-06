@@ -7,6 +7,7 @@ import { updateId, resetRoutineSelect } from '../../../../actions/routineSelect'
 import Exercise1TimerContainer from '../TimerContainer';
 import Exercise1RoutineSelectContainer from './RoutineSelectContainer';
 import Exercise1Introduction from './Introduction';
+import Exercise1Techniques from './Techniques';
 
 import Home from '../../Home';
 
@@ -32,5 +33,6 @@ export {
   Exercise1HomeContainer,
   Exercise1TimerContainer,
   Exercise1RoutineSelectContainer,
-  Exercise1Introduction
+  Exercise1Introduction,
+  Exercise1Techniques
 };

@@ -69,7 +69,7 @@ function LinkTab(props) {
 
 const RRHome = props => {
 
-  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ApolloClient } = props;
+  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
   const { classes } = props;
 
   const { width } = props;
@@ -128,7 +128,18 @@ const RRHome = props => {
                       </Grid>
                     </Fade>
                   </TabPanel>
+                </Grid>
 
+                <Grid item xs={12}>
+                  <TabPanel value={value} index={1} className={classes.introTabPanel}>
+                    <Fade in={true}>
+                      <Grid container spacing={0} className={classes.techniquesContainer}>
+                        <Grid item xs={12}>
+                          <ExerciseTechniques />
+                        </Grid>
+                      </Grid>
+                    </Fade>
+                  </TabPanel>
                 </Grid>
 
                 <Grid item xs={12}>

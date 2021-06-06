@@ -23,7 +23,6 @@ let MuiTheme = createMuiTheme({
   typography: {
 
   },
-
 });
 
 MuiTheme = responsiveFontSizes(MuiTheme);
@@ -74,6 +73,9 @@ const styles = theme => ({
     padding: theme.spacing(0, 2, 0, 2)
   },
   introContainer: {
+    padding: theme.spacing(1, 2, 1, 2)
+  },
+  techniquesContainer: {
     padding: theme.spacing(1, 2, 1, 2)
   },
   homeTabPanel: {
@@ -143,6 +145,32 @@ const styles = theme => ({
     marginTop: theme.spacing(2),
     color: "#0B0F65",
     fontWeight: "bold"
+  },
+  techniqueMainHeading: {
+    marginTop: theme.spacing(0),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueHeading: {
+    marginTop: theme.spacing(0),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueIcon: {
+    marginTop: theme.spacing(1),
+    color: "#B9BBE9",
+  },
+  techniqueAccordion: {
+    paddingTop: theme.spacing(0)
+  },
+  techniqueListRoot: {
+    flexGrow: 1,
+  },
+  techniquePrimaryText: {
+    fontWeight: "500",
+  },
+  techniqueSecondaryText: {
+
   },
   sliderRoot:{
     width: 500,
