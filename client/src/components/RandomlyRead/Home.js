@@ -76,7 +76,19 @@ const RRHome = props => {
 
   const { width } = props;
 
-  const [value, setValue] = React.useState(0);
+  let { stages } = IdentityConfig;
+
+  let location = props.history.location.pathname;
+
+  let selectedStage = 0; // set default stage
+
+  for (let i = 0; i < stages.length; i++) {
+    if (location.includes(stages[i])) {
+      selectedStage = i; // render selected stage
+    }
+  }
+
+  const [value, setValue] = React.useState(selectedStage);
 
   const handleChange = (event, newValue) => {
     updatePathname(newValue);
