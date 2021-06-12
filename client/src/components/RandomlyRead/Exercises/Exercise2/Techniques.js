@@ -81,7 +81,7 @@ function Techniques() {
             </Grid>
             <Grid item xs={12}>
               <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Stop, Breathe, Relax, Vowel, Pinch, Articulate
+                Stop, Breathe, Relax, Vowel, Articulate, Pinch
               </Typography>
             </Grid>
           </Grid>

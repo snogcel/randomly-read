@@ -141,6 +141,64 @@ const styles = theme => ({
   mobileRoutineSelectContainer: {
     textAlign: "left",
   },
+  introductionListItem: {
+    margin: theme.spacing(1.25, 0),
+    padding: theme.spacing(1, 2)
+  },
+  introductionListRoot: {
+    flexGrow: 1,
+    margin: theme.spacing(1.5, 0)
+  },
+  introductionPrimaryText: {
+    display: "block",
+    fontWeight: "500",
+  },
+  introductionSecondaryText: {
+    display: "block",
+    color: "rgba(0, 0, 0, 0.95)"
+  },
+  introductionHeadingActive: {
+    marginTop: theme.spacing(0),
+    color: "#0B0F65",
+    fontWeight: "500",
+    fontSize: "1.25rem"
+  },
+  introductionHeading: {
+    marginTop: theme.spacing(0),
+    fontWeight: "500",
+    fontSize: "1.25rem"
+  },
+  introductionIconActive: {
+    color: "#0B0F65",
+    margin: theme.spacing(2, 0),
+    paddingRight: theme.spacing(1)
+  },
+  introductionIcon: {
+    color: "#B9BBE9",
+    margin: theme.spacing(2, 0),
+    paddingRight: theme.spacing(1)
+  },
+  definitionListRoot: {
+    flexGrow: 1,
+    margin: theme.spacing(0, 0)
+  },
+  definitionListHeading: {
+    margin: theme.spacing(1.5, 0, 0.5, 0),
+    fontWeight: "500",
+    fontSize: "1.25rem"
+  },
+  definitionHeading: {
+    margin: theme.spacing(0),
+    fontSize: "1.15rem"
+  },
+  definitionSecondaryText: {
+    display: "block",
+  },
+  definitionIcon: {
+    color: "#EBECFB",
+    margin: theme.spacing(1, 0, 1, 0),
+    paddingRight: theme.spacing(1)
+  },
   contentHeading: {
     marginTop: theme.spacing(2),
     color: "#0B0F65",
@@ -164,13 +222,17 @@ const styles = theme => ({
     paddingTop: theme.spacing(0)
   },
   techniqueListRoot: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   techniquePrimaryText: {
+    display: "block",
     fontWeight: "500",
+    margin: theme.spacing(0.75, 0, 0.75, 0)
   },
   techniqueSecondaryText: {
-
+    display: "block",
+    margin: theme.spacing(0.75, 0, 0.75, 0),
+    color: "rgba(0, 0, 0, 0.95)"
   },
   sliderRoot:{
     width: 500,
