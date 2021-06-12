@@ -113,17 +113,17 @@ const App = (props) => {
               <Route path='/RandomlyRead' component={RRHomeContainer} />
 
               <Route
-                path='/therapy/beginner'
+                path={Identities[0].pathname}
                 render={props => (<Exercise1HomeContainer ApolloClient={client} TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} ExerciseTechniques={Exercise1Techniques} {...props}/>)}
               />
 
               <Route
-                path='/therapy/intermediate'
+                path={Identities[1].pathname}
                 render={props => (<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} ExerciseTechniques={Exercise2Techniques} {...props}/>)}
               />
 
               <Route
-                path='/therapy/advanced'
+                path={Identities[2].pathname}
                 render={props => (<Exercise3HomeContainer ApolloClient={client} TimerContainer={Exercise3TimerContainer} RoutineSelectContainer={Exercise3RoutineSelectContainer} ExerciseIntroduction={Exercise3Introduction} ExerciseTechniques={Exercise3Techniques} {...props}/>)}
               />
 

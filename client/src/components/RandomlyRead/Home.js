@@ -17,6 +17,8 @@ import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
 import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
+import Identities from './Identities/Identities';
+import IdentityConfig from './Identities/Config';
 import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
 
@@ -77,8 +79,28 @@ const RRHome = props => {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
+    updatePathname(newValue);
     setValue(newValue);
   };
+
+  function updatePathname(subpath) {
+
+    // set router url to match page section
+
+    let { root, levels, stages } = IdentityConfig;
+
+    if (!subpath) subpath = 0;
+
+    let location = props.history.location.pathname;
+
+    for (let i = 0; i < levels.length; i++) {
+      if (location.includes(levels[i])) {
+        location = root + levels[i] + "/" + stages[subpath];
+        props.history.push(location);
+      }
+    }
+
+  }
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;

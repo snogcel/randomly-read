@@ -1,6 +1,6 @@
-const identities = [{
+const Identities = [{
   alias: "Beginner",
-  pathname: [ "/therapy/beginner","/therapy/Beginner","/Therapy/beginner","/Therapy/Beginner" ],
+  pathname: [ "/therapy/beginner/introduction", "/therapy/beginner/techniques", "/therapy/beginner/practice" ],
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjVmZWQxMWJkZWRmMzkyMGQ4ODg0Njc3NSJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDAxIiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDEiLCJpc0FjdGl2ZSI6ZmFsc2UsImlkIjoiNWZlZDExOWVlZGYzOTIwZDg4ODQ2Nzc0In0sImlhdCI6MTYxODAxNjYyNiwiZXhwIjo4ODAxNzkzMDIyNn0.cq2RSFajG2EJlvvaQy6ykyrZ4hjIJDDrpPmsiQhcfxw",
   user: {
     "routines": [
@@ -16,7 +16,7 @@ const identities = [{
   }
 },{
   alias: "Intermediate",
-  pathname: [ "/therapy/intermediate","/therapy/Intermediate","/Therapy/intermediate","/Therapy/Intermediate" ],
+  pathname: [ "/therapy/intermediate/introduction", "/therapy/intermediate/techniques", "/therapy/intermediate/practice" ],
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjYwNmEzMzRhY2M5Y2Y1MjM1YzI4MjA3ZSIsIjYwNzM4ODNjZjkzOTgzNTI0MDMzOTk1MSIsIjYwNzM5YzRlZjkzOTgzNTI0MDMzOTk1MiIsIjYwNzM5YzU4ZjkzOTgzNTI0MDMzOTk1MyIsIjYwN2NiNTllMjczZjBhNWQ2OGY1MTBiYSIsIjYwN2NiNWI2MjczZjBhNWQ2OGY1MTBiYiIsIjYwN2NiNWM0MjczZjBhNWQ2OGY1MTBiYyIsIjYwN2NiNWQ0MjczZjBhNWQ2OGY1MTBiZCJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDAyIiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDIiLCJpc0FjdGl2ZSI6ZmFsc2UsImlkIjoiNWZlZTZjZjdlZGYzOTIwZDg4ODQ2YTAzIn0sImlhdCI6MTYxODc4NjM5MywiZXhwIjo4ODAxODY5OTk5M30.jwPltIy4kZuxeu_ViuKvj7uSTNEbisV1Pz9hRWkkF2I",
   user: {
     "routines": [],
@@ -30,7 +30,7 @@ const identities = [{
   }
 },{
   alias: "Advanced",
-  pathname: [ "/therapy/advanced","/therapy/Advanced","/Therapy/advanced","/Therapy/Advanced" ],
+  pathname: [ "/therapy/advanced/introduction", "/therapy/advanced/techniques", "/therapy/advanced/practice" ],
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbXSwiaW50ZXJhY3Rpb25TZXR0aW5ncyI6W10sImNsaWVudHMiOltdLCJ1c2VybmFtZSI6ImV4ZXJjaXNldXNlcjAwMyIsImZpcnN0TmFtZSI6IkV4ZXJjaXNlIiwibGFzdE5hbWUiOiJVc2VyMDAzIiwiaXNBY3RpdmUiOnRydWUsImlkIjoiNWZlZTZkMGVlZGYzOTIwZDg4ODQ2YTA0In0sImlhdCI6MTYyMjQzMjQwNiwiZXhwIjo4ODAyMjM0NjAwNn0.hdy4OTQB8NcblDcCPaatbzr_is4zY1k7lOu4UfoLW0I",
   user: {
     "routines": [],
@@ -44,7 +44,4 @@ const identities = [{
   }
 }];
 
-export default identities;
-
-
-
+export default Identities;
