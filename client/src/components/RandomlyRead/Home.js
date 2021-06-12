@@ -11,13 +11,13 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 
+import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
 import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
-import Identities from './Identities/Identities';
 import IdentityConfig from './Identities/Config';
 import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
@@ -142,7 +142,7 @@ const RRHome = props => {
 
                 <Grid item xs={12}>
                   <TabPanel value={value} index={0} className={classes.introTabPanel}>
-                    <Fade in={true}>
+                    <Fade in={true} timeout={750}>
                       <Grid container spacing={0} className={classes.introContainer}>
                         <Grid item xs={12}>
                           <ExerciseIntroduction />
@@ -154,7 +154,7 @@ const RRHome = props => {
 
                 <Grid item xs={12}>
                   <TabPanel value={value} index={1} className={classes.introTabPanel}>
-                    <Fade in={true}>
+                    <Fade in={true} timeout={750}>
                       <Grid container spacing={0} className={classes.techniquesContainer}>
                         <Grid item xs={12}>
                           <ExerciseTechniques />
@@ -166,25 +166,33 @@ const RRHome = props => {
 
                 <Grid item xs={12}>
                   <TabPanel value={value} index={2} className={classes.homeTabPanel}>
+
+                    <Fade in={true} timeout={750}>
                       <Grid container spacing={0} className={classes.routineSelector}>
                         <Grid item xs={12}>
-                            <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+                          <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
                         </Grid>
                       </Grid>
+                    </Fade>
 
-                      <Fade in={true}>
+                    <Hidden xsUp={(!(props.routineSelectId !== 0))}>
+
+                      <Fade in={true} timeout={1250}>
                         <Grid container spacing={2}>
 
-                            { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
+                          { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
 
-                            <Grid item xs={timerContainerWidth}>
-                              <RoutineDescriptionContainer />
-                              <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
-                              <ProgressIndicator />
-                              <WordHistoryList />
-                            </Grid>
+                          <Grid item xs={timerContainerWidth}>
+                            <RoutineDescriptionContainer />
+                            <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+                            <ProgressIndicator />
+                            <WordHistoryList />
+                          </Grid>
                         </Grid>
                       </Fade>
+
+                    </Hidden>
+
                   </TabPanel>
                 </Grid>
 

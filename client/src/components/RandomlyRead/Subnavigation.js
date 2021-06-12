@@ -9,6 +9,10 @@ import { withStyles } from '@material-ui/core';
 
 class Subnavigation extends React.Component {
 
+  componentDidMount() {
+    this.props.updateId(0);
+  }
+
   componentDidUpdate(prevProps, prevState, snapshot) {
 
   }
@@ -29,9 +33,6 @@ class Subnavigation extends React.Component {
 
   render() {
     const { history, classes } = this.props;
-
-
-
 
     // { Identities.map((item, i) => ( <Link href="#" key={i} className={classes.subnavigationLink + " " + ((item.pathname === history.location.pathname) ? classes.subnavigationLinkSelected : '')} onClick={e => this.handleClick(e, item.pathname, item.user.routines[0])}>{item.alias}</Link> )) }
 
