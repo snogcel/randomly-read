@@ -145,7 +145,9 @@ class RoutineDescription extends Component {
 
               <Typography variant="h5" component="h2" className={classes.routineDescriptionHeading}>{this.props.name}</Typography>
 
-              <Typography gutterBottom variant="body1" color="textSecondary" component="p">{formattedDuration}</Typography>
+              <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
+                {formattedDuration}
+              </Typography>
 
               <br />
 

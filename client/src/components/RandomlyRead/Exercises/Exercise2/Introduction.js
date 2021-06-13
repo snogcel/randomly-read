@@ -110,26 +110,6 @@ class Introduction extends React.Component {
                   <React.Fragment>
                     <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
                     <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Diaphragm
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Description
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                       Pelvic Floor
                     </Typography>
                   </React.Fragment>
@@ -191,26 +171,6 @@ class Introduction extends React.Component {
                     <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
                     <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                       Transfer
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Description
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Pinching
                     </Typography>
                   </React.Fragment>
                 }

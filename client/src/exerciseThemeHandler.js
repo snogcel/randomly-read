@@ -105,18 +105,25 @@ const styles = theme => ({
   },
   activeRoutineStep: {
     fontWeight: "500",
-    fontSize: '0.95rem',
+    fontSize: "1rem",
     color: "#0B0F65"
   },
   activeRoutineStepSecondary: {
-    fontSize: '0.95rem',
+    fontSize: "1rem",
     color: "#0B0F65"
   },
   activeRoutineStepCheckbox: {
     color: "#0B0F65"
   },
-  completedRoutineStep: {
+  completedRoutineStepCheckbox: {
     color: "#D1D1D1"
+  },
+  completedRoutineStep: {
+    color: "#D1D1D1",
+    fontSize: "1rem"
+  },
+  routineStep: {
+    fontSize: "1rem"
   },
   routineStepCheckbox: {
     marginLeft: theme.spacing(4),
@@ -127,7 +134,8 @@ const styles = theme => ({
     marginLeft: theme.spacing(3),
     marginBottom: theme.spacing(1),
     color: "#0B0F65",
-    fontWeight: "bold"
+    fontWeight: "500",
+    fontSize: "1.25rem"
   },
   routineDescriptionHeading: {
     color: "#0B0F65",
@@ -184,6 +192,7 @@ const styles = theme => ({
   },
   definitionListHeading: {
     margin: theme.spacing(1.5, 0, 0.5, 0),
+    color: "#0B0F65",
     fontWeight: "500",
     fontSize: "1.25rem"
   },
@@ -221,8 +230,13 @@ const styles = theme => ({
   techniqueAccordion: {
     paddingTop: theme.spacing(0)
   },
+  techniqueAccordionContainer: {
+    marginTop: theme.spacing(2),
+    padding: theme.spacing(1, 2)
+  },
   techniqueListRoot: {
-    flexGrow: 1
+    flexGrow: 1,
+    paddingTop: theme.spacing(0)
   },
   techniquePrimaryText: {
     display: "block",

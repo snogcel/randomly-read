@@ -194,15 +194,15 @@ class ExerciseHistory extends React.Component {
                     />
                   ) : (
                     <CheckBoxIcon
-                      className={classes.completedRoutineStep}
+                      className={classes.completedRoutineStepCheckbox}
                     />
                   )}
                 </ListItemIcon>
                 <ListItemText
                   primary={listItemText}
-                  primaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStep : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : null) }}
+                  primaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStep : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : classes.routineStep) }}
                   secondary={subHeaderText}
-                  secondaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStepSecondary : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : null) }}
+                  secondaryTypographyProps={{ className: ((currentExerciseNumber === stepNumber) && inProgress) ? classes.activeRoutineStepSecondary : (((stepNumber < currentExerciseNumber) && inProgress) ? classes.completedRoutineStep : classes.routineStep) }}
                 />
               </StyledListItem>
             );
@@ -230,7 +230,9 @@ class ExerciseHistory extends React.Component {
 
               <Box className={classes.exerciseStepsCard}>
 
-                <Typography gutterBottom variant="body1" color="textSecondary" component="p" className={classes.exerciseHistoryHeading}>Practice Routine Outline</Typography>
+                <Typography variant="h5" component="h2" className={classes.exerciseHistoryHeading} color="textPrimary">
+                  Practice Routine Outline
+                </Typography>
 
                 {exerciseHistory}
 

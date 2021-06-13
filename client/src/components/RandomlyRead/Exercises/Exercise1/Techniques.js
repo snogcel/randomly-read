@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1
   },
   contentHeading: {
-    marginTop: theme.spacing(2),
+    margin: theme.spacing(2, 0, 3.5, 0),
     color: "#0B0F65",
     fontWeight: "bold"
   },
@@ -54,20 +54,11 @@ function Techniques() {
         Beginner Techniques
       </Typography>
 
-      <br />
-
-      <Typography variant="body1" color="textPrimary" component="p" >
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras finibus est vitae sem fringilla varius in vitae tortor. Pellentesque ullamcorper sagittis justo at rutrum. Proin eu semper ligula. Cras maximus nec ligula a accumsan.
-      </Typography>
-
-      <br />
-
       <Accordion elevation={3} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
-          className={classes.techniqueAccordionSummary}
         >
           <Grid container>
             <Grid item xs={12}>
@@ -77,18 +68,13 @@ function Techniques() {
             </Grid>
             <Grid item xs={12}>
               <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Stop, Breathe, Relax, Vowel
+                Stop, Breathe, Relax, Phonate
               </Typography>
             </Grid>
           </Grid>
         </AccordionSummary>
         <AccordionDetails className={classes.techniqueAccordionDetails}>
           <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="body1" color="textPrimary" component="p" >
-                Sed bibendum vitae risus vel efficitur. Donec in malesuada mauris, ut vehicula dui. Etiam rhoncus non odio vitae lacinia. Curabitur nec leo sapien. Curabitur pellentesque diam id sapien mollis, eget luctus nibh venenatis. Phasellus in lacinia dui. In facilisis sodales neque, et rutrum felis bibendum a.
-              </Typography>
-            </Grid>
             <Grid item xs={12}>
               <Technique1 />
             </Grid>
@@ -111,18 +97,13 @@ function Techniques() {
             </Grid>
             <Grid item xs={12}>
               <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Stop, Breathe, Relax, Vowel, Articulate, Pinch
+                Stop, Breathe, Relax, Phonate, Articulate, Pinch
               </Typography>
             </Grid>
           </Grid>
         </AccordionSummary>
         <AccordionDetails className={classes.techniqueAccordionDetails}>
           <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="body1" color="textPrimary" component="p" >
-                Aenean tempus libero vel mi rhoncus maximus. Vestibulum pharetra augue erat. Praesent dignissim tincidunt nisi, at mollis est tristique vel. Ut vulputate sem sem, vitae commodo velit hendrerit eget. Maecenas euismod lobortis dolor et lobortis. Nullam quis neque dolor.
-              </Typography>
-            </Grid>
             <Grid item xs={12}>
               <Technique2 />
             </Grid>

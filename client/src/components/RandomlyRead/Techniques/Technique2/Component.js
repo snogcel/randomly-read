@@ -95,7 +95,7 @@ class Technique extends React.Component {
               primary={
                 <React.Fragment>
                   <Typography variant="h5" component="h2" className={classes.techniqueHeading} color="textPrimary">
-                    Vowel
+                    Phonate
                   </Typography>
                 </React.Fragment>
               }
