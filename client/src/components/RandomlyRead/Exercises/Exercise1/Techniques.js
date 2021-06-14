@@ -59,6 +59,7 @@ function Techniques() {
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1bh-content"
           id="panel1bh-header"
+          className={classes.techniqueAccordionSummary}
         >
           <Grid container>
             <Grid item xs={12}>
