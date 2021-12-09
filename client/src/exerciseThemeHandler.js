@@ -638,6 +638,10 @@ const styles = theme => ({
     padding: theme.spacing(2),
     borderRadius: 10
   },
+  textLink: {
+    marginLeft: theme.spacing(0.5),
+    textDecoration: 'underline'
+  },
   previewImage: {
     position: 'absolute',
     width: 800,
@@ -647,7 +651,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
   },
-
   routineBuilderSelectContainer: {
     display: "flex",
   },
@@ -656,7 +659,7 @@ const styles = theme => ({
   },
   userAdminSelectContainer: {
     display: "flex",
-  }
+  },
 });
 
 export {
