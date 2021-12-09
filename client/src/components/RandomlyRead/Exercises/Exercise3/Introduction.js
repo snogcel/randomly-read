@@ -5,6 +5,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import { withStyles } from '@material-ui/core';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -117,7 +118,12 @@ class Introduction extends React.Component {
                 secondary={
                   <React.Fragment>
                     <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Description
+                      Phonation is the act of producing sound through the vibration of the vocal folds in the larynx. Phonation can be viewed as a sort of "droning" or "humming" sound and is used to drive the production of the vowel sounds which allows for the production of speech.
+                      <br /><br />
+                      Learn More:
+                      <Link href="https://www.valsalva.org/phonation-blocks.htm" className={classes.textLink} color="textSecondary" variant="body1">
+                        Phonation and Valsalva-Stuttering Blocks
+                      </Link>
                     </Typography>
                   </React.Fragment>
                 }
@@ -137,7 +143,12 @@ class Introduction extends React.Component {
                 secondary={
                   <React.Fragment>
                     <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Description
+                      Transfer is the process of routing the "robotic" speech generated in the nasal passages into normal sounding speech which is centered in the mouth. Transfer can be verified by gently placing an index finger against the nose to see if you feel vibration (you should not feel any at completion of Transfer).
+                      <br /><br />
+                      Learn More:
+                      <Link href="https://thevoicelady.com/nasal-voice/" className={classes.textLink} color="textSecondary" variant="body1">
+                        Take This Test to See If Your Voice Is Nasal or Not
+                      </Link>
                     </Typography>
                   </React.Fragment>
                 }
@@ -158,7 +169,7 @@ class Introduction extends React.Component {
                 secondary={
                   <React.Fragment>
                     <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Description
+                      Resonant speech is the goal of this treatment program and is simply a "condensed" version of the Transfer concept. The idea is to begin speech production in the nasal passages, then quickly and smoothly transitioning that speech into the mouth in a way that produces natural-sounding speech.
                     </Typography>
                   </React.Fragment>
                 }
