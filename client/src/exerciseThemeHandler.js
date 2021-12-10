@@ -312,6 +312,21 @@ const styles = theme => ({
   descriptionTextContainer: {
     marginBottom: theme.spacing(2)
   },
+  descriptionTextModal: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    backgroundColor: theme.palette.background.paper,
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+    padding: theme.spacing(2)
+  },
+  descriptionTextHeader: {
+    paddingBottom: theme.spacing(3)
+  },
   incrementButton: {
     marginLeft: theme.spacing(4),
     marginTop: theme.spacing(2),

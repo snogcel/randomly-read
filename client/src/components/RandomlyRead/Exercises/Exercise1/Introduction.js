@@ -19,7 +19,6 @@ class Introduction extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const preventDefault = (event) => event.preventDefault();
 
     return (
       <React.Fragment>

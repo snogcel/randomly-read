@@ -8,6 +8,7 @@ import withWidth from '@material-ui/core/withWidth';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
+import Modal from '@material-ui/core/Modal';
 import PropTypes from 'prop-types';
 
 class RoutineDescription extends Component {
@@ -15,7 +16,8 @@ class RoutineDescription extends Component {
     super(props);
 
     this.state = {
-      text: ""
+      text: "",
+      open: false
     };
 
     this.canIncrementRoutine = this.canIncrementRoutine.bind(this);
@@ -125,6 +127,14 @@ class RoutineDescription extends Component {
 
   }
 
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    this.setState({open: false});
+  }
+
   renderDescription(props) {
     const { isCompleted, inProgress, currentExercise, currentExerciseNumber, classes, width } = props;
 
@@ -132,10 +142,16 @@ class RoutineDescription extends Component {
 
     let canIncrement = this.canIncrementRoutine();
 
-    console.log(this.props);
+    /*
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+    */
 
-    // let canDecrement = this.canDecrementRoutine();
-    // { (canDecrement) && <Button variant="contained" color="primary" onClick={e => this.decrementRoutine(e)}>Previous Practice Routine</Button> }
+    const handleOpen = () => this.handleOpen();
+    const handleClose = () => this.handleClose();
+
+    console.log(this.state);
 
     return (
       <React.Fragment key={'description'}>
@@ -155,9 +171,33 @@ class RoutineDescription extends Component {
                   </Typography>
 
                 </Grid>
-                <Grid item alignItems="center">
+                <Grid item xs>
 
-                  { (isCompleted && canIncrement) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={e => this.incrementRoutine(e)}>Go To Next Exercise</Button> }
+                  <Grid container direction="row-reverse">
+                    <Grid item>
+
+                      { (inProgress) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={handleOpen}>Exercise Summary</Button> }
+
+                      <Modal
+                        open={this.state.open}
+                        onClose={handleClose}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                      >
+                        <Box className={classes.descriptionTextModal}>
+                          <Typography id="modal-modal-title" variant="h6" component="h2" className={classes.descriptionTextHeader}>
+                            {this.props.name}
+                          </Typography>
+                          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                            {renderHTML(this.state.text)}
+                          </Typography>
+                        </Box>
+                      </Modal>
+
+                      { (isCompleted && canIncrement) && <Button className={classes.incrementButton} variant="contained" color="primary" onClick={e => this.incrementRoutine(e)}>Go To Next Exercise</Button> }
+
+                    </Grid>
+                  </Grid>
 
                 </Grid>
               </Grid>
@@ -165,8 +205,6 @@ class RoutineDescription extends Component {
               <br />
 
               { (!inProgress && (currentExerciseNumber === 0 || currentExerciseNumber === null)) && <><Box className={classes.descriptionTextContainer}><Typography variant="body1" color="textPrimary" component="p">{renderHTML(this.state.text)}</Typography></Box></> }
-
-
 
             </Paper>
 
