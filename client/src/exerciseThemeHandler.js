@@ -313,7 +313,8 @@ const styles = theme => ({
     marginBottom: theme.spacing(2)
   },
   incrementButton: {
-    marginTop: theme.spacing(6),
+    marginLeft: theme.spacing(4),
+    marginTop: theme.spacing(2),
     margin: "0 auto",
     display: "flex"
   },

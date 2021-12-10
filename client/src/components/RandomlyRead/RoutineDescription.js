@@ -126,11 +126,13 @@ class RoutineDescription extends Component {
   }
 
   renderDescription(props) {
-    const { isCompleted, inProgress, currentExercise, classes, width } = props;
+    const { isCompleted, inProgress, currentExercise, currentExerciseNumber, classes, width } = props;
 
     const formattedDuration = this.formatDuration(currentExercise);
 
     let canIncrement = this.canIncrementRoutine();
+
+    console.log(this.props);
 
     // let canDecrement = this.canDecrementRoutine();
     // { (canDecrement) && <Button variant="contained" color="primary" onClick={e => this.decrementRoutine(e)}>Previous Practice Routine</Button> }
@@ -143,17 +145,28 @@ class RoutineDescription extends Component {
 
             <Paper className={classes.exerciseDetails} elevation={0}>
 
-              <Typography variant="h5" component="h2" className={classes.routineDescriptionHeading}>{this.props.name}</Typography>
+              <Grid container>
+                <Grid item>
 
-              <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                {formattedDuration}
-              </Typography>
+                  <Typography variant="h5" component="h2" className={classes.routineDescriptionHeading}>{this.props.name}</Typography>
+
+                  <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
+                    {formattedDuration}
+                  </Typography>
+
+                </Grid>
+                <Grid item alignItems="center">
+
+                  { (isCompleted && canIncrement) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={e => this.incrementRoutine(e)}>Go To Next Exercise</Button> }
+
+                </Grid>
+              </Grid>
 
               <br />
 
-              { (!inProgress || (width !== "xs" && width !== "sm")) && <><Box className={classes.descriptionTextContainer}><Typography variant="body1" color="textPrimary" component="p">{renderHTML(this.state.text)}</Typography></Box></> }
+              { (!inProgress && (currentExerciseNumber === 0 || currentExerciseNumber === null)) && <><Box className={classes.descriptionTextContainer}><Typography variant="body1" color="textPrimary" component="p">{renderHTML(this.state.text)}</Typography></Box></> }
 
-              { (isCompleted && canIncrement) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={e => this.incrementRoutine(e)}>Continue</Button> }
+
 
             </Paper>
 
