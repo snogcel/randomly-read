@@ -17,6 +17,11 @@ class Technique extends React.Component {
     return (
       <React.Fragment>
         <List className={classes.techniqueListRoot}>
+
+          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+            The goal of this exercise is to learn how to phonate using the nasal passages and diaphragm and should result in a gentle humming sound. When practicing this technique it is not necessary to articulate the word being displayed, instead, focus on the vowel sound which drives the word. Generate a smooth flow of air using your Diaphragm while keeping your Pelvic Floor relaxed.
+          </Typography>
+
           <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon}/>
             <ListItemText

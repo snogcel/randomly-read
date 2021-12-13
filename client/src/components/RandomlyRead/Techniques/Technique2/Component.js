@@ -17,6 +17,11 @@ class Technique extends React.Component {
     return (
       <React.Fragment>
         <List className={classes.techniqueListRoot}>
+
+          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+            While keeping your Pelvic Floor relaxed, breathe in making sure not to pause at the top of your breath. Exhale using Diaphragmatic Phonation and, while remaining focused on the vowel sound, articulate your mouth and tongue as if you were speaking the word normally while gently pinching your thumb and middle finger on the vowel sound. The resulting speech will sound quite "robotic" which is addressed in subsequent exercises.
+          </Typography>
+
           <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon}/>
             <ListItemText

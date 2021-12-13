@@ -17,6 +17,11 @@ class Technique extends React.Component {
     return (
       <React.Fragment>
         <List className={classes.techniqueListRoot}>
+
+          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+            This technique is intended to transfer the "robotic" sounding speech into something that resembles natural speech. The key to performing a transfer is to become aware of the flow of air while speaking normally through your mouth compared to humming using your nasal passages. To confirm that you are successfully completing a transfer, gently hold your index finger against the side of your nose and notice how the vibration stops once the flow of air is transferred to your mouth.
+          </Typography>
+
           <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
             <ListItemText

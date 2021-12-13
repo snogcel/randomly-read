@@ -11,6 +11,13 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Link from '@material-ui/core/Link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 import Technique2 from '../../Techniques/Technique2/Component.js';
 import Technique3 from '../../Techniques/Technique3/Component.js';
 import Technique4 from '../../Techniques/Technique4/Component.js';
@@ -35,7 +42,33 @@ const useStyles = makeStyles((theme) => ({
   techniqueAccordionDetails: {
     backgroundColor: "#fdfdfd",
     paddingTop: theme.spacing(0)
-  }
+  },
+  definitionListRoot: {
+    flexGrow: 1,
+    margin: theme.spacing(0, 0)
+  },
+  definitionListHeading: {
+    margin: theme.spacing(1.5, 0, 0.5, 0),
+    color: "#0B0F65",
+    fontWeight: "500",
+    fontSize: "1.25rem"
+  },
+  definitionHeading: {
+    margin: theme.spacing(0),
+    fontSize: "1.15rem"
+  },
+  definitionSecondaryText: {
+    display: "block",
+  },
+  definitionIcon: {
+    color: "#EBECFB",
+    margin: theme.spacing(1, 0, 1, 0),
+    paddingRight: theme.spacing(1)
+  },
+  textLink: {
+    marginLeft: theme.spacing(0.5),
+    textDecoration: 'underline'
+  },
 }));
 
 function Techniques() {
@@ -65,7 +98,7 @@ function Techniques() {
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
-                Technique 2
+                Phonation & Articulation
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -94,7 +127,7 @@ function Techniques() {
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
-                Technique 3
+                Phonation & Transfer
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -123,12 +156,12 @@ function Techniques() {
           <Grid container>
             <Grid item xs={12}>
               <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
-                Technique 4
+                Resonant Speech
               </Typography>
             </Grid>
             <Grid item xs={12}>
               <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Stop, Breathe, Relax, Phonate, Articulate, Transfer, Pinch, Resonance
+                Stop, Breathe, Relax, Phonate, Transfer, Pinch, Resonance
               </Typography>
             </Grid>
           </Grid>
@@ -141,6 +174,108 @@ function Techniques() {
           </Grid>
         </AccordionDetails>
       </Accordion>
+
+      <br /><br />
+
+      <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
+        Definitions
+      </Typography>
+
+      <List className={classes.definitionListRoot}>
+        <ListItemText
+          primary={
+            <React.Fragment>
+              <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+              <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
+                Diaphragmatic Breathing
+              </Typography>
+            </React.Fragment>
+          }
+          secondary={
+            <React.Fragment>
+              <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
+                This technique is commonly used in meditation and focuses on driving the breath using your Diaphragm rather than your chest. The most basic type of diaphragmatic breathing is done by inhaling through your nose and breathing out through your mouth.
+                <br /><br />
+                Learn More:
+                <Link href="https://www.healthline.com/health/diaphragmatic-breathing" className={classes.textLink} color="textSecondary" variant="body1">
+                  What Is Diaphragmatic Breathing?
+                </Link>
+              </Typography>
+            </React.Fragment>
+          }
+        />
+        <ListItem alignItems="flex-start" disableGutters>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
+                  Phonation
+                </Typography>
+              </React.Fragment>
+            }
+            secondary={
+              <React.Fragment>
+                <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
+                  Phonation is the act of producing sound through the vibration of the vocal folds in the larynx. Phonation can be viewed as a sort of "droning" or "humming" sound and is used to drive the production of the vowel sounds which allows for the production of speech.
+                  <br /><br />
+                  Learn More:
+                  <Link href="https://www.valsalva.org/phonation-blocks.htm" className={classes.textLink} color="textSecondary" variant="body1">
+                    Phonation and Valsalva-Stuttering Blocks
+                  </Link>
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+
+        <ListItem alignItems="flex-start" disableGutters>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
+                  Transfer
+                </Typography>
+              </React.Fragment>
+            }
+            secondary={
+              <React.Fragment>
+                <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
+                  Transfer is the process of routing the "robotic" speech generated in the nasal passages into normal sounding speech which is centered in the mouth. Transfer can be verified by gently placing an index finger against the nose to see if you feel vibration (you should not feel any at completion of Transfer).
+                  <br /><br />
+                  Learn More:
+                  <Link href="https://thevoicelady.com/nasal-voice/" className={classes.textLink} color="textSecondary" variant="body1">
+                    Take This Test to See If Your Voice Is Nasal or Not
+                  </Link>
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+
+
+        <ListItem alignItems="flex-start" disableGutters>
+          <ListItemText
+            primary={
+              <React.Fragment>
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
+                  Resonance
+                </Typography>
+              </React.Fragment>
+            }
+            secondary={
+              <React.Fragment>
+                <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
+                  Resonant speech is the goal of this treatment program and is simply a "condensed" version of the Transfer concept. The idea is to begin speech production in the nasal passages, then quickly and smoothly transitioning that speech into the mouth in a way that produces natural-sounding speech.
+                </Typography>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+
+      </List>
 
     </Box>
   );

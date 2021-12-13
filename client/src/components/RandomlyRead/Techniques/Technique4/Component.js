@@ -17,6 +17,11 @@ class Technique extends React.Component {
     return (
       <React.Fragment>
         <List className={classes.techniqueListRoot}>
+
+          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+            This technique is intended to produce natural-sounding speech and is similar to "Phonation & Transfer". The goal in this case is to minimize the amount of time spent "humming" and to maximize the amount of time spent articulating and speaking. Over time, the duration of initial phonation will decrease and with practice can be condensed to a point that only the speaker will be able to detect it.
+          </Typography>
+
           <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
             <ListItemText
@@ -106,28 +111,6 @@ class Technique extends React.Component {
                   </Typography>
                   <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueSecondaryText}>
                     Notice how the vowel sound drives the word.
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography variant="h5" component="h2" className={classes.techniqueHeading} color="textPrimary">
-                    Articulate
-                  </Typography>
-                </React.Fragment>
-              }
-              secondary={
-                <React.Fragment>
-                  <Typography variant="body1" component="span" color="textPrimary" className={classes.techniquePrimaryText}>
-                    Articulate your mouth as if you were speaking the word normally.
-                  </Typography>
-                  <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueSecondaryText}>
-                    The resulting speech will sound robotic and weird.
                   </Typography>
                 </React.Fragment>
               }

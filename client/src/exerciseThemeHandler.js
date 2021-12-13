@@ -248,6 +248,11 @@ const styles = theme => ({
     margin: theme.spacing(0.75, 0, 0.75, 0),
     color: "rgba(0, 0, 0, 0.95)"
   },
+  techniqueDescriptionText: {
+    display: "block",
+    margin: theme.spacing(0, 1.25, 1.5, 1.25),
+    color: "rgba(0, 0, 0, 0.95)"
+  },
   sliderRoot:{
     width: 500,
     margin: 50

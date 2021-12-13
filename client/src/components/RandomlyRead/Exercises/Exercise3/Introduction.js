@@ -105,58 +105,7 @@ class Introduction extends React.Component {
           </Typography>
 
           <List className={classes.definitionListRoot}>
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Phonation
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Phonation is the act of producing sound through the vibration of the vocal folds in the larynx. Phonation can be viewed as a sort of "droning" or "humming" sound and is used to drive the production of the vowel sounds which allows for the production of speech.
-                      <br /><br />
-                      Learn More:
-                      <Link href="https://www.valsalva.org/phonation-blocks.htm" className={classes.textLink} color="textSecondary" variant="body1">
-                        Phonation and Valsalva-Stuttering Blocks
-                      </Link>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Transfer
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Transfer is the process of routing the "robotic" speech generated in the nasal passages into normal sounding speech which is centered in the mouth. Transfer can be verified by gently placing an index finger against the nose to see if you feel vibration (you should not feel any at completion of Transfer).
-                      <br /><br />
-                      Learn More:
-                      <Link href="https://thevoicelady.com/nasal-voice/" className={classes.textLink} color="textSecondary" variant="body1">
-                        Take This Test to See If Your Voice Is Nasal or Not
-                      </Link>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" disableGutters>
               <ListItemText
                 primary={
                   <React.Fragment>

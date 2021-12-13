@@ -105,82 +105,7 @@ class Introduction extends React.Component {
           </Typography>
 
           <List className={classes.definitionListRoot}>
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Pelvic Floor
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      The Pelvic Floor is a group of muscles located in the pelvic region which provide support for internal organs such as the bladder, rectum and uterus/prostate. In the context of this program, the relaxation of these muscles allow the speaker to short-circuit an Effort Closure.
-                      <br /><br />
-                      Learn More:
-                      <Link href="https://drtarasalay.com/what-is-the-pelvic-floor/" className={classes.textLink} color="textSecondary" variant="body1">
-                        What is the Pelvic Floor?
-                      </Link>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Phonation
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Phonation is the act of producing sound through the vibration of the vocal folds in the larynx. Phonation can be viewed as a sort of "droning" or "humming" sound and is used to drive the production of the vowel sounds which allows for the production of speech.
-                      <br /><br />
-                      Learn More:
-                      <Link href="https://www.valsalva.org/phonation-blocks.htm" className={classes.textLink} color="textSecondary" variant="body1">
-                        Phonation and Valsalva-Stuttering Blocks
-                      </Link>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Articulation
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Articulation is the act of speaking words through the movement of speech organs including lips, teeth and tongue. In other words, it is the process which allows us to produce words by shaping the "humming" sound produced through the act of Phonation.
-                      <br /><br />
-                      Learn More:
-                      <Link href="https://www.differencebetween.com/difference-between-articulation-and-vs-pronunciation/" className={classes.textLink} color="textSecondary" variant="body1">
-                        Difference Between Articulation and Pronunciation
-                      </Link>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-
-            <ListItem alignItems="flex-start">
+            <ListItem alignItems="flex-start" disableGutters>
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -204,8 +129,7 @@ class Introduction extends React.Component {
                 }
               />
             </ListItem>
-
-          </List>
+        </List>
 
         </Box>
       </React.Fragment>
