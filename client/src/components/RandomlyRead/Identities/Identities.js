@@ -2,16 +2,16 @@ const Identities = [{
   alias: "Home",
   navigation: true,
   pathname: [ "/therapy/splash/introduction", "/therapy/splash/techniques", "/therapy/splash/practice" ],
-  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbXSwiaW50ZXJhY3Rpb25TZXR0aW5ncyI6W10sImNsaWVudHMiOltdLCJ1c2VybmFtZSI6ImV4ZXJjaXNldXNlcjAwMyIsImZpcnN0TmFtZSI6IkV4ZXJjaXNlIiwibGFzdE5hbWUiOiJVc2VyMDAzIiwiaXNBY3RpdmUiOnRydWUsImlkIjoiNWZlZTZkMGVlZGYzOTIwZDg4ODQ2YTA0In0sImlhdCI6MTYyMjQzMjQwNiwiZXhwIjo4ODAyMjM0NjAwNn0.hdy4OTQB8NcblDcCPaatbzr_is4zY1k7lOu4UfoLW0I",
+  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjYxYzBiNTBjMGZhZjAwMGFiZTkxMDkxYSJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDA5IiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDkiLCJpc0FjdGl2ZSI6dHJ1ZSwiaWQiOiI1ZmVlNmQ2M2VkZjM5MjBkODg4NDZhMGEifSwiaWF0IjoxNjQwMDE5MjUwLCJleHAiOjg4MDM5OTMyODUwfQ.sSP9uWhym9mryU4lLC6zqhRXyt9zeHGxvFQfb2ztz0o",
   user: {
     "routines": [],
     "interactionSettings": [],
     "clients": [],
-    "username": "exerciseuser003",
+    "username": "exerciseuser009",
     "firstName": "Exercise",
-    "lastName": "User003",
+    "lastName": "User009",
     "isActive": false,
-    "id": "5fee6cf7edf3920d88846a03"
+    "id": "5fee6d63edf3920d88846a0a"
   }
 },{
   alias: "Beginner",
@@ -58,7 +58,7 @@ const Identities = [{
     "firstName": "Exercise",
     "lastName": "User003",
     "isActive": false,
-    "id": "5fee6cf7edf3920d88846a03"
+    "id": "5fee6cf7edf3920d88846a04"
   }
 }];
 

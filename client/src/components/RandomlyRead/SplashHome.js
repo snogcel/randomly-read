@@ -164,22 +164,122 @@ const RRHome = props => {
                 <Grid item xs={12}>
                   <AppBar position="static" color="secondary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Introduction" {...a11yProps(0)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Techniques" {...a11yProps(1)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Practice" {...a11yProps(2)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Overview" {...a11yProps(0)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Customize" {...a11yProps(1)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Contact" {...a11yProps(2)} />
                     </Tabs>
                   </AppBar>
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TabPanel value={value} index={0} className={classes.introTabPanel}>
+                  <TabPanel value={value} index={0} className={classes.homeTabPanel}>
+
                     <Fade in={true} timeout={750}>
-                      <Grid container spacing={0} className={classes.introContainer}>
+                      <Grid container justify="center" spacing={0} className={classes.introContainer}>
+
                         <Grid item xs={12}>
-                          <ExerciseIntroduction />
+
+                          <Box>
+                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                              Overview
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases: Beginner (4 weeks), Intermediate (4 weeks) and Advanced (Maintenance).
+                            </Typography>
+                          </Box>
+
+
+                          <Grid container spacing={5}>
+                            <Grid item xs={12} sm={6}>
+
+                              <List className={classes.introductionListRoot}>
+                                <ListItem alignItems="flex-start">
+                                  <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+                                  <ListItemText
+                                    primary={
+                                      <React.Fragment>
+                                        <Typography variant="body1" component="span" className={classes.introductionHeading} color="textPrimary">
+                                          Customizable
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                    secondary={
+                                      <React.Fragment>
+                                        <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
+                                          Define specific consonant and vowel sounds as well as what part of the word to practice. This flexibility allows for focus to be placed on other speech-language issues such as lisping or accent removal.
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                  />
+                                </ListItem>
+                                <ListItem alignItems="flex-start">
+                                  <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+                                  <ListItemText
+                                    primary={
+                                      <React.Fragment>
+                                        <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
+                                          Structured
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                    secondary={
+                                      <React.Fragment>
+                                        <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText}>
+                                          Words and Sentences are displayed in a timed sequence allowing for a structured practice session which leads to greater success.
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                  />
+                                </ListItem>
+                                <ListItem alignItems="flex-start">
+                                  <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+                                  <ListItemText
+                                    primary={
+                                      <React.Fragment>
+                                        <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
+                                          Focused
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                    secondary={
+                                      <React.Fragment>
+                                        <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
+                                          Fully automated usage allows you to focus on speaking technique without having to flip through flash cards or other reading materials.
+                                        </Typography>
+                                      </React.Fragment>
+                                    }
+                                  />
+                                </ListItem>
+                              </List>
+
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+
+                              <br /><br />
+
+                              <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+
+                              <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+
+                              <ProgressIndicator />
+
+                            </Grid>
+                          </Grid>
+
+
+
+
+
+
                         </Grid>
+
                       </Grid>
                     </Fade>
+
                   </TabPanel>
                 </Grid>
 
@@ -188,7 +288,7 @@ const RRHome = props => {
                     <Fade in={true} timeout={750}>
                       <Grid container spacing={0} className={classes.techniquesContainer}>
                         <Grid item xs={12}>
-                          <ExerciseTechniques />
+
                         </Grid>
                       </Grid>
                     </Fade>
@@ -196,127 +296,18 @@ const RRHome = props => {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <TabPanel value={value} index={2} className={classes.homeTabPanel}>
-
-                      <Fade in={true} timeout={750}>
-                        <Grid container spacing={2} justify="center" spacing={0} className={classes.introContainer}>
-
-                          <Grid item xs={12}>
-
-                            <Box>
-                              <Typography variant="h5" component="h2" className={classes.contentHeading}>
-                                Advanced Introduction
-                              </Typography>
-
-                              <br />
-
-                              <Typography variant="body1" color="textPrimary" component="p" >
-                                This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases.
-                              </Typography>
-                            </Box>
-
-
-                            <Grid container spacing={2}>
-                              <Grid item xs={12} sm={6}>
-
-                                <List className={classes.introductionListRoot}>
-                                  <ListItem alignItems="flex-start">
-                                    <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
-                                    <ListItemText
-                                      primary={
-                                        <React.Fragment>
-                                          <Typography variant="body1" component="span" className={classes.introductionHeading} color="textPrimary">
-                                            Beginner
-                                          </Typography>
-                                        </React.Fragment>
-                                      }
-                                      secondary={
-                                        <React.Fragment>
-                                          <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
-                                            Learn speaking techniques centered on phonation.
-                                          </Typography>
-                                        </React.Fragment>
-                                      }
-                                    />
-                                  </ListItem>
-                                  <ListItem alignItems="flex-start">
-                                    <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
-                                    <ListItemText
-                                      primary={
-                                        <React.Fragment>
-                                          <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
-                                            Intermediate
-                                          </Typography>
-                                        </React.Fragment>
-                                      }
-                                      secondary={
-                                        <React.Fragment>
-                                          <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText}>
-                                            Transfer phonation into normal-sounding speech.
-                                          </Typography>
-                                        </React.Fragment>
-                                      }
-                                    />
-                                  </ListItem>
-                                  <ListItem alignItems="flex-start">
-                                    <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} />
-                                    <ListItemText
-                                      primary={
-                                        <React.Fragment>
-                                          <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
-                                            Advanced
-                                          </Typography>
-                                        </React.Fragment>
-                                      }
-                                      secondary={
-                                        <React.Fragment>
-                                          <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionPrimaryText}>
-                                            Adapt these techniques for everyday use.
-                                          </Typography>
-                                        </React.Fragment>
-                                      }
-                                    />
-                                  </ListItem>
-                                </List>
-
-                              </Grid>
-
-                              <Grid item xs={12} sm={6}>
-
-                                <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
-
-                                <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
-
-                                <ProgressIndicator />
-
-                              </Grid>
-                            </Grid>
-
-
-
-
-
-
-                          </Grid>
+                  <TabPanel value={value} index={2} className={classes.introTabPanel}>
+                    <Fade in={true} timeout={750}>
+                      <Grid container spacing={0} className={classes.techniquesContainer}>
+                        <Grid item xs={12}>
 
                         </Grid>
-                      </Fade>
-
-
-                    <Hidden xsUp={(!(props.routineSelectId !== 0))}>
-
-                      <Fade in={true} timeout={1250}>
-                        <Grid container spacing={2}>
-
-
-
-                        </Grid>
-                      </Fade>
-
-                    </Hidden>
-
+                      </Grid>
+                    </Fade>
                   </TabPanel>
                 </Grid>
+
+
 
               </Grid>
             </Grid>
