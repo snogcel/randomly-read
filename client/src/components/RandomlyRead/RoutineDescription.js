@@ -151,8 +151,6 @@ class RoutineDescription extends Component {
     const handleOpen = () => this.handleOpen();
     const handleClose = () => this.handleClose();
 
-    console.log(this.state);
-
     return (
       <React.Fragment key={'description'}>
 

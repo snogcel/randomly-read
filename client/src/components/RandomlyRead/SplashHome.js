@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
+import { useTheme } from '@material-ui/core/styles';
 
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
@@ -74,6 +75,8 @@ const RRHome = props => {
   const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
   const { classes } = props;
 
+  const theme = useTheme();
+
   const { width } = props;
 
   let { stages } = IdentityConfig;
@@ -99,6 +102,8 @@ const RRHome = props => {
 
     // set router url to match page section
 
+
+
     let { root, levels, stages } = IdentityConfig;
 
     if (!subpath) subpath = 0;
@@ -114,25 +119,31 @@ const RRHome = props => {
 
   }
 
+  function displayModal() {
+    console.log("test");
+  }
+
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
 
   // desktop - widescreen
   if (width === "xl") {
-    exerciseHistoryContainerWidth = 4;
-    timerContainerWidth = 8;
+    exerciseHistoryContainerWidth = 8;
+    timerContainerWidth = 4;
   }
 
   // laptop or desktop
   if (width === "lg" || width === "md") {
-    exerciseHistoryContainerWidth = 4;
-    timerContainerWidth = 8;
+    exerciseHistoryContainerWidth = 8;
+    timerContainerWidth = 4;
   }
 
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>
+
       <Grid className={classes.root}>
+
           <Grid container alignItems="center" justify="center" spacing={0}>
             <Grid item xs={12} sm={11} md={11} lg={12}>
 
@@ -179,27 +190,35 @@ const RRHome = props => {
                 <Grid item xs={12}>
                   <TabPanel value={value} index={2} className={classes.homeTabPanel}>
 
-                    <Fade in={true} timeout={750}>
-                      <Grid container spacing={0} className={classes.routineSelector}>
-                        <Grid item xs={12}>
-                          <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+                      <Fade in={true} timeout={750}>
+                        <Grid container spacing={2} justify="center">
+                          <Grid item xs={12}>
+
+                          </Grid>
+
+                          <Grid item xs={12}>
+
+                            <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+
+                            <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+
+                            <ProgressIndicator />
+
+                            <ExerciseIntroduction />
+
+                          </Grid>
+
                         </Grid>
-                      </Grid>
-                    </Fade>
+                      </Fade>
+
 
                     <Hidden xsUp={(!(props.routineSelectId !== 0))}>
 
                       <Fade in={true} timeout={1250}>
                         <Grid container spacing={2}>
 
-                          { (width === "xs" || width === "sm" ? null : <><Grid item xs={exerciseHistoryContainerWidth}><ExerciseHistoryContainer /></Grid></>) }
 
-                          <Grid item xs={timerContainerWidth}>
-                            <RoutineDescriptionContainer />
-                            <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
-                            <ProgressIndicator />
-                            <WordHistoryList />
-                          </Grid>
+
                         </Grid>
                       </Fade>
 

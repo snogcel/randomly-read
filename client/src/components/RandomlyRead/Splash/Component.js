@@ -6,9 +6,6 @@ import Box from '@material-ui/core/Box';
 import Modal from '@material-ui/core/Modal';
 import Hidden from '@material-ui/core/Hidden';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
-
-// import { withStyles } from "@material-ui/core/styles";
-
 import withStyles from '@material-ui/core/styles/withStyles';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';

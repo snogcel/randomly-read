@@ -9,9 +9,9 @@ let MuiTheme = createMuiTheme({
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      main: '#2f8eed',
+      main: '#4045A6',
       // dark: will be calculated from palette.secondary.main,
-      contrastText: '#ffcc00',
+      contrastText: '#FFFFFF',
     },
     overrides: {
 
@@ -19,10 +19,7 @@ let MuiTheme = createMuiTheme({
         color:"#000000"
       }
     }
-  },
-  typography: {
-
-  },
+  }
 });
 
 MuiTheme = responsiveFontSizes(MuiTheme);
@@ -355,8 +352,8 @@ const styles = theme => ({
     marginLeft: theme.spacing(3.5),
     marginRight: theme.spacing(3.5),
     [MuiTheme.breakpoints.down('xs')]: {
-      marginLeft: theme.spacing(1.75),
-      marginRight: theme.spacing(1.75),
+      marginLeft: theme.spacing(1.5),
+      marginRight: theme.spacing(1.5),
     },
   },
   subnavigationLinkSelected: {

@@ -25,6 +25,7 @@ import SplashContainer from '../RandomlyRead/Splash/Container';
 
 import Identities from '../RandomlyRead/Identities/Identities';
 
+import { SplashPageContainer, SplashPageTimerContainer, SplashPageRoutineSelectContainer, SplashPageIntroduction, SplashPageTechniques} from '../RandomlyRead/Exercises/SplashPage/HomeContainer';
 import { Exercise1HomeContainer, Exercise1TimerContainer, Exercise1RoutineSelectContainer, Exercise1Introduction, Exercise1Techniques } from '../RandomlyRead/Exercises/Exercise1/HomeContainer';
 import { Exercise2HomeContainer, Exercise2TimerContainer, Exercise2RoutineSelectContainer, Exercise2Introduction, Exercise2Techniques } from '../RandomlyRead/Exercises/Exercise2/HomeContainer';
 import { Exercise3HomeContainer, Exercise3TimerContainer, Exercise3RoutineSelectContainer, Exercise3Introduction, Exercise3Techniques } from '../RandomlyRead/Exercises/Exercise3/HomeContainer';
@@ -114,16 +115,21 @@ const App = (props) => {
 
               <Route
                 path={Identities[0].pathname}
-                render={props => (<Exercise1HomeContainer ApolloClient={client} TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} ExerciseTechniques={Exercise1Techniques} {...props}/>)}
+                render={props => (<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} {...props}/>)}
               />
 
               <Route
                 path={Identities[1].pathname}
-                render={props => (<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} ExerciseTechniques={Exercise2Techniques} {...props}/>)}
+                render={props => (<Exercise1HomeContainer ApolloClient={client} TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} ExerciseTechniques={Exercise1Techniques} {...props}/>)}
               />
 
               <Route
                 path={Identities[2].pathname}
+                render={props => (<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} ExerciseTechniques={Exercise2Techniques} {...props}/>)}
+              />
+
+              <Route
+                path={Identities[3].pathname}
                 render={props => (<Exercise3HomeContainer ApolloClient={client} TimerContainer={Exercise3TimerContainer} RoutineSelectContainer={Exercise3RoutineSelectContainer} ExerciseIntroduction={Exercise3Introduction} ExerciseTechniques={Exercise3Techniques} {...props}/>)}
               />
 

@@ -101,8 +101,8 @@ class WordCard extends React.Component  {
                 <Card elevation={0} className={classes.card}>
                   <CardContent>
                       { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                      { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
-                      { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                      { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                      { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
                   </CardContent>
                 </Card>
 
@@ -145,24 +145,28 @@ class WordCard extends React.Component  {
 
   renderEmptyCard() {
 
-    const { classes } = this.props;
+    const { classes, inProgress } = this.props;
 
-    return (
-      <React.Fragment key={'card'}>
+    if (inProgress) {
+      return (
+        <React.Fragment key={'card'}>
 
-        <Grid container className={classes.wordGrid} justify="center">
-          <Grid item>
+          <Grid container className={classes.wordGrid} justify="center">
+            <Grid item>
 
-            <Card elevation={0} className={classes.card}>
-              <CardContent>
-              </CardContent>
-            </Card>
+              <Card elevation={0} className={classes.card}>
+                <CardContent>
+                </CardContent>
+              </Card>
 
+            </Grid>
           </Grid>
-        </Grid>
 
-      </React.Fragment>
-    );
+        </React.Fragment>
+      );
+    } else {
+      return null;
+    }
   }
 
   parseResult(mode, data, result) {
