@@ -23,6 +23,14 @@ import IdentityConfig from './Identities/Config';
 import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
 
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
 import { styles } from '../../exerciseThemeHandler';
 
 function TabPanel(props) {
@@ -191,20 +199,103 @@ const RRHome = props => {
                   <TabPanel value={value} index={2} className={classes.homeTabPanel}>
 
                       <Fade in={true} timeout={750}>
-                        <Grid container spacing={2} justify="center">
-                          <Grid item xs={12}>
-
-                          </Grid>
+                        <Grid container spacing={2} justify="center" spacing={0} className={classes.introContainer}>
 
                           <Grid item xs={12}>
 
-                            <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+                            <Box>
+                              <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                                Advanced Introduction
+                              </Typography>
 
-                            <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+                              <br />
 
-                            <ProgressIndicator />
+                              <Typography variant="body1" color="textPrimary" component="p" >
+                                This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases.
+                              </Typography>
+                            </Box>
 
-                            <ExerciseIntroduction />
+
+                            <Grid container spacing={2}>
+                              <Grid item xs={12} sm={6}>
+
+                                <List className={classes.introductionListRoot}>
+                                  <ListItem alignItems="flex-start">
+                                    <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+                                    <ListItemText
+                                      primary={
+                                        <React.Fragment>
+                                          <Typography variant="body1" component="span" className={classes.introductionHeading} color="textPrimary">
+                                            Beginner
+                                          </Typography>
+                                        </React.Fragment>
+                                      }
+                                      secondary={
+                                        <React.Fragment>
+                                          <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
+                                            Learn speaking techniques centered on phonation.
+                                          </Typography>
+                                        </React.Fragment>
+                                      }
+                                    />
+                                  </ListItem>
+                                  <ListItem alignItems="flex-start">
+                                    <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+                                    <ListItemText
+                                      primary={
+                                        <React.Fragment>
+                                          <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
+                                            Intermediate
+                                          </Typography>
+                                        </React.Fragment>
+                                      }
+                                      secondary={
+                                        <React.Fragment>
+                                          <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText}>
+                                            Transfer phonation into normal-sounding speech.
+                                          </Typography>
+                                        </React.Fragment>
+                                      }
+                                    />
+                                  </ListItem>
+                                  <ListItem alignItems="flex-start">
+                                    <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} />
+                                    <ListItemText
+                                      primary={
+                                        <React.Fragment>
+                                          <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
+                                            Advanced
+                                          </Typography>
+                                        </React.Fragment>
+                                      }
+                                      secondary={
+                                        <React.Fragment>
+                                          <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionPrimaryText}>
+                                            Adapt these techniques for everyday use.
+                                          </Typography>
+                                        </React.Fragment>
+                                      }
+                                    />
+                                  </ListItem>
+                                </List>
+
+                              </Grid>
+
+                              <Grid item xs={12} sm={6}>
+
+                                <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+
+                                <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+
+                                <ProgressIndicator />
+
+                              </Grid>
+                            </Grid>
+
+
+
+
+
 
                           </Grid>
 

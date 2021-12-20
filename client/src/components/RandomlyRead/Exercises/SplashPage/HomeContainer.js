@@ -4,7 +4,7 @@ import withAuth from './withDefinedAuth';
 
 import { updateId, resetRoutineSelect } from '../../../../actions/routineSelect';
 
-import SplashPageTimerContainer from '../TimerContainer';
+import SplashPageTimerContainer from './SplashTimerContainer';
 import SplashPageRoutineSelectContainer from './RoutineSelectContainer';
 import SplashPageIntroduction from './Introduction';
 import SplashPageTechniques from './Techniques';
