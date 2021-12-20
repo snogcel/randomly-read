@@ -27,7 +27,7 @@ class Subnavigation extends React.Component {
       this.props.clearQueryResults();
       this.props.resetWordCard();
       this.props.updateId(routineId);
-      this.props.history.push({pathname})
+      this.props.history.push({pathname});
     }
   }
 

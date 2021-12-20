@@ -41,7 +41,7 @@ class QueryWrapper extends Component {
 
     this.result = "";
     this.fetching = false;
-    this.debug = false;
+    this.debug = true;
 
     if (this.props.mode !== "Intermission") this.props.buildGraphQL(this.props);
 
@@ -61,7 +61,7 @@ class QueryWrapper extends Component {
 
       } else {
 
-        if ((this.props.timeLeft) === 0 && !this.fetching) {
+        if ((this.props.timeLeft) === 0 && !this.fetching && this.props.inProgress) {
 
           // handle case: query result should be refreshed
           if (this.debug) console.log("handle case: card should be refreshed");
@@ -84,7 +84,7 @@ class QueryWrapper extends Component {
 
     const props = this.props;
     const { currentExercise, currentExerciseNumber, exerciseResults, mode, text } = props;
-
+    
     if (this.debug) console.log("fetching data...");
 
     // Check for empty word card

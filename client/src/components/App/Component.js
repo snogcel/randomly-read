@@ -109,8 +109,6 @@ const App = (props) => {
             <Route component={ErrorNotificationContainer} />
             <Switch>
 
-
-
               <Route path='/login' component={LoginFormContainer} />
               <Route path='/signup' component={SignupFormContainer} />
               <Route path='/createpost' component={CreatePostFormContainer} />
@@ -150,7 +148,6 @@ const App = (props) => {
                   )
                 }}
               />
-              
             </Switch>
           </div>
       </ThemeProvider>
