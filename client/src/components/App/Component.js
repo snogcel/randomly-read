@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactGA from 'react-ga';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
 import { MuiThemeProvider } from '@material-ui/core/styles'
@@ -108,6 +108,9 @@ const App = (props) => {
 
             <Route component={ErrorNotificationContainer} />
             <Switch>
+
+
+
               <Route path='/login' component={LoginFormContainer} />
               <Route path='/signup' component={SignupFormContainer} />
               <Route path='/createpost' component={CreatePostFormContainer} />
@@ -137,7 +140,17 @@ const App = (props) => {
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/Administration' component={Administration} />
               <Route path='/Profile' component={UserProfile} />
-              <Route path='/' component={SplashContainer} />
+
+              <Route
+                exact
+                path="*"
+                render={() => {
+                  return (
+                    <Redirect to="/home" />
+                  )
+                }}
+              />
+              
             </Switch>
           </div>
       </ThemeProvider>
