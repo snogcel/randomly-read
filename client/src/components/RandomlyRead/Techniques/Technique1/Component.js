@@ -1,5 +1,7 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -9,17 +11,83 @@ import { withStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
+import Modal from '@material-ui/core/Modal';
+import Definitions from '../../Definitions/Container';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
 class Technique extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      Phonate: false,
+      Articulation: false,
+      Diaphragm: false,
+      PelvicFloor: false
+    };
+  }
+
+  // this is a really ugly way to do this...
+  handleOpenPhonate() {
+    this.setState({Phonate: true});
+  }
+  handleClosePhonate() {
+    this.setState({Phonate: false});
+  }
+
+  handleOpenArticulation() {
+    this.setState({Articulation: true});
+  }
+  handleCloseArticulation() {
+    this.setState({Articulation: false});
+  }
+
+  handleOpenDiaphragm() {
+    this.setState({Diaphragm: true});
+  }
+  handleCloseDiaphragm() {
+    this.setState({Diaphragm: false});
+  }
+
+  handleOpenPelvicFloor() {
+    this.setState({PelvicFloor: true});
+  }
+  handleClosePelvicFloor() {
+    this.setState({PelvicFloor: false});
+  }
 
   render() {
     const { classes } = this.props;
+
+    const handleOpenPhonate = () => this.handleOpenPhonate();
+    const handleClosePhonate = () => this.handleClosePhonate();
+
+    const handleOpenArticulation = () => this.handleOpenArticulation();
+    const handleCloseArticulation = () => this.handleCloseArticulation();
+
+    const handleOpenDiaphragm = () => this.handleOpenDiaphragm();
+    const handleCloseDiaphragm = () => this.handleCloseDiaphragm();
+
+    const handleOpenPelvicFloor = () => this.handleOpenPelvicFloor();
+    const handleClosePelvicFloor = () => this.handleClosePelvicFloor();
 
     return (
       <React.Fragment>
         <List className={classes.techniqueListRoot}>
 
-          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-            The goal of this exercise is to learn how to phonate using the nasal passages and diaphragm and should result in a gentle humming sound. When practicing this technique it is not necessary to articulate the word being displayed, instead, focus on the vowel sound which drives the word. Generate a smooth flow of air using your Diaphragm while keeping your Pelvic Floor relaxed.
+          <Typography variant="body1" component="span" color="Primary" className={classes.techniqueDescriptionText}>
+            The goal of this exercise is to learn how to <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenPhonate}>Phonate</Link> using the nasal passages and diaphragm and should result in a gentle humming sound. When practicing this technique it is not necessary to <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenArticulation}>Articulate</Link> the word being displayed, instead, focus on the vowel sound which drives the word. Generate a smooth flow of air using <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenDiaphragm}>Diaphragmatic Breathing</Link> while keeping your <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenPelvicFloor}>Pelvic Floor</Link> relaxed.
           </Typography>
 
           <ListItem alignItems="flex-start">
@@ -120,6 +188,53 @@ class Technique extends React.Component {
             />
           </ListItem>
         </List>
+
+
+        <Modal
+          open={this.state.Phonate}
+          onClose={handleClosePhonate}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="Phonate"/>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={this.state.Articulation}
+          onClose={handleCloseArticulation}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="Articulation"/>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={this.state.Diaphragm}
+          onClose={handleCloseDiaphragm}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="Diaphragm"/>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={this.state.PelvicFloor}
+          onClose={handleClosePelvicFloor}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="PelvicFloor"/>
+          </Box>
+        </Modal>
+
+
       </React.Fragment>
     );
   }

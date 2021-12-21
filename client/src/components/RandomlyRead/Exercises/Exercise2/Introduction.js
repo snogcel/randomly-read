@@ -121,7 +121,7 @@ class Introduction extends React.Component {
                       Transfer is the process of routing the "robotic" speech generated in the nasal passages into normal sounding speech which is centered in the mouth. Transfer can be verified by gently placing an index finger against the nose to see if you feel vibration (you should not feel any at completion of Transfer).
                       <br /><br />
                       Learn More:
-                      <Link href="https://thevoicelady.com/nasal-voice/" className={classes.textLink} color="textSecondary" variant="body1">
+                      <Link href="https://thevoicelady.com/nasal-voice/" className={classes.textLink} color="textSecondary" variant="body1" target="_blank">
                         Take This Test to See If Your Voice Is Nasal or Not
                       </Link>
                     </Typography>

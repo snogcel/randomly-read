@@ -6,12 +6,22 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import Modal from '@material-ui/core/Modal';
 import { withStyles } from '@material-ui/core';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
+import Definitions from '../../Definitions/Container';
+
 class Introduction extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false
+    };
+  }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
@@ -121,7 +131,7 @@ class Introduction extends React.Component {
                       The main focus of fluency shaping intervention is to increase fluent speech through teaching one or more of the following: easy onsets, loose contacts, changing breathing, prolonging sounds or words, pausing, as well as other methods that reduce speaking rate.
                       <br /><br />
                       Learn More:
-                      <Link href="https://www.mnsu.edu/comdis/isad7/papers/ramig7.html" className={classes.textLink} color="textSecondary" variant="body1">
+                      <Link href="https://www.mnsu.edu/comdis/isad7/papers/ramig7.html" className={classes.textLink} color="textSecondary" variant="body1" target="_blank">
                         Fluency Shaping Intervention: Helpful, But Why It Is Important to Know More
                       </Link>
                     </Typography>
@@ -146,10 +156,10 @@ class Introduction extends React.Component {
                       An effort closure, as defined by the Valsalva Hypothesis, is what your body does when it is attempting to lift, push or pull a heavy object. Your chest and shoulders become rigid, the muscles in your abdomen tighten and your throat (layrnx) becomes completely locked.
                       <br /><br />
                       Learn More:
-                      <Link href="https://www.mnsu.edu/comdis/kuster/Infostuttering/Harrison/block.html" className={classes.textLink} color="textSecondary" variant="body1">
+                      <Link href="https://www.mnsu.edu/comdis/kuster/Infostuttering/Harrison/block.html" className={classes.textLink} color="textSecondary" variant="body1" target="_blank">
                         Understanding the Speech Block
                       </Link> and
-                      <Link href="https://valsalva.org" className={classes.textLink} color="textSecondary" variant="body1">
+                      <Link href="https://valsalva.org" className={classes.textLink} color="textSecondary" variant="body1" target="_blank">
                         Valsalva Hypothesis
                       </Link>
                     </Typography>

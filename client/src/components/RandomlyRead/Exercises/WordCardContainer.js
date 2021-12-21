@@ -84,7 +84,7 @@ class QueryWrapper extends Component {
 
     const props = this.props;
     const { currentExercise, currentExerciseNumber, exerciseResults, mode, text } = props;
-    
+
     if (this.debug) console.log("fetching data...");
 
     // Check for empty word card

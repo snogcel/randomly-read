@@ -1,5 +1,7 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -9,10 +11,63 @@ import { withStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
+import Modal from '@material-ui/core/Modal';
+import Definitions from '../../Definitions/Container';
+
 class Technique extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      Articulation: false,
+      Diaphragm: false,
+      PelvicFloor: false,
+      Transfer: false
+    };
+  }
+
+  handleOpenArticulation() {
+    this.setState({Articulation: true});
+  }
+  handleCloseArticulation() {
+    this.setState({Articulation: false});
+  }
+
+  handleOpenDiaphragm() {
+    this.setState({Diaphragm: true});
+  }
+  handleCloseDiaphragm() {
+    this.setState({Diaphragm: false});
+  }
+
+  handleOpenPelvicFloor() {
+    this.setState({PelvicFloor: true});
+  }
+  handleClosePelvicFloor() {
+    this.setState({PelvicFloor: false});
+  }
+
+  handleOpenTransfer() {
+    this.setState({Transfer: true});
+  }
+  handleCloseTransfer() {
+    this.setState({Transfer: false});
+  }
 
   render() {
     const { classes } = this.props;
+
+    const handleOpenArticulation = () => this.handleOpenArticulation();
+    const handleCloseArticulation = () => this.handleCloseArticulation();
+
+    const handleOpenDiaphragm = () => this.handleOpenDiaphragm();
+    const handleCloseDiaphragm = () => this.handleCloseDiaphragm();
+
+    const handleOpenPelvicFloor = () => this.handleOpenPelvicFloor();
+    const handleClosePelvicFloor = () => this.handleClosePelvicFloor();
+
+    const handleOpenTransfer = () => this.handleOpenTransfer();
+    const handleCloseTransfer = () => this.handleCloseTransfer();
 
     return (
       <React.Fragment>
@@ -183,6 +238,51 @@ class Technique extends React.Component {
             />
           </ListItem>
         </List>
+
+        <Modal
+          open={this.state.Articulation}
+          onClose={handleCloseArticulation}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="Articulation"/>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={this.state.Diaphragm}
+          onClose={handleCloseDiaphragm}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="Diaphragm"/>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={this.state.PelvicFloor}
+          onClose={handleClosePelvicFloor}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="PelvicFloor"/>
+          </Box>
+        </Modal>
+
+        <Modal
+          open={this.state.Transfer}
+          onClose={handleCloseTransfer}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={classes.descriptionTextModal}>
+            <Definitions word="Transfer"/>
+          </Box>
+        </Modal>
+
       </React.Fragment>
     );
   }
