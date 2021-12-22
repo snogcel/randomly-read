@@ -14,6 +14,7 @@ import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 
+import Header from './Header/Component';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
@@ -134,6 +135,11 @@ const RRHome = props => {
     <Container maxWidth="lg" className={classes.homeContainer}>
       <Grid className={classes.root}>
           <Grid container alignItems="center" justify="center" spacing={0}>
+
+            <Grid item xs={12} sm={11} md={11} lg={12}>
+              <Header />
+            </Grid>
+
             <Grid item xs={12} sm={11} md={11} lg={12}>
 
               <Grid container spacing={0}>

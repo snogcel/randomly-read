@@ -210,6 +210,14 @@ const styles = theme => ({
     color: "#0B0F65",
     fontWeight: "bold"
   },
+  headerText: {
+    display: "block",
+    fontWeight: "700",
+    fontFamily: "'Quicksand', sans-serif",
+    color: "#14197E",
+    fontSize: "2.0rem",
+    margin: theme.spacing(0, 0, 2.5, 1)
+  },
   techniqueMainHeading: {
     marginTop: theme.spacing(0),
     color: "#0B0F65",
