@@ -3,6 +3,8 @@ import { compose } from 'redux';
 import withAuth from './withDefinedAuth';
 
 import { updateId, resetRoutineSelect } from '../../../../actions/routineSelect';
+import { resetWordCard } from '../../../../actions/word';
+import { setInProgress, setExercisePause, updateTime, updateTimeLeft, clearQueryResults } from '../../../../actions/exerciseHistory';
 
 import SplashPageTimerContainer from './SplashTimerContainer';
 import SplashPageRoutineSelectContainer from './RoutineSelectContainer';
@@ -19,7 +21,7 @@ const mapStateToProps = state => ({
   text: state.word.text
 });
 
-const mapDispatchToProps = { updateId, resetRoutineSelect };
+const mapDispatchToProps = { updateId, resetRoutineSelect, resetWordCard, setInProgress, setExercisePause, updateTime, updateTimeLeft, clearQueryResults };
 
 const enhance = compose(
   withAuth,

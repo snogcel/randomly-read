@@ -329,6 +329,9 @@ const styles = theme => ({
   descriptionTextHeader: {
     paddingBottom: theme.spacing(3)
   },
+  getStartedButton: {
+
+  },
   incrementButton: {
     marginLeft: theme.spacing(4),
     marginTop: theme.spacing(2),

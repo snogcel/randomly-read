@@ -174,7 +174,7 @@ class RoutineDescription extends Component {
                   <Grid container direction="row-reverse">
                     <Grid item>
 
-                      { (inProgress) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={handleOpen}>Exercise Summary</Button> }
+                      { (inProgress) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={handleOpen}>Help</Button> }
 
                       <Modal
                         open={this.state.open}

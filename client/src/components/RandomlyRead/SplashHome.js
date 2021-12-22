@@ -2,6 +2,8 @@ import React from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { useTheme } from '@material-ui/core/styles';
 
+import Identities from './Identities/Identities';
+
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import withWidth from '@material-ui/core/withWidth';
@@ -19,10 +21,10 @@ import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
 import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
-import IdentityConfig from './Identities/Config';
+import IdentityConfig from './Identities/SplashConfig';
 import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
-
+import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -109,9 +111,6 @@ const RRHome = props => {
   function updatePathname(subpath) {
 
     // set router url to match page section
-
-
-
     let { root, levels, stages } = IdentityConfig;
 
     if (!subpath) subpath = 0;
@@ -120,15 +119,25 @@ const RRHome = props => {
 
     for (let i = 0; i < levels.length; i++) {
       if (location.includes(levels[i])) {
-        location = root + levels[i] + "/" + stages[subpath];
+        location = root + stages[subpath];
         props.history.push(location);
       }
     }
 
   }
 
-  function displayModal() {
-    console.log("test");
+  function handleClick(e, pathname, routineId) {
+    if (props.history.location.pathname !== pathname) {
+      props.setInProgress(false);
+      props.setExercisePause(false);
+      props.updateTime(0);
+      props.updateTimeLeft(0);
+      props.resetRoutineSelect();
+      props.clearQueryResults();
+      props.resetWordCard();
+      props.updateId(routineId);
+      props.history.push({pathname});
+    }
   }
 
   let exerciseHistoryContainerWidth = 12;
@@ -166,7 +175,7 @@ const RRHome = props => {
                     <Tabs value={value} onChange={handleChange}>
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Overview" {...a11yProps(0)} />
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Customize" {...a11yProps(1)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Contact" {...a11yProps(2)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="About" {...a11yProps(2)} />
                     </Tabs>
                   </AppBar>
                 </Grid>
@@ -193,6 +202,23 @@ const RRHome = props => {
 
 
                           <Grid container spacing={5}>
+
+                            <Grid item xs={12} sm={6}>
+
+                              <br /><br />
+
+                              <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
+
+                              <RoutineDescriptionContainer />
+
+                              <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
+
+                              <ProgressIndicator />
+
+                            </Grid>
+
+
+
                             <Grid item xs={12} sm={6}>
 
                               <List className={classes.introductionListRoot}>
@@ -255,23 +281,19 @@ const RRHome = props => {
                                 </ListItem>
                               </List>
 
-                            </Grid>
+                              <br />
 
-                            <Grid item xs={12} sm={6}>
+                              <Grid container justify="center" alignItems="center">
+                                <Grid item xs={12} align="center">
 
-                              <br /><br />
+                                  <Button className={classes.getStartedButton} variant="outlined" color="primary" onClick={e => handleClick(e, Identities[1].pathname[0], Identities[1].user.routines[0])}>Get Started</Button>
 
-                              <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
-
-                              <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
-
-                              <ProgressIndicator />
+                                </Grid>
+                              </Grid>
 
                             </Grid>
+
                           </Grid>
-
-
-
 
 
 

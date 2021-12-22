@@ -1,5 +1,5 @@
 const Config = {
-  root: "/therapy/",
+  root: ["/therapy/"],
   levels: ["beginner", "intermediate", "advanced"],
   stages: ["introduction","techniques","practice"]
 };
