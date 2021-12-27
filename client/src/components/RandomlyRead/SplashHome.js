@@ -351,7 +351,13 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              FluencyShaping.com has been customized to address Stuttering and is heavily influenced by the work of Dr. Peter Ramig (Speech Therapy) and Dr. William Perry (Valsalva Hypothesis / Self-Help). This tool has been inspired through my own personal journey learning how to successfully manage my fluency being a Person Who Stutters (PWS). FluencyShaping.com aims to make the “practice” and “maintenance” aspects of Speech Therapy as user-friendly and efficient as possible.
+                              FluencyShaping.com has been customized to address Stuttering and is heavily influenced by the work of Dr. Peter Ramig (Speech Therapy) and Dr. William Perry (Valsalva Hypothesis / Self-Help). This tool has been inspired through my own personal journey learning how to successfully manage my stutter.
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              FluencyShaping.com aims to make the “practice” and “maintenance” aspects of Speech Therapy as user-friendly and efficient as possible.
                             </Typography>
 
                           </Box>
@@ -363,8 +369,14 @@ const RRHome = props => {
 
                               <br />
 
+                              <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
+                                How does it work?
+                              </Typography>
+
+                              <br />
+
                               <Typography variant="body1" color="textPrimary" component="p" >
-                                Through the use of a password-protected administrator console, customized routines can be created for a group of clients who share a common deficit such as Lisping, or for an individual based more specifically on their needs.
+                                Through the use of a password-protected administrator console, customized routines can be created for a group of clients who share a common deficit such as Lisping or Stuttering. Additionally, fully customized routines can be created for an individual based on their needs.
                               </Typography>
 
                               <br />
@@ -375,15 +387,17 @@ const RRHome = props => {
 
                               <br />
 
-                              <Typography variant="body1" color="textPrimary" component="p" >
-                                Using a proprietary system, FluencyShaping.com is able to filter and focus the system-generated exercise routine on specific consonants and vowels, the placement of those sounds within the word, the number of syllables in the word, and even so far as grade level that the word is first acquired. This approach allows for a more efficient usage of time while practicing, ensuring that the user is focusing their efforts – working “smart” instead of working “hard”.
+                              <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
+                                Practice Smarter.
                               </Typography>
 
                               <br />
 
                               <Typography variant="body1" color="textPrimary" component="p" >
-                                This platform aims to bridge the gap between “on-site” speech therapy and “self-help” speech therapy. To learn more about how this tool could be used in your own practice please reach out to <Link href="mailto:jon@blackcircletechnologies.com">jon@blackcircletechnologies.com</Link>.
+                                Using a proprietary system, FluencyShaping.com is able to filter and focus the system-generated exercise routine on specific consonants and vowels, the placement of those sounds within the word, the number of syllables in the word, and even so far as grade level that the word is first acquired. This approach allows for a more efficient usage of time while practicing, ensuring that the user is focusing their efforts – working “smart” instead of working “hard”.
                               </Typography>
+
+
 
                             </Grid>
 
@@ -391,7 +405,7 @@ const RRHome = props => {
                             <Hidden xsDown>
                               <Grid item xs={12} sm={4}>
 
-                                <br />
+                                <br /><br /><br />
 
                                 <img src="./fluencyShaping_admin1_preview.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} alt="Preview 1"/>
 
@@ -406,7 +420,7 @@ const RRHome = props => {
                                   </div>
                                 </Modal>
 
-                                <br /><br />
+                                <br /><br /><br />
 
                                 <img src="./fluencyShaping_admin2_preview.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} alt="Preview 2" />
 
@@ -425,6 +439,22 @@ const RRHome = props => {
                             </Hidden>
 
                           </Grid>
+
+                          <br />
+
+                          <Box>
+
+                            <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
+                              Contact Us.
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              This platform aims to bridge the gap between “on-site” speech therapy and “self-help” speech therapy. To learn more about how this tool could be used in your own practice please reach out to <Link href="mailto:jon@blackcircletechnologies.com">jon@blackcircletechnologies.com</Link>.
+                            </Typography>
+                          </Box>
+
                         </Grid>
                       </Grid>
                     </Fade>
