@@ -24,7 +24,7 @@ class Introduction extends React.Component {
       <React.Fragment>
         <Box>
           <Typography variant="h5" component="h2" className={classes.contentHeading}>
-            Advanced Introduction
+            Advanced Introduction (Week 8+)
           </Typography>
 
           <br />

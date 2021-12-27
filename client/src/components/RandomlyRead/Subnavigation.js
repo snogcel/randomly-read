@@ -44,7 +44,9 @@ class Subnavigation extends React.Component {
               return false; // skip
             }
             return true;
-          }).map((item, i) => ( <Typography key={i+"_text"} gutterBottom variant="body1" color="textSecondary" className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} ><Link href="#" onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0])}>{item.alias}</Link></Typography> )) }
+          }).map((item, i) => (
+            <Typography key={i+"_text"} gutterBottom variant="body1" color="textSecondary" className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} ><Link href="#" onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0])}>{item.alias}</Link></Typography>
+          )) }
         </Box>
         <br />
       </React.Fragment>

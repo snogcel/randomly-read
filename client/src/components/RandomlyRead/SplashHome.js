@@ -5,6 +5,7 @@ import { useTheme } from '@material-ui/core/styles';
 import Identities from './Identities/Identities';
 
 import Grid from '@material-ui/core/Grid';
+import Modal from '@material-ui/core/Modal';
 import Container from '@material-ui/core/Container';
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
@@ -86,6 +87,9 @@ const RRHome = props => {
   const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
   const { classes } = props;
 
+  const [open_1, setOpen_1] = React.useState(false);
+  const [open_2, setOpen_2] = React.useState(false);
+
   const theme = useTheme();
 
   const { width } = props;
@@ -156,6 +160,22 @@ const RRHome = props => {
     timerContainerWidth = 4;
   }
 
+  const handleOpen_1 = () => {
+    setOpen_1(true);
+  };
+
+  const handleClose_1 = () => {
+    setOpen_1(false);
+  };
+
+  const handleOpen_2 = () => {
+    setOpen_2(true);
+  };
+
+  const handleClose_2 = () => {
+    setOpen_2(false);
+  };
+
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>
@@ -180,8 +200,7 @@ const RRHome = props => {
                   <AppBar position="static" color="secondary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Overview" {...a11yProps(0)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Customize" {...a11yProps(1)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="About" {...a11yProps(2)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Customizable" {...a11yProps(1)} />
                     </Tabs>
                   </AppBar>
                 </Grid>
@@ -202,8 +221,15 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases: Beginner (4 weeks), Intermediate (4 weeks) and Advanced (Maintenance).
+                              FluencyShaping.com has been created to provide a robust toolset intended to address a wide array of speech language disabilities and/or other perceived deficits. These potential applications range from various developmental disabilities such as Stuttering and Lisping to professional uses such as accent reduction or improved enunciation.
                             </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              The key to this program is a fully customizable “exercise routine” that applies two concepts to what is an otherwise very repetitive process: <strong>Structure</strong> and <strong>Focus</strong>.
+                            </Typography>
+
                           </Box>
 
 
@@ -317,25 +343,93 @@ const RRHome = props => {
                       <Grid container spacing={0} className={classes.techniquesContainer}>
                         <Grid item xs={12}>
 
+                          <Box>
+                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                              Customizable
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              FluencyShaping.com has been customized to address Stuttering and is heavily influenced by the work of Dr. Peter Ramig (Speech Therapy) and Dr. William Perry (Valsalva Hypothesis / Self-Help). This tool has been inspired through my own personal journey learning how to successfully manage my fluency being a Person Who Stutters (PWS). FluencyShaping.com aims to make the “practice” and “maintenance” aspects of Speech Therapy as user-friendly and efficient as possible.
+                            </Typography>
+
+                          </Box>
+
+
+                          <Grid container spacing={5}>
+
+                            <Grid item xs={12} sm={8}>
+
+                              <br />
+
+                              <Typography variant="body1" color="textPrimary" component="p" >
+                                Through the use of a password-protected administrator console, customized routines can be created for a group of clients who share a common deficit such as Lisping, or for an individual based more specifically on their needs.
+                              </Typography>
+
+                              <br />
+
+                              <Typography variant="body1" color="textPrimary" component="p" >
+                                These exercise routines provide a structure for these practice routines and can even go so far as to track whether or not the person has completed the assigned exercises. In addition to providing structure, these exercise routines also provide a targeted set of words to practice as opposed to simply reading text out of magazines, newspapers or books.
+                              </Typography>
+
+                              <br />
+
+                              <Typography variant="body1" color="textPrimary" component="p" >
+                                Using a proprietary system, FluencyShaping.com is able to filter and focus the system-generated exercise routine on specific consonants and vowels, the placement of those sounds within the word, the number of syllables in the word, and even so far as grade level that the word is first acquired. This approach allows for a more efficient usage of time while practicing, ensuring that the user is focusing their efforts – working “smart” instead of working “hard”.
+                              </Typography>
+
+                              <br />
+
+                              <Typography variant="body1" color="textPrimary" component="p" >
+                                This platform aims to bridge the gap between “on-site” speech therapy and “self-help” speech therapy. To learn more about how this tool could be used in your own practice please reach out to <Link href="mailto:jon@blackcircletechnologies.com">jon@blackcircletechnologies.com</Link>.
+                              </Typography>
+
+                            </Grid>
+
+
+                            <Hidden xsDown>
+                              <Grid item xs={12} sm={4}>
+
+                                <br />
+
+                                <img src="./fluencyShaping_admin1_preview.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} alt="Preview 1"/>
+
+                                <Modal
+                                  aria-labelledby="simple-modal-title"
+                                  aria-describedby="simple-modal-description"
+                                  open={open_1}
+                                  onClose={handleClose_1}
+                                >
+                                  <div className={classes.previewImage}>
+                                    <img src="./fluencyShaping_admin1.PNG" alt="Preview 1"/>
+                                  </div>
+                                </Modal>
+
+                                <br /><br />
+
+                                <img src="./fluencyShaping_admin2_preview.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} alt="Preview 2" />
+
+                                <Modal
+                                  aria-labelledby="simple-modal-title"
+                                  aria-describedby="simple-modal-description"
+                                  open={open_2}
+                                  onClose={handleClose_2}
+                                >
+                                  <div className={classes.previewImage}>
+                                    <img src="./fluencyShaping_admin2.PNG" alt="Preview 2"/>
+                                  </div>
+                                </Modal>
+
+                              </Grid>
+                            </Hidden>
+
+                          </Grid>
                         </Grid>
                       </Grid>
                     </Fade>
                   </TabPanel>
                 </Grid>
-
-                <Grid item xs={12}>
-                  <TabPanel value={value} index={2} className={classes.introTabPanel}>
-                    <Fade in={true} timeout={750}>
-                      <Grid container spacing={0} className={classes.techniquesContainer}>
-                        <Grid item xs={12}>
-
-                        </Grid>
-                      </Grid>
-                    </Fade>
-                  </TabPanel>
-                </Grid>
-
-
 
               </Grid>
             </Grid>
