@@ -221,7 +221,7 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              FluencyShaping.com has been created to provide a robust toolset intended to address a wide array of speech language disabilities and/or other perceived deficits. These potential applications range from various developmental disabilities such as Stuttering and Lisping to professional uses such as accent reduction or improved enunciation.
+                              FluencyShaping.com has been created to provide a robust toolset intended to address a wide array of speech language disabilities and other perceived deficits. These potential applications range from developmental disabilities such as stuttering and lisping to professional uses such as accent reduction.
                             </Typography>
 
                             <br />
@@ -267,7 +267,7 @@ const RRHome = props => {
                                     secondary={
                                       <React.Fragment>
                                         <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
-                                          Define specific consonant and vowel sounds as well as what part of the word to practice. This flexibility allows for focus to be placed on other speech-language issues such as lisping or accent removal.
+                                          Define specific consonant and vowel sounds as well as what part of the word to practice. This flexibility allows for focus to be placed on other speech-language issues such as lisping or accent reduction.
                                         </Typography>
                                       </React.Fragment>
                                     }
