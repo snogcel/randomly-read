@@ -13,7 +13,7 @@ import Box from '@material-ui/core/Box';
 
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
-
+import Typography from '@material-ui/core/Typography';
 import Header from './Header/Component';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
@@ -216,6 +216,14 @@ const RRHome = props => {
 
               </Grid>
             </Grid>
+
+            <Grid item xs={12} sm={11} md={11} lg={12} align="center">
+              <br /><br /><br />
+              <Typography variant="body1" color="textSecondary" component="p" >
+                Copyright &copy; 2021 Black Circle Technologies, LLC
+              </Typography>
+            </Grid>
+
           </Grid>
 
       </Grid>
