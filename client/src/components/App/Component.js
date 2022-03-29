@@ -38,7 +38,7 @@ import UserProfile from '../UserProfile/Container';
 
 const App = (props) => {
 
-  let {user, token} = props;
+  let {user, token, exerciseUser, exerciseToken} = props;
 
   let location = useLocation();
 
@@ -57,7 +57,7 @@ const App = (props) => {
 
     if (Identities[i].pathname.indexOf(location.pathname) !== -1) { // override
 
-      if (token !== Identities[i].token) {
+      if (token !== Identities[i].token && typeof(token) === "undefined") { // only override token if not set (not logged in)
         token = Identities[i].token;
         user = Identities[i].user;
       }

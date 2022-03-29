@@ -147,7 +147,7 @@ function MenuAppBar(props) {
           </SwipeableDrawer>
 
           <Typography onClick={handleRandomlyRead} variant="h6" className={classes.title}>
-            <span className={classes.headerLink}>Randomly Read</span>
+            <span className={classes.headerLink}>Fluency Shaping</span>
           </Typography>
 
           {user ? (

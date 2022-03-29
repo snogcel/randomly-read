@@ -82,11 +82,21 @@ class RoutineSelect extends React.Component {
     }
 
     UNSAFE_componentWillMount() {
-      if (typeof(this.props.user) !== "undefined") this.prepareRoutineSelect();
+      if (typeof(this.props.exerciseUser) !== "undefined") {
+        this.prepareRoutineSelect();
+      } else if (typeof(this.props.user) !== "undefined") {
+        this.prepareRoutineSelect();
+      }
     }
 
     prepareRoutineSelect(){
-      if (typeof(this.props.token) !== "undefined") this.props.fetchAssignedRoutines(this.props.token);
+      if (typeof(this.props.exerciseToken) !== "undefined") {
+        console.log("- exercise token -");
+        this.props.fetchAssignedRoutines(this.props.exerciseToken);
+      } else if (typeof(this.props.token) !== "undefined") {
+        console.log("- login token -");
+        this.props.fetchAssignedRoutines(this.props.token);
+      }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
