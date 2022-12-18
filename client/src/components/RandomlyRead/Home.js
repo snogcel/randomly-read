@@ -78,9 +78,23 @@ const RRHome = props => {
 
   const { width } = props;
 
-  let { stages } = IdentityConfig;
+  let subpath = 0;
+  let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
 
   let location = props.history.location.pathname;
+
+  for (let i = 0; i < levels.length; i++) {
+    if (location.includes(levels[i])) {
+      subpath = i;
+      location = root + levels[i] + "/" + stages[subpath];      
+    }
+  }
+  
+  if (leveltitle !== 'Home') {
+    document.title = 'EasyOnset.com | ' + leveltitle[subpath] + ' ' + pathtitle[subpath];
+  } else {
+    document.title = 'EasyOnset.com';
+  }
 
   let selectedStage = 0; // set default stage
 
