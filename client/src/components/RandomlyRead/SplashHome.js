@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from "react-ga4";
 import { withStyles } from "@material-ui/core/styles";
 import { useTheme } from '@material-ui/core/styles';
 
@@ -128,6 +129,10 @@ const RRHome = props => {
         props.history.push(location);
       }
     }
+    
+    const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
+    ReactGA.initialize(GA_ID);
+    ReactGA.send({ hitType: "pageview", page: location });  
 
   }
 

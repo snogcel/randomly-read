@@ -1,5 +1,6 @@
 import React from 'react';
-import ReactGA from 'react-ga';
+import { useState, useEffect } from "react";
+import myGa from './myGa';
 import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
@@ -94,8 +95,9 @@ const App = (props) => {
   });
 
   // Google Analytics
-  ReactGA.initialize('UA-109552567-1');
-  ReactGA.pageview(window.location.pathname + window.location.search);
+  useEffect(() => {
+    myGa();
+  }, []);
 
   return (
   <MuiThemeProvider theme={MuiTheme}>

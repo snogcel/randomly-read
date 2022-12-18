@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from "react-ga4";
 import { withRouter } from 'react-router';
 import Identities from './Identities/Identities';
 import { styles } from '../../exerciseThemeHandler';
@@ -17,7 +18,8 @@ class Subnavigation extends React.Component {
 
   }
 
-  handleClick(e, pathname, routineId) {
+  handleClick(e, pathname, routineId, alias) {
+    
     if (this.props.history.location.pathname !== pathname) {
       this.props.setInProgress(false);
       this.props.setExercisePause(false);
@@ -28,6 +30,16 @@ class Subnavigation extends React.Component {
       this.props.resetWordCard();
       this.props.updateId(routineId);
       this.props.history.push({pathname});
+
+      if (alias !== 'Home') {
+        document.title = 'EasyOnset.com | ' + alias + ' Introduction';
+      } else {
+        document.title = 'EasyOnset.com';
+      }
+
+      const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
+      ReactGA.initialize(GA_ID);
+      ReactGA.send({ hitType: "pageview", page: pathname });      
     }
   }
 
@@ -45,7 +57,7 @@ class Subnavigation extends React.Component {
             }
             return true;
           }).map((item, i) => (
-            <Typography key={i+"_text"} gutterBottom variant="body1" color="textSecondary" className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} ><Link href="#" onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0])}>{item.alias}</Link></Typography>
+            <Typography key={i+"_text"} gutterBottom variant="body1" color="textSecondary" className={classes.subnavigationLink + " " + ((item.pathname.indexOf(history.location.pathname) !== -1) ? classes.subnavigationLinkSelected : '')} ><Link href="#" onClick={e => this.handleClick(e, item.pathname[0], item.user.routines[0], item.alias)}>{item.alias}</Link></Typography>
           )) }
         </Box>
         <br />

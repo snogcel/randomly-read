@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactGA from "react-ga4";
 import { withStyles } from "@material-ui/core/styles";
 
 import Grid from '@material-ui/core/Grid';
@@ -100,7 +101,7 @@ const RRHome = props => {
 
     // set router url to match page section
 
-    let { root, levels, stages } = IdentityConfig;
+    let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
 
     if (!subpath) subpath = 0;
 
@@ -112,6 +113,16 @@ const RRHome = props => {
         props.history.push(location);
       }
     }
+    
+    if (leveltitle !== 'Home') {
+      document.title = 'EasyOnset.com | ' + leveltitle[subpath] + ' ' + pathtitle[subpath];
+    } else {
+      document.title = 'EasyOnset.com';
+    }
+
+    const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
+    ReactGA.initialize(GA_ID);
+    ReactGA.send({ hitType: "pageview", page: location });  
 
   }
 
