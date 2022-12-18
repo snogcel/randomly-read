@@ -28,28 +28,6 @@ class Technique extends React.Component {
               primary={
                 <React.Fragment>
                   <Typography variant="h5" component="h2" className={classes.techniqueHeading} color="textPrimary">
-                    Stop
-                  </Typography>
-                </React.Fragment>
-              }
-              secondary={
-                <React.Fragment>
-                  <Typography variant="body1" component="span" color="textPrimary" className={classes.techniquePrimaryText}>
-                    Breathe out while paying attention to your Diaphragm.
-                  </Typography>
-                  <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueSecondaryText}>
-                    You should be breathing downwards through your spine towards the floor.
-                  </Typography>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
-            <ListItemText
-              primary={
-                <React.Fragment>
-                  <Typography variant="h5" component="h2" className={classes.techniqueHeading} color="textPrimary">
                     Breathe
                   </Typography>
                 </React.Fragment>

@@ -102,7 +102,7 @@ function Techniques() {
             </Grid>
             <Grid item xs={12}>
               <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Stop, Breathe, Relax, Phonate
+                Breathe, Relax, Phonate
               </Typography>
             </Grid>
           </Grid>
@@ -131,7 +131,7 @@ function Techniques() {
             </Grid>
             <Grid item xs={12}>
               <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Stop, Breathe, Relax, Phonate, Articulate, Pinch
+                Breathe, Relax, Phonate, Articulate, Pinch
               </Typography>
             </Grid>
           </Grid>
