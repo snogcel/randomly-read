@@ -45,7 +45,7 @@ function ProgressIndicator(props) {
 
       {(props.currentExerciseNumber !== null && props.text !== "") ? (
         <>
-          <CircularProgress size={size} variant="static" value={value} color="inherit" className={progressClass} />
+          <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />
           <br />
           <Typography variant="h6" color="secondary">{status}</Typography>
         </>
