@@ -85,13 +85,12 @@ const RRHome = props => {
 
   for (let i = 0; i < levels.length; i++) {
     if (location.includes(levels[i])) {
-      subpath = i;
-      location = root + levels[i] + "/" + stages[subpath];      
+      subpath = i;   
     }
   }
   
   if (leveltitle !== 'Home') {
-    document.title = 'EasyOnset.com | ' + leveltitle[subpath] + ' ' + pathtitle[subpath];
+    document.title = 'EasyOnset.com | ' + leveltitle[subpath];
   } else {
     document.title = 'EasyOnset.com';
   }
@@ -128,12 +127,6 @@ const RRHome = props => {
       }
     }
     
-    if (leveltitle !== 'Home') {
-      document.title = 'EasyOnset.com | ' + leveltitle[subpath] + ' ' + pathtitle[subpath];
-    } else {
-      document.title = 'EasyOnset.com';
-    }
-
     const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
     ReactGA.initialize(GA_ID);
     ReactGA.send({ hitType: "pageview", page: location });  
