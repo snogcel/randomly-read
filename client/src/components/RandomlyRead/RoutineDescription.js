@@ -202,7 +202,7 @@ class RoutineDescription extends Component {
 
               <br />
 
-              { (!inProgress && (currentExerciseNumber === 0 || currentExerciseNumber === null)) && <><Box className={classes.descriptionTextContainer}><Typography variant="body1" color="textPrimary" component="p">{renderHTML(this.state.text)}</Typography></Box></> }
+              { (!inProgress && (currentExerciseNumber === 0 || currentExerciseNumber === null)) && <><Box className={classes.descriptionTextContainer}>{renderHTML(this.state.text)}</Box></> }
 
             </Paper>
 
