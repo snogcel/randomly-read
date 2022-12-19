@@ -226,7 +226,7 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              FluencyShaping.com has been created to provide a robust toolset intended to address a wide array of speech language disabilities and other perceived deficits. These potential applications range from developmental disabilities such as stuttering and lisping to professional uses such as accent reduction.
+                              EasyOnset.com has been created to provide a robust toolset intended to address a wide array of speech language disabilities and other perceived deficits. These potential applications range from developmental disabilities such as stuttering and lisping to professional uses such as accent reduction.
                             </Typography>
 
                             <br />
@@ -356,13 +356,13 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              FluencyShaping.com has been customized to address Stuttering and is heavily influenced by the work of Dr. Peter Ramig (Speech Therapy) and Dr. William Perry (Valsalva Hypothesis / Self-Help). This tool has been inspired through my own personal journey learning how to successfully manage my stutter.
+                              EasyOnset.com has been customized to address Stuttering and is heavily influenced by the work of Dr. Peter Ramig (Speech Therapy) and Dr. William Perry (Valsalva Hypothesis / Self-Help). This tool has been inspired through my own personal journey learning how to successfully manage my stutter.
                             </Typography>
 
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              FluencyShaping.com aims to make the “practice” and “maintenance” aspects of Speech Therapy as user-friendly and efficient as possible.
+                              EasyOnset.com aims to make the “practice” and “maintenance” aspects of Speech Therapy as user-friendly and efficient as possible.
                             </Typography>
 
                           </Box>
@@ -399,7 +399,7 @@ const RRHome = props => {
                               <br />
 
                               <Typography variant="body1" color="textPrimary" component="p" >
-                                Using a proprietary system, FluencyShaping.com is able to filter and focus the system-generated exercise routine on specific consonants and vowels, the placement of those sounds within the word, the number of syllables in the word, and even so far as grade level that the word is first acquired. This approach allows for a more efficient usage of time while practicing, ensuring that the user is focusing their efforts – working “smart” instead of working “hard”.
+                                Using a proprietary system, EasyOnset.com is able to filter and focus the system-generated exercise routine on specific consonants and vowels, the placement of those sounds within the word, the number of syllables in the word, and even so far as grade level that the word is first acquired. This approach allows for a more efficient usage of time while practicing, ensuring that the user is focusing their efforts – working “smart” instead of working “hard”.
                               </Typography>
 
 
