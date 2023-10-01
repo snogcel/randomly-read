@@ -53,6 +53,7 @@
     "redux-form-material-ui": "^4.3.4",
     "redux-thunk": "^2.3.0",
     "remark-breaks": "^1.0.2",
+    "serve": "^13.0.4",
     "styled-components": "^4.1.3"
   },
   "scripts": {
@@ -94,5 +95,5 @@
   "jscsConfig": {
     "extends": "dev"
   },
-  "homepage": "https://fluencyshaping.com"
+  "homepage": "https://easyonset.com"
 }
