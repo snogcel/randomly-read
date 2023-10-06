@@ -82,7 +82,7 @@ const App = (props) => {
   const baseUrl =
     process.env.NODE_ENV === 'development_'
       ? 'http://dev.snogcel.com:8080/graphql'
-      : `https://api.stuttered.net/graphql`;
+      : `https://api.easyonset.com/graphql`;
 
   const link = ApolloLink.from([
     AuthLink,
