@@ -4,7 +4,7 @@ const Identities = [{
   pathname: [ "/home", "/customize", "/about" ],
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjYxYzBiNTBjMGZhZjAwMGFiZTkxMDkxYSJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDA5IiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDkiLCJpc0FjdGl2ZSI6dHJ1ZSwiaWQiOiI1ZmVlNmQ2M2VkZjM5MjBkODg4NDZhMGEifSwiaWF0IjoxNjQwMDE5MjUwLCJleHAiOjg4MDM5OTMyODUwfQ.sSP9uWhym9mryU4lLC6zqhRXyt9zeHGxvFQfb2ztz0o",
   user: {
-    "routines": [],
+    "routines": [],    
     "interactionSettings": [],
     "clients": [],
     "username": "exerciseuser009",
@@ -19,8 +19,9 @@ const Identities = [{
   pathname: [ "/therapy/beginner/introduction", "/therapy/beginner/techniques", "/therapy/beginner/practice" ],
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjVmZWQxMWJkZWRmMzkyMGQ4ODg0Njc3NSJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDAxIiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDEiLCJpc0FjdGl2ZSI6ZmFsc2UsImlkIjoiNWZlZDExOWVlZGYzOTIwZDg4ODQ2Nzc0In0sImlhdCI6MTYxODAxNjYyNiwiZXhwIjo4ODAxNzkzMDIyNn0.cq2RSFajG2EJlvvaQy6ykyrZ4hjIJDDrpPmsiQhcfxw",
   user: {
-    "routines": [
-      "5fed11bdedf3920d88846775"
+    "routines": [],
+    "step_routines": [
+      "60b45d7329f56b4af066ae87"
     ],
     "interactionSettings": [],
     "clients": [],

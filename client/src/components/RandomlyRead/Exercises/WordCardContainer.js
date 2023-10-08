@@ -29,6 +29,7 @@ const mapStateToProps = state => ({
   time: state.exerciseHistory.time,
   inProgress: state.exerciseHistory.inProgress,
   isCompleted: state.exerciseHistory.isCompleted,
+  auto: state.modeSelect.auto
 });
 
 const mapDispatchToProps = { addVowel, addWord, removeVowel, removeWord, addRoutineVowel, buildGraphQL, setModalOpen, addQueryResult, addExerciseNumber, updateTimeLeft };
@@ -64,7 +65,7 @@ class QueryWrapper extends Component {
         if ((this.props.timeLeft) === 0 && !this.fetching && this.props.inProgress) {
 
           // handle case: query result should be refreshed
-          if (this.debug) console.log("handle case: card should be refreshed");
+          if (this.debug) console.log("handle case: card should be refreshed, timeLeft: ", this.props.timeLeft);
 
           this.fetching = true;
 

@@ -18,7 +18,8 @@ const mapStateToProps = state => ({
   isPaused: state.exerciseHistory.isPaused,
   inProgress: state.exerciseHistory.inProgress,
   isCompleted: state.exerciseHistory.isCompleted,
-  text: state.word.text
+  text: state.word.text,
+  auto: state.modeSelect.auto
 });
 
 const mapDispatchToProps = { updateId, resetRoutineSelect, resetWordCard, setInProgress, setExercisePause, updateTime, updateTimeLeft, clearQueryResults };

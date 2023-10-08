@@ -73,7 +73,7 @@ function LinkTab(props) {
 
 const RRHome = props => {
 
-  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
+  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient, auto } = props;
   const { classes } = props;
 
   const { width } = props;

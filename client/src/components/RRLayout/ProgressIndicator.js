@@ -43,10 +43,20 @@ function ProgressIndicator(props) {
   return (
     <div className={classes.column}>
 
-      {(props.currentExerciseNumber !== null && props.text !== "") ? (
+      {(props.currentExerciseNumber !== null && props.text !== "" && props.auto) ? (
         <>
-          <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />
-          <br />
+          <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />      
+        </>
+      ) : (
+        <>
+
+        </>
+      )}
+
+      <br />
+
+      {(props.currentExerciseNumber !== null && props.text !== "") ? (
+        <>          
           <Typography variant="h6" color="secondary">{status}</Typography>
         </>
       ) : (

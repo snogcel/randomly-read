@@ -103,6 +103,9 @@ class RoutineSelect extends React.Component {
 
       // check if routine has changed
       if ((prevProps.routine !== this.props.routine)) {
+        console.log(this.state);
+        console.log(this.props);
+        this.props.updateTimeLeft(1); // avoid accidental word update                
         this.props.action(this.props.routine); // pass mode update back to QueryManager
       }
 
@@ -154,6 +157,7 @@ class RoutineSelect extends React.Component {
 
     handleChange(e) {
         this.setState({Routine: e.target.value});
+        this.props.setInProgress(false);
 
         let selectedRoutine = {};
 

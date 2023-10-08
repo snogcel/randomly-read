@@ -14,7 +14,8 @@ import Home from '../../Home'
 const mapStateToProps = state => ({
   routineSelectId: state.routineSelect.id,
   inProgress: state.exerciseHistory.inProgress,
-  isCompleted: state.exerciseHistory.isCompleted
+  isCompleted: state.exerciseHistory.isCompleted,
+  auto: state.modeSelect.auto
 });
 
 const mapDispatchToProps = { updateId, resetRoutineSelect };

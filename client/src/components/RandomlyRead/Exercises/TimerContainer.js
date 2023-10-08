@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 
 import Timer from '../Timer';
 
+import { selectTimerMode } from '../../../actions/modeSelect';
+
 import {addWord} from '../../../actions/word';
 import {removeWord} from '../../../actions/word';
 import {removeConsonant} from '../../../actions/word';
@@ -49,9 +51,13 @@ const mapStateToProps = state => ({
   inProgress: state.exerciseHistory.inProgress,
   isCompleted: state.exerciseHistory.isCompleted,
   text: state.word.text,
+  auto: state.modeSelect.auto
 });
 
 const mapDispatchToProps = dispatch => ({
+  selectTimerMode: (auto) => {
+    dispatch(selectTimerMode(auto))
+  },
   addWord: (word) => {
     dispatch(addWord(word))
   },

@@ -10,7 +10,8 @@ const mapStateToProps = state => ({
     total: state.exerciseHistory.total,
     range: state.exerciseHistory.range,
     timeLeft: state.exerciseHistory.timeLeft,
-    text: state.word.text
+    text: state.word.text,
+    auto: state.modeSelect.auto
     });
 
     const mapDispatchToProps = dispatch => ({

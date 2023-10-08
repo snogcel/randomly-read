@@ -5,13 +5,20 @@ import Box from '@material-ui/core/Box';
 import Grid from '@material-ui/core/Grid';
 
 import { withStyles } from "@material-ui/core/styles";
+import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
+
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 import withWidth from '@material-ui/core/withWidth';
 import PropTypes from 'prop-types';
 
 import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ReplayIcon from '@material-ui/icons/Replay';
 
 import { styles } from '../../exerciseThemeHandler';
@@ -45,6 +52,7 @@ class Timer extends React.Component {
     this.startTimer = this.startTimer.bind(this);
     this.resumeTimer = this.resumeTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+    this.skipTimer = this.skipTimer.bind(this);
     this.resetTimerAndQuery = this.resetTimerAndQuery.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
 
@@ -98,11 +106,15 @@ class Timer extends React.Component {
       if (this.debug) console.log("routine change detected");
 
       // reset timer
+
+      console.log("-reset timer-");
+
       timerReset = true;
       this.props.updateTime(0);
-      this.setState({time: 0, timeLeft: 0, isOn: false});
+      this.setState({time: 0, timeLeft: 1, isOn: false});
       this.props.setMode('Word');
       this.props.setInProgress(false);
+      this.props.updateTimeLeft(1);
 
       // reset exercise
       this.exerciseStack = [];
@@ -374,7 +386,7 @@ class Timer extends React.Component {
       }
 
       // Proceed to 'next Action' in Exercise
-      if (nextAction) {
+      if (nextAction && this.props.auto) {
 
         this.timerHandler(nextAction);
         this.currentRoutine.delete(currentKey);
@@ -480,6 +492,58 @@ class Timer extends React.Component {
       this.completed = 0;
       this.props.setIsCompleted(false);
       this.props.updateCompleted(0);
+    }
+
+  }
+
+  skipTimer() {
+
+    let routineKeys = this.currentRoutine.keys();
+    let currentKey = routineKeys.next().value;
+
+    let nextAction = this.currentRoutine.get(currentKey);
+
+    // If no 'next Action' in Exercise, advance to next Exercise Set in Routine
+    if (!nextAction && (this.exerciseStack.length > 0) && (this.exercisePointer < (this.exerciseStack.length - 1))) {
+
+      if(this.exerciseStack[this.exercisePointer].map !== 'intermission') {
+        this.completed++;
+        this.props.updateCompleted(this.completed);
+      }
+
+      this.exercisePointer++;
+
+      this.props.addExerciseNumber(this.exercisePointer);
+
+      this.setExercise(this.exerciseStack[this.exercisePointer]);
+
+      routineKeys = this.currentRoutine.keys();
+
+      currentKey = routineKeys.next().value;
+
+      nextAction = this.currentRoutine.get(currentKey);
+    }
+
+    // If end of Exercise Stack is reached, stop Timer
+    if (!nextAction && (this.exercisePointer === (this.exerciseStack.length - 1))) {
+      this.setState({timeLeft: null});
+      this.props.updateTimeLeft(null); // Calling the "updateTimeLeft" action function to update the global state "timeLeft"
+
+      this.props.setInProgress(false);
+      this.props.setIsCompleted(true);
+      this.stopTimer();
+    }
+
+    // Proceed to 'next Action' in Exercise
+    if (nextAction) {
+
+      this.timerHandler(nextAction);
+      this.currentRoutine.delete(currentKey);
+
+      this.setState({
+        lastUpdated: Date.now()
+      });
+
     }
 
   }
@@ -597,6 +661,16 @@ class Timer extends React.Component {
 
   }
 
+
+  onChange = e => {
+    // Enable and Disable Auto Increment
+
+    const selectedMode = e.target.checked;
+
+    this.props.selectTimerMode(selectedMode);    
+
+  }
+
   render() {
 
     const { classes } = this.props;
@@ -616,11 +690,32 @@ class Timer extends React.Component {
     let start = (this.props.isPaused && !this.props.inProgress && !this.props.isCompleted) ?
       <IconButton onClick={this.startTimer} className={classes.iconButton} aria-label="start" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton> : null;
 
-    let stop = (this.props.isPaused || !this.state.isOn) ?
-      null : <IconButton onClick={this.stopTimer} className={classes.iconButton} aria-label="stop" color={"primary"}><PauseCircleFilledIcon fontSize="large" /></IconButton>;
+    let stop = ((this.props.isPaused) || (!this.state.isOn)) ?
+      null : <IconButton onClick={this.stopTimer} className={classes.iconButton} aria-label="stop" color={"primary"} disabled={this.props.auto === true ? false : true}><PauseCircleFilledIcon fontSize="large"  disabled={this.props.auto === true ? false : true} /></IconButton>;
 
-    let resume = ((this.state.time === 0 || !this.props.isPaused) || !this.props.inProgress) ?
+    let skip = ((this.props.isPaused) || (!this.state.isOn)) ?
+      null : <React.Fragment>
+        <IconButton onClick={this.skipTimer} className={classes.iconButton} aria-label="skip" color={"primary"}><SkipNextIcon fontSize="large" /></IconButton>
+        <IconButton onClick={this.resetTimer} className={classes.iconButton} aria-label="reset" color={"primary"}><ReplayIcon fontSize="large" /></IconButton>
+        </React.Fragment>
+
+    let resume = (((this.state.time === 0) || (!this.props.isPaused)) || (!this.props.inProgress)) ?
       null : <IconButton onClick={this.resumeTimer} className={classes.iconButton} aria-label="resume" color={"primary"}><PlayCircleFilledIcon fontSize="large" /></IconButton>;
+
+    let auto = <FormControl component="fieldset">      
+    <FormGroup aria-label="position" row>        
+      <FormControlLabel
+        value="bottom"
+        control={<Checkbox
+          checked={this.props.auto}
+          onChange={this.onChange}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />}
+        label="Auto"
+        labelPlacement="bottom"
+      />
+    </FormGroup>
+  </FormControl>;
 
     let reset = ((this.props.isPaused && !this.props.inProgress && !this.props.isCompleted) || !this.props.isPaused) ?
       null : <IconButton onClick={this.resetTimer} className={classes.iconButton} aria-label="reset" color={"primary"}><ReplayIcon fontSize="large" /></IconButton>;
@@ -628,7 +723,7 @@ class Timer extends React.Component {
     let TimerFragment = <React.Fragment>
       <Grid container className={classes.routineSelectContainer}>
 
-        <Grid item xs={8} sm={5} md={3}>
+        <Grid item xs={5} sm={5} md={3}>
 
           <Box className={classes.RoutineSelector}>
             <RoutineSelectContainer ref={this.routineSelect} action={this.routineSelectHandler} />
@@ -636,20 +731,31 @@ class Timer extends React.Component {
 
         </Grid>
 
-        <Grid item xs={4} sm={7} md={9}>
+        <Grid item xs={5} sm={5} md={6}>
 
           {(this.props.currentExercise.length > 0) ? (
             <>
-              <Box className={classes.TimerControls}>
-                {start}
-                {resume}
+              <Box className={classes.TimerControls}>                
+                {start}                
+                {resume}                                           
                 {stop}
+                {skip}
                 {reset}
-              </Box>
+              </Box>              
             </>
-          ) : ( <> </> )}
+          ) : ( <> </> )}    
 
         </Grid>
+
+        <Grid item xs={2} sm={2} md={3}>
+          <Box display="flex" justifyContent="flex-end">
+            {auto}    
+          </Box>
+        </Grid>
+
+        
+
+                
 
       </Grid>
     </React.Fragment>;
