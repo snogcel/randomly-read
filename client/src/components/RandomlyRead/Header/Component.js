@@ -15,7 +15,7 @@ class Header extends React.Component {
 
     return (
       <React.Fragment>
-        <Typography variant="body1" component="span" color="textPrimary" className={classes.headerText}>
+        <Typography variant="h4" component="span" color="textPrimary" className={classes.headerText}>
           EasyOnset.com
         </Typography>
       </React.Fragment>

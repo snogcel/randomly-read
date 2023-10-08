@@ -189,17 +189,21 @@ const RRHome = props => {
 
           <Grid container alignItems="center" justify="center" spacing={0}>
 
-            <Grid item xs={12} sm={11} md={11} lg={12}>
+          <Grid className={classes.headerBackground} container spacing={0}>
+            <Grid item xs={4} sm={4} md={6}>
               <Header />
             </Grid>
+
+            <Grid item xs={8} sm={8} md={6}>
+              <Box display="flex" justifyContent="flex-end">
+                <Subnavigation />
+              </Box>
+            </Grid>
+          </Grid>
 
             <Grid item xs={12} sm={11} md={11} lg={12}>
 
               <Grid container spacing={0}>
-
-                <Grid item xs={12}>
-                  <Subnavigation />
-                </Grid>
 
                 <Grid item xs={12}>
                   <AppBar position="static" color="secondary" elevation={0}>

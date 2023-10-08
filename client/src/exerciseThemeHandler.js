@@ -215,8 +215,18 @@ const styles = theme => ({
     fontWeight: "700",
     fontFamily: "'Quicksand', sans-serif",
     color: "#14197E",
-    fontSize: "2.0rem",
-    margin: theme.spacing(0, 0, 2.5, 1)
+    margin: theme.spacing(1, 0, 1.5, 0)
+  },
+  headerBackground: {
+    // backgroundColor:"#F4F2F9",
+  },
+  modeSelect: {
+    backgroundColor:"#FFFDEE",
+    paddingLeft: theme.spacing(1)
+  },
+  modeSelectText: {    
+    paddingLeft: theme.spacing(1),
+    margin: theme.spacing(0, 0, 1.5, 0)
   },
   techniqueMainHeading: {
     marginTop: theme.spacing(0),
