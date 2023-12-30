@@ -14,13 +14,8 @@
   padding: 0;
 }
 
-html {
-  height: 100%;
-}
-
 body {
   min-height: 100%;
-  padding-bottom: 8px;
   font-family: 'IBM Plex Sans', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
   background-color: #FFFBF6;
   -webkit-font-smoothing: antialiased;
