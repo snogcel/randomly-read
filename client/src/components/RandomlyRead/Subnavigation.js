@@ -108,7 +108,10 @@ class Subnavigation extends React.Component {
     return (
       <React.Fragment>
         
-          <FormControl style={{minWidth: 160}}>
+        <Box className={classes.modeSelectContainer}>
+          <FormHelperText className={classes.modeHelperText}>Select Training Mode</FormHelperText>
+
+          <FormControl>
             <Select
               labelId="mode-simple-select-label"
               id="mode-simple-select"
@@ -123,11 +126,11 @@ class Subnavigation extends React.Component {
                 }
                 return true;
               }).map((item, i) => (
-                <MenuItem key={i+"_text"} value={i}>{item.alias}</MenuItem>                
+                <MenuItem key={i+"_text"} value={i} sx={{ justifyContent: 'flex-end' }}>{item.alias}</MenuItem>                
               )) }  
-            </Select>
-            <FormHelperText className={classes.modeSelectText}>Selected Training Mode</FormHelperText>
+            </Select>            
           </FormControl>        
+        </Box>
         
       </React.Fragment>
     );

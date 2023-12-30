@@ -476,7 +476,7 @@ const RRHome = props => {
             <Grid item xs={12} sm={11} md={11} lg={12} align="center">
               <br /><br /><br />
               <Typography variant="body1" color="textSecondary" component="p" >
-                Copyright &copy; 2023 Black Circle Technologies, LLC
+                Copyright &copy; 2024 Black Circle Technologies, LLC
               </Typography>
             </Grid>
 

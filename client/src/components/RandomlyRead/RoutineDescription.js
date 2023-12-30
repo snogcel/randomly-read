@@ -148,6 +148,12 @@ class RoutineDescription extends Component {
     const handleClose = () => setOpen(false);
     */
 
+    /* removed help button 
+
+    { (inProgress) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={handleOpen}>Help</Button> }
+
+    **/
+
     const handleOpen = () => this.handleOpen();
     const handleClose = () => this.handleClose();
 
@@ -172,9 +178,7 @@ class RoutineDescription extends Component {
                 <Grid item xs>
 
                   <Grid container direction="row-reverse">
-                    <Grid item>
-
-                      { (inProgress) && <Button className={classes.incrementButton} variant="outlined" color="primary" onClick={handleOpen}>Help</Button> }
+                    <Grid item>                      
 
                       <Modal
                         open={this.state.open}

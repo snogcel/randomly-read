@@ -26,6 +26,7 @@ MuiTheme = responsiveFontSizes(MuiTheme);
 
 MuiTheme.typography.h6 = {
   fontSize: '1.0rem',
+  fontFamily: "'Gudea', sans-serif",
   [MuiTheme.breakpoints.up('md')]: {
     fontSize: '1.0rem',
   },
@@ -33,6 +34,7 @@ MuiTheme.typography.h6 = {
 
 MuiTheme.typography.h5 = {
   fontSize: '1.5rem',
+  fontFamily: "'Gudea', sans-serif",
   [MuiTheme.breakpoints.up('md')]: {
     fontSize: '1.5rem',
   },
@@ -46,13 +48,21 @@ MuiTheme.typography.h3 = {
   },
 };
 
+MuiTheme.typography.h2 = {
+  fontFamily: "'Gudea', sans-serif",
+};
+
+MuiTheme.typography.h1 = {
+  fontFamily: "'Gudea', sans-serif",
+};
+
 
 const styles = theme => ({
   root: {
     flexGrow: 1
   },
   homeContainer: {
-    marginTop: theme.spacing(5)
+    marginTop: theme.spacing(2)
   },
   introTabPanel: {
     '& .MuiBox-root': {
@@ -61,6 +71,7 @@ const styles = theme => ({
   },
   introTabLink: {
     padding: theme.spacing(0, 2, 0, 2),
+    fontFamily: "'Gudea', sans-serif",
     [MuiTheme.breakpoints.down('xs')]: {
       marginLeft: theme.spacing(0),
       marginRight: theme.spacing(0),
@@ -81,7 +92,7 @@ const styles = theme => ({
     },
   },
   routineSelector: {
-    backgroundColor: "#FCFCFF",
+    //backgroundColor: "#FCFCFF",
     padding: theme.spacing(1.5, 2, 1.5, 2)
   },
   routineSelectContainer: {
@@ -210,23 +221,52 @@ const styles = theme => ({
     color: "#0B0F65",
     fontWeight: "bold"
   },
-  headerText: {
+  headerTextStart: {
     display: "block",
-    fontWeight: "700",
-    fontFamily: "'Quicksand', sans-serif",
+    fontWeight: "500",
+    fontFamily: "'Mitr', sans-serif",
     color: "#14197E",
-    margin: theme.spacing(1, 0, 1.5, 0)
+    fontSize: theme.spacing(5),
+    margin: theme.spacing(2.5, 0, 0, 1)
+  },
+  headerTextEnd: {
+    display: "block",
+    fontWeight: "400",
+    fontFamily: "'Mitr', sans-serif",
+    color: "#14197E",
+    fontSize: theme.spacing(4),
+    margin: theme.spacing(-1, 0, 2, 2),
+    textAlign: "bottom"
   },
   headerBackground: {
     // backgroundColor:"#F4F2F9",
   },
+  modeHelperText: {
+    fontFamily: "'Gudea', sans-serif",
+    color: "#F4F2F9",
+    fontWeight: 500,
+    lineHeight: 1.75,
+    textTransform: "uppercase",
+    textAlign: "center"
+  },
+  modeSelectContainer: {    
+    border: 4,
+    borderLeft: 0,
+    borderRight: 0,
+    backgroundColor: "#4045A6"
+  },
   modeSelect: {
-    backgroundColor:"#FFFDEE",
-    paddingLeft: theme.spacing(1)
+    //backgroundColor:"#FFFDEE",
+    //backgroundColor:"#F4F2F9",
+    backgroundColor:"#FFF",
+    //paddingLeft: theme.spacing(2),
+    fontFamily: "'Gudea', sans-serif",
+    minWidth: theme.spacing(24),
+    padding: theme.spacing(0,1,0,1)
   },
   modeSelectText: {    
     paddingLeft: theme.spacing(1),
-    margin: theme.spacing(0, 0, 1.5, 0)
+    margin: theme.spacing(0, 0, 1.5, 2),
   },
   techniqueMainHeading: {
     marginTop: theme.spacing(0),
@@ -312,7 +352,7 @@ const styles = theme => ({
     outline: "none"
   },
   wordGrid: {
-    alignItems: "end",
+    //alignItems: "end",
     minHeight: theme.spacing(20),
     marginTop: theme.spacing(2),
   },
@@ -323,11 +363,36 @@ const styles = theme => ({
     alignItems: "center"
   },
   wordCardContainer: {
-    minHeight: theme.spacing(20),
+    //minHeight: theme.spacing(20),
   },
   card: {
     textAlign: "center",
     minHeight: theme.spacing(20),
+    minWidth: theme.spacing(38),
+    border: '0px solid #242A99',
+    borderRadius: theme.spacing(2),
+    boxShadow: '0 0 32px #C7D0D8',
+    justifyContent: "center",
+    display: "flex",
+    alignItems: "center"
+  },
+  intermissionCard: {
+    textAlign: "center",
+    minHeight: theme.spacing(20),
+    minWidth: theme.spacing(38),
+    //border: '0px solid #242A99',
+    //borderRadius: theme.spacing(2),
+    //boxShadow: '0 0 32px #C7D0D8',
+    backgroundColor: "#FFFBF6",
+    justifyContent: "center",
+    display: "flex",
+    alignItems: "center"
+  },
+  cardContent: {
+    margin: "0 auto",
+    
+    paddingLeft: theme.spacing(4),
+    paddingRight: theme.spacing(4)
   },
   descriptionTextContainer: {
     marginBottom: theme.spacing(2)
@@ -405,6 +470,7 @@ const styles = theme => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(0),
     marginRight: theme.spacing(0),
+    backgroundColor: 'transparent',
   },
   sideCard: {
     marginBottom: 20
@@ -558,7 +624,8 @@ const styles = theme => ({
   },
   exerciseDetails: {
     padding: theme.spacing(2, 1, 1, 1),
-    marginTop: theme.spacing(0)
+    marginTop: theme.spacing(0),
+    backgroundColor: 'transparent',
   },
   homePageContainer: {
 

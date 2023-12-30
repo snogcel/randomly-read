@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,500,600,700');
 @import url("https://fonts.googleapis.com/css2?family=Amatic+SC&family=Quicksand&display=swap");
 
+/* new */
+
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans+Extra+Condensed:wght@900&family=Gudea:wght@700&family=Mitr:wght@200;300;400;500;600;700&display=swap');
+
+
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -15,6 +22,7 @@ body {
   min-height: 100%;
   padding-bottom: 8px;
   font-family: 'IBM Plex Sans', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif;
+  background-color: #FFFBF6;
   -webkit-font-smoothing: antialiased;
 }
 

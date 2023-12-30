@@ -95,16 +95,22 @@ class WordCard extends React.Component  {
       return (
         <React.Fragment key={'card'}>
 
-          <Grid container className={classes.wordGrid} justify="center">
+          <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center" sx={{ width: 1, height: "100vh" }}>
             <Grid item>
 
-                <Card elevation={0} className={classes.card}>
-                  <CardContent>
+                { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
+                  <CardContent className={classes.cardContent}>
                       { (mode === 'Intermission' ?  <><Intermission /></> : null)}
                       { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
                       { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
                   </CardContent>
-                </Card>
+                </Card></> : <><Card elevation={0} className={classes.card}>
+                  <CardContent className={classes.cardContent}>
+                      { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                      { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                      { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                  </CardContent>
+                </Card></>)}               
 
             </Grid>
           </Grid>
@@ -125,17 +131,21 @@ class WordCard extends React.Component  {
     return (
       <React.Fragment key={'card'}>
 
-        <Grid container className={classes.wordGrid} justify="center">
+        <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center">
           <Grid item>
 
-            <Card elevation={0} className={classes.card}>
-              <CardContent>
+            { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}><CardContent className={classes.cardContent}>
                 { (mode === 'Intermission' ?  <><Intermission /></> : null)}
                 { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
                 { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
               </CardContent>
-            </Card>
-
+            </Card></> : <><Card elevation={0} className={classes.card}><CardContent className={classes.cardContent}>
+                { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+              </CardContent>
+            </Card></>)}            
+              
           </Grid>
         </Grid>
 
@@ -145,19 +155,22 @@ class WordCard extends React.Component  {
 
   renderEmptyCard() {
 
-    const { classes, inProgress } = this.props;
+    const { mode, classes, inProgress } = this.props;
 
     if (inProgress) {
       return (
         <React.Fragment key={'card'}>
 
-          <Grid container className={classes.wordGrid} justify="center">
+          <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center">
             <Grid item>
 
-              <Card elevation={0} className={classes.card}>
-                <CardContent>
+            { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
+                <CardContent className={classes.cardContent}>
                 </CardContent>
-              </Card>
+              </Card></> : <><Card elevation={0} className={classes.intermissionCard}>
+                <CardContent className={classes.cardContent}>
+                </CardContent>
+              </Card></> )}              
 
             </Grid>
           </Grid>

@@ -43,7 +43,7 @@ export default function DurationSlider(props) {
         step={1}
         marks
         min={1}
-        max={10}
+        max={15}
         onChange={handleSliderChange('duration', value)}
       />
     </div>
