@@ -136,13 +136,13 @@ class WordCard extends React.Component  {
 
             { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}><CardContent className={classes.cardContent}>
                 { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
-                { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
               </CardContent>
             </Card></> : <><Card elevation={0} className={classes.card}><CardContent className={classes.cardContent}>
                 { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                { (mode === 'Word' ? <><Fader><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
-                { (mode === 'Sentence' ?  <><Fader><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></Fader></> : null ) }
+                { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
               </CardContent>
             </Card></>)}            
               

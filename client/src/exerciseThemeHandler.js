@@ -413,9 +413,9 @@ const styles = theme => ({
     textAlign: "center",
     minHeight: theme.spacing(20),
     minWidth: theme.spacing(38),
-    border: '0px solid #242A99',
-    borderRadius: theme.spacing(2),
-    boxShadow: '0 0 32px #C7D0D8',
+    border: '1px solid #242A99',
+    //borderRadius: theme.spacing(2),
+    //boxShadow: '0 0 32px #C7D0D8',
     justifyContent: "center",
     display: "flex",
     alignItems: "center"
