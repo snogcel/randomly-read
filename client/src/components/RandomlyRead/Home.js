@@ -2,6 +2,8 @@ import React from 'react';
 import ReactGA from "react-ga4";
 import { withStyles } from "@material-ui/core/styles";
 
+import Identities from './Identities/Identities';
+
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import withWidth from '@material-ui/core/withWidth';
@@ -11,11 +13,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 import Typography from '@material-ui/core/Typography';
-import Header from './Header/Component';
+import Header from './Header/Container';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
@@ -23,6 +26,12 @@ import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
 import IdentityConfig from './Identities/Config';
 import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
+
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { styles } from '../../exerciseThemeHandler';
 
@@ -113,6 +122,7 @@ const RRHome = props => {
   function updatePathname(subpath) {
 
     // set router url to match page section
+    console.log(subpath);
 
     let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
 
@@ -133,6 +143,65 @@ const RRHome = props => {
 
   }
 
+  function handleShortcut(e, subpath, location, routineId) {
+
+    // set router url to match page section
+    console.log(subpath);
+
+    let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+
+    if (!subpath) subpath = 0;
+
+    // let location = props.history.location.pathname;
+
+    console.log(location);
+
+    if (props.history.location.pathname !== location) {
+      props.setInProgress(false);
+      props.setExercisePause(false);
+      props.updateTime(0);
+      props.updateTimeLeft(0);
+      props.resetRoutineSelect();
+      props.clearQueryResults();
+      props.resetWordCard();
+      props.updateId(routineId);      
+    }
+
+    for (let i = 0; i < levels.length; i++) {
+      if (location.includes(levels[i])) {
+        location = root + levels[i] + "/" + stages[subpath];
+        props.history.push(location);
+      }
+    }
+    
+    const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
+    ReactGA.initialize(GA_ID);
+    ReactGA.send({ hitType: "pageview", page: location });  
+
+    setValue(subpath);
+
+  }
+
+  function handleClick(e, pathname, routineId) {
+
+    console.log(pathname);
+
+    if (props.history.location.pathname !== pathname) {
+      props.setInProgress(false);
+      props.setExercisePause(false);
+      props.updateTime(0);
+      props.updateTimeLeft(0);
+      props.resetRoutineSelect();
+      props.clearQueryResults();
+      props.resetWordCard();
+      props.updateId(routineId);
+
+      updatePathname(pathname);
+      setValue(pathname);
+      props.history.push({pathname});
+    }
+  }
+
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
 
@@ -147,6 +216,8 @@ const RRHome = props => {
     exerciseHistoryContainerWidth = 4;
     timerContainerWidth = 8;
   }
+
+  console.log(props.pageContext)
 
   return (
 
@@ -185,7 +256,79 @@ const RRHome = props => {
                     <Fade in={true} timeout={750}>
                       <Grid container spacing={0} className={classes.introContainer}>
                         <Grid item xs={12}>
+
+                          <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                            Introduction
+                          </Typography>
+
+                          <br />
+
+                          <Typography variant="body1" color="textPrimary" component="p" >
+                            This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Easy Onset. This program is intended for people who stutter (PWS) and involves three phases:
+                          </Typography>
+                          
+                          <List className={classes.introductionListRoot}>
+                            <ListItem alignItems="flex-start">
+                              { (props.pageContext === "beginner" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                              <ListItemText
+                                primary={
+                                  <React.Fragment>
+                                    <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary" onClick={e => handleShortcut(e, 2, Identities[1].pathname[2], Identities[1].user.routines[0])}>
+                                      Beginner Training
+                                    </Typography>
+                                  </React.Fragment>
+                                }
+                                secondary={
+                                  <React.Fragment>
+                                    <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText} onClick={e => handleShortcut(e, 1, Identities[1].pathname[1], Identities[1].user.routines[0])}>
+                                      Learn speaking techniques centered on phonation
+                                    </Typography>
+                                  </React.Fragment>
+                                }
+                              />
+                            </ListItem>
+                            <ListItem alignItems="flex-start">
+                            { (props.pageContext === "intermediate" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                              <ListItemText
+                                primary={
+                                  <React.Fragment>
+                                    <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary" onClick={e => handleShortcut(e, 2, Identities[2].pathname[2], Identities[2].user.routines[0])}>
+                                      Intermediate Training
+                                    </Typography>
+                                  </React.Fragment>
+                                }
+                                secondary={
+                                  <React.Fragment>
+                                    <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText} onClick={e => handleShortcut(e, 1, Identities[2].pathname[1], Identities[2].user.routines[0])}>
+                                      Transfer phonation into normal-sounding speech
+                                    </Typography>
+                                  </React.Fragment>
+                                }
+                              />
+                            </ListItem>
+                            <ListItem alignItems="flex-start">
+                            { (props.pageContext === "advanced" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                              <ListItemText
+                                primary={
+                                  <React.Fragment>
+                                    <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary" onClick={e => handleShortcut(e, 2, Identities[3].pathname[2], Identities[3].user.routines[0])}>
+                                      Advanced Training
+                                    </Typography>
+                                  </React.Fragment>
+                                }
+                                secondary={
+                                  <React.Fragment>
+                                    <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText} onClick={e => handleShortcut(e, 1, Identities[3].pathname[1], Identities[3].user.routines[0])}>
+                                      Adapt these techniques for everyday use
+                                    </Typography>
+                                  </React.Fragment>
+                                }
+                              />
+                            </ListItem>
+                          </List>
+
                           <ExerciseIntroduction />
+
                         </Grid>
                       </Grid>
                     </Fade>
@@ -240,8 +383,8 @@ const RRHome = props => {
             </Grid>
 
             <Grid item xs={12} sm={11} md={11} lg={12} align="center">
-              <br /><br /><br />
-              <Typography variant="body1" color="textSecondary" component="p" >
+              
+              <Typography variant="body1" color="textSecondary" component="p" className={classes.footerText}>
                 Copyright &copy; 2024 Black Circle Technologies, LLC
               </Typography>
             </Grid>

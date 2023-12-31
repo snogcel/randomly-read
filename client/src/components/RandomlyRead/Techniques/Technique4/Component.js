@@ -1,5 +1,8 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -9,18 +12,55 @@ import { withStyles } from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
+import ReactPlayer from 'react-player/youtube';
+
 class Technique extends React.Component {
+
+
+  /* 
+  
+  <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+    This technique is intended to produce natural-sounding speech and is similar to "Phonation & Transfer". The goal in this case is to minimize the amount of time spent "humming" and to maximize the amount of time spent articulating and speaking. Over time, the duration of initial phonation will decrease and with practice can be condensed to a point that only the speaker will be able to detect it.
+  </Typography>
+  
+  */
 
   render() {
     const { classes } = this.props;
 
     return (
       <React.Fragment>
-        <List className={classes.techniqueListRoot}>
+        
+        <Grid container>     
 
-          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-            This technique is intended to produce natural-sounding speech and is similar to "Phonation & Transfer". The goal in this case is to minimize the amount of time spent "humming" and to maximize the amount of time spent articulating and speaking. Over time, the duration of initial phonation will decrease and with practice can be condensed to a point that only the speaker will be able to detect it.
-          </Typography>
+        <Grid item xs={12} lg={6}>
+            
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
+                IV. Resonant Speech
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+                Breathe, Relax, Phonate, Transfer, Pinch, Resonance
+              </Typography>
+            </Grid>
+
+            <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+              This technique is intended to produce natural-sounding speech and is similar to "Phonation & Transfer". Our goal is to minimize the amount of time spent "humming" and to maximize the amount of time spent articulating and speaking.
+            </Typography>
+            
+            <ReactPlayer 
+              url="https://www.youtube.com/watch?v=yqWX86uT5jM&ab_channel=fotios"
+              className={classes.techniquePlayerWrapper}
+              width="100%"
+              controls={false}
+            />            
+
+        </Grid>
+
+        <Grid item xs={12} lg={6}>
+        <List className={classes.techniqueListRoot}>
 
           <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
@@ -161,6 +201,14 @@ class Technique extends React.Component {
             />
           </ListItem>
         </List>
+        </Grid>
+
+        </Grid>
+
+
+
+
+        
       </React.Fragment>
     );
   }

@@ -11,6 +11,8 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import Divider from '@material-ui/core/Divider';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -32,6 +34,16 @@ const useStyles = makeStyles((theme) => ({
   },
   techniqueAccordionSummary: {
     backgroundColor: "#fdfdfd"
+  },
+  techniqueContentHeading: {
+    marginTop: theme.spacing(2),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueSecondaryContentHeading: {
+    marginTop: theme.spacing(4),
+    color: "#0B0F65",
+    fontWeight: "bold"
   },
   techniqueMainHeading: {
     marginTop: theme.spacing(0),
@@ -83,67 +95,22 @@ function Techniques() {
   return (
     <Box className={classes.techniqueRoot}>
 
-      <Typography variant="h5" component="h2" className={classes.contentHeading}>
-        Beginner Techniques
-      </Typography>
+      <Grid container>
+        
+        <Grid item xs={12}>
+          <Technique1 />
+        </Grid>
 
-      <Accordion elevation={3} expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-          className={classes.techniqueAccordionSummary}
-        >
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
-                Phonation
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Breathe, Relax, Phonate
-              </Typography>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-        <AccordionDetails className={classes.techniqueAccordionDetails}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Technique1 />
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
+        <Grid item xs={12}>
+          <br />
+          <Divider className={classes.techniqueDivider} />
+          <br /><br />
+        </Grid>    
 
-      <Accordion elevation={3} expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-          className={classes.techniqueAccordionSummary}
-        >
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h5" component="h2" className={classes.techniqueMainHeading}>
-                Phonation & Articulation
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
-                Breathe, Relax, Phonate, Articulate, Pinch
-              </Typography>
-            </Grid>
-          </Grid>
-        </AccordionSummary>
-        <AccordionDetails className={classes.techniqueAccordionDetails}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Technique2 />
-            </Grid>
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
+        <Grid item xs={12}>
+          <Technique2 />
+        </Grid>
+      </Grid>
 
     </Box>
   );

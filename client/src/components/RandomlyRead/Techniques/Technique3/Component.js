@@ -1,5 +1,6 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
@@ -13,6 +14,8 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '@material-ui/core/Modal';
 import Definitions from '../../Definitions/Container';
+
+import ReactPlayer from 'react-player/youtube';
 
 class Technique extends React.Component {
   constructor(props) {
@@ -54,6 +57,14 @@ class Technique extends React.Component {
     this.setState({Transfer: false});
   }
 
+  /*
+    
+  <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+    This technique is intended to transfer the "robotic" sounding speech into something that resembles natural speech. The key to performing a transfer is to become aware of the flow of air while speaking normally through your mouth compared to humming using your nasal passages. To confirm that you are successfully completing a transfer, gently hold your index finger against the side of your nose and notice how the vibration stops once the flow of air is transferred to your mouth.
+  </Typography>
+
+  */
+
   render() {
     const { classes } = this.props;
 
@@ -71,13 +82,39 @@ class Technique extends React.Component {
 
     return (
       <React.Fragment>
+
+        <Grid container>     
+
+        <Grid item xs={12} lg={6}>
+            
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
+                III. Phonation with Transfer
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+                Breathe, Relax, Phonate, Articulate, Transfer, Pinch
+              </Typography>
+            </Grid>
+
+            <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+            This technique is intended to transfer the "robotic" sounding speech into something that resembles natural speech. The key to performing a transfer is to become aware of the flow of air while speaking normally through your mouth compared to humming using your nasal passages.
+            </Typography>
+            
+            <ReactPlayer 
+              url="https://www.youtube.com/watch?v=yqWX86uT5jM&ab_channel=fotios"
+              className={classes.techniquePlayerWrapper}
+              width="100%"
+              controls={false}
+            />            
+
+        </Grid>
+
+        <Grid item xs={12} lg={6}>
         <List className={classes.techniqueListRoot}>
 
-          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-            This technique is intended to transfer the "robotic" sounding speech into something that resembles natural speech. The key to performing a transfer is to become aware of the flow of air while speaking normally through your mouth compared to humming using your nasal passages. To confirm that you are successfully completing a transfer, gently hold your index finger against the side of your nose and notice how the vibration stops once the flow of air is transferred to your mouth.
-          </Typography>
-
-          <ListItem alignItems="flex-start">
+        <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
             <ListItemText
               primary={
@@ -216,6 +253,11 @@ class Technique extends React.Component {
             />
           </ListItem>
         </List>
+        </Grid>
+
+        </Grid>
+
+          
 
         <Modal
           open={this.state.Articulation}

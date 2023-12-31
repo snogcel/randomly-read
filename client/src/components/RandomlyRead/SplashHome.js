@@ -19,7 +19,7 @@ import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 
-import Header from './Header/Component';
+import Header from './Header/Container';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
@@ -181,6 +181,8 @@ const RRHome = props => {
     setOpen_2(false);
   };
 
+  // <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Customizable" {...a11yProps(1)} />
+
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>
@@ -209,7 +211,7 @@ const RRHome = props => {
                   <AppBar position="static" color="secondary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Overview" {...a11yProps(0)} />
-                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Customizable" {...a11yProps(1)} />
+                      
                     </Tabs>
                   </AppBar>
                 </Grid>
@@ -223,10 +225,7 @@ const RRHome = props => {
                         <Grid item xs={12}>
 
                           <Box>
-                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
-                              Overview
-                            </Typography>
-
+                            
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
@@ -241,102 +240,11 @@ const RRHome = props => {
 
                           </Box>
 
+                        </Grid>
 
-                          <Grid container spacing={5}>
+                        <Grid item xs={12} align="center" className={classes.getStartedButtonContainer}>
 
-                            <Grid item xs={12} sm={6}>
-
-                              <br /><br />
-
-                              <TimerContainer RoutineSelectContainer={RoutineSelectContainer} />
-
-                              <RoutineDescriptionContainer />
-
-                              <WordCardContainer ApolloClient={ApolloClient} classes={classes} />
-
-                              <ProgressIndicator />
-
-                            </Grid>
-
-
-
-                            <Grid item xs={12} sm={6}>
-
-                              <List className={classes.introductionListRoot}>
-                                <ListItem alignItems="flex-start">
-                                  <FontAwesomeIcon icon={faCheckCircle} size="2x" pull="left" className={classes.introductionIcon} />
-                                  <ListItemText
-                                    primary={
-                                      <React.Fragment>
-                                        <Typography variant="body1" component="span" className={classes.introductionHeading} color="textPrimary">
-                                          Customizable
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                    secondary={
-                                      <React.Fragment>
-                                        <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
-                                          Define specific consonant and vowel sounds as well as what part of the word to practice. This flexibility allows for focus to be placed on other speech-language issues such as lisping or accent reduction.
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                  />
-                                </ListItem>
-                                <ListItem alignItems="flex-start">
-                                  <FontAwesomeIcon icon={faCheckCircle} size="2x" pull="left" className={classes.introductionIcon} />
-                                  <ListItemText
-                                    primary={
-                                      <React.Fragment>
-                                        <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
-                                          Structured
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                    secondary={
-                                      <React.Fragment>
-                                        <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText}>
-                                          Words and Sentences are displayed in a timed sequence allowing for a structured practice session which leads to greater success.
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                  />
-                                </ListItem>
-                                <ListItem alignItems="flex-start">
-                                  <FontAwesomeIcon icon={faCheckCircle} size="2x" pull="left" className={classes.introductionIcon} />
-                                  <ListItemText
-                                    primary={
-                                      <React.Fragment>
-                                        <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
-                                          Focused
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                    secondary={
-                                      <React.Fragment>
-                                        <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
-                                          Fully automated usage allows you to focus on speaking technique without having to flip through flash cards or other reading materials.
-                                        </Typography>
-                                      </React.Fragment>
-                                    }
-                                  />
-                                </ListItem>
-                              </List>
-
-                              <br />
-
-                              <Grid container justify="center" alignItems="center">
-                                <Grid item xs={12} align="center">
-
-                                  <Button className={classes.getStartedButton} variant="outlined" color="primary" onClick={e => handleClick(e, Identities[1].pathname[0], Identities[1].user.routines[0])}>Get Started</Button>
-
-                                </Grid>
-                              </Grid>
-
-                            </Grid>
-
-                          </Grid>
-
-
+                          <Button className={classes.getStartedButton} variant="outlined" color="primary" onClick={e => handleClick(e, Identities[1].pathname[0], Identities[1].user.routines[0])}>Click Here To Get Started</Button> 
 
                         </Grid>
 
@@ -474,10 +382,11 @@ const RRHome = props => {
             </Grid>
 
             <Grid item xs={12} sm={11} md={11} lg={12} align="center">
-              <br /><br /><br />
+              
               <Typography variant="body1" color="textSecondary" component="p" >
                 Copyright &copy; 2024 Black Circle Technologies, LLC
               </Typography>
+              
             </Grid>
 
           </Grid>

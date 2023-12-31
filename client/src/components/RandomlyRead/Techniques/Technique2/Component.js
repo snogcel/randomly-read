@@ -1,5 +1,6 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
+import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
@@ -13,6 +14,8 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import Modal from '@material-ui/core/Modal';
 import Definitions from '../../Definitions/Container';
+
+import ReactPlayer from 'react-player/youtube';
 
 class Technique extends React.Component {
   constructor(props) {
@@ -54,6 +57,14 @@ class Technique extends React.Component {
     this.setState({Transfer: false});
   }
 
+  /*
+  
+  <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+    While keeping your <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenPelvicFloor}>Pelvic Floor</Link> relaxed, breathe in making sure not to pause at the top of your breath. Exhale using <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenDiaphragm}>Diaphragmatic Breathing</Link> and, while remaining focused on the vowel sound, <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenArticulation}>Articulate</Link> your mouth and tongue as if you were speaking the word normally while gently pinching your thumb and middle finger on the vowel sound. The resulting speech will sound quite "robotic" which is addressed in subsequent exercises.
+  </Typography>
+  
+  */
+
   render() {
     const { classes } = this.props;
 
@@ -71,11 +82,37 @@ class Technique extends React.Component {
 
     return (
       <React.Fragment>
-        <List className={classes.techniqueListRoot}>
 
-          <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-            While keeping your <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenPelvicFloor}>Pelvic Floor</Link> relaxed, breathe in making sure not to pause at the top of your breath. Exhale using <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenDiaphragm}>Diaphragmatic Breathing</Link> and, while remaining focused on the vowel sound, <Link className={classes.definitionLink} color="textSecondary" variant="body1" onClick={handleOpenArticulation}>Articulate</Link> your mouth and tongue as if you were speaking the word normally while gently pinching your thumb and middle finger on the vowel sound. The resulting speech will sound quite "robotic" which is addressed in subsequent exercises.
-          </Typography>
+        <Grid container>     
+
+        <Grid item xs={12} lg={6}>
+            
+            <Grid item xs={12}>
+              <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
+                II. Phonation with Articulation
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography gutterBottom variant="body1" color="textSecondary" component="p">
+                Breathe, Relax, Phonate, Articulate, Pinch
+              </Typography>
+            </Grid>
+
+            <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
+              This exercise expands on the previous one. Articulate your mouth and tongue as if you were speaking the word normally. Gently pinch your thumb and middle finger on the vowel sound.
+            </Typography>
+            
+            <ReactPlayer 
+              url="https://www.youtube.com/watch?v=yqWX86uT5jM&ab_channel=fotios"
+              className={classes.techniquePlayerWrapper}
+              width="100%"
+              controls={false}
+            />      
+
+        </Grid>
+
+        <Grid item xs={12} lg={6}>
+        <List className={classes.techniqueListRoot}>
 
           <ListItem alignItems="flex-start">
             <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
@@ -193,7 +230,16 @@ class Technique extends React.Component {
               }
             />
           </ListItem>
-        </List>
+          </List>
+        </Grid>
+
+        </Grid>
+        
+        
+        
+
+
+        
 
         <Modal
           open={this.state.Articulation}

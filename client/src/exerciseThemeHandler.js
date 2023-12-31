@@ -64,6 +64,9 @@ const styles = theme => ({
   homeContainer: {
     marginTop: theme.spacing(2)
   },
+  footerText: {
+    padding: theme.spacing(5, 0, 1, 0)
+  },
   introTabPanel: {
     '& .MuiBox-root': {
       padding: theme.spacing(0)
@@ -78,13 +81,13 @@ const styles = theme => ({
     },
   },
   introTabIndicator: {
-    padding: theme.spacing(0, 2, 0, 2)
+    padding: theme.spacing(0, 0, 0, 0)
   },
   introContainer: {
-    padding: theme.spacing(1, 2, 1, 2)
+    padding: theme.spacing(1, 0, 1, 0)
   },
   techniquesContainer: {
-    padding: theme.spacing(1, 2, 1, 2)
+    padding: theme.spacing(1, 0, 1, 0)
   },
   homeTabPanel: {
     '& .MuiBox-root': {
@@ -93,7 +96,7 @@ const styles = theme => ({
   },
   routineSelector: {
     //backgroundColor: "#FCFCFF",
-    padding: theme.spacing(1.5, 2, 1.5, 2)
+    padding: theme.spacing(1.5, 0, 1.5, 0)
   },
   routineSelectContainer: {
     display: "flex",
@@ -171,18 +174,26 @@ const styles = theme => ({
   },
   introductionSecondaryText: {
     display: "block",
-    color: "rgba(0, 0, 0, 0.95)"
+    color: "rgba(0, 0, 0, 0.95)",    
+    '&:hover': {      
+      cursor: "pointer",
+      textDecoration: "underline"
+   }
   },
   introductionHeadingActive: {
     marginTop: theme.spacing(0),
     color: "#0B0F65",
     fontWeight: "500",
-    fontSize: "1.25rem"
+    fontSize: "1.25rem"    
   },
   introductionHeading: {
     marginTop: theme.spacing(0),
     fontWeight: "500",
-    fontSize: "1.25rem"
+    fontSize: "1.25rem",    
+    '&:hover': {      
+      cursor: "pointer",
+      textDecoration: "underline"
+   }
   },
   introductionIconActive: {
     color: "#0B0F65",
@@ -227,7 +238,10 @@ const styles = theme => ({
     fontFamily: "'Mitr', sans-serif",
     color: "#14197E",
     fontSize: theme.spacing(5),
-    margin: theme.spacing(2.5, 0, 0, 1)
+    margin: theme.spacing(2.5, 0, 0, 1),    
+    '&:hover': {      
+      cursor: "pointer"
+   }
   },
   headerTextEnd: {
     display: "block",
@@ -236,7 +250,10 @@ const styles = theme => ({
     color: "#14197E",
     fontSize: theme.spacing(4),
     margin: theme.spacing(-1, 0, 2, 2),
-    textAlign: "bottom"
+    textAlign: "bottom",    
+    '&:hover': {      
+      cursor: "pointer"
+   }
   },
   headerBackground: {
     // backgroundColor:"#F4F2F9",
@@ -267,6 +284,32 @@ const styles = theme => ({
   modeSelectText: {    
     paddingLeft: theme.spacing(1),
     margin: theme.spacing(0, 0, 1.5, 2),
+  },
+  techniqueDivider: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(4)
+  },
+  techniqueContentHeading: {
+    marginTop: theme.spacing(2),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueSecondaryContentHeading: {
+    marginTop: theme.spacing(1),
+    color: "#0B0F65",
+    fontWeight: "bold"
+  },
+  techniqueVideoWrapper: {
+    display: "flex",
+    alignItems: "flex-end",
+    alignContent: "flex-start",
+    justifyContent: "center",
+    flexDirection: "row"
+  },
+  techniquePlayerWrapper: {
+    padding: theme.spacing(3),
+    height: "auto !important",
+    aspectRatio: "16/9"
   },
   techniqueMainHeading: {
     marginTop: theme.spacing(0),
@@ -305,8 +348,9 @@ const styles = theme => ({
   },
   techniqueDescriptionText: {
     display: "block",
-    margin: theme.spacing(0, 1.25, 1.5, 1.25),
-    color: "rgba(0, 0, 0, 0.95)"
+    margin: theme.spacing(0, 1.25, 1.5, 0),
+    color: "rgba(0, 0, 0, 0.95)",
+    textAlign: "center"
   },
   sliderRoot:{
     width: 500,
@@ -412,8 +456,16 @@ const styles = theme => ({
   descriptionTextHeader: {
     paddingBottom: theme.spacing(3)
   },
+  getStartedButtonContainer: {
+    paddingTop: theme.spacing(4),
+    paddingBottom: theme.spacing(8)
+  },
   getStartedButton: {
-
+    maxWidth: theme.spacing(36),
+    minWidth: theme.spacing(36),
+    maxHeight: theme.spacing(8),
+    minHeight: theme.spacing(8),
+    margin: "0 auto"
   },
   incrementButton: {
     marginLeft: theme.spacing(4),
@@ -623,7 +675,7 @@ const styles = theme => ({
     marginTop: theme.spacing(4),
   },
   exerciseDetails: {
-    padding: theme.spacing(2, 1, 1, 1),
+    padding: theme.spacing(2, 0, 1, 0),
     marginTop: theme.spacing(0),
     backgroundColor: 'transparent',
   },

@@ -22,114 +22,11 @@ class Introduction extends React.Component {
 
     return (
       <React.Fragment>
-        <Box>
-          <Typography variant="h5" component="h2" className={classes.contentHeading}>
-            Intermediate Introduction (Week 5 - 8)
-          </Typography>
-
-          <br />
+        <Box>          
 
           <Typography variant="body1" color="textPrimary" component="p" >
-            This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases.
+            In this phase, we will focus on techniques relating to <strong>Phonation</strong>, <strong>Articulation</strong> and <strong>Transfer</strong>. These techniques allow you to begin to transfer the "raw" phonation produced in the previous phase into natural-sounding speech.
           </Typography>
-
-
-          <List className={classes.introductionListRoot}>
-            <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" className={classes.introductionHeading} color="textPrimary">
-                      Beginner
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionSecondaryText}>
-                      Learn speaking techniques centered on phonation.
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} />
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
-                      Intermediate
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textPrimary" className={classes.introductionPrimaryText}>
-                      Transfer phonation into normal-sounding speech.
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-            <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <Typography variant="h5" component="h2" className={classes.introductionHeading} color="textPrimary">
-                      Advanced
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.introductionSecondaryText}>
-                      Adapt these techniques for everyday use.
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-          </List>
-
-          <Typography variant="body1" color="textPrimary" component="p" >
-            In this phase, we will focus on techniques relating to <strong>Phonation</strong>, <strong>Articulation</strong> and <strong>Transfer</strong>. These techniques allow you to begin to transfer the "raw" phonation produced in the previous phase into natural-sounding speech. Before we begin it’s important to understand the following definitions.
-          </Typography>
-
-          <br />
-
-          <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
-            Definitions
-          </Typography>
-
-          <List className={classes.definitionListRoot}>
-            <ListItem alignItems="flex-start" disableGutters>
-              <ListItemText
-                primary={
-                  <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
-                    <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
-                      Transfer
-                    </Typography>
-                  </React.Fragment>
-                }
-                secondary={
-                  <React.Fragment>
-                    <Typography variant="body1" component="span" color="textSecondary" className={classes.definitionSecondaryText}>
-                      Transfer is the process of routing the "robotic" speech generated in the nasal passages into normal sounding speech which is centered in the mouth. Transfer can be verified by gently placing an index finger against the nose to see if you feel vibration (you should not feel any at completion of Transfer).
-                      <br /><br />
-                      Learn More:
-                      <Link href="https://thevoicelady.com/nasal-voice/" className={classes.textLink} color="textSecondary" variant="body1" target="_blank">
-                        Take This Test to See If Your Voice Is Nasal or Not
-                      </Link>
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
-        </List>
 
         </Box>
       </React.Fragment>

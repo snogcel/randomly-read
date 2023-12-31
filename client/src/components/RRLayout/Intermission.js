@@ -9,7 +9,7 @@ class Intermission extends React.Component {
     const { classes } = this.props;
 
     return (
-      <Typography variant="h1" className={classes.intermission}>
+      <Typography variant="h3" component="h3" className={classes.intermission}>
         {this.props.intermissionText}
       </Typography>
     );
