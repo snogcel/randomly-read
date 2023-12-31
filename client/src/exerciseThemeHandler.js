@@ -348,7 +348,7 @@ const styles = theme => ({
   },
   techniqueDescriptionText: {
     display: "block",
-    margin: theme.spacing(0, 1.25, 1.5, 0),
+    margin: theme.spacing(3, 1.25, 1.5, 0),
     color: "rgba(0, 0, 0, 0.95)",
     textAlign: "center"
   },
