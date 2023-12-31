@@ -103,10 +103,10 @@ class Technique extends React.Component {
             </Typography>
             
             <ReactPlayer 
-              url="https://www.youtube.com/watch?v=yqWX86uT5jM&ab_channel=fotios"
+              url="https://www.youtube.com/watch?v=3pFHLaPdgJ0&ab_channel=fotios"
               className={classes.techniquePlayerWrapper}
               width="100%"
-              controls={false}
+              controls={true}
             />      
 
         </Grid>
