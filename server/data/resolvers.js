@@ -198,21 +198,78 @@ const resolvers = {
            */
 
 
-            let templates = [
+            /* let templates = [
               "{{ noun }} is {{ adjective }}",
               "{{ adjective }} {{ noun }}",
               "{{ an_adjective }} {{ noun }}",
+            ]; */
+
+            let improvedBaseTemplates = [
+              "soft {{ adjective }} touch on the {{ noun }}",
+              "unveil {{ an_adjective }} allure of the {{ noun }}",
+              "graceful {{ adjective }} hues on the {{ noun }}",
+              "{{ an_adjective }} whispers echo the {{ noun }}",
+              "{{ noun }} adorned with {{ an_adjective }} elegance",
+              "{{ adjective }} reflections dance on {{ noun }}",
+              "symphony of {{ an_adjective }} colors in {{ noun }}",
+              "{{ noun }} embraces {{ an_adjective }} essence",
+              "{{ an_adjective }} whispers paint {{ adjective }} {{ noun }}",
+              "explore {{ adjective }} mystique of the {{ noun }}",
+              "whispers of {{ an_adjective }} enchantment in {{ noun }}",
+              "{{ noun }} resonates with {{ adjective }} echoes",
+              "{{ adjective }} whispers grace aura of {{ noun }}",
+              "discover {{ noun }} through {{ an_adjective }} eyes",
+              "{{ noun }} whispers tales of {{ adjective }} beauty",
+              "{{ adjective }} melodies play in {{ noun }}",
+              "canvas of {{ an_adjective }} wonders unfolds in {{ noun }}",
+              "{{ an_adjective }} {{ adjective }} strokes illuminate {{ noun }}",
+              "immerse in {{ adjective }} tapestry of {{ noun }}",
+              "{{ an_adjective }} whispers unfold story of {{ noun }}",
+              "{{ an_adjective }} reflections reveal beauty of {{ noun }}",
+              "{{ noun }} touched by essence of {{ adjective }}",
+              "{{ an_adjective }} whispers unveil {{ adjective }} secrets of {{ noun }}",
+              "{{ an_adjective }} hues paint canvas of {{ noun }}",
+              "whispers of {{ adjective }} dreams echo in {{ noun }}",
             ];
 
 
-            let templateAnimal = ["{{ an_adjective }} {{ noun_animal }}"];
+            // Templates for specific tags - Maximum 7 words
+            let templateAnimal = [
+              "{{ an_adjective }} {{ noun_animal }} is {{ adjective }} and wild",
+              "{{ adjective }} {{ noun_animal }} roams the {{ noun_location }}",
+              "{{ an_adjective }} {{ noun_animal }} in its natural habitat",
+            ];
+
+            let templateArtifact = [
+              "the {{ adjective }} {{ noun_artifact }} exudes {{ an_adjective }} mystery",
+              "explore {{ noun_artifact }} with {{ an_adjective }} craftsmanship",
+              "{{ noun_artifact }} adorned with {{ an_adjective }} tales",
+            ];
+
+            let templateLocation = [
+              "{{ an_adjective }} {{ noun_location }} is {{ an_adjective }} haven",
+              "discover {{ noun_location }} with {{ an_adjective }} charm",
+              "immerse in the culture of {{ an_adjective }} {{ noun_location }}",
+            ];
+
+            let templateFood = [
+              "savor {{ an_adjective }} {{ noun_food }} flavors",
+              "aroma of {{ noun_food }} with {{ an_adjective }} spices",
+            ];
+
+            let templatePerson = [
+              "{{ an_adjective }} {{ noun_person }} is {{ adjective }}",
+              "{{ an_adjective }} {{ noun_person }} with {{ an_adjective }} charm",
+            ];
+
+           /*  let templateAnimal = ["{{ an_adjective }} {{ noun_animal }}"];
             let templateArtifact = ["the {{ adjective }} {{ noun_artifact }}", "{{ an_adjective }} {{ noun_artifact }}"];
             let templateLocation = ["{{ noun_location }} is {{ adjective }}"];
 
             let templateFood = ["the {{ noun_food }} is {{ adjective }}", "{{ an_adjective }} {{ noun_food }}"];
             let templatePerson = ["the {{ noun_person }} is {{ adjective }}", "{{ an_adjective }} {{ noun_person }}"];
 
-            let templateFoodAndPerson = ["{{ noun_person }} with a {{ noun_food }}"]; // find other examples of this?
+            let templateFoodAndPerson = ["{{ noun_person }} with a {{ noun_food }}"]; // find other examples of this? */
 
             // Parse Parameters
             if (typeof args.vowel !== 'undefined' && Array.isArray(args.vowel)) filter.vowel = args.vowel;
@@ -293,7 +350,7 @@ const resolvers = {
 
                       if (noun.length <= 0 || adj.length <= 0) reject("insufficient nouns and adjectives");
 
-                      if (filteredNouns["food"].length > 0 && filteredNouns["person"].length > 0) templates = templates.concat(templateFoodAndPerson);
+                     // if (filteredNouns["food"].length > 0 && filteredNouns["person"].length > 0) templates = templates.concat(templateFoodAndPerson);
 
                       if (filteredNouns["animal"].length > 0) templates = templates.concat(templateAnimal);
                       if (filteredNouns["location"].length > 0) templates = templates.concat(templateLocation);
