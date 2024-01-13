@@ -204,7 +204,7 @@ const resolvers = {
               "{{ an_adjective }} {{ noun }}",
             ]; */
 
-            let improvedBaseTemplates = [
+            let templates = [
               "soft {{ adjective }} touch on the {{ noun }}",
               "unveil {{ an_adjective }} allure of the {{ noun }}",
               "graceful {{ adjective }} hues on the {{ noun }}",
