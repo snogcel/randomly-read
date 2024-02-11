@@ -62,7 +62,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   homeContainer: {
-    height: "80vh",
+    height: "84vh",
     display: "flex",
     flexDirection: "column"
   },
@@ -95,10 +95,12 @@ const styles = theme => ({
     padding: theme.spacing(0, 0, 0, 0)
   },
   introContainer: {
-    padding: theme.spacing(1, 0, 1, 0)
+    padding: theme.spacing(1, 0, 1, 0),
+    marginBottom: theme.spacing(10)
   },
   techniquesContainer: {
-    padding: theme.spacing(1, 0, 1, 0)
+    padding: theme.spacing(1, 0, 1, 0),
+    marginBottom: theme.spacing(10)
   },
   homeTabPanel: {
     '& .MuiBox-root': {
