@@ -62,7 +62,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   homeContainer: {
-    height: "84vh",
+    height: "82vh",
     display: "flex",
     flexDirection: "column"
   },
