@@ -186,10 +186,10 @@ const styles = theme => ({
     color: "rgba(0, 0, 0, 0.25)",
   },
   historyTitleUpvote: {
-    color: "#C70E4C"
+    color: "rgba(0, 0, 0, 0.25)",
   },
   historyTitleDownvote: {
-    color: "#8A0C93"
+    color: "rgba(0, 0, 0, 0.25)",
   },
   subtitle: {
     fontSize: 20
