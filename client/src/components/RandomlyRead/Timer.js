@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactDOM from "react-dom";
+
 import RoutineBuilder from '../RRLayout/RoutineBuilder';
 
 import Box from '@material-ui/core/Box';
@@ -20,6 +22,7 @@ import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
 import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import ReplayIcon from '@material-ui/icons/Replay';
+
 
 import { styles } from '../../exerciseThemeHandler';
 
@@ -43,6 +46,25 @@ class Timer extends React.Component {
       position: 'initial',
       limit: 1,
     };
+
+    let script = document.createElement("script");
+    script.setAttribute('data-name','BMC-Widget')
+    script.src = "https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+    script.setAttribute('data-id', 'easyonset');
+    script.setAttribute('data-description', 'Thank you for your support!');
+    script.setAttribute('data-message', 'Easy Onset is free to use, please help support the site.');
+    script.setAttribute('data-color',"#FF5F5F")
+    script.setAttribute('data-position','right')
+    script.setAttribute('data-x_margin','24')
+    script.setAttribute('data-y-margin','24')
+    script.async = true
+    //Call window on load to show the image
+    script.onload=function(){
+        var evt = document.createEvent('Event');  
+        evt.initEvent('DOMContentLoaded', false, false);  
+        window.dispatchEvent(evt);
+    }
+    this.script=script
 
     this.timerHandler = this.timerHandler.bind(this);
 
@@ -68,6 +90,8 @@ class Timer extends React.Component {
 
     this.debug = false;
 
+    this.bmc = null;
+
   }
 
   isEmpty(obj) {
@@ -77,12 +101,23 @@ class Timer extends React.Component {
     }
     return true;
 }
-  componentDidMount() {
-
+  componentDidMount() {    
+    document.head.appendChild(this.script)
   }
 
   componentWillUnmount() {
     this.stopTimer();
+
+    document.head.removeChild(this.script)
+
+    this.bmc = document.getElementById("bmc-wbtn");
+
+    var elms = document.querySelectorAll("[id='bmc-wbtn']");
+    for(var i = 0; i < elms.length; i++) { document.body.removeChild(elms[i]) }
+  
+    var elms = document.querySelectorAll("[id='bmc-close-btn']");
+    for(var i = 0; i < elms.length; i++) { document.body.removeChild(elms[i].parentElement) }
+  
   }
 
   routineSelectHandler(routine) {
@@ -773,7 +808,7 @@ class Timer extends React.Component {
 
             <Grid container justify="flex-end">
               <Grid item>
-
+                
               </Grid>
             </Grid>
 

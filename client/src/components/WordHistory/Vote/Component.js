@@ -83,7 +83,7 @@ class PostVote extends React.Component {
           <Typography
             className={title}
             color="textPrimary"
-            variant="h4">
+            variant="h5">
             {this.state.title}
           </Typography>
           <PostVoteDownvote
@@ -101,7 +101,7 @@ class PostVote extends React.Component {
           <Typography
             className={title}
             color="textPrimary"
-            variant="h4">
+            variant="h5">
             {this.state.title}
           </Typography>
         </Grid>

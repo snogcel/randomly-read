@@ -62,10 +62,21 @@ const styles = theme => ({
     flexGrow: 1
   },
   homeContainer: {
-    marginTop: theme.spacing(2)
+    height: "80vh",
+    display: "flex",
+    flexDirection: "column"
   },
   footerText: {
     padding: theme.spacing(5, 0, 1, 0)
+  },
+  siteFooterWrapper: {
+    marginTop: theme.spacing(8),
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
+    backgroundColor: "#FFFBF6"
   },
   introTabPanel: {
     '& .MuiBox-root': {
@@ -257,6 +268,7 @@ const styles = theme => ({
   },
   headerBackground: {
     // backgroundColor:"#F4F2F9",
+    marginTop: theme.spacing(2),
   },
   modeHelperText: {
     fontFamily: "'Gudea', sans-serif",
@@ -398,10 +410,21 @@ const styles = theme => ({
   wordGrid: {
     //alignItems: "end",
     minHeight: theme.spacing(20),
+    marginTop: theme.spacing(2)
+  },
+  wordGridDesktop: {
+    //alignItems: "end",
+    minHeight: theme.spacing(20),
     marginTop: theme.spacing(2),
+    paddingRight: "50%"
   },
   wordHistoryGrid: {
-    alignItems: "center"
+    alignItems: "center",
+    paddingRight: "50%"
+  },
+  wordHistoryGridDesktop: {
+    alignItems: "center",
+    paddingRight: "50%"
   },
   timerControlGrid: {
     alignItems: "center"
@@ -558,13 +581,13 @@ const styles = theme => ({
     color: "rgba(0, 0, 0, 0.25)"
   },
   historyTitleNovote: {
-    color: "rgba(0, 0, 0, 0.25)",
+    color: "rgba(0, 0, 0, 0.25)"
   },
   historyTitleUpvote: {
-    color: "#C70E4C"
+    color: "rgba(0, 0, 0, 0.25)"
   },
   historyTitleDownvote: {
-    color: "#8A0C93"
+    color: "rgba(0, 0, 0, 0.25)"
   },
   subtitle: {
     fontSize: 20

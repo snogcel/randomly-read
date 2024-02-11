@@ -36,6 +36,9 @@ import Link from '@material-ui/core/Link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
+import BuyMeACoffee from './Donate/Component';
+import SiteFooter from './Footer/Component';
+
 import { styles } from '../../exerciseThemeHandler';
 
 function TabPanel(props) {
@@ -211,7 +214,6 @@ const RRHome = props => {
                   <AppBar position="static" color="secondary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Overview" {...a11yProps(0)} />
-                      
                     </Tabs>
                   </AppBar>
                 </Grid>
@@ -229,13 +231,13 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              EasyOnset.com has been created to provide a robust toolset intended to address a wide array of speech language disabilities and other perceived deficits. These potential applications range from developmental disabilities such as stuttering and lisping to professional uses such as accent reduction.
+                              Welcome to EasyOnset.com, a free speech therapy service for People Who Stutter. This program is the result of my own personal experience learning to use speaking techniques to overcome stuttering as a child and to maintain it as an adult. If you find this resource useful support the site: <Link href="https://www.buymeacoffee.com/easyonset">buy me a coffee</Link>.
                             </Typography>
 
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              The key to this program is a fully customizable “exercise routine” that applies two concepts to what is an otherwise very repetitive process: <strong>Structure</strong> and <strong>Focus</strong>.
+                              The key to this program is an automated training system which displays dynamically generated word lists as timed flash cards. These word lists form a of series of therapy routines aimed at achieving phonetic balance while helping you get the most out of every practice session.
                             </Typography>
 
                           </Box>
@@ -258,6 +260,7 @@ const RRHome = props => {
                   <TabPanel value={value} index={1} className={classes.introTabPanel}>
                     <Fade in={true} timeout={750}>
                       <Grid container spacing={0} className={classes.techniquesContainer}>
+
                         <Grid item xs={12}>
 
                           <Box>
@@ -381,18 +384,19 @@ const RRHome = props => {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} sm={11} md={11} lg={12} align="center">
-              
-              <Typography variant="body1" color="textSecondary" component="p" >
-                Copyright &copy; 2024 Black Circle Technologies, LLC
+            <Grid item xs={12} sm={11} md={11} lg={12} align="center" className={classes.siteFooterWrapper}>
+
+              <Typography variant="body2" color="textSecondary" component="p" >
+                Copyright &copy; {(new Date().getFullYear())} Black Circle Technologies, LLC <br />All Rights Reserved, email us <Link href="mailto:hello@easyonset.com" variant="body3" color="textPrimary">hello@easyonset.com</Link>
               </Typography>
-              
+
             </Grid>
 
           </Grid>
-
+    
       </Grid>
-
+      
+      
     </Container>
 
   )};

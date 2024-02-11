@@ -56,6 +56,13 @@ const styles = theme => ({
   formControl: {
     marginRight: 40,
   },
+  columnDesktop: {
+    paddingTop: theme.spacing(2),
+    paddingBottom: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    paddingRight: "50%"
+  },
   column: {
     padding: theme.spacing(2),
     textAlign: "center",
@@ -90,9 +97,20 @@ const styles = theme => ({
     alignItems: "end",
     minHeight: 150,
     marginTop: theme.spacing(4),
+    paddingRight: "50%"
+  },
+  wordGridDesktop: {
+    alignItems: "end",
+    minHeight: 150,
+    marginTop: theme.spacing(4),
+    paddingRight: "50%"
   },
   wordHistoryGrid: {
     alignItems: "center"
+  },
+  wordHistoryGridDesktop: {
+    alignItems: "center",
+    paddingRight: "50%"
   },
   timerControlGrid: {
     alignItems: "center"
@@ -229,13 +247,14 @@ const styles = theme => ({
   resetContainer: {
     padding: theme.spacing(3)
   },
+  wordHistoryContainer: {
+  },
   wordHistoryWrapper: {
     textAlign: "center",
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   RoutineSelector: {
     display: "inline-flex",

@@ -10,6 +10,9 @@ import { styles } from '../../exerciseThemeHandler';
 import Word from '../RRLayout/elements/Word';
 import Sentence from '../RRLayout/elements/Sentence';
 
+import withWidth from '@material-ui/core/withWidth';
+
+
 class WordCard extends React.Component  {
 
   constructor(props) {
@@ -84,7 +87,7 @@ class WordCard extends React.Component  {
 
   renderCard(props) {
 
-    const { isCompleted, mode, text, vowel, classes } = this.props;
+    const { isCompleted, mode, text, vowel, classes, width } = this.props;
 
     if (isCompleted) {
       return this.renderCompletedCard();
@@ -92,31 +95,61 @@ class WordCard extends React.Component  {
 
     if (text) {
 
-      return (
-        <React.Fragment key={'card'}>
-
-          <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center" sx={{ width: 1, height: "100vh" }}>
-            <Grid item>
-
-                { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
-                  <CardContent className={classes.cardContent}>
-                      { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                      { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-                      { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-                  </CardContent>
-                </Card></> : <><Card elevation={0} className={classes.card}>
-                  <CardContent className={classes.cardContent}>
-                      { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                      { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-                      { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-                  </CardContent>
-                </Card></>)}               
-
+      if ((width === "xs" || width === "sm")) {
+        return (
+          <React.Fragment key={'card'}>
+  
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center" sx={{ width: 1, height: "100vh" }}>
+              <Grid item>
+  
+                  { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
+                    <CardContent className={classes.cardContent}>
+                        { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                        { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                        { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                    </CardContent>
+                  </Card></> : <><Card elevation={0} className={classes.card}>
+                    <CardContent className={classes.cardContent}>
+                        { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                        { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                        { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                    </CardContent>
+                  </Card></>)}               
+  
+              </Grid>
             </Grid>
-          </Grid>
+  
+          </React.Fragment>
+        );
+      } else if ((width === "md" || width === "lg" || width === "xl")) {
+        return (
+          <React.Fragment key={'card'}>
+  
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGridDesktop} justify="center" sx={{ width: 1, height: "100vh" }}>
+              <Grid item>
+  
+                  { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
+                    <CardContent className={classes.cardContent}>
+                        { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                        { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                        { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                    </CardContent>
+                  </Card></> : <><Card elevation={0} className={classes.card}>
+                    <CardContent className={classes.cardContent}>
+                        { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                        { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                        { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                    </CardContent>
+                  </Card></>)}               
+  
+              </Grid>
+            </Grid>
+  
+          </React.Fragment>
+        );
+      }  
 
-        </React.Fragment>
-      );
+      
 
     } else {
       return this.renderEmptyCard();
@@ -126,57 +159,106 @@ class WordCard extends React.Component  {
 
   renderCompletedCard() {
 
-    const { mode, text, vowel, classes } = this.props;
+    const { mode, text, vowel, classes, width } = this.props;
 
-    return (
-      <React.Fragment key={'card'}>
-
-        <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center">
-          <Grid item>
-
-            { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}><CardContent className={classes.cardContent}>
-                { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-                { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-              </CardContent>
-            </Card></> : <><Card elevation={0} className={classes.card}><CardContent className={classes.cardContent}>
-                { (mode === 'Intermission' ?  <><Intermission /></> : null)}
-                { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-                { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
-              </CardContent>
-            </Card></>)}            
-              
+    if ((width === "xs" || width === "sm")) {
+      return (
+        <React.Fragment key={'card'}>
+  
+          <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center">
+            <Grid item>
+  
+              { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}><CardContent className={classes.cardContent}>
+                  { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                  { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                  { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                </CardContent>
+              </Card></> : <><Card elevation={0} className={classes.card}><CardContent className={classes.cardContent}>
+                  { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                  { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                  { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                </CardContent>
+              </Card></>)}            
+                
+            </Grid>
           </Grid>
-        </Grid>
+  
+        </React.Fragment>
+      );
+    } else if ((width === "md" || width === "lg" || width === "xl")) {
+      return (
+        <React.Fragment key={'card'}>
+  
+          <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGridDesktop} justify="center">
+            <Grid item>
+  
+              { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}><CardContent className={classes.cardContent}>
+                  { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                  { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                  { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                </CardContent>
+              </Card></> : <><Card elevation={0} className={classes.card}><CardContent className={classes.cardContent}>
+                  { (mode === 'Intermission' ?  <><Intermission /></> : null)}
+                  { (mode === 'Word' ? <><Word mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                  { (mode === 'Sentence' ?  <><Sentence mode={mode} key={text} value={{name: text, selectedVowel: vowel}} /></> : null ) }
+                </CardContent>
+              </Card></>)}            
+                
+            </Grid>
+          </Grid>
+  
+        </React.Fragment>
+      );
+    }
 
-      </React.Fragment>
-    );
   }
 
   renderEmptyCard() {
 
-    const { mode, classes, inProgress } = this.props;
+    const { mode, classes, inProgress, width } = this.props;
 
     if (inProgress) {
-      return (
-        <React.Fragment key={'card'}>
-
-          <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center">
-            <Grid item>
-
-            { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
-                <CardContent className={classes.cardContent}>
-                </CardContent>
-              </Card></> : <><Card elevation={0} className={classes.intermissionCard}>
-                <CardContent className={classes.cardContent}>
-                </CardContent>
-              </Card></> )}              
-
+      if ((width === "xs" || width === "sm")) {
+        return (
+          <React.Fragment key={'card'}>
+  
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGrid} justify="center">
+              <Grid item>
+  
+              { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
+                  <CardContent className={classes.cardContent}>
+                  </CardContent>
+                </Card></> : <><Card elevation={0} className={classes.intermissionCard}>
+                  <CardContent className={classes.cardContent}>
+                  </CardContent>
+                </Card></> )}              
+  
+              </Grid>
             </Grid>
-          </Grid>
-
-        </React.Fragment>
-      );
+  
+          </React.Fragment>
+        );
+      } else if ((width === "md" || width === "lg" || width === "xl")) {
+        return (
+          <React.Fragment key={'card'}>
+  
+            <Grid container direction="row" justifyContent="flex-end" alignItems="center" className={classes.wordGridDesktop} justify="center">
+              <Grid item>
+  
+              { (mode === 'Intermission' ? <><Card elevation={0} className={classes.intermissionCard}>
+                  <CardContent className={classes.cardContent}>
+                  </CardContent>
+                </Card></> : <><Card elevation={0} className={classes.intermissionCard}>
+                  <CardContent className={classes.cardContent}>
+                  </CardContent>
+                </Card></> )}              
+  
+              </Grid>
+            </Grid>
+  
+          </React.Fragment>
+        );
+      }  
     } else {
       return null;
     }
@@ -288,9 +370,10 @@ class WordCard extends React.Component  {
  }
 
 WordCard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
 const WordCardWrapped = withStyles(styles)(WordCard);
 
-export default WordCardWrapped;
+export default withWidth()(WordCardWrapped);

@@ -1,5 +1,7 @@
 import React from 'react';
 import WordHistoryListItem from './Item';
+import withWidth from '@material-ui/core/withWidth';
+import PropTypes from 'prop-types';
 
 import { withStyles } from "@material-ui/core/styles";
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +25,7 @@ class WordHistoryList extends React.Component {
   render() {
 
     const {classes} = this.props;
+    const { width } = this.props;
 
     if (!this.props.posts || this.props.posts.length === 0) return null;
 
@@ -45,11 +48,19 @@ class WordHistoryList extends React.Component {
       exerciseResults = this.props.posts.slice(0, -1);
     }
 
-    return <Grid container className={classes.wordHistoryGrid} direction="column-reverse" spacing={0}>{this.mapPosts(exerciseResults)}</Grid>;
+    if ((width === "xs" || width === "sm")) {
+      return <Grid container className={classes.wordHistoryGrid} direction="column-reverse" spacing={0}>{this.mapPosts(exerciseResults)}</Grid>;  
+    } else if ((width === "md" || width === "lg" || width === "xl")) {
+      return <Grid container className={classes.wordHistoryGridDesktop} direction="column-reverse" spacing={0}>{this.mapPosts(exerciseResults)}</Grid>;
+    }    
 
   }
 }
 
+WordHistoryList.propTypes = {
+  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+};
+
 const WordHistoryListWrapped = withStyles(styles)(WordHistoryList);
 
-export default WordHistoryListWrapped;
+export default withWidth()(WordHistoryListWrapped);

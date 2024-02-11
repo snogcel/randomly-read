@@ -19,7 +19,7 @@ function ProgressIndicator(props) {
     if (!props.currentExercise[props.currentExerciseNumber].isIntermission) {
       progressClass = classes.exerciseIndicator;
       intermissionMultiplier = 1;
-      status = 'Exercise ' + (parseInt(props.completed) + 1) + ' of ' + props.total;
+      status = (parseInt(props.completed) + 1) + ' of ' + props.total;
     }
   }
 
@@ -40,33 +40,69 @@ function ProgressIndicator(props) {
 
   size = size * intermissionMultiplier;
 
-  return (
-    <div className={classes.column}>
+// {(width === "md" || width === "sm" || width === "xs") ? ( <>{classes.column}</> ) : ( <>{classes.column}</>) }
 
-      {(props.currentExerciseNumber !== null && props.text !== "" && props.auto) ? (
-        <>
-          <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />      
-        </>
-      ) : (
-        <>
+  if ((width === "xs" || width === "sm")) {
+    return (
+    
+      <div className={classes.column}>
+  
+        {(props.currentExerciseNumber !== null && props.text !== "" && props.auto) ? (
+          <>
+            <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />      
+          </>
+        ) : (
+          <>
+  
+          </>
+        )}
+  
+        <br />
+  
+        {(props.currentExerciseNumber !== null && props.text !== "") ? (
+          <>          
+            <Typography variant="h6" color="secondary">{status}</Typography>
+          </>
+        ) : (
+          <>
+  
+          </>
+        )}
+  
+      </div>
+    );
+  } else if ((width === "md" || width === "lg" || width === "xl")) {
+    return (
+    
+      <div className={classes.columnDesktop}>
+  
+        {(props.currentExerciseNumber !== null && props.text !== "" && props.auto) ? (
+          <>
+            <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />      
+          </>
+        ) : (
+          <>
+  
+          </>
+        )}
+  
+        <br />
+  
+        {(props.currentExerciseNumber !== null && props.text !== "") ? (
+          <>          
+            <Typography variant="h6" color="secondary">{status}</Typography>
+          </>
+        ) : (
+          <>
+  
+          </>
+        )}
+  
+      </div>
+    );
+  } 
 
-        </>
-      )}
-
-      <br />
-
-      {(props.currentExerciseNumber !== null && props.text !== "") ? (
-        <>          
-          <Typography variant="h6" color="secondary">{status}</Typography>
-        </>
-      ) : (
-        <>
-
-        </>
-      )}
-
-    </div>
-  );
+  
 
 }
 

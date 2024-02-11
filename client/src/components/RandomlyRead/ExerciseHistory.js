@@ -184,7 +184,7 @@ class ExerciseHistory extends React.Component {
 
             */
 
-          } else if (width === "md" || width === "lg" || width === "xl") {
+          } else if ((width === "md" || width === "lg" || width === "xl") & stepNumber >= currentExerciseNumber) {
             return(
               <StyledListItem key={stepNumber} selected={((currentExerciseNumber === stepNumber) && inProgress)} className={classes.exerciseHistoryDesktop} disableGutters>
                 <ListItemIcon className={classes.routineStepCheckbox}>

@@ -26,12 +26,14 @@ import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
 import IdentityConfig from './Identities/Config';
 import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
-
+import Link from '@material-ui/core/Link';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+
+import BuyMeACoffee from './Donate/Component';
 
 import { styles } from '../../exerciseThemeHandler';
 
@@ -382,14 +384,17 @@ const RRHome = props => {
               </Grid>
             </Grid>
 
-            <Grid item xs={12} sm={11} md={11} lg={12} align="center">
-              
-              <Typography variant="body1" color="textSecondary" component="p" className={classes.footerText}>
-                Copyright &copy; 2024 Black Circle Technologies, LLC
+            <Grid item xs={12} sm={11} md={11} lg={12} align="center" className={classes.siteFooterWrapper}>
+     
+              <Typography variant="body2" color="textSecondary" component="p" >
+                Copyright &copy; {(new Date().getFullYear())} Black Circle Technologies, LLC <br />All Rights Reserved, email us <Link href="mailto:hello@easyonset.com" variant="body3" color="textPrimary">hello@easyonset.com</Link>
               </Typography>
+
             </Grid>
 
           </Grid>
+
+      {/* <BuyMeACoffee /> */}
 
       </Grid>
 

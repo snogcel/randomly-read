@@ -173,7 +173,7 @@ class ExerciseHistory extends React.Component {
                 <Typography variant="h6" color="secondary"><ListItemText primary={(listItemText)} /></Typography>
               </StyledListItem>
             );
-          } else if (width === "lg" || width === "xl") {
+          } else if ((width === "lg" || width === "xl")) {
             return(
               <StyledListItem key={stepNumber} selected={currentExerciseNumber === stepNumber} className={classes.exerciseHistoryDesktop}>
                 <ListItemIcon>
