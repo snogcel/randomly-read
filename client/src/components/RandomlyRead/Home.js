@@ -266,7 +266,7 @@ const RRHome = props => {
                           <br />
 
                           <Typography variant="body1" color="textPrimary" component="p" >
-                            This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Easy Onset. This program is intended for people who stutter (PWS) and involves three phases:
+                            This program divides Easy Onset into smaller parts by breaking the speaking techniques into three training stages:
                           </Typography>
                           
                           <List className={classes.introductionListRoot}>
