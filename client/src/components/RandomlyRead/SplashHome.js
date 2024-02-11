@@ -237,7 +237,7 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              The key to this program is an automated training system which displays dynamically generated word lists using timed flash cards. These word lists form a of series of therapy routines aimed at achieving phonetic balance while helping you get the most out of every practice session.
+                              The key to this program is an automated training system which displays dynamically generated word lists using timed flash cards. These word lists form a series of therapy routines aimed at achieving phonetic balance while helping you get the most out of every practice session.
                             </Typography>
 
                           </Box>
