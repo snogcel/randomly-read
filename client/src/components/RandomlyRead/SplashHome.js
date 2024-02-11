@@ -231,7 +231,7 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              Welcome to EasyOnset.com, a free speech therapy service for People Who Stutter. This program is the result of my own personal experience learning to use speaking techniques to overcome stuttering as a child and to maintain it as an adult. If you find this resource useful support the site: <Link href="https://www.buymeacoffee.com/easyonset">buy me a coffee</Link>.
+                              Welcome to EasyOnset.com, a free speech therapy service for People Who Stutter. This program is the result of my own personal experience learning to use speaking techniques to overcome stuttering as a child and to maintain it as an adult. If you find this resource useful, please support the site and <Link href="https://www.buymeacoffee.com/easyonset">buy me a coffee</Link>.
                             </Typography>
 
                             <br />
