@@ -30,6 +30,8 @@ class WordCard extends React.Component  {
 
   componentDidUpdate(prevProps, prevState, snapshot) {
 
+    //console.log(this.props.data) // TODO - better handle delay? reset timer if delayed?
+    
     // if data has been returned from query
     if ((typeof(this.props.data) !== 'undefined' && this.props.data)) {
 
@@ -44,7 +46,7 @@ class WordCard extends React.Component  {
       if (mode === 'Word' && data.words) {
 
         // if new result, store and display
-        if ((this.result !== data.words.lexeme) && this.fetching) {
+        if ((this.result !== data.words.lexeme) && this.fetching) {          
           this.result = data.words.lexeme;
           this.fetching = false;
           this.parseResult(mode, data);
@@ -61,15 +63,25 @@ class WordCard extends React.Component  {
           if (i < (data.sentences.words.length - 1)) result += " ";
         }
 
+        //console.log("new result: " + result)
+        //console.log("prev result: " + this.result)
+
         // if new result, store and display
         if (this.result !== result && this.fetching) {
-        // if (typeof(data.sentences.words) !== "undefined" && result.length > 0 && this.fetching) {
+        // if (typeof(data.sentences.words) !== "undefined" && result.length > 0 && this.fetching) {          
           this.result = result; // assign newly generated sentence to result
           this.fetching = false;
           this.parseResult(mode, data);
+          //console.log("new result, display")
         }
+
+        //console.log("are we stuck here?")
       }
 
+    } else {
+      if (this.props.timeLeft == 0 && this.props.timeLeft) this.props.updateTimeLeft(this.props.time)
+      //console.log(this.props.time)
+      //console.log(this.props.timeLeft)
     }
 
 
@@ -282,7 +294,7 @@ class WordCard extends React.Component  {
       };
 
       this.props.addWord(this.result);
-      this.props.addQueryResult(fetched);
+      this.props.addQueryResult(fetched);      
 
     } else if (mode === 'Sentence') {
 
@@ -311,7 +323,7 @@ class WordCard extends React.Component  {
         "comments": [],
         "type": "sentence",
         "time": Date.now()
-      });
+      });      
 
     }
 

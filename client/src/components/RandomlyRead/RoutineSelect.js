@@ -92,10 +92,10 @@ class RoutineSelect extends React.Component {
 
     prepareRoutineSelect(){
       if (typeof(this.props.exerciseToken) !== "undefined") {
-        console.log("- exercise token -");
+        //console.log("- exercise token -");
         this.props.fetchAssignedRoutines(this.props.exerciseToken);
       } else if (typeof(this.props.token) !== "undefined") {
-        console.log("- login token -");
+        //console.log("- login token -");
         this.props.fetchAssignedRoutines(this.props.token);
       }
     }
@@ -104,8 +104,8 @@ class RoutineSelect extends React.Component {
 
       // check if routine has changed
       if ((prevProps.routine !== this.props.routine)) {
-        console.log(this.state);
-        console.log(this.props);
+        //console.log(this.state);
+        //console.log(this.props);
         this.props.updateTimeLeft(1); // avoid accidental word update                
         this.props.action(this.props.routine); // pass mode update back to QueryManager
       }
@@ -113,7 +113,7 @@ class RoutineSelect extends React.Component {
       if (typeof this.props.isVoting !== "undefined") {
         if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
 
-          console.log("-fetching updated routines-");
+          //console.log("-fetching updated routines-");
 
           this.props.fetchAssignedRoutines();
           this.props.updateId(prevProps.id);
@@ -125,7 +125,7 @@ class RoutineSelect extends React.Component {
       if (typeof this.props.isInteractionVoting !== "undefined") {
         if ((prevProps.isInteractionVoting !== this.props.isInteractionVoting) && !this.props.isInteractionVoting) { // fetch updated routines
 
-          console.log("-fetching updated routines-");
+          //console.log("-fetching updated routines-");
 
           this.props.fetchAssignedRoutines();
           this.props.updateId(prevProps.id);
