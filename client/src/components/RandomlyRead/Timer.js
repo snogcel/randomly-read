@@ -142,7 +142,7 @@ class Timer extends React.Component {
 
       // reset timer
 
-      console.log("-reset timer-");
+      // console.log("-reset timer-");
 
       timerReset = true;
       this.props.updateTime(0);

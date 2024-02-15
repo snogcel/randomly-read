@@ -219,7 +219,7 @@ const RRHome = props => {
     timerContainerWidth = 8;
   }
 
-  console.log(props.pageContext)
+  // console.log(props.pageContext)
 
   return (
 

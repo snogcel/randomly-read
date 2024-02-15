@@ -42,7 +42,7 @@ class QueryWrapper extends Component {
 
     this.result = "";
     this.fetching = false;
-    this.debug = true;
+    this.debug = false;
 
     if (this.props.mode !== "Intermission") this.props.buildGraphQL(this.props);
 
