@@ -79,7 +79,7 @@ class WordCard extends React.Component  {
       }
 
     } else {
-      if (this.props.timeLeft == 0 && this.props.timeLeft) this.props.updateTimeLeft(this.props.time)
+      if (this.props.timeLeft == 0 && this.props.timeLeft) this.props.updateTimeLeft(0)
       console.log(this.props.time)
       console.log(this.props.timeLeft)
     }
