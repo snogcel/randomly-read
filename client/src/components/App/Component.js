@@ -106,7 +106,7 @@ const App = (props) => {
           <div>
             <GlobalStyle />
 
-            { ((typeof(user) === "undefined") || (user === null) || (typeof(user) !== "undefined" && user.isActive)) && <Route component={AppBarContainer} /> }
+            {/* { ((typeof(user) === "undefined") || (user === null) || (typeof(user) !== "undefined" && user.isActive)) && <Route component={AppBarContainer} /> } */}
 
             <Route component={ErrorNotificationContainer} />
             <Switch>
@@ -115,6 +115,15 @@ const App = (props) => {
               <Route path='/signup' component={SignupFormContainer} />
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
+
+              <Route              
+                path="/home"
+                render={() => {
+                  return (
+                    <Redirect to="/" />
+                  )
+                }}
+              />
 
               <Route
                 path={Identities[0].pathname}
@@ -141,12 +150,17 @@ const App = (props) => {
               <Route path='/Administration' component={Administration} />
               <Route path='/Profile' component={UserProfile} />
 
+              <Route                
+                path="/"
+                render={props => (<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} {...props}/>)}
+              />
+
               <Route
                 exact
                 path="*"
                 render={() => {
                   return (
-                    <Redirect to="/home" />
+                    <Redirect to="/" />
                   )
                 }}
               />

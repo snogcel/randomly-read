@@ -41,7 +41,7 @@ const Header = ({ user, logout }) => (
       </>
     ) : (
       <>
-        <HeaderNavLink to='/login'>Log In</HeaderNavLink>
+        {/* <HeaderNavLink to='/login'>Log In</HeaderNavLink> */}
       </>
     )}
   </Wrapper>

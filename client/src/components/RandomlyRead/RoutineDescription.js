@@ -52,6 +52,9 @@ class RoutineDescription extends Component {
 
   incrementRoutine(e) {
     const { routine, availableRoutines } = this.props;
+    
+    this.props.setExercisePause(true);
+    this.props.updateTime(0);
 
     let position = 0;
 
@@ -65,6 +68,8 @@ class RoutineDescription extends Component {
     this.props.updateName(newRoutine.name);
     this.props.updateDescription(newRoutine.description);
     this.props.updateActiveRoutine(newRoutine);
+    this.props.clearQueryResults();
+    this.props.updateCompleted(0);
   }
 
   canIncrementRoutine() {

@@ -17,8 +17,8 @@ import {addRoutineVowel} from '../../../actions/word';
 import {setIntermissionText} from '../../../actions/word';
 import {buildGraphQL} from '../../../actions/word';
 
-import {addExercise} from '../../../actions/exerciseHistory'
-import {addExerciseNumber} from '../../../actions/exerciseHistory'
+import {addExercise} from '../../../actions/exerciseHistory';
+import {addExerciseNumber} from '../../../actions/exerciseHistory';
 import {setExercisePause} from '../../../actions/exerciseHistory';
 
 import {updateCompleted} from '../../../actions/exerciseHistory'; // TODO - remove?

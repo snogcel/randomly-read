@@ -50,8 +50,8 @@ export default (state = initialState, action) => {
         return {...state, total: action.text};
       case UPDATE_TIMELEFT:
         return {...state, timeLeft: action.text};
-      case UPDATE_TIME:
-        return {...state, time: action.text};
+      case UPDATE_TIME:        
+        return {...state, time: parseInt(action.text)};
       case SET_INPROGRESS:
         return {...state, inProgress: action.text};
       case SET_ISCOMPLETED:

@@ -231,22 +231,72 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              Welcome to EasyOnset.com, a free speech therapy service for people who stutter. This program is the result of my own personal experience with speaking techniques and overcoming stuttering as a child, and then learning how to maintain that fluency as an adult. If you find this resource useful, please support the site and <Link href="https://www.buymeacoffee.com/easyonset">buy me a coffee</Link>.
+                              Welcome to EasyOnset.com, a <u>free</u> virtual speech therapy service for people who stutter. If you find this useful, please support the site and <Link href="https://www.buymeacoffee.com/easyonset"><strong>buy me a coffee</strong></Link>.
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                              What is EasyOnset.com?
                             </Typography>
 
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              The key to this program is an automated training system which displays dynamically generated word lists using timed flash cards. These word lists form a series of practice routines aimed at achieving phonetic balance while helping you get the most out of every practice session.
+                              First, a little bit of my own personal context: I was diagnosed with a moderate-to-severe stutter when I was a child. For two years I was a client of speech therapist Dr. Peter Ramig, author of <Link href="https://www.amazon.com/Adolescent-Stuttering-Treatment-Activity-Resource/dp/1435481178"><i>The Child and Adolescent Stuttering Treatment & Activity Resource Guide</i></Link>.
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              During that time I learned many speaking techniques including <i>Easy Onset</i>, which focuses on sensing the vibration created by words while speaking and works by stretching out the production of the word itself. I found a lot of success with that method through my teenage years and into college.
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              It wasn't until after graduation, and into my adult life, that I found my stutter had come back. By the time I'd reached my mid 30s, I realized that I needed to find a better way to respond to my blocks and learned of <Link href="https://www.amazon.com/Understanding-Controlling-Stuttering-Comprehensive-Hypothesis/dp/1737955504"><i>Understanding and Controlling Stuttering</i></Link>, endorsed by the <Link href="https://westutter.org/product-category/books/">National Stuttering Association</Link> and written by Dr. William Perry.
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                              Vowel Focused Stuttering Therapy
+                            </Typography>
+
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              In <Link href="https://isad.live/isad-2013/papers-presented-by-2013/dismantling-the-brick-wall-of-stuttering/"><i>Dismantling the "Brick Wall" of Stuttering</i></Link>, Dr. Perry describes the composition of stuttering blocks and how Valsalva Stuttering Therapy can help. This hypothesis states that relaxing the muscles beneath your stomach breaks the chain of muscles that is related to and drives the stuttering block. 
+                            </Typography>
+
+                            
+                            <br />
+
+                            <Typography variant="body1" color="textPrimary" component="p" >
+                              This chain of muscles leads to a block that you can feel all the way up your body into your throat. This type of Effort Impulse can be short-circuited by intentionally relaxing the <i>Pelvic Floor</i>, which is a basket-like set of muscles which supports the stomach. This program relies on consistent practice and ultimately only works if you dedicate enough time to it.
                             </Typography>
 
                           </Box>
 
                         </Grid>
 
-                        <Grid item xs={12} align="center" className={classes.getStartedButtonContainer}>
+                        <Grid item xs={12} md={8}>
 
-                          <Button className={classes.getStartedButton} variant="outlined" color="primary" onClick={e => handleClick(e, Identities[1].pathname[0], Identities[1].user.routines[0])}>Click Here To Get Started</Button> 
+                          <Box>
+                            
+                          <br />
+
+                          <Typography variant="body1" color="textPrimary" component="p" >
+                            EasyOnset.com offers a free automated training system which displays dynamically generated word lists using timed flash cards. These word lists form a series of practice routines aimed at achieving phonetic balance while helping you get the most out of every practice session.
+                          </Typography>
+
+                          </Box>
+                        </Grid>
+
+                        <Grid item xs={12} md={4} align="center" className={classes.getStartedButtonContainer}>
+
+                          <Button className={classes.getStartedButton} variant="contained" color="primary" onClick={e => handleClick(e, Identities[1].pathname[0], Identities[1].user.routines[0])}>Click Here To Get Started</Button> 
 
                         </Grid>
 
@@ -267,6 +317,15 @@ const RRHome = props => {
                             <Typography variant="h5" component="h2" className={classes.contentHeading}>
                               Customizable
                             </Typography>
+
+
+
+
+
+
+
+
+
 
                             <br />
 
