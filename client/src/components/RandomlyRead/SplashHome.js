@@ -252,7 +252,7 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              First, a little bit of my own personal context: I was diagnosed with a moderate-to-severe stutter when I was a child. For two years I was a client of speech therapist Dr. Peter Ramig, author of <Link href="https://www.amazon.com/Adolescent-Stuttering-Treatment-Activity-Resource/dp/1435481178"><i>The Child and Adolescent Stuttering Treatment & Activity Resource Guide</i></Link>.
+                              First, a little bit of my own personal context: I was diagnosed with a moderate-to-severe stutter when I was a child. For two years I was a client of speech therapist Dr. Peter Ramig, co-author of <Link href="https://www.amazon.com/Adolescent-Stuttering-Treatment-Activity-Resource/dp/1435481178"><i>The Child and Adolescent Stuttering Treatment & Activity Resource Guide</i></Link>.
                             </Typography>
 
                             <br />
