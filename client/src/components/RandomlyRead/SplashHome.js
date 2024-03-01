@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactGA from "react-ga4";
+import { Helmet } from 'react-helmet';
+
 import { withStyles } from "@material-ui/core/styles";
 import { useTheme } from '@material-ui/core/styles';
 
@@ -189,6 +191,13 @@ const RRHome = props => {
   return (
 
     <Container maxWidth="lg" className={classes.homeContainer}>
+
+    <Helmet>
+      <title>Easy Onset</title>
+      <meta name="description" content="EasyOnset.com is a free virtual speech therapy service for people who stutter." />
+      <meta property="og:title" content="Easy Onset" />
+      <meta property="og:description" content="EasyOnset.com is a free virtual speech therapy service for people who stutter." />
+    </Helmet>
 
       <Grid className={classes.root}>
 
