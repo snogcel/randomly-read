@@ -193,9 +193,9 @@ const RRHome = props => {
     <Container maxWidth="lg" className={classes.homeContainer}>
 
     <Helmet>
-      <title>Easy Onset</title>
+      <title>Easy Onset - Free Stuttering Therapy</title>
       <meta name="description" content="EasyOnset.com is a free virtual speech therapy service for people who stutter." />
-      <meta property="og:title" content="Easy Onset" />
+      <meta property="og:title" content="Easy Onset - Free Stuttering Therapy" />
       <meta property="og:description" content="EasyOnset.com is a free virtual speech therapy service for people who stutter." />
     </Helmet>
 
