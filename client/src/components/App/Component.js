@@ -116,6 +116,11 @@ const App = (props) => {
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
 
+              <Route path='/FluencyReport' component={FluencyReport} />
+              <Route path='/RoutineBuilder' component={RoutineBuilder} />
+              <Route path='/Administration' component={Administration} />
+              <Route path='/Profile' component={UserProfile} />
+
               <Route              
                 path="/home"
                 render={() => {
@@ -145,16 +150,11 @@ const App = (props) => {
                 render={props => (<Exercise3HomeContainer ApolloClient={client} TimerContainer={Exercise3TimerContainer} RoutineSelectContainer={Exercise3RoutineSelectContainer} ExerciseIntroduction={Exercise3Introduction} ExerciseTechniques={Exercise3Techniques} {...props}/>)}
               />
 
-              <Route path='/FluencyReport' component={FluencyReport} />
-              <Route path='/RoutineBuilder' component={RoutineBuilder} />
-              <Route path='/Administration' component={Administration} />
-              <Route path='/Profile' component={UserProfile} />
-
               <Route                
                 path="/"
                 render={props => (<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} {...props}/>)}
               />
-
+{/* 
               <Route
                 exact
                 path="*"
@@ -163,7 +163,9 @@ const App = (props) => {
                     <Redirect to="/" />
                   )
                 }}
-              />
+              /> */}
+
+
             </Switch>
           </div>
       </ThemeProvider>
