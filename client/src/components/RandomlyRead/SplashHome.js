@@ -343,7 +343,7 @@ const RRHome = props => {
                                 <br />
 
                                 <Typography variant="body1" color="textPrimary" component="p" >
-                                  Have an idea on a way to improve the site? Willing to share your personal experience using this program as a written testimonial? Comments and suggestions are welcomed, and I'm always looking for help spreading the word about the site.
+                                  Have an idea of a way to improve the site? Willing to share your personal experience using this program as a written testimonial? Comments and suggestions are welcomed, and I'm always looking for help spreading the word about the site.
                                 </Typography>
 
                                 <br />
