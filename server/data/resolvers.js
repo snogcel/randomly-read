@@ -178,7 +178,7 @@ const resolvers = {
               syllables: [1,2,3,4,5]
             };
             let limit = 1; // default
-            let dataLimit = 250; // fixed to 250 for querying words
+            let dataLimit = 50; // fixed to 250 for querying words
             let location = "initial"; // default
 
             const id = req.user.id; // get user id
@@ -205,20 +205,20 @@ const resolvers = {
             ]; */
 
             let templates = [              
-              "graceful {{ adjective }} hues on the {{ noun }}",
+              "{{ adjective }} hues on the {{ noun }}",
               "{{ an_adjective }} echoes fill the {{ noun }}",
               "{{ noun }} adorned with {{ an_adjective }} elegance",
-              "symphony of {{ an_adjective }} colors in {{ noun }}",
+              "{{ an_adjective }} colors in {{ noun }}",
               "{{ noun }} embraces {{ an_adjective }} essence",              
-              "explore {{ adjective }} mystique of the {{ noun }}",
-              "whispers of {{ an_adjective }} enchantment in {{ noun }}",
+              "{{ adjective }} mystique of the {{ noun }}",
+              "{{ an_adjective }} enchantment in {{ noun }}",
               "{{ noun }} resonates with {{ adjective }} echoes",
               "{{ adjective }} essence graces the aura of {{ noun }}",
-              "discover {{ noun }} through {{ an_adjective }} eyes",
+              "{{ noun }} through {{ an_adjective }} eyes",
               "{{ adjective }} melodies play in {{ noun }}",
-              "canvas of {{ an_adjective }} wonders unfold in {{ noun }}",
+              "{{ an_adjective }} wonders unfold in {{ noun }}",
               "{{ an_adjective }} {{ adjective }} illuminate the {{ noun }}",
-              "immerse in {{ adjective }} tapestry of {{ noun }}",
+              "{{ adjective }} tapestry of {{ noun }}",
               "{{ an_adjective }} stories unfold about {{ noun }}",
               "{{ noun }} touched by essence of {{ adjective }}",
               "{{ an_adjective }} unveils {{ adjective }} secret of {{ noun }}",
@@ -235,20 +235,20 @@ const resolvers = {
             ];
 
             let templateArtifact = [
-              "the {{ adjective }} {{ noun_artifact }} exudes {{ an_adjective }} mystery",
-              "explore {{ noun_artifact }} with {{ an_adjective }} craftsmanship",
+              "{{ adjective }} {{ noun_artifact }} exudes {{ an_adjective }} mystery",
+              "{{ noun_artifact }} with {{ an_adjective }} craftsmanship",
               "{{ noun_artifact }} adorned with {{ an_adjective }} tales",
             ];
 
             let templateLocation = [
               "{{ an_adjective }} {{ noun_location }} is {{ an_adjective }} haven",
-              "discover {{ noun_location }} with {{ an_adjective }} charm",
-              "immerse in the culture of {{ an_adjective }} {{ noun_location }}",
+              "{{ noun_location }} with {{ an_adjective }} charm",
+              "{{ an_adjective }} {{ noun_location }}",
             ];
 
             let templateFood = [
-              "savor {{ an_adjective }} {{ noun_food }} flavors",
-              "aroma of {{ noun_food }} with {{ an_adjective }} spices",
+              "{{ an_adjective }} {{ noun_food }} flavors",
+              "{{ noun_food }} with {{ an_adjective }} spices",
             ];
 
             let templatePerson = [
