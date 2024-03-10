@@ -206,32 +206,32 @@ const resolvers = {
 
             let templates = [              
               "{{ adjective }} hues on the {{ noun }}",
-              "{{ an_adjective }} echoes fill the {{ noun }}",
+              "{{ adjective }} echoes fill the {{ noun }}",
               "{{ noun }} adorned with {{ an_adjective }} elegance",
-              "{{ an_adjective }} colors in {{ noun }}",
+              "{{ adjective }} colors in {{ noun }}",
               "{{ noun }} embraces {{ an_adjective }} essence",              
               "{{ adjective }} mystique of the {{ noun }}",
-              "{{ an_adjective }} enchantment in {{ noun }}",
+              "{{ adjective }} enchantment in {{ noun }}",
               "{{ noun }} resonates with {{ adjective }} echoes",
               "{{ adjective }} essence graces the aura of {{ noun }}",
               "{{ noun }} through {{ an_adjective }} eyes",
               "{{ adjective }} melodies play in {{ noun }}",
-              "{{ an_adjective }} wonders unfold in {{ noun }}",
-              "{{ an_adjective }} {{ adjective }} illuminate the {{ noun }}",
+              "{{ adjective }} wonders unfold in {{ noun }}",
+              "{{ adjective }} {{ adjective }} illuminate the {{ noun }}",
               "{{ adjective }} tapestry of {{ noun }}",
-              "{{ an_adjective }} stories unfold about {{ noun }}",
+              "{{ adjective }} stories unfold about {{ noun }}",
               "{{ noun }} touched by essence of {{ adjective }}",
-              "{{ an_adjective }} unveils {{ adjective }} secret of {{ noun }}",
-              "{{ an_adjective }} shades paint canvas of {{ noun }}",
+              "{{ adjective }} unveils {{ adjective }} secret of {{ noun }}",
+              "{{ adjective }} shades paint canvas of {{ noun }}",
               "{{ adjective }} dreams echo softly in {{ noun }}",
             ];
 
 
             // Templates for specific tags - Maximum 7 words
             let templateAnimal = [
-              "{{ an_adjective }} {{ noun_animal }} is {{ adjective }} and wild",
+              "{{ adjective }} {{ noun_animal }} is {{ adjective }} and wild",
               "{{ adjective }} {{ noun_animal }} roams the {{ noun_location }}",
-              "{{ an_adjective }} {{ noun_animal }} in its natural habitat",
+              "{{ adjective }} {{ noun_animal }} in its natural habitat",
             ];
 
             let templateArtifact = [
