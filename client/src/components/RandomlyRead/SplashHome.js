@@ -223,6 +223,7 @@ const RRHome = props => {
                   <AppBar position="static" color="secondary" elevation={0}>
                     <Tabs value={value} onChange={handleChange}>
                       <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Overview" {...a11yProps(0)} />
+                      <LinkTab disableRipple disableFocusRipple className={classes.introTabLink} label="Value-for-Value" {...a11yProps(1)} />
                     </Tabs>
                   </AppBar>
                 </Grid>
@@ -240,12 +241,12 @@ const RRHome = props => {
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              Welcome to EasyOnset.com, a <u>free</u> virtual speech therapy service for people who stutter. If you find this useful, please support the site and <Link href="https://www.buymeacoffee.com/easyonset"><strong>buy me a coffee</strong></Link>.
+                              Welcome to EasyOnset.com, a <u>free</u> virtual speech therapy service for people who stutter. If you find this useful, please support the site with a <Link href="https://www.paypal.com/donate/?business=YEJFDTW8JQ6LE&no_recurring=0&item_name=There%27s+a+real+lack+of+options+for+people+who+stutter.+My+goal+is+to+provide+a+free+speech+therapy+resource+for+everyone.&currency_code=USD">donation</Link>.
                             </Typography>
 
                             <br />
 
-                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                            <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
                               What is EasyOnset.com?
                             </Typography>
 
@@ -269,7 +270,7 @@ const RRHome = props => {
 
                             <br />
 
-                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                            <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
                               Vowel Focused Stuttering Therapy
                             </Typography>
 
@@ -323,124 +324,60 @@ const RRHome = props => {
                         <Grid item xs={12}>
 
                           <Box>
-                            <Typography variant="h5" component="h2" className={classes.contentHeading}>
-                              Customizable
-                            </Typography>
-
-
-
-
-
-
-
-
-
-
+                            
                             <br />
 
                             <Typography variant="body1" color="textPrimary" component="p" >
-                              EasyOnset.com has been customized to address Stuttering and is heavily influenced by the work of Dr. Peter Ramig (Speech Therapy) and Dr. William Perry (Valsalva Hypothesis / Self-Help). This tool has been inspired through my own personal journey learning how to successfully manage my stutter.
+                              EasyOnset.com is brought to you through the power of <i>value-for-value</i> and is a 100% free service. There's a real lack of options for adults and adolescents who stutter, and my hope is that this resource can provide a solution for those willing to fight it out using self-help therapy. If you find this service useful and valuable, please give back either by donating your time, talent, or treasure.
                             </Typography>
 
                             <br />
 
-                            <Typography variant="body1" color="textPrimary" component="p" >
-                              EasyOnset.com aims to make the “practice” and “maintenance” aspects of Speech Therapy as user-friendly and efficient as possible.
-                            </Typography>
+                            <Grid container spacing={5}>
 
-                          </Box>
+                              <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                                  Time & Talent
+                                </Typography>
 
+                                <br />
 
-                          <Grid container spacing={5}>
+                                <Typography variant="body1" color="textPrimary" component="p" >
+                                  Have an idea on a way to improve the site? Willing to share your personal experience using this program as a written testimonial? Comments and suggestions are welcomed, and I'm always looking for help spreading the word about the site.
+                                </Typography>
 
-                            <Grid item xs={12} sm={8}>
+                                <br />
 
-                              <br />
+                                <Typography variant="body1" color="textPrimary" component="p" >
+                                  Email any time at <Link href="mailto:hello@easyonset.com">hello@easyonset.com</Link>.
+                                </Typography>
+                              </Grid>
 
-                              <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
-                                How does it work?
-                              </Typography>
+                              <Grid item xs={12} sm={6}>
+                                <Typography variant="h5" component="h2" className={classes.contentHeading}>
+                                  Treasure
+                                </Typography>
 
-                              <br />
+                                <br />
 
-                              <Typography variant="body1" color="textPrimary" component="p" >
-                                Through the use of a password-protected administrator console, customized routines can be created for a group of clients who share a common deficit such as Lisping or Stuttering. Additionally, fully customized routines can be created for an individual based on their needs.
-                              </Typography>
+                                <Typography variant="body1" color="textPrimary" component="p" >
+                                  This program unfortunately does not offer overnight success, and requires a lot of hard work. This is being offered for free and on a <i>value-for-value</i> basis. The amount of value you get out of it will be directly related to how much you put in.
+                                </Typography>
 
-                              <br />
+                                <br />
 
-                              <Typography variant="body1" color="textPrimary" component="p" >
-                                These exercise routines provide a structure for these practice routines and can even go so far as to track whether or not the person has completed the assigned exercises. In addition to providing structure, these exercise routines also provide a targeted set of words to practice as opposed to simply reading text out of magazines, newspapers or books.
-                              </Typography>
+                                <Typography variant="body1" color="textPrimary" component="p" >
+                                For those that are willing and able to give back financially, please <Link href="https://www.paypal.com/donate/?business=YEJFDTW8JQ6LE&no_recurring=0&item_name=There%27s+a+real+lack+of+options+for+people+who+stutter.+My+goal+is+to+provide+a+free+speech+therapy+resource+for+everyone.&currency_code=USD">donate</Link>!
+                                </Typography>
 
-                              <br />
+                                <br />
 
-                              <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
-                                Practice Smarter.
-                              </Typography>
-
-                              <br />
-
-                              <Typography variant="body1" color="textPrimary" component="p" >
-                                Using a proprietary system, EasyOnset.com is able to filter and focus the system-generated exercise routine on specific consonants and vowels, the placement of those sounds within the word, the number of syllables in the word, and even so far as grade level that the word is first acquired. This approach allows for a more efficient usage of time while practicing, ensuring that the user is focusing their efforts – working “smart” instead of working “hard”.
-                              </Typography>
-
-
+                                <Link href="https://www.paypal.com/donate/?business=YEJFDTW8JQ6LE&no_recurring=0&item_name=There%27s+a+real+lack+of+options+for+people+who+stutter.+My+goal+is+to+provide+a+free+speech+therapy+resource+for+everyone.&currency_code=USD"><img src="./paypal_donate.png" alt="donate with paypal"/></Link>
+                                                                
+                              </Grid>
 
                             </Grid>
 
-
-                            <Hidden xsDown>
-                              <Grid item xs={12} sm={4}>
-
-                                <br /><br /><br />
-
-                                <img src="./fluencyShaping_admin1_preview.png" onClick={handleOpen_1} className={classes.homePagePreviewImage} alt="Preview 1"/>
-
-                                <Modal
-                                  aria-labelledby="simple-modal-title"
-                                  aria-describedby="simple-modal-description"
-                                  open={open_1}
-                                  onClose={handleClose_1}
-                                >
-                                  <div className={classes.previewImage}>
-                                    <img src="./fluencyShaping_admin1.PNG" alt="Preview 1"/>
-                                  </div>
-                                </Modal>
-
-                                <br /><br /><br />
-
-                                <img src="./fluencyShaping_admin2_preview.png" onClick={handleOpen_2} className={classes.homePagePreviewImage} alt="Preview 2" />
-
-                                <Modal
-                                  aria-labelledby="simple-modal-title"
-                                  aria-describedby="simple-modal-description"
-                                  open={open_2}
-                                  onClose={handleClose_2}
-                                >
-                                  <div className={classes.previewImage}>
-                                    <img src="./fluencyShaping_admin2.PNG" alt="Preview 2"/>
-                                  </div>
-                                </Modal>
-
-                              </Grid>
-                            </Hidden>
-
-                          </Grid>
-
-                          <br />
-
-                          <Box>
-
-                            <Typography variant="h5" component="h2" className={classes.definitionListHeading} color="textPrimary">
-                              Contact Us.
-                            </Typography>
-
-                            <br />
-
-                            <Typography variant="body1" color="textPrimary" component="p" >
-                              This platform aims to bridge the gap between “on-site” speech therapy and “self-help” speech therapy. To learn more about how this tool could be used in your own practice please reach out to <Link href="mailto:jon@blackcircletechnologies.com">jon@blackcircletechnologies.com</Link>.
-                            </Typography>
                           </Box>
 
                         </Grid>

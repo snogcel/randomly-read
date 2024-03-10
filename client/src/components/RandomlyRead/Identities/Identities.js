@@ -1,7 +1,7 @@
 const Identities = [{
   alias: "Introduction",
   navigation: true,
-  pathname: [ "/home", "/customize", "/about" ],
+  pathname: [ "/home" ],
   token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InJvdXRpbmVzIjpbIjYxYzBiNTBjMGZhZjAwMGFiZTkxMDkxYSJdLCJpbnRlcmFjdGlvblNldHRpbmdzIjpbXSwiY2xpZW50cyI6W10sInVzZXJuYW1lIjoiZXhlcmNpc2V1c2VyMDA5IiwiZmlyc3ROYW1lIjoiRXhlcmNpc2UiLCJsYXN0TmFtZSI6IlVzZXIwMDkiLCJpc0FjdGl2ZSI6dHJ1ZSwiaWQiOiI1ZmVlNmQ2M2VkZjM5MjBkODg4NDZhMGEifSwiaWF0IjoxNjQwMDE5MjUwLCJleHAiOjg4MDM5OTMyODUwfQ.sSP9uWhym9mryU4lLC6zqhRXyt9zeHGxvFQfb2ztz0o",
   user: {
     "routines": [],    

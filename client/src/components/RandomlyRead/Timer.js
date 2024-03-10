@@ -46,7 +46,7 @@ class Timer extends React.Component {
       position: 'initial',
       limit: 1,
     };
-
+/* 
     let script = document.createElement("script");
     script.setAttribute('data-name','BMC-Widget')
     script.src = "https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
@@ -65,7 +65,7 @@ class Timer extends React.Component {
         window.dispatchEvent(evt);
     }
     this.script=script
-
+ */
     this.timerHandler = this.timerHandler.bind(this);
 
     this.routineSelectHandler = this.routineSelectHandler.bind(this);
@@ -102,13 +102,13 @@ class Timer extends React.Component {
     return true;
 }
   componentDidMount() {    
-    document.head.appendChild(this.script)
+    //document.head.appendChild(this.script)
   }
 
   componentWillUnmount() {
     this.stopTimer();
 
-    document.head.removeChild(this.script)
+    //document.head.removeChild(this.script)
 
     this.bmc = document.getElementById("bmc-wbtn");
 
