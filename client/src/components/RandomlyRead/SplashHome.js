@@ -372,7 +372,7 @@ const RRHome = props => {
 
                                 <br />
 
-                                <Link href="https://www.paypal.com/donate/?business=YEJFDTW8JQ6LE&no_recurring=0&item_name=There%27s+a+real+lack+of+options+for+people+who+stutter.+My+goal+is+to+provide+a+free+speech+therapy+resource+for+everyone.&currency_code=USD"><img src="./paypal_donate.png" alt="donate with paypal"/></Link>
+                                <center><Link href="https://www.paypal.com/donate/?business=YEJFDTW8JQ6LE&no_recurring=0&item_name=There%27s+a+real+lack+of+options+for+people+who+stutter.+My+goal+is+to+provide+a+free+speech+therapy+resource+for+everyone.&currency_code=USD"><img src="./paypal_donate.png" alt="donate with paypal"/></Link></center>
                                                                 
                               </Grid>
 
