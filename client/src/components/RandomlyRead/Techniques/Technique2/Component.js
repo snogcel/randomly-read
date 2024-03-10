@@ -89,7 +89,7 @@ class Technique extends React.Component {
             
             <Grid item xs={12}>
               <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
-                II. Phonation with Articulation
+                Exercise 2 - Articulation
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -99,7 +99,7 @@ class Technique extends React.Component {
             </Grid>
 
             <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-              This exercise expands on the previous one. Articulate your mouth and tongue as if you were speaking the word normally. Gently pinch your thumb and middle finger on the vowel sound.
+              This technique continues and expands on the earlier phonation exercise. Using this humming sound, articulate your mouth and tongue as if you were speaking the word normally and gently pinch your thumb and middle finger on the vowel sound.
             </Typography>
             
             <ReactPlayer 

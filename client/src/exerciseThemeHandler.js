@@ -464,7 +464,11 @@ const styles = theme => ({
     paddingRight: theme.spacing(4)
   },
   descriptionTextContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
+    '& li': {
+      marginBottom: theme.spacing(2),
+      marginLeft: theme.spacing(2)
+    }
   },
   descriptionTextModal: {
     position: 'absolute',

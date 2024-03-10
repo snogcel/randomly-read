@@ -124,7 +124,7 @@ const RRHome = props => {
   function updatePathname(subpath) {
 
     // set router url to match page section
-    console.log(subpath);
+    // console.log(subpath);
 
     let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
 
@@ -186,7 +186,7 @@ const RRHome = props => {
 
   function handleClick(e, pathname, routineId) {
 
-    console.log(pathname);
+    // console.log(pathname);
 
     if (props.history.location.pathname !== pathname) {
       props.setInProgress(false);

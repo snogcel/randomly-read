@@ -214,8 +214,8 @@ class RoutineSelect extends React.Component {
                     >
 
                       { routines.map((item, i) => ( <MenuItem key={item.attributes.id} value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
-                      { ((upvotedRoutines.length > 0) && <ListSubheader>System Generated</ListSubheader> ) }
-                      { upvotedRoutines.map((item, i) => ( <MenuItem key={item.attributes.id} value={item.attributes.id}>{item.attributes.name}</MenuItem> )) }
+                      {/* { ((upvotedRoutines.length > 0) && <ListSubheader>System Generated</ListSubheader> ) }
+                      { upvotedRoutines.map((item, i) => ( <MenuItem key={item.attributes.id} value={item.attributes.id}>{item.attributes.name}</MenuItem> )) } */}
                     </Select>
                   </FormControl>
 

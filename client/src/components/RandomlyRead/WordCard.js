@@ -31,7 +31,7 @@ class WordCard extends React.Component  {
   componentDidUpdate(prevProps, prevState, snapshot) {
 
     if (typeof(this.props.data) == 'undefined') console.log(this.props.data) // TODO - better handle delay? reset timer if delayed?
-    //if (!this.props.data) console.log(this.props.data) // TODO - better handle delay? reset timer if delayed?
+    // if (!this.props.data) console.log(this.props.data) // TODO - better handle delay? reset timer if delayed?    
     
     // if data has been returned from query
     if ((typeof(this.props.data) !== 'undefined' && this.props.data)) {
@@ -84,8 +84,8 @@ class WordCard extends React.Component  {
         this.props.updateTime(0);
         this.props.updateTimeLeft(0);        
       }
-      //console.log(this.props.time)
-      //console.log(this.props.timeLeft)
+      // console.log(this.props.time)
+      // console.log(this.props.timeLeft)
     }
 
 

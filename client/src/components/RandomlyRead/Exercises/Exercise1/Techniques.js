@@ -22,6 +22,7 @@ import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-
 
 import Technique1 from '../../Techniques/Technique1/Component.js';
 import Technique2 from '../../Techniques/Technique2/Component.js';
+import Technique3 from '../../Techniques/Technique3/Component.js';
 
 const useStyles = makeStyles((theme) => ({
   techniqueRoot: {
@@ -110,6 +111,16 @@ function Techniques() {
         <Grid item xs={12}>
           <Technique2 />
         </Grid>
+
+        <Grid item xs={12}>
+          <br />
+          <Divider className={classes.techniqueDivider} />
+          <br /><br />
+        </Grid> 
+        
+        <Grid item xs={12}>
+          <Technique3 />
+        </Grid> 
       </Grid>
 
     </Box>

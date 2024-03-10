@@ -37,7 +37,7 @@ class Technique extends React.Component {
             
             <Grid item xs={12}>
               <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
-                IV. Resonant Speech
+                Exercise 4 - Resonant Speech
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -47,7 +47,7 @@ class Technique extends React.Component {
             </Grid>
 
             <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-              This technique is intended to produce natural-sounding speech and is similar to "Phonation & Transfer". Our goal is to minimize the amount of time spent "humming" and to maximize the amount of time spent articulating and speaking.
+              This technique is centered around Easy Onset and is focused on natural sounding speech. Our goal is to minimize the amount of time spent humming, and to maximize the amount of time spent articulating and speaking.
             </Typography>
             
             <ReactPlayer 

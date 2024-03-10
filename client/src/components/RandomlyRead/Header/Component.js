@@ -28,12 +28,6 @@ class Header extends React.Component {
     let routineId = Identities[selectedMode].user.routines[0];
     let alias = Identities[selectedMode].alias;
 
-
-    console.log(selectedMode);
-    console.log(pathname);
-    console.log(routineId);
-    console.log(alias);
-
     if (this.props.history.location.pathname !== pathname) {
       this.props.setInProgress(false);
       this.props.setExercisePause(false);

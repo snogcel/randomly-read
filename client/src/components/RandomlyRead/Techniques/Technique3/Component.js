@@ -89,7 +89,7 @@ class Technique extends React.Component {
             
             <Grid item xs={12}>
               <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
-                III. Phonation with Transfer
+                Exercise 3 - Easy Onset
               </Typography>
             </Grid>
             <Grid item xs={12}>
@@ -99,7 +99,7 @@ class Technique extends React.Component {
             </Grid>
 
             <Typography variant="body1" component="span" color="textSecondary" className={classes.techniqueDescriptionText}>
-            This technique is intended to transfer the "robotic" sounding speech into something that resembles natural speech. The key to performing a transfer is to become aware of the flow of air while speaking normally through your mouth compared to humming using your nasal passages.
+            Easy Onset expands on these phonation and articulation exercises. The goal of this technique is to gently transfer phonation to the layrnx, and to work towards producing natural sounding speech.
             </Typography>
             
             <ReactPlayer 

@@ -104,7 +104,7 @@ class Technique extends React.Component {
               
               <Grid item xs={12}>
                 <Typography variant="h5" component="h2" className={classes.techniqueContentHeading}>
-                  I. Phonation
+                  Exercise 1 -  Vowels
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -114,7 +114,7 @@ class Technique extends React.Component {
               </Grid>
 
               <Typography variant="body1" component="span" color="Primary" className={classes.techniqueDescriptionText}>
-                The goal of this exercise is to learn how to create sound using the nasal passages and diaphragm. This should result in a humming sound.
+                The goal of this exercise is to learn how to create sound using the nasal passages and diaphragm. Also known as phonation, this should result in a humming sound.
               </Typography>
               
               <ReactPlayer 

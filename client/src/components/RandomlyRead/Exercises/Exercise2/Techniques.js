@@ -20,6 +20,7 @@ import Link from '@material-ui/core/Link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
+import Technique1 from '../../Techniques/Technique1/Component.js';
 import Technique2 from '../../Techniques/Technique2/Component.js';
 import Technique3 from '../../Techniques/Technique3/Component.js';
 
@@ -87,6 +88,16 @@ function Techniques() {
 
       <Grid container>
         
+        <Grid item xs={12}>
+          <Technique1 />
+        </Grid>
+
+        <Grid item xs={12}>
+          <br />
+          <Divider className={classes.techniqueDivider} />
+          <br /><br />
+        </Grid>   
+
         <Grid item xs={12}>
           <Technique2 />
         </Grid>
