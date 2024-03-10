@@ -250,16 +250,14 @@ const resolvers = {
 
             let templateLocation = [
               "{{ adjective }} {{ noun_location }} is {{ an_adjective }} haven",
-              "{{ noun_location }} with {{ an_adjective }} charm",
-              "{{ adjective }} {{ noun_location }}",
+              "{{ noun_location }} with {{ an_adjective }} charm",              
 
               "{{ adjective }} essence graces the aura of {{ noun_location }}",
               "{{ adjective }} shades paint canvas of {{ noun_location }}",
               "{{ adjective }} {{ adjective }} illuminate the {{ noun_location }}",
             ];
 
-            let templateFood = [
-              "{{ adjective }} {{ noun_food }} flavors",
+            let templateFood = [              
               "{{ noun_food }} with {{ an_adjective }} spices",
 
               "{{ adjective }} tapestry of {{ noun_food }}",
