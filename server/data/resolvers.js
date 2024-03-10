@@ -178,7 +178,7 @@ const resolvers = {
               syllables: [1,2,3,4,5]
             };
             let limit = 1; // default
-            let dataLimit = 50; // fixed to 250 for querying words
+            let dataLimit = 100; // fixed to 250 for querying words
             let location = "initial"; // default
 
             const id = req.user.id; // get user id
@@ -232,28 +232,47 @@ const resolvers = {
               "{{ adjective }} {{ noun_animal }} is {{ adjective }} and wild",
               "{{ adjective }} {{ noun_animal }} roams the {{ noun_location }}",
               "{{ adjective }} {{ noun_animal }} in its natural habitat",
+
+              "{{ adjective }} hues on the {{ noun_animal }}",
+              "{{ adjective }} mystique of the {{ noun_animal }}",
+              "{{ noun_animal }} touched by essence of {{ adjective }}",
             ];
 
             let templateArtifact = [
               "{{ adjective }} {{ noun_artifact }} exudes {{ an_adjective }} mystery",
               "{{ noun_artifact }} with {{ an_adjective }} craftsmanship",
               "{{ noun_artifact }} adorned with {{ an_adjective }} tales",
+
+              "{{ noun_artifact }} resonates with {{ adjective }} echoes",
+              "{{ adjective }} stories unfold about {{ noun_artifact }}",
+              "{{ adjective }} unveils {{ adjective }} secret of {{ noun_artifact }}",
             ];
 
             let templateLocation = [
-              "{{ an_adjective }} {{ noun_location }} is {{ an_adjective }} haven",
+              "{{ adjective }} {{ noun_location }} is {{ an_adjective }} haven",
               "{{ noun_location }} with {{ an_adjective }} charm",
-              "{{ an_adjective }} {{ noun_location }}",
+              "{{ adjective }} {{ noun_location }}",
+
+              "{{ adjective }} essence graces the aura of {{ noun_location }}",
+              "{{ adjective }} shades paint canvas of {{ noun_location }}",
+              "{{ adjective }} {{ adjective }} illuminate the {{ noun_location }}",
             ];
 
             let templateFood = [
-              "{{ an_adjective }} {{ noun_food }} flavors",
+              "{{ adjective }} {{ noun_food }} flavors",
               "{{ noun_food }} with {{ an_adjective }} spices",
+
+              "{{ adjective }} tapestry of {{ noun_food }}",
+              "{{ adjective }} essence graces the aura of {{ noun_food }}",
+              "{{ noun_food }} embraces {{ an_adjective }} essence",
             ];
 
             let templatePerson = [
-              "{{ an_adjective }} {{ noun_person }} is {{ adjective }}",
-              "{{ an_adjective }} {{ noun_person }} with {{ an_adjective }} charm",
+              "{{ adjective }} {{ noun_person }} is {{ adjective }}",
+              "{{ adjective }} {{ noun_person }} with {{ an_adjective }} charm",
+
+              "{{ noun_person }} touched by essence of {{ adjective }}",
+              "{{ noun_person }} resonates with {{ adjective }} echoes",
             ];
 
            /*  let templateAnimal = ["{{ an_adjective }} {{ noun_animal }}"];
