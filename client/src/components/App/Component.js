@@ -32,7 +32,7 @@ import { Exercise2HomeContainer, Exercise2TimerContainer, Exercise2RoutineSelect
 import { Exercise3HomeContainer, Exercise3TimerContainer, Exercise3RoutineSelectContainer, Exercise3Introduction, Exercise3Techniques } from '../RandomlyRead/Exercises/Exercise3/HomeContainer';
 
 import RRHomeContainer from '../RRLayout/RRHomeContainer'
-import FluencyReport from '../RRFluencyReport/FluencyReport'
+// import FluencyReport from '../RRFluencyReport/FluencyReport'
 import RoutineBuilder from '../RoutineBuilder/RoutineBuilderContainer';
 import Administration from '../Administration/Container';
 import UserProfile from '../UserProfile/Container';
@@ -116,7 +116,7 @@ const App = (props) => {
               <Route path='/createpost' component={CreatePostFormContainer} />
               <Route path='/RandomlyRead' component={RRHomeContainer} />
 
-              <Route path='/FluencyReport' component={FluencyReport} />
+              
               <Route path='/RoutineBuilder' component={RoutineBuilder} />
               <Route path='/Administration' component={Administration} />
               <Route path='/Profile' component={UserProfile} />
