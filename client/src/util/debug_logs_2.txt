@@ -1,0 +1,36 @@
+npm ERR! path C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli
+npm ERR! code EPERM
+npm ERR! errno -4048
+npm ERR! syscall rename
+npm ERR! Error: EPERM: operation not permitted, rename 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli' -> 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\node-gyp\node_modules\@npmcli'
+npm ERR!  { [Error: EPERM: operation not permitted, rename 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli' -> 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\node-gyp\node_modules\@npmcli']
+npm ERR!   cause:
+npm ERR!    { Error: EPERM: operation not permitted, rename 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli' -> 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\node-gyp\node_modules\@npmcli'
+npm ERR!      errno: -4048,
+npm ERR!      code: 'EPERM',
+npm ERR!      syscall: 'rename',
+npm ERR!      path:
+npm ERR!       'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\.node-gyp.DELETE\\node_modules\\@npmcli',
+npm ERR!      dest:
+npm ERR!       'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\node-gyp\\node_modules\\@npmcli' },
+npm ERR!   stack:
+npm ERR!    'Error: EPERM: operation not permitted, rename \'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\.node-gyp.DELETE\\node_modules\\@npmcli\' -> \'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\node-gyp\\node_modules\\@npmcli\'',
+npm ERR!   errno: -4048,
+npm ERR!   code: 'EPERM',
+npm ERR!   syscall: 'rename',
+npm ERR!   path:
+npm ERR!    'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\.node-gyp.DELETE\\node_modules\\@npmcli',
+npm ERR!   dest:
+npm ERR!    'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\node-gyp\\node_modules\\@npmcli',
+npm ERR!   parent: 'npm' }
+npm ERR!
+npm ERR! The operation was rejected by your operating system.
+npm ERR! It's possible that the file was already in use (by a text editor or antivirus),
+npm ERR! or that you lack permissions to access it.
+npm ERR!
+npm ERR! If you believe this might be a permissions issue, please double-check the
+npm ERR! permissions of the file and its containing directories, or try running
+npm ERR! the command again as root/Administrator (though this is not recommended).
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\ledni\AppData\Roaming\npm-cache\_logs\2025-09-22T20_58_42_431Z-debug.log
