@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 
 const baseUrl =
   process.env.NODE_ENV === 'development_'
