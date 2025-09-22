@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactGA from "react-ga4";
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 import Identities from '../Identities/Identities';
 import { styles } from '../../../exerciseThemeHandler';
 import { withStyles } from '@material-ui/core';
@@ -89,6 +89,7 @@ class Header extends React.Component {
   }
 }
 
-const HeaderWrapped = withRouter(withStyles(styles)(Header));
+// const HeaderWrapped = withRouter(withStyles(styles)(Header));
+const HeaderWrapped = withStyles(styles)(Header);
 
 export default HeaderWrapped;

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactGA from "react-ga4";
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 import Identities from './Identities/Identities';
 import { styles } from '../../exerciseThemeHandler';
 import Typography from '@material-ui/core/Typography';
@@ -138,6 +138,7 @@ class Subnavigation extends React.Component {
   }
 }
 
-const SubnavigationWrapped = withRouter(withStyles(styles)(Subnavigation));
+// const SubnavigationWrapped = withRouter(withStyles(styles)(Subnavigation));
+const SubnavigationWrapped = withStyles(styles)(Subnavigation);
 
 export default SubnavigationWrapped;
