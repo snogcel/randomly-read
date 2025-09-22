@@ -21,13 +21,13 @@ import Box from '@material-ui/core/Box';
 import Hidden from '@material-ui/core/Hidden';
 import Fade from '@material-ui/core/Fade';
 
-import Header from './Header/Container';
+// import Header from './Header/Container';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
 import ExerciseHistoryContainer from './Exercises/ExerciseHistoryContainer';
 import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
 import IdentityConfig from './Identities/SplashConfig';
-import Subnavigation from './Exercises/SubnavigationContainer';
+// import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
 import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
@@ -205,12 +205,12 @@ const RRHome = props => {
 
           <Grid className={classes.headerBackground} container spacing={0}>
             <Grid item xs={4} sm={4} md={6}>
-              <Header />
+              
             </Grid>
 
             <Grid item xs={8} sm={8} md={6}>
               <Box display="flex" justifyContent="flex-end">
-                <Subnavigation />
+                
               </Box>
             </Grid>
           </Grid>

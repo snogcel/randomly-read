@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactGA from "react-ga4";
-import { withRouter } from 'react-router';
+
+
+// import { withRouter } from 'react-router';
+import { useNavigate } from 'react-router-dom';
+
+
 import Identities from './Identities/Identities';
 import { styles } from '../../exerciseThemeHandler';
 import Typography from '@material-ui/core/Typography';

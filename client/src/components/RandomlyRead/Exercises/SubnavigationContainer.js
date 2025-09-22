@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import Subnavigation from '../Subnavigation';
+// import Subnavigation from '../Subnavigation';
 
 import { updateId, resetRoutineSelect } from '../../../actions/routineSelect';
 import { resetWordCard } from '../../../actions/word';
