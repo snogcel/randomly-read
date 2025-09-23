@@ -1,12 +1,11 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
-import InputBase from '@material-ui/core/InputBase';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
+import InputBase from '@mui/material/InputBase';
 
 const useStyles = makeStyles(theme => ({
   root: {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
+import { styled } from "@mui/material/styles";
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardContent from '@mui/material/CardContent';
 import FluencyReportForm from './FluencyReportForm';
 import FluencyReportHistory from './FluencyReportHistoryContainer'
 import { connect } from 'react-redux';

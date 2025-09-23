@@ -1,7 +1,7 @@
 import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import { styled } from "@mui/material/styles";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';

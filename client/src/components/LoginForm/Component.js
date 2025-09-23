@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import Form from '../shared/form/Form';
 import renderField from '../shared/form/renderField';
 import { usernameValidator, passwordValidator } from '../../util/validators';

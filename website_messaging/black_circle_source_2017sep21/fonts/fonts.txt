@@ -1,0 +1,7 @@
+Fonts Used:
+
+    NeoSans
+    NeoSans Medium
+    Montserrat-Regular
+    Montserrat-Bold
+

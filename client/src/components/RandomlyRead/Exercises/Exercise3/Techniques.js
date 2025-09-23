@@ -12,10 +12,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import Divider from '@mui/material/Divider';
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Link from '@material-ui/core/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Link from '@mui/material/Link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 

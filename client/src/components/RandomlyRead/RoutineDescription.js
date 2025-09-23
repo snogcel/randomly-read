@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import { withStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import { styles } from '../../exerciseThemeHandler';
-import { Typography } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import withWidth from '@material-ui/core/withWidth';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
+import { Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 import PropTypes from 'prop-types';
 
 class RoutineDescription extends Component {

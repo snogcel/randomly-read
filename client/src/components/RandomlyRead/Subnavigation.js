@@ -8,15 +8,15 @@ import { useNavigate } from 'react-router-dom';
 
 import Identities from './Identities/Identities';
 import { styles } from '../../exerciseThemeHandler';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import Select, { SelectChangeEvent } from '@material-ui/core/Select';
-import { withStyles } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { styled } from '@mui/material/styles';
 
 class Subnavigation extends React.Component {
 

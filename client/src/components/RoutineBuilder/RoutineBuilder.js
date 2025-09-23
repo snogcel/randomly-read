@@ -1,18 +1,19 @@
 import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
+import { styled } from "@mui/material/styles";
+import Grid from '@mui/material/Grid';
 
-import Hidden from '@material-ui/core/Hidden';
-import withWidth from '@material-ui/core/withWidth';
+import Hidden from '@mui/material/Hidden';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import Modal from '@material-ui/core/Modal';
+import Modal from '@mui/material/Modal';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
-// import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@mui/material/styles';
 
 import NewRoutineButton from './elements/NewRoutineButton';
 import DeleteRoutineButton from './elements/DeleteRoutineButton';
@@ -20,9 +21,9 @@ import InsertButton from './elements/InsertButton';
 import UpdateButton from './elements/UpdateButton';
 import DeleteButton from './elements/DeleteButton';
 import PreviewButton from './elements/PreviewButton';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import DescriptionEditor from './elements/DescriptionEditor';
 

@@ -1,9 +1,9 @@
 import React from 'react';
-import TableCell from '@material-ui/core/TableCell';
+import TableCell from '@mui/material/TableCell';
 import styled from 'styled-components/macro';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
-// import { makeStyles } from '@material-ui/core/styles';
+// import { styled } from '@mui/material/styles';
 
 const Wrapper = styled.div`
   display: flex;

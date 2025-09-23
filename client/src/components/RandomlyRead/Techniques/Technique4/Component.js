@@ -1,13 +1,13 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';

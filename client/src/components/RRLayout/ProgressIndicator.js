@@ -1,10 +1,11 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { styled } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styles } from '../../themeHandler';
-import { Typography } from '@material-ui/core';
+import { Typography } from '@mui/material';
 
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 function ProgressIndicator(props) {

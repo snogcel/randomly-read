@@ -1,11 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
+import { styled } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
-import InputBase from '@material-ui/core/InputBase';
-import { withStyles } from "@material-ui/core/styles";
+import InputBase from '@mui/material/InputBase';
 
 const BootstrapInput = withStyles(theme => ({
   root: {

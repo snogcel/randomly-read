@@ -2,11 +2,9 @@ import 'date-fns';
 import moment from 'moment-timezone';
 import React from 'react';
 import Grid from '@mui/material/Grid';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 export default function EndDatePicker(props) {
 
@@ -23,22 +21,22 @@ export default function EndDatePicker(props) {
   };
 
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-        <KeyboardDatePicker
-          margin="normal"
-          id="end-date-picker-dialog"
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Grid container justifyContent="space-around">
+        <DatePicker
           label="End Date"
-          format="MM/dd/yy"
           value={selectedDate}
           onChange={handleDateChange}
-          error={props.error.length === 0 ? false : true }
-          helperText={props.error}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
+          slotProps={{
+            textField: {
+              margin: "normal",
+              id: "end-date-picker-dialog",
+              error: props.error.length !== 0,
+              helperText: props.error,
+            }
           }}
         />
       </Grid>
-    </MuiPickersUtilsProvider>
+    </LocalizationProvider>
   );
 }

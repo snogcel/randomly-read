@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
+import { styled } from '@mui/material/styles';
 import { styles } from '../../../exerciseThemeHandler';
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 

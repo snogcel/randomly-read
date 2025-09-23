@@ -1,10 +1,11 @@
 import React from 'react';
 import WordHistoryListItem from './Item';
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
+import { styled } from "@mui/material/styles";
+import Grid from '@mui/material/Grid';
 import { styles } from '../../themeHandler';
 
 class WordHistoryList extends React.Component {

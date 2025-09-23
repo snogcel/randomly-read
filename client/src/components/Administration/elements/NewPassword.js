@@ -1,10 +1,10 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import InputBase from '@material-ui/core/InputBase';
-import InputLabel from '@material-ui/core/InputLabel';
-import { fade, withStyles } from "@material-ui/core/styles";
+import { styled } from '@mui/material/styles';
+import FormControl from '@mui/material/FormControl';
+import FormHelperText from '@mui/material/FormHelperText';
+import InputBase from '@mui/material/InputBase';
+import InputLabel from '@mui/material/InputLabel';
+import { alpha } from "@mui/material/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {

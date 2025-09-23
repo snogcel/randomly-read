@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Editor, EditorState, RichUtils, getDefaultKeyBinding} from 'draft-js';
 import { convertToHTML, convertFromHTML } from 'draft-convert';
 
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 
 import '../css/DescriptionEditor.css';
 

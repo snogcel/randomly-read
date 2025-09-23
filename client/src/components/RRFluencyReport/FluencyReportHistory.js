@@ -1,17 +1,17 @@
 import React from 'react';
 import { styles } from '../../themeHandler';
-import { withStyles } from "@material-ui/core/styles";
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select'
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Button from '@material-ui/core/Button';
+import { styled } from "@mui/material/styles";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select'
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 import { settingLabelLoader, audienceLabelLoader, intentionLabelLoader, easeLabelLoader } from './LabelLoaders';
 
 

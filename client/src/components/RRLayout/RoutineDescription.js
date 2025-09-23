@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import { withStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import { styles } from '../../themeHandler';
 
 class RoutineDescription extends Component {
