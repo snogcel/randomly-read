@@ -7,26 +7,24 @@ import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
 import InputBase from '@mui/material/InputBase';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 240,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {
-    margin: 2,
-  },
-  noLabel: {
-    marginTop: theme.spacing(3),
-  },
+const StyledRoot = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 120,
+  maxWidth: 240,
+}));
+
+const StyledChips = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledChip = styled(Chip)(({ theme }) => ({
+  margin: 2,
 }));
 
 const ITEM_HEIGHT = 48;

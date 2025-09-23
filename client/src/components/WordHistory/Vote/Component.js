@@ -1,117 +1,109 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
 
-import { styled } from "@mui/material/styles";
+import { useTheme } from "@mui/material/styles";
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import { styles } from '../../../themeHandler';
 
-class PostVote extends React.Component {
-  constructor(props) {
-    super(props);
-    const didVote = PostVote.existingVote(props);
-    this.state = {
-      score: props.score,
-      title: props.title,
-      didVote,
-      didUpvote: didVote === 1,
-      didDownvote: didVote === -1
-    };
-  }
-
-  static existingVote({ user, votes }) {
+function PostVote(props) {
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  const existingVote = (user, votes) => {
     const existingVote =
       user && votes && votes.find(vote => vote.user === user.id);
     return existingVote ? existingVote.vote : 0;
-  }
+  };
 
-  componentDidUpdate(prevProps) {
-    if (this.props.score !== prevProps.score) {
-      const didVote = PostVote.existingVote(this.props);
-      this.setState({
-        score: this.props.score,
+  const didVote = existingVote(props.user, props.votes);
+  const [state, setState] = useState({
+    score: props.score,
+    title: props.title,
+    didVote,
+    didUpvote: didVote === 1,
+    didDownvote: didVote === -1
+  });
+
+  useEffect(() => {
+    if (props.score !== state.score) {
+      const didVote = existingVote(props.user, props.votes);
+      setState(prevState => ({
+        ...prevState,
+        score: props.score,
         didVote,
         didUpvote: didVote === 1,
         didDownvote: didVote === -1
-      });
-    } else if (this.props.token !== prevProps.token && !this.props.token) {
-      this.setState({
+      }));
+    } else if (!props.token) {
+      setState(prevState => ({
+        ...prevState,
         didVote: false,
         didUpvote: false,
         didDownvote: false
-      });
+      }));
     }
-  }
+  }, [props.score, props.token, props.user, props.votes, state.score]);
 
-  castVote(vote) {
-    const { attemptVote, id, token } = this.props;
+  const castVote = (vote) => {
+    const { attemptVote, id, token } = props;
     if (token) {
       attemptVote(id, vote);
-      this.setState({
-        score: this.state.score + vote - this.state.didVote,
+      setState(prevState => ({
+        ...prevState,
+        score: prevState.score + vote - prevState.didVote,
         didVote: vote,
         didUpvote: vote === 1,
         didDownvote: vote === -1
-      });
+      }));
     }
-  }
+  };
 
-  upvote = () => this.castVote(this.state.didUpvote ? 0 : 1);
+  const upvote = () => castVote(state.didUpvote ? 0 : 1);
+  const downvote = () => castVote(state.didDownvote ? 0 : -1);
 
-  downvote = () => this.castVote(this.state.didDownvote ? 0 : -1);
+  const { user } = props;
 
-  render() {
+  let titleClass = classes.historyTitle;
 
-    const { classes, user } = this.props;
+  if (state.score > 0) titleClass = classes.historyTitleUpvote;
+  if (state.score < 0) titleClass = classes.historyTitleDownvote;
+  if (props.id === null) titleClass = classes.historyTitleNovote;
 
-    let title = classes.historyTitle;
-
-    if (this.state.score > 0) title = classes.historyTitleUpvote;
-    if (this.state.score < 0) title = classes.historyTitleDownvote;
-    if (this.props.id === null) title = classes.historyTitleNovote;
-
-    if (typeof(user) !== "undefined" && this.props.wordid && this.props.user.isActive) {
-
-      return (
-        <Grid item className={classes.wordHistoryWrapper}>
-          <PostVoteUpvote
-            canVote={!!this.props.token}
-            didVote={this.state.didUpvote}
-            onClick={this.upvote}
-          />
-          <Typography
-            className={title}
-            color="textPrimary"
-            variant="h5">
-            {this.state.title}
-          </Typography>
-          <PostVoteDownvote
-            canVote={!!this.props.token}
-            didVote={this.state.didDownvote}
-            onClick={this.downvote}
-          />
-        </Grid>
-      );
-
-    } else {
-
-      return (
-        <Grid item className={classes.wordHistoryWrapper}>
-          <Typography
-            className={title}
-            color="textPrimary"
-            variant="h5">
-            {this.state.title}
-          </Typography>
-        </Grid>
-      );
-
-    }
-
+  if (typeof(user) !== "undefined" && props.wordid && props.user.isActive) {
+    return (
+      <Grid item className={classes.wordHistoryWrapper}>
+        <PostVoteUpvote
+          canVote={!!props.token}
+          didVote={state.didUpvote}
+          onClick={upvote}
+        />
+        <Typography
+          className={titleClass}
+          color="textPrimary"
+          variant="h5">
+          {state.title}
+        </Typography>
+        <PostVoteDownvote
+          canVote={!!props.token}
+          didVote={state.didDownvote}
+          onClick={downvote}
+        />
+      </Grid>
+    );
+  } else {
+    return (
+      <Grid item className={classes.wordHistoryWrapper}>
+        <Typography
+          className={titleClass}
+          color="textPrimary"
+          variant="h5">
+          {state.title}
+        </Typography>
+      </Grid>
+    );
   }
 }
 
-const PostVoteWrapped = withStyles(styles)(PostVote);
-
-export default PostVoteWrapped;
+export default PostVote;
