@@ -4,7 +4,7 @@ import myGa from './myGa';
 import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
-import { MuiThemeProvider } from '@material-ui/core/styles'
+import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 
 import { MuiTheme } from '../../exerciseThemeHandler';
 

@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from "prop-types";
 // import Fader from 'react-fader';
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Intermission from '../RRLayout/IntermissionContainer';
 import { styles } from '../../exerciseThemeHandler';
 import Word from '../RRLayout/elements/Word';
 import Sentence from '../RRLayout/elements/Sentence';
 
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 class WordCard extends React.Component  {
