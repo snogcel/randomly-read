@@ -6,7 +6,8 @@ import RoutineBuilder from '../RRLayout/RoutineBuilder';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
+import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
 
@@ -827,6 +828,25 @@ Timer.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const TimerWrapped = withStyles(styles)(Timer);
+// Wrapper component to provide theme, styles, and width
+function TimerWrapper(props) {
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width = 'xs';
+  if (isXl) width = 'xl';
+  else if (isLg) width = 'lg';
+  else if (isMd) width = 'md';
+  else if (isSm) width = 'sm';
+  
+  return <Timer {...props} classes={classes} theme={theme} width={width} />;
+}
 
-export default withWidth()(TimerWrapped);
+export default TimerWrapper;
