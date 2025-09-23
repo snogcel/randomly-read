@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import { withStyles } from '@mui/styles';
+import { makeStyles, withStyles } from '@mui/styles';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -26,6 +26,25 @@ const StyledChips = styled('div')(({ theme }) => ({
 
 const StyledChip = styled(Chip)(({ theme }) => ({
   margin: 2,
+}));
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+    maxWidth: 240,
+  },
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
 }));
 
 const ITEM_HEIGHT = 48;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles, withStyles } from '@mui/styles';
+import { alpha } from '@mui/material/styles';
 import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
@@ -53,7 +54,7 @@ const BootstrapInput = withStyles(theme => ({
       '"Segoe UI Symbol"',
     ].join(','),
     '&:focus': {
-      boxShadow: `${fade(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
+      boxShadow: `${alpha(theme.palette.primary.main, 0.25)} 0 0 0 0.2rem`,
       borderColor: theme.palette.primary.main,
     },
   },
