@@ -13,7 +13,10 @@
   - _Requirements: 3.1, 3.2_
 
 - [ ] 2. Modernize core dependencies and framework versions
-  - [ ] 2.1 Upgrade React to version 18.x with concurrent features
+  - [-] 2.1 Upgrade React to version 18.x with concurrent features
+
+
+
     - Update React and ReactDOM to version 18.x
     - Migrate deprecated APIs (ReactDOM.render to createRoot)
     - Update component lifecycle methods to use modern patterns

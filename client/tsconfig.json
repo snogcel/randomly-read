@@ -18,7 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -28,16 +28,7 @@
     "strictPropertyInitialization": true,
     "noImplicitOverride": false,
     "exactOptionalPropertyTypes": false,
-    "noUncheckedIndexedAccess": false,
-    "baseUrl": "src",
-    "paths": {
-      "@/*": ["*"],
-      "@/components/*": ["components/*"],
-      "@/util/*": ["util/*"],
-      "@/actions/*": ["actions/*"],
-      "@/reducers/*": ["reducers/*"],
-      "@/config/*": ["config/*"]
-    }
+    "noUncheckedIndexedAccess": false
   },
   "include": [
     "src/**/*"
