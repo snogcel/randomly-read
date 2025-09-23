@@ -130,7 +130,7 @@ class Technique extends React.Component {
             <List className={classes.techniqueListRoot}>
 
               <ListItem alignItems="flex-start">
-                <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+                <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <ListItemText
                   primary={
                     <React.Fragment>
@@ -155,7 +155,7 @@ class Technique extends React.Component {
                 />
               </ListItem>
               <ListItem alignItems="flex-start">
-                <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+                <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <ListItemText
                   primary={
                     <React.Fragment>
@@ -180,7 +180,7 @@ class Technique extends React.Component {
                 />
               </ListItem>
               <ListItem alignItems="flex-start">
-                <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+                <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <ListItemText
                   primary={
                     <React.Fragment>

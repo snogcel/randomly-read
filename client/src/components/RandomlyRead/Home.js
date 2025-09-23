@@ -284,7 +284,7 @@ const RRHome = props => {
                           
                           <List className={classes.introductionListRoot}>
                             <ListItem alignItems="flex-start">
-                              { (props.pageContext === "beginner" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                              { (props.pageContext === "beginner" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6"}} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC"}} /></>) }
                               <ListItemText
                                 primary={
                                   <React.Fragment>
@@ -303,7 +303,7 @@ const RRHome = props => {
                               />
                             </ListItem>
                             <ListItem alignItems="flex-start">
-                            { (props.pageContext === "intermediate" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                            { (props.pageContext === "intermediate" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6"}} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC"}} /></>) }
                               <ListItemText
                                 primary={
                                   <React.Fragment>
@@ -322,7 +322,7 @@ const RRHome = props => {
                               />
                             </ListItem>
                             <ListItem alignItems="flex-start">
-                            { (props.pageContext === "advanced" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                            { (props.pageContext === "advanced" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6"}} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC"}} /></>) }
                               <ListItemText
                                 primary={
                                   <React.Fragment>

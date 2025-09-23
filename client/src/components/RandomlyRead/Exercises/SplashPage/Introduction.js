@@ -31,7 +31,7 @@ function Introduction(props) {
 
           <List className={classes.introductionListRoot}>
             <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC", margin: "8px"}} />
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -50,7 +50,7 @@ function Introduction(props) {
               />
             </ListItem>
             <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC", margin: "8px"}} />
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -69,7 +69,7 @@ function Introduction(props) {
               />
             </ListItem>
             <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} />
+              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -104,7 +104,7 @@ function Introduction(props) {
               <ListItemText
                 primary={
                   <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                     <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                       Resonance
                     </Typography>

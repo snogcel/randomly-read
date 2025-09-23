@@ -24,7 +24,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Fluency Shaping
                 </Typography>
@@ -50,7 +50,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Phonation
                 </Typography>
@@ -76,7 +76,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Diaphragmatic Breathing
                 </Typography>
@@ -102,7 +102,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Pelvic Floor
                 </Typography>
@@ -131,7 +131,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Articulation
                 </Typography>
@@ -157,7 +157,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Larynx
                 </Typography>
@@ -186,7 +186,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Transfer
                 </Typography>
