@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from "@material-ui/core/styles";
 import { styles } from '../../themeHandler';
 import Grid from '@material-ui/core/Grid';
@@ -54,8 +54,10 @@ class ViewHistory extends React.Component {
     this.props.fetchViewHistory(userId, startDate, endDate);
   };
 
-  UNSAFE_componentWillMount() {
-    if (this.props.userId && this.props.startDate && this.props.endDate) this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
+  componentDidMount() {
+    if (this.props.userId && this.props.startDate && this.props.endDate) {
+      this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {

@@ -26,16 +26,16 @@ class PostVote extends React.Component {
     return existingVote ? existingVote.vote : 0;
   }
 
-  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
-    if (this.props.score !== nextProps.score) {
-      const didVote = PostVote.existingVote(nextProps);
+  componentDidUpdate(prevProps) {
+    if (this.props.score !== prevProps.score) {
+      const didVote = PostVote.existingVote(this.props);
       this.setState({
-        score: nextProps.score,
+        score: this.props.score,
         didVote,
         didUpvote: didVote === 1,
         didDownvote: didVote === -1
       });
-    } else if (this.props.token !== nextProps.token && !nextProps.token) {
+    } else if (this.props.token !== prevProps.token && !this.props.token) {
       this.setState({
         didVote: false,
         didUpvote: false,

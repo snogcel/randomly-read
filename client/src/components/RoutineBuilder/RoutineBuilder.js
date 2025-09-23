@@ -225,12 +225,10 @@ class RoutineBuilder extends React.Component {
 
   }
 
-  UNSAFE_componentWillMount() {
-
+  componentDidMount() {
     this.props.resetRoutineBuilder();
 
     if (typeof this.props.user !== "undefined") this.prepareRoutineBuilder();
-
   }
 
   prepareRoutineBuilder(){

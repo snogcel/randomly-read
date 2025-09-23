@@ -93,9 +93,7 @@ class ExerciseHistory extends React.Component {
 
   }
 
-  UNSAFE_componentWillReceiveProps() {
 
-  }
 
   render() {
     const {classes, currentExerciseNumber} = this.props;

@@ -46,7 +46,7 @@ class Administration extends React.Component {
 
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     this.prepareAdministration();
   }
 

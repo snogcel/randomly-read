@@ -27,6 +27,15 @@ class RoutineDescription extends Component {
     this.decrementRoutine = this.decrementRoutine.bind(this);
   }
 
+  componentDidMount() {
+    if (typeof this.props.description !== 'undefined') {
+      let description = this.props.description;
+      let trimmed = description.replace(/^"|"$/g, '');
+
+      this.setState({text: trimmed });
+    }
+  }
+
   componentDidUpdate(prevProps) {
 
     if (prevProps.description !== this.props.description) {
@@ -35,17 +44,6 @@ class RoutineDescription extends Component {
       let trimmed = description.replace(/^"|"$/g, '');
 
       this.setState({text: trimmed });
-    }
-
-  }
-
-  UNSAFE_componentWillMount() {
-
-    if (typeof this.props.description !== 'undefined') {
-    	let description = this.props.description;
-	    let trimmed = description.replace(/^"|"$/g, '');
-
-	    this.setState({text: trimmed });
     }
 
   }

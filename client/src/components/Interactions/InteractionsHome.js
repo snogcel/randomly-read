@@ -38,7 +38,7 @@ class InteractionsHome extends React.Component {
 
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     if (typeof this.props.user !== "undefined") this.prepareInteractionForm();
   }
 
