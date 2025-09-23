@@ -15,9 +15,6 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
-
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';

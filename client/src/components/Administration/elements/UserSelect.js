@@ -36,6 +36,7 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const StyledRoot = styled('div')(({ theme }) => ({
   display: 'flex',
   flexWrap: 'wrap',
 }));
