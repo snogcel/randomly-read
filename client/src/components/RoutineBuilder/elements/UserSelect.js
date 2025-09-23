@@ -8,13 +8,8 @@ import Select from '@mui/material/Select';
 
 import InputBase from '@mui/material/InputBase';
 
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  '& .MuiInputBase-input': {
     borderRadius: 4,
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
@@ -22,7 +17,6 @@ const BootstrapInput = withStyles(theme => ({
     fontSize: 16,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -41,24 +35,18 @@ const BootstrapInput = withStyles(theme => ({
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
     },
   },
-}))(InputBase);
+}));
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 200,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 200,
 }));
 
 export default function UserSelect(props) {
-  const classes = useStyles();
   const [values, setValues] = React.useState({});
 
   const handleChange = event => {
@@ -83,8 +71,8 @@ export default function UserSelect(props) {
   }
 
   return (
-    <form className={classes.root} autoComplete="off">
-      <FormControl className={classes.formControl}>
+    <StyledRoot component="form" autoComplete="off">
+      <StyledFormControl>
         <InputLabel htmlFor="routine-user-input">Users</InputLabel>
         <Select
           defaultValue={props.options[0]}
@@ -108,7 +96,7 @@ export default function UserSelect(props) {
           ))}
 
         </Select>
-      </FormControl>
-    </form>
+      </StyledFormControl>
+    </StyledRoot>
   );
 }
