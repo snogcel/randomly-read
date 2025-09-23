@@ -34,7 +34,12 @@
     - Test exercise interface components with new MUI components
     - _Requirements: 1.3_
 
-  - [ ] 2.3 Upgrade Apollo Client to version 3.x
+  - [x] 2.3 Upgrade Apollo Client to version 3.x
+
+
+
+
+
     - Update Apollo Client packages to version 3.x
     - Migrate cache configuration and link setup
     - Update GraphQL query and mutation patterns

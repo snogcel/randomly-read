@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/client';
 import { connect } from 'react-redux';
 import { addVowel, addWord, removeVowel, removeWord, addRoutineVowel, buildGraphQL } from '../../../actions/word'
 import  { setModalOpen, addQueryResult, addExerciseNumber, updateTimeLeft } from '../../../actions/exerciseHistory';
@@ -33,6 +33,74 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = { addVowel, addWord, removeVowel, removeWord, addRoutineVowel, buildGraphQL, setModalOpen, addQueryResult, addExerciseNumber, updateTimeLeft };
+
+// Functional component wrapper for useQuery hook
+const QueryHookWrapper = ({ query, fetching, isPaused, mode, exerciseResults, debug, onFetchingChange }) => {
+  const { loading, error, data, refetch } = useQuery(query?.action, {
+    skip: !query?.action || !fetching || isPaused,
+    fetchPolicy: "no-cache",
+    errorPolicy: "all",
+    variables: { v: Math.random() },
+    onCompleted: () => {
+      // Handle completion if needed
+    }
+  });
+
+  React.useEffect(() => {
+    if (loading) return;
+    
+    if (error) {
+      onFetchingChange(false);
+      return;
+    }
+
+    if (data) {
+      onFetchingChange(false);
+    }
+  }, [loading, error, data, onFetchingChange]);
+
+  if (loading) return <WordCardContainer data={null} />;
+
+  if (error) {
+    return <WordCardContainer data={null} />;
+  }
+
+  if (data) {
+    /* WORD DEDUPING */
+    if (mode === "Word" && typeof(data.words) !== 'undefined') {
+      let result = data.words.lexeme || "";
+      let prevResult = "";
+
+      if (typeof(exerciseResults) !== 'undefined' && exerciseResults.length >= 1) {
+        prevResult = exerciseResults[exerciseResults.length-1].title;
+      }
+
+      // If duplicate, refetch
+      if ((result === prevResult) && result !== "" && prevResult !== "" && !fetching){
+        if (debug) console.log("-refetch!");
+        if (debug) console.log("--current result: ", result);
+        if (debug) console.log("--last exercise result: ", prevResult);
+        if (debug) console.log("--this fetching: ", fetching);
+
+        // TODO -- implement server-side refetch
+        // refetch();
+        // onFetchingChange(true);
+
+        return <WordCardContainer data={data} refetch={refetch} />;
+      } else {
+        return <WordCardContainer data={data} refetch={refetch} />;
+      }
+    } else if (mode === "Sentence") {
+      return <WordCardContainer data={data} refetch={refetch} />;
+    } else if (mode === "Intermission") {
+      return <WordCardContainer data={''} refetch={refetch} />;
+    } else {
+      return <WordCardContainer data={''} refetch={refetch} />;
+    }
+  }
+
+  return <WordCardContainer data={''} />;
+};
 
 class QueryWrapper extends Component {
   constructor(props) {
@@ -119,79 +187,15 @@ class QueryWrapper extends Component {
 
     return (
       <>
-        { ((typeof(this.props.query) !== "undefined" && this.props.query.action !== null && this.fetching && !this.props.isPaused) ?
-
-          <Query
-            query={this.props.query.action}
-            fetchPolicy="no-cache"
-            errorPolicy="all"
-            variables={{ v: Math.random() }}
-            onCompleted={() => {  }} >
-            {({ loading, error, data, refetch }) => {
-
-              if (loading) return ( <WordCardContainer data={null} /> );
-
-              if (error) {
-
-                this.fetching = false;
-
-                return ( <WordCardContainer data={null} /> );
-
-              }
-
-              if (data) {
-
-                this.fetching = false;
-
-                /* WORD DEDUPING */
-
-                if (mode === "Word" && typeof(data.words) !== 'undefined') {
-
-                  let result = data.words.lexeme || "";
-                  let prevResult = "";
-
-                  if (typeof(exerciseResults) !== 'undefined' && exerciseResults.length >= 1) {
-                    prevResult = exerciseResults[exerciseResults.length-1].title;
-                  }
-
-                  // If duplicate, refetch
-                  if ((result === prevResult) && result !== "" && prevResult !== "" && !this.fetching){
-                    if (this.debug) console.log("-refetch!");
-
-                    if (this.debug) console.log("--current result: ", result);
-                    if (this.debug) console.log("--last exercise result: ", prevResult);
-                    if (this.debug) console.log("--this fetching: ", this.fetching);
-
-                    // TODO -- implement server-side refetch
-                    // refetch();
-                    // this.fetching = true;
-
-                    return ( <WordCardContainer data={data} refetch={refetch} /> );
-
-                  } else {
-
-                    return ( <WordCardContainer data={data} refetch={refetch} /> );
-
-                  }
-
-                } else if (mode === "Sentence") {
-
-                  return ( <WordCardContainer data={data} refetch={refetch} /> );
-
-                } else if (mode === "Intermission") {
-
-                  return ( <WordCardContainer data={''} refetch={refetch} /> );
-
-                } else {
-
-                  return ( <WordCardContainer data={''} refetch={refetch} /> );
-
-                }
-
-              }
-
-            }}
-          </Query> : <WordCardContainer data={''} /> ) }
+        <QueryHookWrapper 
+          query={this.props.query}
+          fetching={this.fetching}
+          isPaused={this.props.isPaused}
+          mode={mode}
+          exerciseResults={exerciseResults}
+          debug={this.debug}
+          onFetchingChange={(value) => { this.fetching = value; }}
+        />
 
       </>
     )

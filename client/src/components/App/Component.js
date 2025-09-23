@@ -16,11 +16,9 @@ import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
 import CreatePostFormContainer from '../CreatePostForm/Container';
 
-import ApolloClient from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
-import { ApolloLink } from 'apollo-link';
-import { InMemoryCache as Cache } from 'apollo-cache-inmemory';
-import { ApolloProvider } from 'react-apollo';
+import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+import { ApolloProvider } from '@apollo/client';
 
 import SplashContainer from '../RandomlyRead/Splash/Container';
 
@@ -66,29 +64,30 @@ const App = (props) => {
     }
   }
 
-  const AuthLink = (operation, next) => {
+  const httpLink = createHttpLink({
+    uri: `https://api.easyonset.com/graphql`,
+  });
 
-    operation.setContext(context => ({
-      ...context,
+  const authLink = setContext((_, { headers }) => {
+    return {
       headers: {
-        ...context.headers,
-        Authorization: `Bearer ${token}`,
-      },
-    }));
-
-    return next(operation);
-  };
-
-  const baseUrl = `https://api.easyonset.com/graphql`;
-
-  const link = ApolloLink.from([
-    AuthLink,
-    new HttpLink({ uri: baseUrl }),
-  ]);
+        ...headers,
+        authorization: token ? `Bearer ${token}` : "",
+      }
+    }
+  });
 
   const client = new ApolloClient({
-    link,
-    cache: new Cache().restore({}),
+    link: from([authLink, httpLink]),
+    cache: new InMemoryCache(),
+    defaultOptions: {
+      watchQuery: {
+        errorPolicy: 'all'
+      },
+      query: {
+        errorPolicy: 'all'
+      }
+    }
   });
 
   // Google Analytics
