@@ -2,9 +2,9 @@ import React from 'react';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
 
-import { withStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
+import { styled } from "@mui/material/styles";
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
 import { styles } from '../../../themeHandler';
 
 class PostVote extends React.Component {

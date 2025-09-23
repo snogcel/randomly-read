@@ -1,10 +1,11 @@
 import React from 'react';
 import PostVoteContainer from './Vote/Container';
-import Grid from '@material-ui/core/Grid';
-import withWidth from '@material-ui/core/withWidth';
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 import { styles } from '../../themeHandler';
 
 const WordHistory = function({ wordid, id, votes, score, comments, full, title, type, ...content }) {

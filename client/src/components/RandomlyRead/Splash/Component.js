@@ -1,13 +1,14 @@
 import React from 'react';
 import { styles } from '../../../exerciseThemeHandler';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Modal from '@material-ui/core/Modal';
-import Hidden from '@material-ui/core/Hidden';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Hidden from '@mui/material/Hidden';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 const SplashPage = props => {

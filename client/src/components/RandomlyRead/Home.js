@@ -1,23 +1,24 @@
 import React from 'react';
 import ReactGA from "react-ga4";
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 
 import Identities from './Identities/Identities';
 
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import withWidth from '@material-ui/core/withWidth';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-import Hidden from '@material-ui/core/Hidden';
-import Fade from '@material-ui/core/Fade';
-import Typography from '@material-ui/core/Typography';
+import Hidden from '@mui/material/Hidden';
+import Fade from '@mui/material/Fade';
+import Typography from '@mui/material/Typography';
 // import Header from './Header/Container';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
@@ -26,10 +27,10 @@ import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
 import IdentityConfig from './Identities/Config';
 // import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 

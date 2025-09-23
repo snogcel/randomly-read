@@ -1,7 +1,7 @@
 import 'date-fns';
 import moment from 'moment-timezone';
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
+import Grid from '@mui/material/Grid';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,

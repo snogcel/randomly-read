@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 import { styles } from '../../themeHandler';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import StartDatePicker from './elements/StartDatePicker';
 import EndDatePicker from './elements/EndDatePicker';
 import WordViewFilter from './elements/WordViewFilter';
 
 import PropTypes from 'prop-types';
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
