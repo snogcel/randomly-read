@@ -1,4 +1,5 @@
 import React from 'react';
+import { withStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
@@ -7,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
+
 
 import { styles } from '../../themeHandler';
 

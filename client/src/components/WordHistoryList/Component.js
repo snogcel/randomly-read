@@ -4,6 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
+import { withStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
 import { styles } from '../../themeHandler';

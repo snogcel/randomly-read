@@ -1,6 +1,7 @@
 import React from 'react';
 import { styles } from '../../../exerciseThemeHandler';
 import Typography from '@mui/material/Typography';
+import { withStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 
 class Word extends React.Component {

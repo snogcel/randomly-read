@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from "prop-types";
+import { withStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';

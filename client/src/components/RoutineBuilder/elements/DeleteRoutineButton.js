@@ -36,16 +36,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   marginRight: theme.spacing(1),
 }));
-  dense: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    margin: theme.spacing(1, 1, 1, 4),
-  },
-  input: {
-    display: 'none',
-  },
-}));
 
 export default function DeleteRoutineButton(props) {
   // getModalStyle is not a pure function, we roll the style only on the first render

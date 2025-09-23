@@ -1,6 +1,7 @@
 import React from 'react';
 import { styles } from '../../../themeHandler';
 import Button from '@mui/material/Button';
+import { withStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 
 class VowelCheckbox extends React.Component {

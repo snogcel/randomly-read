@@ -1,5 +1,6 @@
 import React from 'react';
 import { styles } from '../../themeHandler';
+import { withStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';

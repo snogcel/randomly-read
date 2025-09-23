@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
+import { withStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import { styles } from '../../themeHandler';
 
