@@ -1,9 +1,8 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
+import { makeStyles, withStyles } from '@mui/styles';
 import FormControl from '@mui/material/FormControl';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
-import { alpha } from "@mui/material/styles";
 
 const useStyles = makeStyles(theme => ({
   root: {

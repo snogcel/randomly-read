@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@mui/styles';
-import { styled } from '@mui/material/styles';
+import { makeStyles, withStyles } from '@mui/styles';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -82,7 +81,7 @@ export default function RoutinesSelect(props) {
             name: 'routine',
             id: 'routine-select',
           }}
-        >s
+        >
           <MenuItem value="">
             <em>Select routine...</em>
           </MenuItem>
