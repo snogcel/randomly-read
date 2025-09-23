@@ -130,5 +130,6 @@
   "jscsConfig": {
     "extends": "dev"
   },
+  "proxy": "https://api.easyonset.com",
   "homepage": "https://easyonset.com/"
 }

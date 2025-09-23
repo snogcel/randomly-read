@@ -79,10 +79,7 @@ const App = (props) => {
     return next(operation);
   };
 
-  const baseUrl =
-    process.env.NODE_ENV === 'development_'
-      ? 'http://dev.snogcel.com:8080/graphql'
-      : `https://api.easyonset.com/graphql`;
+  const baseUrl = `https://api.easyonset.com/graphql`;
 
   const link = ApolloLink.from([
     AuthLink,

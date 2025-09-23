@@ -1,9 +1,6 @@
 import { gql } from '@apollo/client';
 
-const baseUrl =
-  process.env.NODE_ENV === 'development_'
-    ? 'http://dev.snogcel.com:8080/api'
-    : `https://api.easyonset.com/api`;
+const baseUrl = `https://api.easyonset.com/api`;
 
 const methods = {
   get: async function (endpoint, token = null) {
