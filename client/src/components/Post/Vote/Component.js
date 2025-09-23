@@ -1,13 +1,14 @@
 import React from 'react';
+import TableCell from '@material-ui/core/TableCell';
 import styled from 'styled-components/macro';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
+// import { makeStyles } from '@material-ui/core/styles';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 30px;
+  align-items: center;  
   padding: 4px;
   font-size: 12px;
   line-height: 25px;
@@ -15,6 +16,17 @@ const Wrapper = styled.div`
   text-align: center;
   color: ${props => props.theme.normalText};
 `;
+
+/*
+const styles = makeStyles(theme => ({
+  votingCell: {
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '30px',
+  },
+}));
+*/
 
 class PostVote extends React.Component {
   constructor(props) {
@@ -28,13 +40,13 @@ class PostVote extends React.Component {
     };
   }
 
-  static existingVote({ user, votes }) {
+  static existingVote({ user, author, votes }) {
     const existingVote =
-      user && votes && votes.find(vote => vote.user === user.id);
+      author && votes && votes.find(vote => vote.user === author.id);
     return existingVote ? existingVote.vote : 0;
   }
 
-  componentWillUpdate(nextProps, nextState, nextContext) {
+  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
     if (this.props.score !== nextProps.score) {
       const didVote = PostVote.existingVote(nextProps);
       this.setState({
@@ -70,20 +82,22 @@ class PostVote extends React.Component {
   downvote = () => this.castVote(this.state.didDownvote ? 0 : -1);
 
   render() {
+
     return (
-      <Wrapper>
-        <PostVoteUpvote
-          canVote={!!this.props.token}
-          didVote={this.state.didUpvote}
-          onClick={this.upvote}
-        />
-        <span>{this.state.score}</span>
-        <PostVoteDownvote
-          canVote={!!this.props.token}
-          didVote={this.state.didDownvote}
-          onClick={this.downvote}
-        />
-      </Wrapper>
+      <TableCell align="center">
+        <Wrapper>
+          <PostVoteUpvote
+            canVote={!!this.props.token}
+            didVote={this.state.didUpvote}
+            onClick={this.upvote}
+          />
+          <PostVoteDownvote
+            canVote={!!this.props.token}
+            didVote={this.state.didDownvote}
+            onClick={this.downvote}
+          />
+        </Wrapper>
+      </TableCell>
     );
   }
 }

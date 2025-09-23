@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
+import Grid from '@material-ui/core/Grid';
 import Form from '../shared/form/Form';
 import renderField from '../shared/form/renderField';
 import { usernameValidator, passwordValidator } from '../../util/validators';
@@ -15,7 +16,7 @@ class LoginForm extends React.Component {
   }
 
   redirectIfLoggedIn() {
-    if (this.props.token) this.props.history.push('/');
+    if (this.props.token) this.props.history.push('/home');
   }
 
   onSubmit = ({ username, password }) => {
@@ -24,26 +25,31 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <Form
-        loading={this.props.loading}
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-      >
-        <Field
-          name='username'
-          label='username'
-          type='text'
-          component={renderField}
-          validate={usernameValidator}
-        />
-        <Field
-          name='password'
-          label='password'
-          type='password'
-          component={renderField}
-          validate={passwordValidator}
-        />
-        <SubmitButton type='submit'>log in</SubmitButton>
-      </Form>
+      <Grid container>
+        <Grid item xs={12}>
+          <br />
+          <Form
+            loading={this.props.loading}
+            onSubmit={this.props.handleSubmit(this.onSubmit)}
+          >
+            <Field
+              name='username'
+              label='username'
+              type='text'
+              component={renderField}
+              validate={usernameValidator}
+            />
+            <Field
+              name='password'
+              label='password'
+              type='password'
+              component={renderField}
+              validate={passwordValidator}
+            />
+            <SubmitButton type='submit'>log in</SubmitButton>
+          </Form>
+        </Grid>
+      </Grid>
     );
   }
 }

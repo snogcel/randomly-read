@@ -1,6 +1,11 @@
 const { body, validationResult } = require('express-validator/check');
+const ObjectId = require('mongodb').ObjectId;
 const Post = require('../models/post');
 const User = require('../models/user');
+const Interaction = require('../models/interaction');
+const VoteHistory = require('../models/voteHistory');
+const UserHistoryInitial = require('../models/userHistoryInitial');
+const ViewHistory = require('../models/viewHistory');
 
 exports.load = async (req, res, next, id) => {
   try {
@@ -37,7 +42,39 @@ exports.listByCategory = async (req, res) => {
 exports.listByUser = async (req, res) => {
   const username = req.params.user;
   const author = await User.findOne({ username });
-  const posts = await Post.find({ author: author.id }).sort('-created');
+  const posts = await Post.find({ author: author.id, score: 1 }).sort('-created');
+  res.json(posts);
+};
+
+exports.listByUserAndDate = async (req, res) => {
+  const username = req.params.user;
+  const startDate = req.params.start;
+  const endDate = req.params.end;
+
+  const author = await User.findOne({ username });
+
+  // find views by user over start / end date range
+  const viewedPosts = await ViewHistory.find({
+    author: author.id,
+    "created": {
+      "$gte": new Date(startDate * 1000),
+      "$lte": new Date(endDate * 1000)
+    }}, { postId: 1, _id: 0 });
+
+  let viewed = [];
+  for (let i = 0; i < viewedPosts.length; i++) {
+    viewed.push(viewedPosts[i].postId);
+  }
+
+  const posts = await Post.find({ '_id': {$in: viewed} }).sort('-created');
+  res.json(posts);
+};
+
+exports.listByUserAndCategory = async (req, res) => {
+  const username = req.params.user;
+  const category = req.params.category;
+  const author = await User.findOne({ username });
+  const posts = await Post.find({ author: author.id, category: category }).sort('-created');
   res.json(posts);
 };
 
@@ -123,16 +160,88 @@ exports.validate = [
 
 exports.upvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 1);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
+
+  // test for initial / medial / final and record to given User History model
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: 1, [consonant]: 1} }, {upsert: true});
+
+  const interaction = await Interaction.create({
+    "author": post.author._id,
+    "postId": post.id,
+    "word": post.title,
+    "ease": 0,
+    "position": post.position,
+    "consonant": post.consonant,
+    "vowel": post.vowel
+  });
+
   res.json(post);
 };
 
 exports.downvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, -1);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
+  let interaction = await Interaction.findOne({"postId": post._id, "word": post.title, "position": post.position});
+  let i_id = new ObjectId(interaction._id);
+  await Interaction.deleteOne({"_id": i_id});
+
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
+
+  // test for initial / medial / final and record to given User History model
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+
   res.json(post);
 };
 
 exports.unvote = async (req, res) => {
   const post = await req.post.vote(req.user.id, 0);
+
+  // record vote
+  VoteHistory.create({
+    "author": post.author._id,
+    "title": post.title,
+    "cmudict_id": post.cmudict_id,
+    "score": post.score,
+    "consonant": post.consonant,
+    "vowel": post.vowel,
+    "syllables": post.syllables
+  });
+
+  let interaction = await Interaction.findOne({"postId": post._id, "word": post.title, "position": post.position});
+  let i_id = new ObjectId(interaction._id);
+  await Interaction.deleteOne({"_id": i_id});
+
+  // let vowel = "vowel_"+post.vowel;
+  // let consonant = "consonant_"+post.consonant;
+
+  // test for initial / medial / final and record to given User History model
+  // let result = await UserHistoryInitial.update({user: post.author.id},{ $inc: {[vowel]: -1, [consonant]: -1} }, {upsert: true});
+
   res.json(post);
 };
 

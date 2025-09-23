@@ -1,7 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import SidebarCreatePostButton from './CreatePostButton';
 import SidebarCategoryList from './CategoryList';
+
+
+/* const TimerWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-basis: 240px;
+  margin: 12px 12px;
+`; */
 
 const Wrapper = styled.aside`
   display: flex;
@@ -19,7 +26,6 @@ const Wrapper = styled.aside`
 
 const Sidebar = ({ token }) => (
   <Wrapper>
-    {token && <SidebarCreatePostButton />}
     <SidebarCategoryList />
   </Wrapper>
 );

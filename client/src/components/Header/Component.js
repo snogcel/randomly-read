@@ -12,7 +12,6 @@ const Wrapper = styled.header`
   display: flex;
   align-items: stretch;
   margin-bottom: 24px;
-  box-shadow: 0 4px 12px ${props => props.theme.shadow};
   border-bottom: 1px solid ${props => props.theme.border};
   height: 48px;
   padding: 0 10vw;
@@ -32,18 +31,17 @@ const Wrapper = styled.header`
 const Header = ({ user, logout }) => (
   <Wrapper>
     <HeaderLogo />
-    <HeaderDarkButtonContainer />
     {user ? (
       <>
-        <HeaderUsername username={user.username} />
-        <HeaderNavLink as='span' onClick={logout}>
-          log out
-        </HeaderNavLink>
+
+        <HeaderNavLink to='/RandomlyRead'>Randomly Read</HeaderNavLink>
+        <HeaderNavLink to='/Administration'>Administration</HeaderNavLink>
+        <HeaderNavLink to='/RoutineBuilder'>Routine Builder</HeaderNavLink>
+        <HeaderNavLink as='span' onClick={logout}>Log Out</HeaderNavLink>
       </>
     ) : (
       <>
-        <HeaderNavLink to='/login'>log in</HeaderNavLink>
-        <HeaderNavLink to='/signup'>sign up</HeaderNavLink>
+        {/* <HeaderNavLink to='/login'>Log In</HeaderNavLink> */}
       </>
     )}
   </Wrapper>

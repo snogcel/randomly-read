@@ -1,0 +1,174 @@
+npm WARN deprecated jscs@3.0.7: JSCS has merged with ESLint! See - https://medium.com/@markelog/jscs-end-of-the-line-bc9bf0b3fdb2
+npm WARN deprecated @material-ui/icons@3.0.2: You can now upgrade to @mui/icons. See the guide: https://mui.com/guides/migration-v4/        
+npm WARN deprecated @material-ui/pickers@3.3.11: This package no longer supported. It has been relaced by @mui/x-date-pickers
+npm WARN deprecated @material-ui/styles@4.11.5: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+npm WARN deprecated graphql@14.7.0: No longer supported; please update to a newer version. Details: https://github.com/graphql/graphql-js#version-support
+npm WARN deprecated @material-ui/core@4.12.4: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+npm WARN deprecated @material-ui/lab@4.0.0-alpha.61: Material UI v4 doesn't receive active development since September 2021. See the guide https://mui.com/material-ui/migration/migration-v4/ to upgrade to v5.
+npm WARN deprecated glob@5.0.15: Glob versions prior to v9 are no longer supported
+npm WARN deprecated web-animation-club@0.6.0: WARNING: This project has been renamed to @rcaferati/wac; install it using @rcaferati/wac instead.
+npm WARN deprecated fsevents@1.2.4: Upgrade to fsevents v2 to mitigate potential security issues
+npm WARN deprecated babel-eslint@9.0.0: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
+npm WARN deprecated eslint-loader@2.1.1: This loader has been deprecated. Please use eslint-webpack-plugin
+npm WARN deprecated eslint@5.12.0: This version is no longer supported. Please see https://eslint.org/version-support for other options.    
+npm WARN deprecated html-webpack-plugin@4.0.0-alpha.2: please switch to a stable version
+npm WARN deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm WARN deprecated nomnom@1.8.1: Package no longer supported. Contact support@npmjs.com for more info.
+npm WARN deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+npm WARN deprecated uuid@2.0.3: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated airbnb-prop-types@2.16.0: This package has been renamed to 'prop-types-tools'
+npm WARN deprecated node-pre-gyp@0.10.3: Please upgrade to @mapbox/node-pre-gyp: the non-scoped node-pre-gyp package is deprecated and only the @mapbox scoped package will recieve updates in the future
+npm WARN deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supported
+npm WARN deprecated core-js@2.6.12: core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.
+npm WARN deprecated trim@0.0.1: Use String.prototype.trim() instead
+npm WARN deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.    
+npm WARN deprecated npmlog@4.1.2: This package is no longer supported.
+npm WARN deprecated svgo@1.3.2: This SVGO version is no longer supported. Upgrade to v2.x.x.
+npm WARN deprecated fsevents@1.2.13: Upgrade to fsevents v2 to mitigate potential security issues
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated joi@11.4.0: This version has been deprecated in accordance with the hapi support policy (hapi.im/support). Please upgrade to the latest version to get the best features, bug fixes, and security patches. If you are unable to upgrade at this time, paid support is available for older versions (hapi.im/commercial).
+npm WARN deprecated move-concurrently@1.0.1: This package is no longer supported.
+npm WARN deprecated @babel/plugin-proposal-unicode-property-regex@7.18.6: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-unicode-property-regex instead.
+npm WARN deprecated workbox-google-analytics@3.6.3: It is not compatible with newer versions of GA starting with v4, as long as you are using GAv3 it should be ok, but the package is not longer being maintained
+npm WARN deprecated npmlog@7.0.1: This package is no longer supported.
+npm WARN deprecated are-we-there-yet@1.1.7: This package is no longer supported.
+npm WARN deprecated gauge@2.7.4: This package is no longer supported.
+npm WARN deprecated source-map-resolve@0.5.3: See https://github.com/lydell/source-map-resolve#deprecated
+npm WARN deprecated osenv@0.1.5: This package is no longer supported.
+npm WARN deprecated kleur@2.0.2: Please upgrade to kleur@3 or migrate to 'ansi-colors' if you prefer the old syntax. Visit <https://github.com/lukeed/kleur/releases/tag/v3.0.0\> for migration path(s).
+npm WARN deprecated stable@0.1.8: Modern JS already guarantees Array#sort() is a stable sort, so this library is deprecated. See the compatibility table on MDN: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#browser_compatibility      
+npm WARN deprecated sane@2.5.2: some dependency vulnerabilities fixed, support for node < 10 dropped, and newer ECMAScript syntax/features added
+npm WARN deprecated rimraf@2.6.3: Rimraf versions prior to v4 are no longer supported
+npm WARN deprecated copy-concurrently@1.0.5: This package is no longer supported.
+npm WARN deprecated fs-write-stream-atomic@1.0.10: This package is no longer supported.
+npm WARN deprecated topo@2.1.1: This module has moved and is now available at @hapi/topo. Please update your dependencies as this version is no longer maintained and may contain bugs and security issues.
+npm WARN deprecated gauge@5.0.2: This package is no longer supported.
+npm WARN deprecated are-we-there-yet@4.0.2: This package is no longer supported.
+npm WARN deprecated read-package-json@6.0.4: This package is no longer supported. Please use @npmcli/package-json instead.
+npm WARN deprecated npmlog@6.0.2: This package is no longer supported.
+npm WARN deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm WARN deprecated @npmcli/disparity-colors@3.0.1: This package is no longer supported.
+npm WARN deprecated resolve-url@0.2.1: https://github.com/lydell/resolve-url#deprecated
+npm WARN deprecated urix@0.1.0: Please see https://github.com/lydell/urix#deprecated
+npm WARN deprecated source-map-url@0.4.1: See https://github.com/lydell/source-map-url#deprecated
+npm WARN deprecated w3c-hr-time@1.0.2: Use your platform's native performance.now() and performance.timeOrigin.
+npm WARN deprecated request-promise-native@1.0.9: request-promise-native has been deprecated because it extends the now deprecated request package, see https://github.com/request/request/issues/3142
+npm WARN deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+npm WARN deprecated gauge@4.0.4: This package is no longer supported.
+npm WARN deprecated are-we-there-yet@3.0.1: This package is no longer supported.
+npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+npm WARN deprecated glob@8.1.0: Glob versions prior to v9 are no longer supported
+npm WARN deprecated @npmcli/move-file@2.0.1: This functionality has been moved to @npmcli/fs
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules\react-scripts\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.2.3 (node_modules\jest-haste-map\node_modules\sane\node_modules\fsevents):      
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.2.7 (node_modules\chokidar\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@~2.3.2 (node_modules\watchpack\node_modules\chokidar\node_modules\fsevents):       
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.3.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@^1.2.7 (node_modules\watchpack\node_modules\watchpack-chokidar2\node_modules\chokidar\node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+npm WARN @babel/plugin-bugfix-v8-spread-parameters-in-optional-chaining@7.27.1 requires a peer of @babel/core@^7.13.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @babel/plugin-transform-class-static-block@7.28.3 requires a peer of @babel/core@^7.12.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @eslint-community/eslint-utils@4.9.0 requires a peer of eslint@^6.0.0 || ^7.0.0 || >=8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-config-prettier@8.10.2 requires a peer of eslint@>=7.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-config-react-app@3.0.8 requires a peer of eslint@5.x but none is installed. You must install peer dependencies yourself.    
+npm WARN eslint-plugin-flowtype@2.50.1 requires a peer of eslint@>=2.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @apollo/client@4.0.5 requires a peer of graphql@^16.0.0 but none is installed. You must install peer dependencies yourself.        
+npm WARN @apollo/client@4.0.5 requires a peer of graphql-ws@^5.5.5 || ^6.0.3 but none is installed. You must install peer dependencies yourself.
+npm WARN @apollo/client@4.0.5 requires a peer of subscriptions-transport-ws@^0.9.0 || ^0.11.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @apollo/client@3.14.0 requires a peer of graphql@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @apollo/client@3.14.0 requires a peer of graphql-ws@^5.5.5 || ^6.0.3 but none is installed. You must install peer dependencies yourself.
+npm WARN @apollo/client@3.14.0 requires a peer of subscriptions-transport-ws@^0.9.0 || ^0.11.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @material-ui/icons@3.0.2 requires a peer of react@^16.3.0 but none is installed. You must install peer dependencies yourself.      
+npm WARN @material-ui/icons@3.0.2 requires a peer of react-dom@^16.3.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @material-ui/icons@3.0.2 requires a peer of @material-ui/core@^3.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @material-ui/core@4.12.4 requires a peer of @types/react@^16.8.6 || ^17.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @material-ui/lab@4.0.0-alpha.61 requires a peer of @types/react@^16.8.6 || ^17.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @material-ui/styles@4.11.5 requires a peer of @types/react@^16.8.6 || ^17.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN medium-draft@0.5.18 requires a peer of react@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN medium-draft@0.5.18 requires a peer of react-dom@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN draft-js@0.10.5 requires a peer of react@^0.14.0 || ^15.0.0-rc || ^16.0.0-rc || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN draft-js@0.10.5 requires a peer of react-dom@^0.14.0 || ^15.0.0-rc || ^16.0.0-rc || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-apollo@2.5.8 requires a peer of react@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself. 
+npm WARN react-apollo@2.5.8 requires a peer of react-dom@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-ga@2.7.0 requires a peer of react@^15.6.2 || ^16.0 but none is installed. You must install peer dependencies yourself.       
+npm WARN react-markdown@4.3.1 requires a peer of react@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-redux@5.1.2 requires a peer of react@^0.14.0 || ^15.0.0-0 || ^16.0.0-0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-render-html@0.6.0 requires a peer of react@^16.1.0 but none is installed. You must install peer dependencies yourself.       
+npm WARN recharts@1.8.6 requires a peer of react@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.     
+npm WARN recharts@1.8.6 requires a peer of react-dom@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself. 
+npm WARN redux-form@7.4.3 requires a peer of react@^15.0.0-0 || ^16.0.0-0 but none is installed. You must install peer dependencies yourself.
+npm WARN redux-form-material-ui@4.3.4 requires a peer of material-ui@^0.19.0 || ^0.20.0 || 1 but none is installed. You must install peer dependencies yourself.
+npm WARN redux-form-material-ui@4.3.4 requires a peer of react@^15.0.0 || ^16.0.0  but none is installed. You must install peer dependencies yourself.
+npm WARN @material-ui/system@4.12.2 requires a peer of @types/react@^16.8.6 || ^17.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN recompose@0.30.0 requires a peer of react@^0.14.0 || ^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @semantic-release/npm@10.0.6 requires a peer of semantic-release@>=20.1.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @semantic-release/commit-analyzer@9.0.2 requires a peer of semantic-release@>=18.0.0-beta.1 but none is installed. You must install peer dependencies yourself.
+npm WARN @semantic-release/github@8.1.0 requires a peer of semantic-release@>=18.0.0-beta.1 but none is installed. You must install peer dependencies yourself.
+npm WARN listr2@4.0.5 requires a peer of enquirer@>= 2.3.0 < 3 but none is installed. You must install peer dependencies yourself.
+npm WARN cosmiconfig@8.3.6 requires a peer of typescript@>=4.9.5 but none is installed. You must install peer dependencies yourself.        
+npm WARN css-loader@1.0.0 requires a peer of webpack@^4.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN url-loader@1.1.2 requires a peer of webpack@^3.0.0 || ^4.0.0 but none is installed. You must install peer dependencies yourself.   
+npm WARN file-loader@2.0.0 requires a peer of webpack@^2.0.0 || ^3.0.0 || ^4.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN babel-loader@8.0.5 requires a peer of webpack@>=2 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-loader@2.1.1 requires a peer of eslint@>=1.6.0 <6.0.0 but none is installed. You must install peer dependencies yourself.   
+npm WARN eslint-loader@2.1.1 requires a peer of webpack@>=2.0.0 <5.0.0 but none is installed. You must install peer dependencies yourself.  
+npm WARN eslint-plugin-react@7.12.4 requires a peer of eslint@^3.0.0 || ^4.0.0 || ^5.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-plugin-import@2.14.0 requires a peer of eslint@2.x - 5.x but none is installed. You must install peer dependencies yourself.
+npm WARN mini-css-extract-plugin@0.5.0 requires a peer of webpack@^4.4.0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-plugin-jsx-a11y@6.1.2 requires a peer of eslint@^3 || ^4 || ^5 but none is installed. You must install peer dependencies yourself.
+npm WARN webpack-manifest-plugin@2.0.4 requires a peer of webpack@2 || 3 || 4 but none is installed. You must install peer dependencies yourself.
+npm WARN babel-plugin-polyfill-corejs2@0.4.14 requires a peer of @babel/core@^7.4.0 || ^8.0.0-0 <8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @babel/helper-define-polyfill-provider@0.6.5 requires a peer of @babel/core@^7.4.0 || ^8.0.0-0 <8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN babel-plugin-polyfill-regenerator@0.6.5 requires a peer of @babel/core@^7.4.0 || ^8.0.0-0 <8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @babel/helper-define-polyfill-provider@0.6.5 requires a peer of @babel/core@^7.4.0 || ^8.0.0-0 <8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN babel-plugin-polyfill-corejs3@0.13.0 requires a peer of @babel/core@^7.4.0 || ^8.0.0-0 <8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN @babel/helper-define-polyfill-provider@0.6.5 requires a peer of @babel/core@^7.4.0 || ^8.0.0-0 <8.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-smooth@1.0.6 requires a peer of react@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself. 
+npm WARN react-smooth@1.0.6 requires a peer of react-dom@^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN react-resize-detector@2.3.0 requires a peer of react@^0.14.7 || ^15.0.0 || ^16.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN enzyme-adapter-react-16@1.15.8 requires a peer of react@^16.0.0-0 but none is installed. You must install peer dependencies yourself.
+npm WARN enzyme-adapter-react-16@1.15.8 requires a peer of react-dom@^16.0.0-0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-plugin-prettier@3.4.1 requires a peer of eslint@>=5.0.0 but none is installed. You must install peer dependencies yourself. 
+npm WARN react-test-renderer@16.14.0 requires a peer of react@^16.14.0 but none is installed. You must install peer dependencies yourself.  
+npm WARN enzyme-adapter-utils@1.14.2 requires a peer of react@0.13.x || 0.14.x || ^15.0.0-0 || ^16.0.0-0 but none is installed. You must install peer dependencies yourself.
+npm WARN airbnb-prop-types@2.16.0 requires a peer of react@^0.14 || ^15.0.0 || ^16.0.0-alpha but none is installed. You must install peer dependencies yourself.
+
+npm ERR! path C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli
+npm ERR! code EPERM
+npm ERR! errno -4048
+npm ERR! syscall rename
+npm ERR! Error: EPERM: operation not permitted, rename 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli' -> 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\node-gyp\node_modules\@npmcli'
+npm ERR!  { [Error: EPERM: operation not permitted, rename 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli' -> 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\node-gyp\node_modules\@npmcli']
+npm ERR!   cause:
+npm ERR!    { Error: EPERM: operation not permitted, rename 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\.node-gyp.DELETE\node_modules\@npmcli' -> 'C:\Projects\randomly-read\client\node_modules\npm\node_modules\node-gyp\node_modules\@npmcli'
+npm ERR!      errno: -4048,
+npm ERR!      code: 'EPERM',
+npm ERR!      syscall: 'rename',
+npm ERR!      path:
+npm ERR!       'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\.node-gyp.DELETE\\node_modules\\@npmcli',
+npm ERR!      dest:
+npm ERR!       'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\node-gyp\\node_modules\\@npmcli' },
+npm ERR!   stack:
+npm ERR!    'Error: EPERM: operation not permitted, rename \'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\.node-gyp.DELETE\\node_modules\\@npmcli\' -> \'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\node-gyp\\node_modules\\@npmcli\'',
+npm ERR!   errno: -4048,
+npm ERR!   code: 'EPERM',
+npm ERR!   syscall: 'rename',
+npm ERR!   path:
+npm ERR!    'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\.node-gyp.DELETE\\node_modules\\@npmcli',
+npm ERR!   dest:
+npm ERR!    'C:\\Projects\\randomly-read\\client\\node_modules\\npm\\node_modules\\node-gyp\\node_modules\\@npmcli',
+npm ERR!   parent: 'npm' }
+npm ERR!
+npm ERR! The operation was rejected by your operating system.
+npm ERR! It's possible that the file was already in use (by a text editor or antivirus),
+npm ERR! or that you lack permissions to access it.
+npm ERR!
+npm ERR! If you believe this might be a permissions issue, please double-check the
+npm ERR! permissions of the file and its containing directories, or try running
+npm ERR! the command again as root/Administrator (though this is not recommended).
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     C:\Users\ledni\AppData\Roaming\npm-cache\_logs\2025-09-22T18_36_58_849Z-debug.log

@@ -1,26 +1,15 @@
 import React from 'react';
-import styled from 'styled-components/macro';
+import PostTable from './PostTable';
 import PostListItem from './Item';
 import LoadingIndicatorBox from '../shared/LoadingIndicator/Box';
 import Empty from '../shared/Empty';
 
-const List = styled.ul`
-  list-style: none;
-  border: 1px solid ${props => props.theme.border};
-  border-radius: 2px;
-
-  @media (max-width: 768px) {
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-radius: 0;
-  }
-`;
-
 class PostList extends React.Component {
   loadPosts = () => {
-    const { username, category } = this.props;
-    if (username) return this.props.fetchProfile(username);
+    const { username, category, startDate, endDate } = this.props;
+    console.log("username: ", username);
+    if (username && startDate && endDate && category === "all") return this.props.fetchPostsByDate(username, startDate, endDate);
+    if (username && category) return this.props.fetchProfile(username, category);
     return this.props.fetchPosts(category);
   };
 
@@ -31,7 +20,9 @@ class PostList extends React.Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (
       this.props.category !== prevProps.category ||
-      this.props.username !== prevProps.username
+      this.props.username !== prevProps.username ||
+      this.props.startDate !== prevProps.startDate ||
+      this.props.endDate !== prevProps.endDate
     )
       this.loadPosts();
   }
@@ -41,10 +32,16 @@ class PostList extends React.Component {
       <PostListItem key={index} {...post} />
     ));
 
+  displayWords() {
+
+    return <PostTable posts={this.props.posts} />;
+
+  }
+
   render() {
     if (this.props.isFetching) return <LoadingIndicatorBox />;
     if (!this.props.posts || this.props.posts.length === 0) return <Empty />;
-    return <List>{this.mapPosts()}</List>;
+    return this.displayWords();
   }
 }
 

@@ -1,0 +1,117 @@
+import React from 'react';
+import PostVoteUpvote from './Upvote';
+import PostVoteDownvote from './Downvote';
+
+import { withStyles } from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import { styles } from '../../../themeHandler';
+
+class PostVote extends React.Component {
+  constructor(props) {
+    super(props);
+    const didVote = PostVote.existingVote(props);
+    this.state = {
+      score: props.score,
+      title: props.title,
+      didVote,
+      didUpvote: didVote === 1,
+      didDownvote: didVote === -1
+    };
+  }
+
+  static existingVote({ user, votes }) {
+    const existingVote =
+      user && votes && votes.find(vote => vote.user === user.id);
+    return existingVote ? existingVote.vote : 0;
+  }
+
+  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
+    if (this.props.score !== nextProps.score) {
+      const didVote = PostVote.existingVote(nextProps);
+      this.setState({
+        score: nextProps.score,
+        didVote,
+        didUpvote: didVote === 1,
+        didDownvote: didVote === -1
+      });
+    } else if (this.props.token !== nextProps.token && !nextProps.token) {
+      this.setState({
+        didVote: false,
+        didUpvote: false,
+        didDownvote: false
+      });
+    }
+  }
+
+  castVote(vote) {
+    const { attemptVote, id, token } = this.props;
+    if (token) {
+      attemptVote(id, vote);
+      this.setState({
+        score: this.state.score + vote - this.state.didVote,
+        didVote: vote,
+        didUpvote: vote === 1,
+        didDownvote: vote === -1
+      });
+    }
+  }
+
+  upvote = () => this.castVote(this.state.didUpvote ? 0 : 1);
+
+  downvote = () => this.castVote(this.state.didDownvote ? 0 : -1);
+
+  render() {
+
+    const { classes, user } = this.props;
+
+    let title = classes.historyTitle;
+
+    if (this.state.score > 0) title = classes.historyTitleUpvote;
+    if (this.state.score < 0) title = classes.historyTitleDownvote;
+    if (this.props.id === null) title = classes.historyTitleNovote;
+
+    if (typeof(user) !== "undefined" && this.props.wordid && this.props.user.isActive) {
+
+      return (
+        <Grid item className={classes.wordHistoryWrapper}>
+          <PostVoteUpvote
+            canVote={!!this.props.token}
+            didVote={this.state.didUpvote}
+            onClick={this.upvote}
+          />
+          <Typography
+            className={title}
+            color="textPrimary"
+            variant="h5">
+            {this.state.title}
+          </Typography>
+          <PostVoteDownvote
+            canVote={!!this.props.token}
+            didVote={this.state.didDownvote}
+            onClick={this.downvote}
+          />
+        </Grid>
+      );
+
+    } else {
+
+      return (
+        <Grid item className={classes.wordHistoryWrapper}>
+          <Typography
+            className={title}
+            color="textPrimary"
+            variant="h5">
+            {this.state.title}
+          </Typography>
+        </Grid>
+      );
+
+    }
+
+  }
+}
+
+const PostVoteWrapped = withStyles(styles)(PostVote);
+
+export default PostVoteWrapped;

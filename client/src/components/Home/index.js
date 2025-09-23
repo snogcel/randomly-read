@@ -6,6 +6,9 @@ import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
 import PostDetailContainer from '../PostDetail/Container';
 import SidebarContainer from '../Sidebar/Container';
+import RRLayout from '../RRLayout/RRHomeContainer';
+import UserHomeContainer from '../UserHome/Container';
+import Empty from '../shared/Empty';
 
 const Wrapper = styled.div`
   display: flex;
@@ -22,11 +25,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const Home = () => (
-  <Wrapper>
-    <HomeMainSection>
-      <Route component={CategoryMenuContainer} />
-      <Route exact path='/' component={PostListContainer} />
+/*
+
+
+      <Route exact path='/' component={Empty} />
+
+
+
       <Route
         exact
         path='/a/:category'
@@ -48,9 +53,17 @@ const Home = () => (
           <PostDetailContainer id={match.params.post} history={history} />
         )}
       />
-    </HomeMainSection>
-    <Route component={SidebarContainer} />
-  </Wrapper>
+
+ */
+
+const Home = () => (
+
+  <HomeMainSection>
+
+    <Route exact path='/' component={UserHomeContainer} />
+
+  </HomeMainSection>
+
 );
 
 export default Home;

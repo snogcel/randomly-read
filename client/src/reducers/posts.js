@@ -2,6 +2,9 @@ import {
   FETCH_POSTS_REQUEST,
   FETCH_POSTS_SUCCESS,
   FETCH_POSTS_ERROR,
+  FETCH_POSTS_BY_DATE_REQUEST,
+  FETCH_POSTS_BY_DATE_SUCCESS,
+  FETCH_POSTS_BY_DATE_ERROR,
   FETCH_POST_REQUEST,
   FETCH_POST_SUCCESS,
   FETCH_POST_ERROR,
@@ -21,6 +24,7 @@ import {
   VOTE_SUCCESS,
   VOTE_ERROR
 } from '../actions/posts';
+import {LOGOUT} from "../actions/auth";
 
 const initialState = { isFetching: false, items: [] };
 
@@ -35,6 +39,13 @@ export default (state = initialState, action) => {
     case FETCH_POSTS_SUCCESS:
       return { ...state, isFetching: false, items: action.posts };
     case FETCH_POSTS_ERROR:
+      return { ...state, isFetching: false };
+
+    case FETCH_POSTS_BY_DATE_REQUEST:
+      return { ...state, isFetching: true, post: null, newPost: null };
+    case FETCH_POSTS_BY_DATE_SUCCESS:
+      return { ...state, isFetching: false, items: action.posts };
+    case FETCH_POSTS_BY_DATE_ERROR:
       return { ...state, isFetching: false };
 
     case FETCH_POST_REQUEST:
@@ -85,6 +96,9 @@ export default (state = initialState, action) => {
       };
     case VOTE_ERROR:
       return { ...state, isVoting: false };
+
+    case LOGOUT:
+      return initialState;
 
     default:
       return state;

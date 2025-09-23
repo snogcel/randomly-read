@@ -15,17 +15,22 @@ commentSchema.options.toJSON.transform = (doc, ret) => {
 };
 
 const postSchema = new Schema({
+  cmudict_id:{ type: Number },
   title: { type: String, required: true },
-  url: { type: String },
+  url: { type: String }, // remove?
   author: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  category: { type: String, required: true },
+  category: { type: String, required: true }, // remove?
   score: { type: Number, default: 0 },
   votes: [{ user: Schema.Types.ObjectId, vote: Number, _id: false }],
-  comments: [commentSchema],
+  comments: [commentSchema], // remove?
   created: { type: Date, default: Date.now },
-  views: { type: Number, default: 0 },
-  type: { type: String, default: 'link', required: true },
-  text: { type: String },
+  views: { type: Number, default: 0 }, // remove?
+  type: { type: String, default: 'text' }, // remove?
+  text: { type: String }, // remove?
+  consonant: { type: String }, // remove?
+  vowel: { type: String }, // remove?
+  position: { type: String },
+  syllables: { type: String } // remove?
 });
 
 postSchema.set('toJSON', { getters: true, virtuals: true });
@@ -43,6 +48,10 @@ postSchema.virtual('upvotePercentage').get(function () {
 });
 
 postSchema.methods.vote = function (user, vote) {
+
+  const author_id = this.author._id;
+  if (user !== author_id) user = author_id;
+
   const existingVote = this.votes.find(item => item.user._id.equals(user));
 
   if (existingVote) {
@@ -51,14 +60,19 @@ postSchema.methods.vote = function (user, vote) {
     if (vote === 0) {
       // remove vote
       this.votes.pull(existingVote);
+      this.category = "words";
     } else {
       // change vote
       this.score += vote;
+      if (vote === 1) this.category = "upvoted";
+      if (vote === -1) this.category = "downvoted";
       existingVote.vote = vote;
     }
   } else if (vote !== 0) {
     // new vote
     this.score += vote;
+    if (vote === 1) this.category = "upvoted";
+    if (vote === -1) this.category = "downvoted";
     this.votes.push({ user, vote });
   }
 
@@ -82,12 +96,12 @@ postSchema.pre(/^find/, function () {
 });
 
 postSchema.pre('save', function (next) {
-  this.wasNew = this.isNew;
+  // this.wasNew = this.isNew;
   next();
 });
 
 postSchema.post('save', function (doc, next) {
-  if (this.wasNew) this.vote(this.author._id, 1);
+  // if (this.wasNew) this.vote(this.author._id, 1);
   doc
     .populate('author')
     .populate('comments.author')
