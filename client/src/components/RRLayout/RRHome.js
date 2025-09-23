@@ -21,9 +21,22 @@ import WordHistoryList from '../WordHistoryList/Container';
 import { styles } from '../../themeHandler';
 
 const RRHome = props => {
-
-  const { classes, user } = props;
-  const { width } = props;
+  const theme = useTheme();
+  const classes = styles(theme);
+  const { user } = props;
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width = 'xs';
+  if (isXl) width = 'xl';
+  else if (isLg) width = 'lg';
+  else if (isMd) width = 'md';
+  else if (isSm) width = 'sm';
 
   const [open_1, setOpen_1] = React.useState(false);
   const [open_2, setOpen_2] = React.useState(false);
@@ -310,10 +323,4 @@ const RRHome = props => {
 
   )};
 
-RRHome.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
-
-const RRHomeWrapped = withStyles(styles)(RRHome);
-
-export default withWidth()(RRHomeWrapped);
+export default RRHome;

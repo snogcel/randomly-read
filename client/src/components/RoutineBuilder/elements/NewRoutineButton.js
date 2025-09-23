@@ -18,31 +18,29 @@ function getModalStyle() {
   };
 }
 
-const useStyles = makeStyles(theme => ({
-  paper: {
-    position: 'absolute',
-    width: 350,
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #333',
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 2, 2, 2),
-    textAlign: 'center'
-  },
-  margin: {
-    margin: theme.spacing(1),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
-  },
-  extendedIcon: {
-    marginRight: theme.spacing(1),
-  },
-  container: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  textField: {
-    marginLeft: theme.spacing(0),
-    marginRight: theme.spacing(0),
+const StyledPaper = styled('div')(({ theme }) => ({
+  position: 'absolute',
+  width: 350,
+  backgroundColor: theme.palette.background.paper,
+  border: '1px solid #333',
+  boxShadow: theme.shadows[5],
+  padding: theme.spacing(2, 2, 2, 2),
+  textAlign: 'center'
+}));
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
+  paddingLeft: theme.spacing(1),
+  paddingRight: theme.spacing(1)
+}));
+
+const StyledIconButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(1),
+}));
+
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  marginLeft: theme.spacing(0),
+  marginRight: theme.spacing(0),
     paddingLeft: theme.spacing(1)
   },
   dense: {
@@ -57,7 +55,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function NewRoutineButton(props) {
-  const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
   const [open, setOpen] = React.useState(false);
@@ -84,9 +81,9 @@ export default function NewRoutineButton(props) {
 
   return (
     <div>
-      <IconButton onClick={handleOpen} disableFocusRipple style={{ backgroundColor: 'transparent' }} aria-label="add" className={classes.margin}>
+      <StyledIconButton onClick={handleOpen} disableFocusRipple style={{ backgroundColor: 'transparent' }} aria-label="add">
         <AddIcon />
-      </IconButton>
+      </StyledIconButton>
 
       <Modal
         aria-labelledby="simple-modal-title"
@@ -94,13 +91,13 @@ export default function NewRoutineButton(props) {
         open={open}
         onClose={handleClose}
       >
-        <div style={modalStyle} className={classes.paper}>
+        <StyledPaper style={modalStyle}>
 
           <Grid container>
 
             <Grid item>
 
-              <form className={classes.container} noValidate autoComplete="off">
+              <form style={{display: 'flex', flexWrap: 'wrap'}} noValidate autoComplete="off">
                 <TextField
                   id="outlined-full-width"
                   margin="normal"
@@ -118,15 +115,15 @@ export default function NewRoutineButton(props) {
 
               <br />
 
-              <Button onClick={() => { handleClick(); }}  variant="outlined" size="small" color="default" className={classes.button}>
+              <StyledButton onClick={() => { handleClick(); }}  variant="outlined" size="small" color="default">
                 Create
-              </Button>
+              </StyledButton>
 
             </Grid>
 
           </Grid>
 
-        </div>
+        </StyledPaper>
       </Modal>
     </div>
   );

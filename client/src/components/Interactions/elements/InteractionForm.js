@@ -8,13 +8,8 @@ import MenuItem from '@mui/material/MenuItem';
 import InputBase from '@mui/material/InputBase';
 import InputLabel from '@mui/material/InputLabel';
 
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  '& .MuiInputBase-input': {
     borderRadius: 4,
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
@@ -22,7 +17,6 @@ const BootstrapInput = withStyles(theme => ({
     fontSize: 16,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -41,41 +35,25 @@ const BootstrapInput = withStyles(theme => ({
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
     },
   },
-}))(InputBase);
+}));
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    alignItems: "center",
-    display:"flex",
-    justifyItems: "center",
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 100,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-  submit: {
-    textAlign: 'center'
-  },
-  submitButton: {
-    margin: theme.spacing(1),
-    marginTop: theme.spacing(4)
-  },
-  interactionSlider: {
-    alignItems: "center",
-    display:"grid",
-    justifyItems: "center",
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4)
-  },
-  wordEntry: {
-    fontSize:"12px"
-  },
-  formControlLabel: {
-    fontSize:"12px"
-  }
+  alignItems: "center",
+  display:"flex",
+  justifyItems: "center",
+}));
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 100,
+}));
+
+const StyledSubmitButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
+  marginTop: theme.spacing(4)
+}));
+
+const StyledWordEntryGrid = styled(Grid)(({ theme }) => ({
+  fontSize:"12px"
 }));
 
 // Stubbed Out Interaction Settings
@@ -87,7 +65,6 @@ const ease = [
 */
 
 export default function InteractionForm(props) {
-  const classes = useStyles();
 
   const [state, setState] = React.useState({
     position: "initial",
@@ -115,13 +92,13 @@ export default function InteractionForm(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <StyledRoot>
       <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); } }>
 
-            <Grid container justify="center">
+            <Grid container justifyContent="center">
 
-              <Grid item xs={12} sm={6} md={6} lg={12} className={classes.wordEntry}>
-                <FormControl className={classes.formControl}>
+              <StyledWordEntryGrid item xs={12} sm={6} md={6} lg={12}>
+                <StyledFormControl>
                   <InputLabel shrink htmlFor="admin-user-input">Word Search</InputLabel>
                   <BootstrapInput
                     id="outlined-word-name"
@@ -134,13 +111,13 @@ export default function InteractionForm(props) {
                     value={state.word}
                     onChange={handleChange('word')}
                   />
-                </FormControl>
+                </StyledFormControl>
 
-              </Grid>
+              </StyledWordEntryGrid>
 
               <Grid item xs={12} sm={6} md={6} lg={12}>
 
-                <FormControl className={classes.formControl}>
+                <StyledFormControl>
                   <InputLabel htmlFor="admin-user-input">Position</InputLabel>
                   <Select
                     value={state.position}
@@ -154,15 +131,15 @@ export default function InteractionForm(props) {
                     <MenuItem key={"initial"} value={"initial"}>Initial</MenuItem>
                     <MenuItem key={"final"} value={"final"}>Final</MenuItem>
                   </Select>
-                </FormControl>
+                </StyledFormControl>
 
-                <Button type="submit" variant="outlined" className={classes.submitButton}>Find</Button>
+                <StyledSubmitButton type="submit" variant="outlined">Find</StyledSubmitButton>
 
               </Grid>
 
             </Grid>
 
       </form>
-    </div>
+    </StyledRoot>
   );
 }

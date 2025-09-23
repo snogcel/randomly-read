@@ -21,31 +21,30 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: theme.spacing(0)
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1
-  },
-  headerLink: {
-    cursor: "pointer"
-  },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
+const StyledRoot = styled('div')(({ theme }) => ({
+  flexGrow: 1,
+  marginBottom: theme.spacing(0)
+}));
+
+const StyledMenuButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  flexGrow: 1
+}));
+
+const StyledHeaderLink = styled('span')(({ theme }) => ({
+  cursor: "pointer"
+}));
+
+const StyledList = styled('div')(({ theme }) => ({
+  width: 250,
 }));
 
 function MenuAppBar(props) {
-  const classes = useStyles();
-  const { width } = props;
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -107,8 +106,7 @@ function MenuAppBar(props) {
   let user = props.user;
 
   const sideList = side => (
-    <div
-      className={classes.list}
+    <StyledList
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
@@ -125,18 +123,18 @@ function MenuAppBar(props) {
         </ListItem>
       </List>
 
-    </div>
+    </StyledList>
   );
 
   return (
-    <div className={classes.root}>
+    <StyledRoot>
       <AppBar position="static">
         <Toolbar>
 
           {(typeof user !== "undefined" && user !== null && user.superuser === true) ? (
-            <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <StyledMenuButton onClick={toggleDrawer('left', true)} edge="start" color="inherit" aria-label="menu">
               <MenuIcon />
-            </IconButton>
+            </StyledMenuButton>
           ) : ( null )}
 
           <SwipeableDrawer
@@ -147,9 +145,9 @@ function MenuAppBar(props) {
             {sideList('left')}
           </SwipeableDrawer>
 
-          <Typography onClick={handleRandomlyRead} variant="h6" className={classes.title}>
-            <span className={classes.headerLink}>Fluency Shaping</span>
-          </Typography>
+          <StyledTitle onClick={handleRandomlyRead} variant="h6">
+            <StyledHeaderLink>Fluency Shaping</StyledHeaderLink>
+          </StyledTitle>
 
           {user ? (
             <div>
@@ -177,7 +175,7 @@ function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                {(width !== "lg" && width !== "xl") && (<MenuItem onClick={handleFocusWords}>Words</MenuItem>)}
+                {!isLargeScreen && (<MenuItem onClick={handleFocusWords}>Words</MenuItem>)}
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
@@ -189,13 +187,8 @@ function MenuAppBar(props) {
           )}
         </Toolbar>
       </AppBar>
-    </div>
+    </StyledRoot>
   );
 }
 
-
-MenuAppBar.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
-
-export default withWidth()(MenuAppBar);
+export default MenuAppBar;

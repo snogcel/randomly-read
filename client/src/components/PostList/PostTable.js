@@ -16,44 +16,36 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 import PostListItem from './Item';
 
-const useStyles1 = makeStyles(theme => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-  table: {
-  },
+const StyledTablePaginationActions = styled('div')(({ theme }) => ({
+  flexShrink: 0,
+  marginLeft: theme.spacing(2.5),
 }));
 
-const useStyles2 = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(1),
-  },
-  table: {
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  upvote: {
-    color: "#C70E4C"
-  },
-  downvote: {
-    color: "#8A0C93"
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  votingCell: {
-    whiteSpace: 'nowrap',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '30px',
-  },
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  width: '100%',
+  marginTop: theme.spacing(1),
+}));
+
+const StyledTableWrapper = styled('div')(({ theme }) => ({
+  overflowX: 'auto',
+}));
+
+const StyledUpvoteCell = styled(TableCell)(({ theme }) => ({
+  color: "#C70E4C"
+}));
+
+const StyledDownvoteCell = styled(TableCell)(({ theme }) => ({
+  color: "#8A0C93"
+}));
+
+const StyledVotingCell = styled(TableCell)(({ theme }) => ({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  width: '30px',
 }));
 
 function TablePaginationActions(props) {
-  const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
@@ -66,7 +58,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <StyledTablePaginationActions>
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
@@ -77,7 +69,7 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
-    </div>
+    </StyledTablePaginationActions>
   );
 }
 
@@ -89,7 +81,6 @@ TablePaginationActions.propTypes = {
 };
 
 export default function PostTable(props) {
-  const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -107,9 +98,9 @@ export default function PostTable(props) {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.tableWrapper}>
-        <Table className={classes.table} size="small">
+    <StyledPaper>
+      <StyledTableWrapper>
+        <Table size="small">
           <TableHead>
             <TableRow>
               <TableCell align="right"></TableCell>
@@ -153,7 +144,7 @@ export default function PostTable(props) {
             </TableRow>
           </TableFooter>
         </Table>
-      </div>
-    </Paper>
+      </StyledTableWrapper>
+    </StyledPaper>
   );
 }

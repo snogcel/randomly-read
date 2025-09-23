@@ -15,37 +15,22 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import DoneIcon from '@mui/icons-material/Done';
 
-
-
-const useStyles1 = makeStyles(theme => ({
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
-  },
-  table: {
-  },
+const StyledTablePaginationActions = styled('div')(({ theme }) => ({
+  flexShrink: 0,
+  marginLeft: theme.spacing(2.5),
 }));
 
-const useStyles2 = makeStyles(theme => ({
-  root: {
-    width: '100%',
-    marginTop: theme.spacing(4),
-  },
-  table: {
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  width: '100%',
+  marginTop: theme.spacing(4),
+}));
 
-  },
-  tableWrapper: {
-    overflowX: 'auto',
-  },
-  upvote: {
-    color: "#C70E4C"
-  },
-  downvote: {
-    color: "#8A0C93"
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
+const StyledTableWrapper = styled('div')(({ theme }) => ({
+  overflowX: 'auto',
+}));
+
+const StyledButton = styled(IconButton)(({ theme }) => ({
+  margin: theme.spacing(1),
 }));
 
 const availableCharacters = [
@@ -90,7 +75,6 @@ const availableCharacters = [
 ];
 
 function TablePaginationActions(props) {
-  const classes = useStyles1();
   const theme = useTheme();
   const { count, page, rowsPerPage, onChangePage } = props;
 
@@ -103,7 +87,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <StyledTablePaginationActions>
       <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
@@ -114,7 +98,7 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
       </IconButton>
-    </div>
+    </StyledTablePaginationActions>
   );
 }
 
@@ -126,7 +110,6 @@ TablePaginationActions.propTypes = {
 };
 
 export default function InteractionTable(props) {
-  const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
@@ -170,7 +153,7 @@ export default function InteractionTable(props) {
         "ease": result,
         "createdAt": moment(item.createdAt).tz("America/New_York").format('MM/DD'),
         "updatedAt": item.updatedAt,
-        "class": ((item.ease < 50) ? classes.upvote : null)
+        "class": ((item.ease < 50) ? "upvote" : null)
       });
     });
 
@@ -188,9 +171,9 @@ export default function InteractionTable(props) {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   return (
-      <Paper className={classes.root}>
-        <div className={classes.tableWrapper}>
-          <Table size="small" className={classes.table}>
+      <StyledPaper>
+        <StyledTableWrapper>
+          <Table size="small">
             <TableHead>
               <TableRow>
                 <TableCell align="center">Word</TableCell>
@@ -207,9 +190,9 @@ export default function InteractionTable(props) {
                     {row.summary}
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton aria-label="delete" className={classes.margin} onClick={(e) => { e.preventDefault(); props.action(row.id); }}>
+                    <StyledButton aria-label="delete" onClick={(e) => { e.preventDefault(); props.action(row.id); }}>
                       <DoneIcon />
-                    </IconButton>
+                    </StyledButton>
                   </TableCell>
                 </TableRow>
               ))}
@@ -240,7 +223,7 @@ export default function InteractionTable(props) {
               </TableRow>
             </TableFooter>
           </Table>
-        </div>
-      </Paper>
+        </StyledTableWrapper>
+      </StyledPaper>
   );
 }

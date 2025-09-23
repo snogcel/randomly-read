@@ -6,14 +6,27 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Hidden from '@mui/material/Hidden';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { styled } from '@mui/material/styles';
-import { useTheme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 const SplashPage = props => {
-
-  const { classes, width } = props;
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
 
   const [open_1, setOpen_1] = React.useState(false);
   const [open_2, setOpen_2] = React.useState(false);
@@ -185,10 +198,8 @@ const SplashPage = props => {
 
 };
 
-const SplashWrapped = withStyles(styles)(SplashPage);
-
-SplashWrapped.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+SplashPage.propTypes = {
+  // width is now determined internally using useMediaQuery
 };
 
-export default withWidth()(SplashWrapped);
+export default SplashPage;

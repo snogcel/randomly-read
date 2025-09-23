@@ -981,7 +981,8 @@ class RoutineBuilder extends React.Component {
 
     const { user } = this.props;
     const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
-    const { classes } = this.props;
+    const { theme } = this.props;
+    const classes = styles(theme || {});
 
     const { width } = this.props;
 
@@ -1319,6 +1320,25 @@ RoutineBuilder.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const RoutineBuilderWrapped = withStyles(styles)(RoutineBuilder);
+// Wrapper component to provide theme and width
+function RoutineBuilderWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  return <RoutineBuilder {...props} theme={theme} width={width} />;
+}
 
-export default withWidth()(RoutineBuilderWrapped);
+export default RoutineBuilderWrapper;

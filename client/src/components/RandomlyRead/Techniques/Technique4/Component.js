@@ -7,7 +7,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -26,7 +26,8 @@ class Technique extends React.Component {
   */
 
   render() {
-    const { classes } = this.props;
+    const { theme } = this.props;
+    const classes = styles(theme || {});
 
     return (
       <React.Fragment>
@@ -214,6 +215,10 @@ class Technique extends React.Component {
   }
 }
 
-const TechniqueWrapped = withStyles(styles)(Technique);
+// Wrapper component to provide theme
+function TechniqueWrapper(props) {
+  const theme = useTheme();
+  return <Technique {...props} theme={theme} />;
+}
 
-export default TechniqueWrapped;
+export default TechniqueWrapper;

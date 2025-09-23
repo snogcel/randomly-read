@@ -105,8 +105,8 @@ class ViewHistory extends React.Component {
     let selectedFilterObj = this.parseSelectedFilter(this.props.filter);
     let dataSet = this.props.dataSet || [];
 
-    const { width } = this.props;
-    const { classes } = this.props;
+    const { width, theme } = this.props;
+    const classes = styles(theme || {});
 
     console.log(width);
 
@@ -197,6 +197,25 @@ ViewHistory.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const ViewHistoryWrapped = withStyles(styles)(ViewHistory);
+// Wrapper component to provide theme and width
+function ViewHistoryWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  return <ViewHistory {...props} theme={theme} width={width} />;
+}
 
-export default withWidth()(ViewHistoryWrapped);
+export default ViewHistoryWrapper;

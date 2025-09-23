@@ -6,28 +6,23 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
-import { styled } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-class Introduction extends React.Component {
+function Introduction(props) {
+  const theme = useTheme();
+  const classes = styles(theme);
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  return (
+    <React.Fragment>
+      <Box>
+        <Typography variant="h5" component="h2" className={classes.contentHeading}>
+          Advanced Introduction
+        </Typography>
 
-  }
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <React.Fragment>
-        <Box>
-          <Typography variant="h5" component="h2" className={classes.contentHeading}>
-            Advanced Introduction
-          </Typography>
-
-          <br />
+        <br />
 
           <Typography variant="body1" color="textPrimary" component="p" >
             This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases.
@@ -127,12 +122,9 @@ class Introduction extends React.Component {
 
           </List>
 
-        </Box>
-      </React.Fragment>
-    );
-  }
+      </Box>
+    </React.Fragment>
+  );
 }
 
-const IntroductionWrapped = withStyles(styles)(Introduction);
-
-export default IntroductionWrapped;
+export default Introduction;

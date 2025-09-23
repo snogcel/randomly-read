@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
@@ -314,6 +314,12 @@ class RoutinePreview extends React.Component  {
   }
 }
 
-const RoutinePreviewWrapped = withStyles(styles)(RoutinePreview);
+// Wrapper component to provide theme and styles
+function RoutinePreviewWrapper(props) {
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  return <RoutinePreview {...props} classes={classes} theme={theme} />;
+}
 
-export default RoutinePreviewWrapped;
+export default RoutinePreviewWrapper;

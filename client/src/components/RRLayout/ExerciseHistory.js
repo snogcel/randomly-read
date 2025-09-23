@@ -17,17 +17,14 @@ import PropTypes from 'prop-types';
 import { styles } from '../../themeHandler';
 
 
-const StyledListItem = withStyles({
-  root: {
-    border: "0px solid #E0E0F5",
-    marginTop: 2,
-    marginBottom: 2,
-    "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "#ECECEC"
-    }
-  },
-  selected: {}
-})(ListItem);
+const StyledListItem = styled(ListItem)({
+  border: "0px solid #E0E0F5",
+  marginTop: 2,
+  marginBottom: 2,
+  "&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:focus": {
+    backgroundColor: "#ECECEC"
+  }
+});
 
 const availableConsonants = [
   { id: "AA", name: "ɑ"},
@@ -97,8 +94,8 @@ class ExerciseHistory extends React.Component {
 
 
   render() {
-    const {classes, currentExerciseNumber} = this.props;
-    const { width } = this.props;
+    const {currentExerciseNumber, theme, width} = this.props;
+    const classes = styles(theme || {});
 
     let exerciseHistory = <React.Fragment>
       <List dense={true}>
@@ -224,6 +221,25 @@ ExerciseHistory.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const ExerciseHistoryWrapped = withStyles(styles)(ExerciseHistory);
+// Wrapper component to provide theme and width
+function ExerciseHistoryWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  return <ExerciseHistory {...props} theme={theme} width={width} />;
+}
 
-export default withWidth()(ExerciseHistoryWrapped);
+export default ExerciseHistoryWrapper;

@@ -264,6 +264,25 @@ RoutineDescription.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const RoutineDescriptionWrapped = withStyles(styles)(RoutineDescription);
+// Wrapper component to provide theme, styles, and width
+function RoutineDescriptionWrapper(props) {
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width = 'xs';
+  if (isXl) width = 'xl';
+  else if (isLg) width = 'lg';
+  else if (isMd) width = 'md';
+  else if (isSm) width = 'sm';
+  
+  return <RoutineDescription {...props} classes={classes} theme={theme} width={width} />;
+}
 
-export default withWidth()(RoutineDescriptionWrapped);
+export default RoutineDescriptionWrapper;
