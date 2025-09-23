@@ -59,10 +59,8 @@ class WordHistoryList extends React.Component {
   }
 }
 
-WordHistoryList.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// WordHistoryList.propTypes removed - no longer using withWidth
 
 const WordHistoryListWrapped = withStyles(styles)(WordHistoryList);
 
-export default withWidth()(WordHistoryListWrapped);
+export default WordHistoryListWrapped;

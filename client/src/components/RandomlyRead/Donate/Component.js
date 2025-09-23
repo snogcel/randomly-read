@@ -53,10 +53,8 @@ class BuyMeACoffee extends React.Component {
     }
 }
 
-BuyMeACoffee.propTypes = {
-    width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// BuyMeACoffee.propTypes removed - no longer using withWidth
 
 const BuyMeACoffeeWrapped = withStyles(styles)(BuyMeACoffee);
 
-export default withWidth()(BuyMeACoffeeWrapped);
+export default BuyMeACoffeeWrapped;

@@ -41,17 +41,7 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 const StyledTextField = styled(TextField)(({ theme }) => ({
   marginLeft: theme.spacing(0),
   marginRight: theme.spacing(0),
-    paddingLeft: theme.spacing(1)
-  },
-  dense: {
-    marginTop: theme.spacing(2),
-  },
-  button: {
-    margin: theme.spacing(1, 1, 1, 4),
-  },
-  input: {
-    display: 'none',
-  },
+  paddingLeft: theme.spacing(1)
 }));
 
 export default function NewRoutineButton(props) {

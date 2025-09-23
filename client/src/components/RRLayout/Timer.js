@@ -566,10 +566,8 @@ class Timer extends React.Component {
 
  */
 
-Timer.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// Timer.propTypes removed - no longer using withWidth
 
 const TimerWrapped = withStyles(styles)(Timer);
 
-export default withWidth()(TimerWrapped);
+export default TimerWrapped;

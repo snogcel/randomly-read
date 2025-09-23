@@ -70,10 +70,8 @@ class UserProfile extends React.Component {
   }
 }
 
-UserProfile.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// UserProfile.propTypes removed - no longer using withWidth
 
 const UserProfileWrapped = withStyles(styles)(UserProfile);
 
-export default withWidth()(UserProfileWrapped);
+export default UserProfileWrapped;
