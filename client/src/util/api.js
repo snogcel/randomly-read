@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client';
-import { useQuery } from "@apollo/client";
 
 const baseUrl =
   process.env.NODE_ENV === 'development_'
@@ -213,13 +212,7 @@ export async function getViewHistory (id, startDate, endDate, token) {
   return await methods.get(`history/words/${id}/start/${startDate}/end/${endDate}`, token)
 }
 
-export function getGraphQL(query) {
-  const { loading, data } = useQuery(query, {
-    variables: { },
-  });
-  if (loading) return null;
-  return data;
-}
+
 
 export function buildQuery(props) {
 
