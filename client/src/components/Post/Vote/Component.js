@@ -3,6 +3,7 @@ import TableCell from '@mui/material/TableCell';
 import styled from 'styled-components/macro';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
+import { makeStyles } from '@mui/styles';
 // import { styled } from '@mui/material/styles';
 
 const Wrapper = styled.div`

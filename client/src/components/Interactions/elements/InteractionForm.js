@@ -37,8 +37,9 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+const StyledRoot = styled('div')(({ theme }) => ({
   alignItems: "center",
-  display:"flex",
+  display: "flex",
   justifyItems: "center",
 }));
 
@@ -102,7 +103,6 @@ export default function InteractionForm(props) {
                   <InputLabel shrink htmlFor="admin-user-input">Word Search</InputLabel>
                   <BootstrapInput
                     id="outlined-word-name"
-                    className={classes.textField}
                     margin="dense"
                     inputlabelprops={{
                       shrink: true,

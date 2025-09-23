@@ -1,4 +1,5 @@
 import React from 'react';
+import { makeStyles } from '@mui/styles';
 import { styled, useTheme } from '@mui/material/styles';
 import { styles } from '../../../../exerciseThemeHandler';
 import Typography from '@mui/material/Typography';
