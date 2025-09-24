@@ -67,6 +67,9 @@
     "publish": "serve -s build -l 3000",
     "now-build": "yarn build && mv build dist",
     "test": "react-scripts test",
+    "test:graphql": "node src/tests/runGraphQLTests.js",
+    "test:apollo": "react-scripts test --testPathPattern=Apollo --watchAll=false",
+    "test:wordcard": "react-scripts test --testPathPattern=WordCard --watchAll=false",
     "eject": "react-scripts eject",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
@@ -95,6 +98,10 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@apollo/client": "^3.11.8",
+    "@testing-library/jest-dom": "^6.1.4",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^14.5.1",
     "@types/draft-js": "^0.11.12",
     "@types/jest": "^29.5.5",
     "@types/jwt-decode": "^3.1.0",
