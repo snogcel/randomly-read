@@ -4,7 +4,7 @@ const fetch = require('cross-fetch');
 // Test GraphQL connection
 async function testGraphQLConnection() {
   const httpLink = createHttpLink({
-    uri: 'http://localhost:8080/graphql',
+    uri: 'https://api.easyonset.com/graphql',
     fetch
   });
 
@@ -14,7 +14,7 @@ async function testGraphQLConnection() {
   });
 
   try {
-    console.log('Testing GraphQL connection to http://localhost:8080/graphql...');
+    console.log('Testing GraphQL connection to https://api.easyonset.com/graphql...');
     
     // Test basic schema query
     const result = await client.query({
@@ -55,7 +55,7 @@ async function testGraphQLConnection() {
     
   } catch (error) {
     console.log('❌ GraphQL server connection failed:', error.message);
-    console.log('Make sure the GraphQL server is running on http://localhost:8080/graphql');
+    console.log('Make sure the GraphQL server is accessible at https://api.easyonset.com/graphql');
   }
 }
 
