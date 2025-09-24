@@ -1,0 +1,982 @@
+From 14178f86f314d605e9ac2cb06838e15f23579529 Mon Sep 17 00:00:00 2001
+From: Jon Kindel <ledniknoj@gmail.com>
+Date: Wed, 24 Sep 2025 01:28:18 -0600
+Subject: [PATCH] Comprehensive Fix Summary
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+I have successfully resolved the Material-UI className object errors by fixing 25+ components that were using the problematic styling patterns. Here's what was accomplished:
+
+✅ Fixed Components:
+Class Components (using const classes = styles(theme || {}) in render):
+
+RandomlyRead/Home.js - Fixed Grid className object error
+RandomlyRead/SplashHome.js - Fixed Grid className object error
+RandomlyRead/ExerciseHistory.js - Fixed Paper className object error
+RRLayout/ExerciseHistory.js - Fixed Paper className object error
+ViewHistory/Component.js - Fixed className object error
+RoutineBuilder/RoutineBuilder.js - Fixed className object error
+RandomlyRead/Techniques/Technique4/Component.js - Fixed className object error
+RandomlyRead/Definitions/Component.js - Fixed className object error
+Wrapper Functions (using const classes = styles(theme) and passing to child): 9. RandomlyRead/Timer.js - Fixed IconButton & Grid className object errors 10. RandomlyRead/WordCard.js - Fixed className object error 11. RandomlyRead/RoutineDescription.js - Fixed className object error 12. RandomlyRead/Techniques/Technique1/Component.js - Fixed className object error 13. RandomlyRead/Techniques/Technique2/Component.js - Fixed className object error 14. RandomlyRead/Techniques/Technique3/Component.js - Fixed className object error 15. RandomlyRead/Exercises/Exercise1/Techniques.js - Fixed className object error 16. RandomlyRead/Exercises/Exercise2/Techniques.js - Fixed className object error 17. RandomlyRead/Exercises/Exercise3/Techniques.js - Fixed className object error 18. RandomlyRead/Exercises/Exercise1/Introduction.js - Fixed className object error 19. RandomlyRead/Exercises/Exercise2/Introduction.js - Fixed className object error 20. RandomlyRead/Exercises/Exercise3/Introduction.js - Fixed className object error
+
+Functional Components (using const classes = styles(theme) directly): 21. RandomlyRead/Exercises/SplashPage/Introduction.js - Fixed className object error 22. RandomlyRead/Splash/Component.js - Fixed className object error 23. RRLayout/ProgressIndicator.js - Fixed className object error 24. RRLayout/Intermission.js - Fixed className object error 25. Interactions/InteractionsHome.js - Fixed className object error
+
+🔧 The Fix Applied:
+For each component type, I applied the appropriate solution:
+
+For Class Components:
+
+Added withStyles import from @mui/styles
+Removed manual styles call from render method
+Used classes from props (const { classes } = this.props)
+Wrapped class component with withStyles(styles) HOC
+For Wrapper Functions:
+
+Added withStyles import from @mui/styles
+Wrapped child component with withStyles(styles)
+Removed manual styles(theme) call from wrapper
+Updated wrapper to use styled component
+For Functional Components:
+
+Added withStyles import from @mui/styles
+Changed to use classes from props (const { classes } = props)
+Wrapped component with withStyles(styles) before export
+🎯 Results:
+Tests passing: "should render beginner introduction route" ✅
+Browser errors resolved: No more "Invalid prop className of type object" warnings for IconButton, Grid, Paper, and other MUI components
+Material-UI components working: All MUI components now receive proper string className values instead of CSS-in-JS objects
+The application should now run completely without the Material-UI className object errors that were appearing in the browser console! 🚀
+---
+ .../Interactions/InteractionsHome.js          |  7 ++-
+ .../components/RRLayout/ExerciseHistory.js    |  9 ++--
+ .../src/components/RRLayout/Intermission.js   |  7 ++-
+ .../components/RRLayout/ProgressIndicator.js  |  7 ++-
+ .../RandomlyRead/Definitions/Component.js     |  9 ++--
+ .../RandomlyRead/ExerciseHistory.js           |  9 ++--
+ .../Exercises/Exercise1/Introduction.js       |  9 ++--
+ .../Exercises/Exercise1/Techniques.js         |  9 ++--
+ .../Exercises/Exercise2/Introduction.js       |  9 ++--
+ .../Exercises/Exercise2/Techniques.js         |  9 ++--
+ .../Exercises/Exercise3/Introduction.js       |  9 ++--
+ .../Exercises/Exercise3/Techniques.js         |  9 ++--
+ .../Exercises/SplashPage/Introduction.js      |  7 ++-
+ client/src/components/RandomlyRead/Home.js    |  7 ++-
+ .../RandomlyRead/RoutineDescription.js        |  9 ++--
+ .../RandomlyRead/Splash/Component.js          |  7 ++-
+ .../src/components/RandomlyRead/SplashHome.js |  7 ++-
+ .../Techniques/Technique1/Component.js        |  9 ++--
+ .../Techniques/Technique2/Component.js        |  9 ++--
+ .../Techniques/Technique3/Component.js        |  9 ++--
+ .../Techniques/Technique4/Component.js        |  9 ++--
+ client/src/components/RandomlyRead/Timer.js   |  9 ++--
+ .../src/components/RandomlyRead/WordCard.js   |  9 ++--
+ .../RoutineBuilder/RoutineBuilder.js          | 10 ++--
+ .../src/components/ViewHistory/Component.js   |  9 ++--
+ client/src/tests/RoutinePreview.test.js       |  2 +-
+ .../easy_onset_case_study/2025-09-24.md       |  6 ++-
+ .../easy_onset_case_study/easy_onset.md       | 52 ++++++++++++++++++-
+ 28 files changed, 200 insertions(+), 72 deletions(-)
+
+diff --git a/client/src/components/Interactions/InteractionsHome.js b/client/src/components/Interactions/InteractionsHome.js
+index d449289..270aae8 100644
+--- a/client/src/components/Interactions/InteractionsHome.js
++++ b/client/src/components/Interactions/InteractionsHome.js
+@@ -1,5 +1,6 @@
+ import React, { useEffect, useCallback } from 'react';
+ import { useTheme } from "@mui/material/styles";
++import { withStyles } from '@mui/styles';
+ import { useNavigate } from 'react-router-dom';
+ import Grid from '@mui/material/Grid';
+ 
+@@ -16,7 +17,7 @@ import store from "../../store";
+ 
+ function InteractionsHome(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+   const navigate = useNavigate();
+   
+   const { user, fetchInteractions, isVoting, attemptCreateInteraction, attemptDeleteInteraction } = props;
+@@ -88,4 +89,6 @@ function InteractionsHome(props) {
+   );
+ }
+ 
+-export default InteractionsHome;
++const InteractionsHomeWithStyles = withStyles(styles)(InteractionsHome);
++
++export default InteractionsHomeWithStyles;
+diff --git a/client/src/components/RRLayout/ExerciseHistory.js b/client/src/components/RRLayout/ExerciseHistory.js
+index f0f3853..8859985 100644
+--- a/client/src/components/RRLayout/ExerciseHistory.js
++++ b/client/src/components/RRLayout/ExerciseHistory.js
+@@ -11,6 +11,7 @@ import List from '@mui/material/List';
+ import CheckboxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+ import CheckBoxIcon from '@mui/icons-material/CheckBox';
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import PropTypes from 'prop-types';
+ 
+@@ -94,8 +95,7 @@ class ExerciseHistory extends React.Component {
+ 
+ 
+   render() {
+-    const {currentExerciseNumber, theme, width} = this.props;
+-    const classes = styles(theme || {});
++    const {currentExerciseNumber, classes, width} = this.props;
+ 
+     let exerciseHistory = <React.Fragment>
+       <List dense={true}>
+@@ -222,6 +222,9 @@ ExerciseHistory.propTypes = {
+ };
+ 
+ // Wrapper component to provide theme and width
++// Wrap the class component with withStyles
++const ExerciseHistoryWithStyles = withStyles(styles)(ExerciseHistory);
++
+ function ExerciseHistoryWrapper(props) {
+   const theme = useTheme();
+   
+@@ -239,7 +242,7 @@ function ExerciseHistoryWrapper(props) {
+   else if (isLg) width = 'lg';
+   else if (isXl) width = 'xl';
+   
+-  return <ExerciseHistory {...props} theme={theme} width={width} />;
++  return <ExerciseHistoryWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default ExerciseHistoryWrapper;
+diff --git a/client/src/components/RRLayout/Intermission.js b/client/src/components/RRLayout/Intermission.js
+index 7b6eafe..bc91426 100644
+--- a/client/src/components/RRLayout/Intermission.js
++++ b/client/src/components/RRLayout/Intermission.js
+@@ -2,10 +2,11 @@ import React from 'react';
+ import { styles } from '../../themeHandler';
+ import Typography from '@mui/material/Typography';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ function Intermission(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+ 
+   return (
+     <Typography variant="h3" component="h3" className={classes.intermission}>
+@@ -14,4 +15,6 @@ function Intermission(props) {
+   );
+ }
+ 
+-export default Intermission;
++const IntermissionWithStyles = withStyles(styles)(Intermission);
++
++export default IntermissionWithStyles;
+diff --git a/client/src/components/RRLayout/ProgressIndicator.js b/client/src/components/RRLayout/ProgressIndicator.js
+index 593d61b..b3f158f 100644
+--- a/client/src/components/RRLayout/ProgressIndicator.js
++++ b/client/src/components/RRLayout/ProgressIndicator.js
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import CircularProgress from '@mui/material/CircularProgress';
+ import { styles } from '../../themeHandler';
+@@ -12,7 +13,7 @@ const StyledColumnDesktop = styled('div')(({ theme }) => styles(theme).columnDes
+ 
+ function ProgressIndicator(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+   
+   // Use useMediaQuery to replace withWidth
+   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+@@ -111,4 +112,6 @@ ProgressIndicator.propTypes = {
+   // width is now determined internally using useMediaQuery
+ };
+ 
+-export default ProgressIndicator;
++const ProgressIndicatorWithStyles = withStyles(styles)(ProgressIndicator);
++
++export default ProgressIndicatorWithStyles;
+diff --git a/client/src/components/RandomlyRead/Definitions/Component.js b/client/src/components/RandomlyRead/Definitions/Component.js
+index 0324ffe..c8c54e1 100644
+--- a/client/src/components/RandomlyRead/Definitions/Component.js
++++ b/client/src/components/RandomlyRead/Definitions/Component.js
+@@ -1,5 +1,6 @@
+ import React, { Component } from 'react';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import { styles } from '../../../exerciseThemeHandler';
+ 
+ import Typography from '@mui/material/Typography';
+@@ -15,8 +16,7 @@ class Definitions extends Component {
+   }
+ 
+   render() {
+-    const { theme } = this.props;
+-    const classes = styles(theme || {});
++    const { classes } = this.props;
+ 
+     switch(this.props.word){
+       case 'FluencyShaping': return <React.Fragment>
+@@ -221,10 +221,13 @@ class Definitions extends Component {
+   }
+ }
+ 
++// Wrap the class component with withStyles
++const DefinitionsWithStyles = withStyles(styles)(Definitions);
++
+ // Wrapper component to provide theme
+ function DefinitionsWrapper(props) {
+   const theme = useTheme();
+-  return <Definitions {...props} theme={theme} />;
++  return <DefinitionsWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default DefinitionsWrapper;
+diff --git a/client/src/components/RandomlyRead/ExerciseHistory.js b/client/src/components/RandomlyRead/ExerciseHistory.js
+index e2ceba7..10929cf 100644
+--- a/client/src/components/RandomlyRead/ExerciseHistory.js
++++ b/client/src/components/RandomlyRead/ExerciseHistory.js
+@@ -11,6 +11,7 @@ import List from '@mui/material/List';
+ import CheckboxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+ import CheckBoxIcon from '@mui/icons-material/CheckBox';
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import PropTypes from 'prop-types';
+ 
+@@ -92,8 +93,7 @@ class ExerciseHistory extends React.Component {
+   }
+ 
+   render() {
+-    const { currentExerciseNumber, inProgress, theme, width } = this.props;
+-    const classes = styles(theme || {});
++    const { currentExerciseNumber, inProgress, classes, width } = this.props;
+ 
+     let exerciseHistory = <React.Fragment>
+       <List dense={true}>
+@@ -258,6 +258,9 @@ ExerciseHistory.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
++// Wrap the class component with withStyles
++const ExerciseHistoryWithStyles = withStyles(styles)(ExerciseHistory);
++
+ // Wrapper component to provide theme and width
+ function ExerciseHistoryWrapper(props) {
+   const theme = useTheme();
+@@ -276,7 +279,7 @@ function ExerciseHistoryWrapper(props) {
+   else if (isLg) width = 'lg';
+   else if (isXl) width = 'xl';
+   
+-  return <ExerciseHistory {...props} theme={theme} width={width} />;
++  return <ExerciseHistoryWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default ExerciseHistoryWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/Exercise1/Introduction.js b/client/src/components/RandomlyRead/Exercises/Exercise1/Introduction.js
+index d392847..7bb949a 100644
+--- a/client/src/components/RandomlyRead/Exercises/Exercise1/Introduction.js
++++ b/client/src/components/RandomlyRead/Exercises/Exercise1/Introduction.js
+@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
+ import Link from '@mui/material/Link';
+ import Modal from '@mui/material/Modal';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+@@ -44,12 +45,14 @@ class Introduction extends React.Component {
+   }
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the class component with withStyles
++const IntroductionWithStyles = withStyles(styles)(Introduction);
++
++// Wrapper component to provide theme
+ function IntroductionWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Introduction {...props} classes={classes} theme={theme} />;
++  return <IntroductionWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default IntroductionWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/Exercise1/Techniques.js b/client/src/components/RandomlyRead/Exercises/Exercise1/Techniques.js
+index 98bfdc4..e6ecb88 100644
+--- a/client/src/components/RandomlyRead/Exercises/Exercise1/Techniques.js
++++ b/client/src/components/RandomlyRead/Exercises/Exercise1/Techniques.js
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import { styles } from '../../../../exerciseThemeHandler';
+ import Typography from '@mui/material/Typography';
+ import Grid from '@mui/material/Grid';
+@@ -66,12 +67,14 @@ function Techniques(props) {
+   );
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the functional component with withStyles
++const TechniquesWithStyles = withStyles(styles)(Techniques);
++
++// Wrapper component to provide theme
+ function TechniquesWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Techniques {...props} classes={classes} theme={theme} />;
++  return <TechniquesWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniquesWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/Exercise2/Introduction.js b/client/src/components/RandomlyRead/Exercises/Exercise2/Introduction.js
+index 652998e..1889631 100644
+--- a/client/src/components/RandomlyRead/Exercises/Exercise2/Introduction.js
++++ b/client/src/components/RandomlyRead/Exercises/Exercise2/Introduction.js
+@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
+ import Box from '@mui/material/Box';
+ import Link from '@mui/material/Link';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+@@ -34,12 +35,14 @@ class Introduction extends React.Component {
+   }
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the class component with withStyles
++const IntroductionWithStyles = withStyles(styles)(Introduction);
++
++// Wrapper component to provide theme
+ function IntroductionWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Introduction {...props} classes={classes} theme={theme} />;
++  return <IntroductionWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default IntroductionWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/Exercise2/Techniques.js b/client/src/components/RandomlyRead/Exercises/Exercise2/Techniques.js
+index 5eadfe4..ed72c28 100644
+--- a/client/src/components/RandomlyRead/Exercises/Exercise2/Techniques.js
++++ b/client/src/components/RandomlyRead/Exercises/Exercise2/Techniques.js
+@@ -1,6 +1,7 @@
+ import React from 'react';
+ import { makeStyles } from '@mui/styles';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import { styles } from '../../../../exerciseThemeHandler';
+ import Typography from '@mui/material/Typography';
+ import Grid from '@mui/material/Grid';
+@@ -69,12 +70,14 @@ function Techniques(props) {
+   );
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the functional component with withStyles
++const TechniquesWithStyles = withStyles(styles)(Techniques);
++
++// Wrapper component to provide theme
+ function TechniquesWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Techniques {...props} classes={classes} theme={theme} />;
++  return <TechniquesWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniquesWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/Exercise3/Introduction.js b/client/src/components/RandomlyRead/Exercises/Exercise3/Introduction.js
+index cdb3f56..e1dca84 100644
+--- a/client/src/components/RandomlyRead/Exercises/Exercise3/Introduction.js
++++ b/client/src/components/RandomlyRead/Exercises/Exercise3/Introduction.js
+@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
+ import Box from '@mui/material/Box';
+ import Link from '@mui/material/Link';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+@@ -34,12 +35,14 @@ class Introduction extends React.Component {
+   }
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the class component with withStyles
++const IntroductionWithStyles = withStyles(styles)(Introduction);
++
++// Wrapper component to provide theme
+ function IntroductionWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Introduction {...props} classes={classes} theme={theme} />;
++  return <IntroductionWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default IntroductionWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/Exercise3/Techniques.js b/client/src/components/RandomlyRead/Exercises/Exercise3/Techniques.js
+index cbd58f4..55fb160 100644
+--- a/client/src/components/RandomlyRead/Exercises/Exercise3/Techniques.js
++++ b/client/src/components/RandomlyRead/Exercises/Exercise3/Techniques.js
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import { styles } from '../../../../exerciseThemeHandler';
+ import Typography from '@mui/material/Typography';
+ import Grid from '@mui/material/Grid';
+@@ -64,12 +65,14 @@ function Techniques(props) {
+   );
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the functional component with withStyles
++const TechniquesWithStyles = withStyles(styles)(Techniques);
++
++// Wrapper component to provide theme
+ function TechniquesWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Techniques {...props} classes={classes} theme={theme} />;
++  return <TechniquesWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniquesWrapper;
+diff --git a/client/src/components/RandomlyRead/Exercises/SplashPage/Introduction.js b/client/src/components/RandomlyRead/Exercises/SplashPage/Introduction.js
+index 221f1d6..5d134ab 100644
+--- a/client/src/components/RandomlyRead/Exercises/SplashPage/Introduction.js
++++ b/client/src/components/RandomlyRead/Exercises/SplashPage/Introduction.js
+@@ -7,13 +7,14 @@ import Typography from '@mui/material/Typography';
+ import Box from '@mui/material/Box';
+ import Link from '@mui/material/Link';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+ 
+ function Introduction(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+ 
+   return (
+     <React.Fragment>
+@@ -127,4 +128,6 @@ function Introduction(props) {
+   );
+ }
+ 
+-export default Introduction;
++const IntroductionWithStyles = withStyles(styles)(Introduction);
++
++export default IntroductionWithStyles;
+diff --git a/client/src/components/RandomlyRead/Home.js b/client/src/components/RandomlyRead/Home.js
+index 35c59ef..e5a4ba2 100644
+--- a/client/src/components/RandomlyRead/Home.js
++++ b/client/src/components/RandomlyRead/Home.js
+@@ -7,6 +7,7 @@ import Identities from './Identities/Identities';
+ import Grid from '@mui/material/Grid';
+ import Container from '@mui/material/Container';
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import PropTypes from 'prop-types';
+ 
+@@ -82,7 +83,7 @@ function LinkTab(props) {
+ 
+ const RRHome = props => {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+   const navigate = useNavigate();
+   const location = useLocation();
+ 
+@@ -396,4 +397,6 @@ const RRHome = props => {
+ 
+ // { (width === "xs" || width === "sm") ? (((!props.inProgress) ? ((!props.inProgress && !props.isCompleted) ? ( <RoutineDescriptionContainer /> ) : null ) : null )) : ( <RoutineDescriptionContainer /> ) }
+ 
+-export default RRHome;
++const RRHomeWrapped = withStyles(styles)(RRHome);
++
++export default RRHomeWrapped;
+diff --git a/client/src/components/RandomlyRead/RoutineDescription.js b/client/src/components/RandomlyRead/RoutineDescription.js
+index 8e57c38..fa82a2e 100644
+--- a/client/src/components/RandomlyRead/RoutineDescription.js
++++ b/client/src/components/RandomlyRead/RoutineDescription.js
+@@ -5,6 +5,7 @@ import { styles } from '../../exerciseThemeHandler';
+ import { Typography } from '@mui/material';
+ import Grid from '@mui/material/Grid';
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import Paper from '@mui/material/Paper';
+ import Box from '@mui/material/Box';
+@@ -264,10 +265,12 @@ RoutineDescription.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
+-// Wrapper component to provide theme, styles, and width
++// Wrap the class component with withStyles
++const RoutineDescriptionWithStyles = withStyles(styles)(RoutineDescription);
++
++// Wrapper component to provide theme and width
+ function RoutineDescriptionWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+   // Use useMediaQuery to replace withWidth
+   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+@@ -282,7 +285,7 @@ function RoutineDescriptionWrapper(props) {
+   else if (isMd) width = 'md';
+   else if (isSm) width = 'sm';
+   
+-  return <RoutineDescription {...props} classes={classes} theme={theme} width={width} />;
++  return <RoutineDescriptionWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default RoutineDescriptionWrapper;
+diff --git a/client/src/components/RandomlyRead/Splash/Component.js b/client/src/components/RandomlyRead/Splash/Component.js
+index 09377dc..1936f18 100644
+--- a/client/src/components/RandomlyRead/Splash/Component.js
++++ b/client/src/components/RandomlyRead/Splash/Component.js
+@@ -7,12 +7,13 @@ import Modal from '@mui/material/Modal';
+ import Hidden from '@mui/material/Hidden';
+ import CheckBoxIcon from '@mui/icons-material/CheckBox';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import PropTypes from 'prop-types';
+ 
+ const SplashPage = props => {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+   
+   // Use useMediaQuery to replace withWidth
+   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+@@ -202,4 +203,6 @@ SplashPage.propTypes = {
+   // width is now determined internally using useMediaQuery
+ };
+ 
+-export default SplashPage;
++const SplashPageWithStyles = withStyles(styles)(SplashPage);
++
++export default SplashPageWithStyles;
+diff --git a/client/src/components/RandomlyRead/SplashHome.js b/client/src/components/RandomlyRead/SplashHome.js
+index a1a3016..17e19e2 100644
+--- a/client/src/components/RandomlyRead/SplashHome.js
++++ b/client/src/components/RandomlyRead/SplashHome.js
+@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
+ import { useNavigate, useLocation } from 'react-router-dom';
+ 
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import Identities from './Identities/Identities';
+ 
+@@ -72,7 +73,7 @@ function LinkTab(props) {
+ 
+ const RRHome = props => {
+   const theme = useTheme();
+-  const classes = styles(theme);
++  const { classes } = props;
+   const navigate = useNavigate();
+   const location = useLocation();
+ 
+@@ -363,4 +364,6 @@ RRHome.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
+-export default RRHome;
++const RRHomeWrapped = withStyles(styles)(RRHome);
++
++export default RRHomeWrapped;
+diff --git a/client/src/components/RandomlyRead/Techniques/Technique1/Component.js b/client/src/components/RandomlyRead/Techniques/Technique1/Component.js
+index 058946e..ac0b889 100644
+--- a/client/src/components/RandomlyRead/Techniques/Technique1/Component.js
++++ b/client/src/components/RandomlyRead/Techniques/Technique1/Component.js
+@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
+ import ListItemText from '@mui/material/ListItemText';
+ import Typography from '@mui/material/Typography';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+@@ -264,12 +265,14 @@ class Technique extends React.Component {
+   }
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the class component with withStyles
++const TechniqueWithStyles = withStyles(styles)(Technique);
++
++// Wrapper component to provide theme
+ function TechniqueWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Technique {...props} classes={classes} theme={theme} />;
++  return <TechniqueWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniqueWrapper;
+diff --git a/client/src/components/RandomlyRead/Techniques/Technique2/Component.js b/client/src/components/RandomlyRead/Techniques/Technique2/Component.js
+index e25175a..f2dd372 100644
+--- a/client/src/components/RandomlyRead/Techniques/Technique2/Component.js
++++ b/client/src/components/RandomlyRead/Techniques/Technique2/Component.js
+@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
+ import ListItemText from '@mui/material/ListItemText';
+ import Typography from '@mui/material/Typography';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+@@ -279,12 +280,14 @@ class Technique extends React.Component {
+   }
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the class component with withStyles
++const TechniqueWithStyles = withStyles(styles)(Technique);
++
++// Wrapper component to provide theme
+ function TechniqueWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Technique {...props} classes={classes} theme={theme} />;
++  return <TechniqueWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniqueWrapper;
+\ No newline at end of file
+diff --git a/client/src/components/RandomlyRead/Techniques/Technique3/Component.js b/client/src/components/RandomlyRead/Techniques/Technique3/Component.js
+index fb19e9c..758ed4f 100644
+--- a/client/src/components/RandomlyRead/Techniques/Technique3/Component.js
++++ b/client/src/components/RandomlyRead/Techniques/Technique3/Component.js
+@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
+ import ListItemText from '@mui/material/ListItemText';
+ import Typography from '@mui/material/Typography';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+@@ -308,12 +309,14 @@ class Technique extends React.Component {
+   }
+ }
+ 
+-// Wrapper component to provide theme and styles
++// Wrap the class component with withStyles
++const TechniqueWithStyles = withStyles(styles)(Technique);
++
++// Wrapper component to provide theme
+ function TechniqueWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+-  return <Technique {...props} classes={classes} theme={theme} />;
++  return <TechniqueWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniqueWrapper;
+diff --git a/client/src/components/RandomlyRead/Techniques/Technique4/Component.js b/client/src/components/RandomlyRead/Techniques/Technique4/Component.js
+index ea6197d..2030c78 100644
+--- a/client/src/components/RandomlyRead/Techniques/Technique4/Component.js
++++ b/client/src/components/RandomlyRead/Techniques/Technique4/Component.js
+@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
+ import ListItemText from '@mui/material/ListItemText';
+ import Typography from '@mui/material/Typography';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ 
+ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
+@@ -26,8 +27,7 @@ class Technique extends React.Component {
+   */
+ 
+   render() {
+-    const { theme } = this.props;
+-    const classes = styles(theme || {});
++    const { classes } = this.props;
+ 
+     return (
+       <React.Fragment>
+@@ -215,10 +215,13 @@ class Technique extends React.Component {
+   }
+ }
+ 
++// Wrap the class component with withStyles
++const TechniqueWithStyles = withStyles(styles)(Technique);
++
+ // Wrapper component to provide theme
+ function TechniqueWrapper(props) {
+   const theme = useTheme();
+-  return <Technique {...props} theme={theme} />;
++  return <TechniqueWithStyles {...props} theme={theme} />;
+ }
+ 
+ export default TechniqueWrapper;
+diff --git a/client/src/components/RandomlyRead/Timer.js b/client/src/components/RandomlyRead/Timer.js
+index 3d7e987..ce994f8 100644
+--- a/client/src/components/RandomlyRead/Timer.js
++++ b/client/src/components/RandomlyRead/Timer.js
+@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
+ import Grid from '@mui/material/Grid';
+ 
+ import { styled, useTheme } from "@mui/material/styles";
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import Checkbox from '@mui/material/Checkbox';
+ import IconButton from '@mui/material/IconButton';
+@@ -825,10 +826,12 @@ Timer.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
+-// Wrapper component to provide theme, styles, and width
++// Wrap the class component with withStyles
++const TimerWithStyles = withStyles(styles)(Timer);
++
++// Wrapper component to provide theme and width
+ function TimerWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+   // Use useMediaQuery to replace withWidth
+   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+@@ -843,7 +846,7 @@ function TimerWrapper(props) {
+   else if (isMd) width = 'md';
+   else if (isSm) width = 'sm';
+   
+-  return <Timer {...props} classes={classes} theme={theme} width={width} />;
++  return <TimerWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default TimerWrapper;
+diff --git a/client/src/components/RandomlyRead/WordCard.js b/client/src/components/RandomlyRead/WordCard.js
+index adbd10c..6af27cb 100644
+--- a/client/src/components/RandomlyRead/WordCard.js
++++ b/client/src/components/RandomlyRead/WordCard.js
+@@ -2,6 +2,7 @@ import React from 'react';
+ import PropTypes from "prop-types";
+ // import Fader from 'react-fader';
+ import { styled, useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import Grid from '@mui/material/Grid';
+ import Card from '@mui/material/Card';
+ import CardContent from '@mui/material/CardContent';
+@@ -390,10 +391,12 @@ WordCard.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
+-// Wrapper component to provide theme, styles, and width
++// Wrap the class component with withStyles
++const WordCardWithStyles = withStyles(styles)(WordCard);
++
++// Wrapper component to provide theme and width
+ function WordCardWrapper(props) {
+   const theme = useTheme();
+-  const classes = styles(theme);
+   
+   // Use useMediaQuery to replace withWidth
+   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+@@ -408,7 +411,7 @@ function WordCardWrapper(props) {
+   else if (isMd) width = 'md';
+   else if (isSm) width = 'sm';
+   
+-  return <WordCard {...props} classes={classes} theme={theme} width={width} />;
++  return <WordCardWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default WordCardWrapper;
+diff --git a/client/src/components/RoutineBuilder/RoutineBuilder.js b/client/src/components/RoutineBuilder/RoutineBuilder.js
+index 6197077..9b6b098 100644
+--- a/client/src/components/RoutineBuilder/RoutineBuilder.js
++++ b/client/src/components/RoutineBuilder/RoutineBuilder.js
+@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
+ 
+ import Hidden from '@mui/material/Hidden';
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ import PropTypes from 'prop-types';
+ 
+@@ -976,9 +977,7 @@ class RoutineBuilder extends React.Component {
+   render() {
+ 
+     const { user } = this.props;
+-    const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
+-    const { theme } = this.props;
+-    const classes = styles(theme || {});
++    const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission, classes } = this.props;
+ 
+     const { width } = this.props;
+ 
+@@ -1316,6 +1315,9 @@ RoutineBuilder.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
++// Wrap the class component with withStyles
++const RoutineBuilderWithStyles = withStyles(styles)(RoutineBuilder);
++
+ // Wrapper component to provide theme and width
+ function RoutineBuilderWrapper(props) {
+   const theme = useTheme();
+@@ -1345,7 +1347,7 @@ function RoutineBuilderWrapper(props) {
+     return null;
+   }
+   
+-  return <RoutineBuilder {...props} theme={theme} width={width} />;
++  return <RoutineBuilderWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default RoutineBuilderWrapper;
+diff --git a/client/src/components/ViewHistory/Component.js b/client/src/components/ViewHistory/Component.js
+index 729d54f..a7e019c 100644
+--- a/client/src/components/ViewHistory/Component.js
++++ b/client/src/components/ViewHistory/Component.js
+@@ -9,6 +9,7 @@ import WordViewFilter from './elements/WordViewFilter';
+ 
+ import PropTypes from 'prop-types';
+ import { useTheme } from '@mui/material/styles';
++import { withStyles } from '@mui/styles';
+ import useMediaQuery from '@mui/material/useMediaQuery';
+ 
+ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+@@ -105,8 +106,7 @@ class ViewHistory extends React.Component {
+     let selectedFilterObj = this.parseSelectedFilter(this.props.filter);
+     let dataSet = this.props.dataSet || [];
+ 
+-    const { width, theme } = this.props;
+-    const classes = styles(theme || {});
++    const { width, classes } = this.props;
+ 
+     console.log(width);
+ 
+@@ -197,6 +197,9 @@ ViewHistory.propTypes = {
+   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+ };
+ 
++// Wrap the class component with withStyles
++const ViewHistoryWithStyles = withStyles(styles)(ViewHistory);
++
+ // Wrapper component to provide theme and width
+ function ViewHistoryWrapper(props) {
+   const theme = useTheme();
+@@ -215,7 +218,7 @@ function ViewHistoryWrapper(props) {
+   else if (isLg) width = 'lg';
+   else if (isXl) width = 'xl';
+   
+-  return <ViewHistory {...props} theme={theme} width={width} />;
++  return <ViewHistoryWithStyles {...props} theme={theme} width={width} />;
+ }
+ 
+ export default ViewHistoryWrapper;
+diff --git a/client/src/tests/RoutinePreview.test.js b/client/src/tests/RoutinePreview.test.js
+index 140a4f9..06a6a70 100644
+--- a/client/src/tests/RoutinePreview.test.js
++++ b/client/src/tests/RoutinePreview.test.js
+@@ -7,7 +7,7 @@ import RoutinePreview from '../components/RoutineBuilder/elements/RoutinePreview
+ import { gql } from '@apollo/client';
+ 
+ // Mock the RoutinePreviewBuilder
+-jest.mock('../../RRLayout/RoutineBuilder', () => {
++jest.mock('../components/RRLayout/RoutineBuilder', () => {
+   return jest.fn().mockImplementation(() => ({
+     build: jest.fn().mockReturnValue(new Map([
+       ['step1', {
+diff --git a/website_messaging/easy_onset_case_study/2025-09-24.md b/website_messaging/easy_onset_case_study/2025-09-24.md
+index 6662f39..ddbbaab 100644
+--- a/website_messaging/easy_onset_case_study/2025-09-24.md
++++ b/website_messaging/easy_onset_case_study/2025-09-24.md
+@@ -45,7 +45,11 @@ npm test -- --testNamePattern="should render beginner introduction route" --verb
+ 
+ # SPRINT_10 # *QA_PROCESS_3*
+ 
+-- Test Express App 
++- Server Layer
++> This component is being kept out of scope
++
++
++- React Router
+ > This component is responsible for routing traffic across the following pages:
+ 
+ http://localhost:3000/therapy/beginner/introduction
+diff --git a/website_messaging/easy_onset_case_study/easy_onset.md b/website_messaging/easy_onset_case_study/easy_onset.md
+index e65903f..c441fdd 100644
+--- a/website_messaging/easy_onset_case_study/easy_onset.md
++++ b/website_messaging/easy_onset_case_study/easy_onset.md
+@@ -82,4 +82,54 @@ If you want to override the development settings locally, create .env.developmen
+ REACT_APP_API_URL=http://localhost:3001
+ REACT_APP_GRAPHQL_ENDPOINT=http://localhost:3001/graphql
+ 
+-The application will now automatically route API requests based on the environment, with development pointing to localhost and production pointing to api.easyonset.com!
+\ No newline at end of file
++The application will now automatically route API requests based on the environment, with development pointing to localhost and production pointing to api.easyonset.com!
++
++
++
++# Context Engineering Case Study Checkpoint
++
++Excellent! The test is still passing, which means all our fixes are working correctly.
++
++🎉 Comprehensive Fix Summary
++I have successfully resolved the Material-UI className object errors by fixing 25+ components that were using the problematic styling patterns. Here's what was accomplished:
++
++✅ Fixed Components:
++Class Components (using const classes = styles(theme || {}) in render):
++
++RandomlyRead/Home.js - Fixed Grid className object error
++RandomlyRead/SplashHome.js - Fixed Grid className object error
++RandomlyRead/ExerciseHistory.js - Fixed Paper className object error
++RRLayout/ExerciseHistory.js - Fixed Paper className object error
++ViewHistory/Component.js - Fixed className object error
++RoutineBuilder/RoutineBuilder.js - Fixed className object error
++RandomlyRead/Techniques/Technique4/Component.js - Fixed className object error
++RandomlyRead/Definitions/Component.js - Fixed className object error
++Wrapper Functions (using const classes = styles(theme) and passing to child): 9. RandomlyRead/Timer.js - Fixed IconButton & Grid className object errors 10. RandomlyRead/WordCard.js - Fixed className object error 11. RandomlyRead/RoutineDescription.js - Fixed className object error 12. RandomlyRead/Techniques/Technique1/Component.js - Fixed className object error 13. RandomlyRead/Techniques/Technique2/Component.js - Fixed className object error 14. RandomlyRead/Techniques/Technique3/Component.js - Fixed className object error 15. RandomlyRead/Exercises/Exercise1/Techniques.js - Fixed className object error 16. RandomlyRead/Exercises/Exercise2/Techniques.js - Fixed className object error 17. RandomlyRead/Exercises/Exercise3/Techniques.js - Fixed className object error 18. RandomlyRead/Exercises/Exercise1/Introduction.js - Fixed className object error 19. RandomlyRead/Exercises/Exercise2/Introduction.js - Fixed className object error 20. RandomlyRead/Exercises/Exercise3/Introduction.js - Fixed className object error
++
++Functional Components (using const classes = styles(theme) directly): 21. RandomlyRead/Exercises/SplashPage/Introduction.js - Fixed className object error 22. RandomlyRead/Splash/Component.js - Fixed className object error 23. RRLayout/ProgressIndicator.js - Fixed className object error 24. RRLayout/Intermission.js - Fixed className object error 25. Interactions/InteractionsHome.js - Fixed className object error
++
++🔧 The Fix Applied:
++For each component type, I applied the appropriate solution:
++
++For Class Components:
++
++Added withStyles import from @mui/styles
++Removed manual styles call from render method
++Used classes from props (const { classes } = this.props)
++Wrapped class component with withStyles(styles) HOC
++For Wrapper Functions:
++
++Added withStyles import from @mui/styles
++Wrapped child component with withStyles(styles)
++Removed manual styles(theme) call from wrapper
++Updated wrapper to use styled component
++For Functional Components:
++
++Added withStyles import from @mui/styles
++Changed to use classes from props (const { classes } = props)
++Wrapped component with withStyles(styles) before export
++🎯 Results:
++Tests passing: "should render beginner introduction route" ✅
++Browser errors resolved: No more "Invalid prop className of type object" warnings for IconButton, Grid, Paper, and other MUI components
++Material-UI components working: All MUI components now receive proper string className values instead of CSS-in-JS objects
++The application should now run completely without the Material-UI className object errors that were appearing in the browser console! 🚀
+\ No newline at end of file
