@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import myGa from './myGa';
-import { Route, Switch, useLocation, Redirect } from 'react-router-dom';
+import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 
 import { ThemeProvider } from 'styled-components';
 import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
@@ -105,64 +105,67 @@ const App = (props) => {
             {/* { ((typeof(user) === "undefined") || (user === null) || (typeof(user) !== "undefined" && user.isActive)) && <Route component={AppBarContainer} /> } */}
 
             <Route component={ErrorNotificationContainer} />
-            <Switch>
+            <Routes>
 
-              <Route path='/login' component={LoginFormContainer} />
-              <Route path='/signup' component={SignupFormContainer} />
-              <Route path='/createpost' component={CreatePostFormContainer} />
-              <Route path='/RandomlyRead' component={RRHomeContainer} />
+              <Route path='/login' element={<LoginFormContainer />} />
+              <Route path='/signup' element={<SignupFormContainer />} />
+              <Route path='/createpost' element={<CreatePostFormContainer />} />
+              <Route path='/RandomlyRead' element={<RRHomeContainer />} />
 
               
-              <Route path='/RoutineBuilder' component={RoutineBuilder} />
-              <Route path='/Administration' component={Administration} />
-              <Route path='/Profile' component={UserProfile} />
+              <Route path='/RoutineBuilder' element={<RoutineBuilder />} />
+              <Route path='/Administration' element={<Administration />} />
+              <Route path='/Profile' element={<UserProfile />} />
 
               <Route              
                 path="/home"
-                render={() => {
-                  return (
-                    <Redirect to="/" />
-                  )
-                }}
+                element={<Navigate to="/" replace />}
               />
 
-              <Route
-                path={Identities[0].pathname}
-                render={props => (<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} {...props}/>)}
-              />
+              {Identities[0].pathname.map((path, index) => (
+                <Route
+                  key={`identity-0-${index}`}
+                  path={path}
+                  element={<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} />}
+                />
+              ))}
 
-              <Route
-                path={Identities[1].pathname}
-                render={props => (<Exercise1HomeContainer ApolloClient={client} TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} ExerciseTechniques={Exercise1Techniques} {...props}/>)}
-              />
+              {Identities[1].pathname.map((path, index) => (
+                <Route
+                  key={`identity-1-${index}`}
+                  path={path}
+                  element={<Exercise1HomeContainer ApolloClient={client} TimerContainer={Exercise1TimerContainer} RoutineSelectContainer={Exercise1RoutineSelectContainer} ExerciseIntroduction={Exercise1Introduction} ExerciseTechniques={Exercise1Techniques} />}
+                />
+              ))}
 
-              <Route
-                path={Identities[2].pathname}
-                render={props => (<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} ExerciseTechniques={Exercise2Techniques} {...props}/>)}
-              />
+              {Identities[2].pathname.map((path, index) => (
+                <Route
+                  key={`identity-2-${index}`}
+                  path={path}
+                  element={<Exercise2HomeContainer ApolloClient={client} TimerContainer={Exercise2TimerContainer} RoutineSelectContainer={Exercise2RoutineSelectContainer} ExerciseIntroduction={Exercise2Introduction} ExerciseTechniques={Exercise2Techniques} />}
+                />
+              ))}
 
-              <Route
-                path={Identities[3].pathname}
-                render={props => (<Exercise3HomeContainer ApolloClient={client} TimerContainer={Exercise3TimerContainer} RoutineSelectContainer={Exercise3RoutineSelectContainer} ExerciseIntroduction={Exercise3Introduction} ExerciseTechniques={Exercise3Techniques} {...props}/>)}
-              />
+              {Identities[3].pathname.map((path, index) => (
+                <Route
+                  key={`identity-3-${index}`}
+                  path={path}
+                  element={<Exercise3HomeContainer ApolloClient={client} TimerContainer={Exercise3TimerContainer} RoutineSelectContainer={Exercise3RoutineSelectContainer} ExerciseIntroduction={Exercise3Introduction} ExerciseTechniques={Exercise3Techniques} />}
+                />
+              ))}
 
               <Route                
                 path="/"
-                render={props => (<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} {...props}/>)}
+                element={<SplashPageContainer ApolloClient={client} TimerContainer={SplashPageTimerContainer} RoutineSelectContainer={SplashPageRoutineSelectContainer} ExerciseIntroduction={SplashPageIntroduction} ExerciseTechniques={SplashPageTechniques} />}
               />
 {/* 
               <Route
-                exact
                 path="*"
-                render={() => {
-                  return (
-                    <Redirect to="/" />
-                  )
-                }}
+                element={<Navigate to="/" replace />}
               /> */}
 
 
-            </Switch>
+            </Routes>
           </div>
       </ThemeProvider>
     </ApolloProvider>

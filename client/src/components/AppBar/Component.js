@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -45,6 +46,7 @@ const StyledList = styled('div')(({ theme }) => ({
 function MenuAppBar(props) {
   const theme = useTheme();
   const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -74,12 +76,12 @@ function MenuAppBar(props) {
 
   const handleProfile = () => {
     setAnchorEl(null);
-    props.history.push('/Profile');
+    navigate('/Profile');
   };
 
   const handleFocusWords = () => {
     setAnchorEl(null);
-    props.history.push('/FocusWords');
+    navigate('/FocusWords');
   };
 
   const handleLogout = () => {
@@ -88,19 +90,19 @@ function MenuAppBar(props) {
   };
 
   const handleLogin = () => {
-    props.history.push('/login');
+    navigate('/login');
   };
 
   const handleRandomlyRead = () => {
-    props.history.push('/');
+    navigate('/');
   };
 
   const handleRoutineBuilder = () => {
-    props.history.push('/RoutineBuilder');
+    navigate('/RoutineBuilder');
   };
 
   const handleUserAdministration = () => {
-    props.history.push('/Administration');
+    navigate('/Administration');
   };
 
   let user = props.user;

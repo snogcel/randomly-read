@@ -47,7 +47,12 @@
     - Test GraphQL word database queries with new client
     - _Requirements: 1.2_
 
-  - [ ] 2.4 Update React Router to version 6
+  - [x] 2.4 Update React Router to version 6
+
+
+
+
+
     - Update React Router packages to version 6
     - Migrate route definitions to new Route component patterns
     - Update navigation logic and programmatic routing
