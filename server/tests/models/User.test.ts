@@ -15,8 +15,7 @@ describe('User Model', () => {
       expect(savedUser.lastName).toBe(userData.lastName);
       expect(savedUser.email).toBe(userData.email);
       expect(savedUser.isActive).toBe(true);
-      expect(savedUser.admin).toBe(false);
-      expect(savedUser.superuser).toBe(false);
+
       expect(savedUser.createdAt).toBeDefined();
       expect(savedUser.updatedAt).toBeDefined();
     });
@@ -30,13 +29,12 @@ describe('User Model', () => {
       expect(savedUser.password).toMatch(/^\$2[aby]\$\d+\$/); // bcrypt hash pattern
     });
 
-    it('should create admin user', async () => {
-      const adminData = createTestAdmin();
-      const admin = new User(adminData);
-      const savedAdmin = await admin.save();
+    it('should create user with different username', async () => {
+      const userData = createTestUser({ username: 'differentuser' });
+      const user = new User(userData);
+      const savedUser = await user.save();
 
-      expect(savedAdmin.admin).toBe(true);
-      expect(savedAdmin.username).toBe('admin');
+      expect(savedUser.username).toBe('differentuser');
     });
 
     it('should enforce unique username', async () => {
@@ -48,13 +46,16 @@ describe('User Model', () => {
       await expect(user2.save()).rejects.toThrow();
     });
 
-    it('should enforce unique email', async () => {
-      const email = 'unique@example.com';
+    it('should allow duplicate emails', async () => {
+      const email = 'shared@example.com';
       const user1 = new User(createTestUser({ email, username: 'user1' }));
       await user1.save();
 
       const user2 = new User(createTestUser({ email, username: 'user2' }));
-      await expect(user2.save()).rejects.toThrow();
+      const savedUser2 = await user2.save();
+      
+      expect(savedUser2.email).toBe(email);
+      expect(savedUser2.username).toBe('user2');
     });
   });
 

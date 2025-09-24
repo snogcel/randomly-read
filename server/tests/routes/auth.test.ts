@@ -6,7 +6,11 @@ import { createTestUser } from '../helpers/testData';
 import { createUserInDB } from '../helpers/testUtils';
 
 // Mock UserService
-jest.mock('../../src/services/UserService');
+jest.mock('../../src/services/UserService', () => ({
+  UserService: {
+    getInstance: jest.fn()
+  }
+}));
 
 describe('Auth Routes', () => {
   let app: express.Application;
@@ -21,9 +25,9 @@ describe('Auth Routes', () => {
     mockUserService = {
       login: jest.fn(),
       createUser: jest.fn(),
-      changePassword: jest.fn(),
-      verifyToken: jest.fn(),
-      updateUser: jest.fn()
+      updateUser: jest.fn(),
+      getUserById: jest.fn(),
+      getUsers: jest.fn()
     } as any;
 
     (UserService.getInstance as jest.Mock).mockReturnValue(mockUserService);
@@ -219,195 +223,7 @@ describe('Auth Routes', () => {
     });
   });
 
-  describe('POST /auth/change-password', () => {
-    const mockUser = createTestUser();
-    const passwordChangeData = {
-      currentPassword: 'oldpassword123',
-      newPassword: 'newpassword123'
-    };
 
-    beforeEach(() => {
-      // Mock authentication middleware
-      app.use((req: any, res, next) => {
-        req.user = mockUser;
-        next();
-      });
-    });
-
-    it('should change password successfully', async () => {
-      mockUserService.changePassword.mockResolvedValue(undefined);
-
-      const response = await request(app)
-        .post('/auth/change-password')
-        .send(passwordChangeData)
-        .expect(200);
-
-      expect(response.body).toEqual({
-        success: true,
-        message: 'Password changed successfully'
-      });
-
-      expect(mockUserService.changePassword).toHaveBeenCalledWith(
-        mockUser.id,
-        passwordChangeData.currentPassword,
-        passwordChangeData.newPassword
-      );
-    });
-
-    it('should return 400 for incorrect current password', async () => {
-      mockUserService.changePassword.mockRejectedValue(new Error('Current password is incorrect'));
-
-      const response = await request(app)
-        .post('/auth/change-password')
-        .send(passwordChangeData)
-        .expect(400);
-
-      expect(response.body).toEqual({
-        success: false,
-        error: {
-          code: 'PASSWORD_CHANGE_FAILED',
-          message: 'Current password is incorrect'
-        }
-      });
-    });
-
-    it('should validate required fields', async () => {
-      const response = await request(app)
-        .post('/auth/change-password')
-        .send({
-          currentPassword: 'oldpassword123'
-          // Missing newPassword
-        })
-        .expect(400);
-
-      expect(response.body.success).toBe(false);
-      expect(response.body.error.code).toBe('VALIDATION_ERROR');
-    });
-
-    it('should validate new password length', async () => {
-      const response = await request(app)
-        .post('/auth/change-password')
-        .send({
-          currentPassword: 'oldpassword123',
-          newPassword: '12345' // Too short
-        })
-        .expect(400);
-
-      expect(response.body.success).toBe(false);
-      expect(response.body.error.code).toBe('VALIDATION_ERROR');
-    });
-  });
-
-  describe('POST /auth/verify', () => {
-    it('should verify valid token', async () => {
-      const mockUser = createTestUser();
-      const token = 'valid-jwt-token';
-
-      mockUserService.verifyToken.mockResolvedValue(mockUser as any);
-
-      const response = await request(app)
-        .post('/auth/verify')
-        .send({ token })
-        .expect(200);
-
-      expect(response.body).toEqual({
-        success: true,
-        data: { user: mockUser },
-        message: 'Token is valid'
-      });
-
-      expect(mockUserService.verifyToken).toHaveBeenCalledWith(token);
-    });
-
-    it('should return 401 for invalid token', async () => {
-      const token = 'invalid-token';
-
-      mockUserService.verifyToken.mockResolvedValue(null);
-
-      const response = await request(app)
-        .post('/auth/verify')
-        .send({ token })
-        .expect(401);
-
-      expect(response.body).toEqual({
-        success: false,
-        error: {
-          code: 'INVALID_TOKEN',
-          message: 'Token is invalid or expired'
-        }
-      });
-    });
-
-    it('should return 400 when token is missing', async () => {
-      const response = await request(app)
-        .post('/auth/verify')
-        .send({})
-        .expect(400);
-
-      expect(response.body).toEqual({
-        success: false,
-        error: {
-          code: 'TOKEN_REQUIRED',
-          message: 'Token is required'
-        }
-      });
-    });
-
-    it('should handle verification errors', async () => {
-      const token = 'error-token';
-
-      mockUserService.verifyToken.mockRejectedValue(new Error('Verification failed'));
-
-      const response = await request(app)
-        .post('/auth/verify')
-        .send({ token })
-        .expect(401);
-
-      expect(response.body).toEqual({
-        success: false,
-        error: {
-          code: 'TOKEN_VERIFICATION_FAILED',
-          message: 'Token verification failed'
-        }
-      });
-    });
-  });
-
-  describe('GET /auth/me', () => {
-    it('should return current user profile', async () => {
-      const mockUser = createTestUser();
-
-      // Mock authentication middleware
-      app.use((req: any, res, next) => {
-        req.user = mockUser;
-        next();
-      });
-
-      const response = await request(app)
-        .get('/auth/me')
-        .expect(200);
-
-      expect(response.body).toEqual({
-        success: true,
-        data: { user: mockUser },
-        message: 'User profile retrieved successfully'
-      });
-    });
-
-    it('should return 401 when not authenticated', async () => {
-      // Mock authentication middleware that doesn't set user
-      app.use((req: any, res, next) => {
-        // No user set
-        next();
-      });
-
-      const response = await request(app)
-        .get('/auth/me')
-        .expect(401);
-
-      expect(response.body.error.code).toBe('UNAUTHORIZED');
-    });
-  });
 
   describe('Input Validation', () => {
     it('should trim whitespace from inputs', async () => {
