@@ -88,7 +88,7 @@ export class ProgressService {
       
     } catch (error) {
       logger.error('Error creating exercise session:', error);
-      throw new Error(`Failed to create exercise session: ${error.message}`);
+      throw new Error(`Failed to create exercise session: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -126,7 +126,7 @@ export class ProgressService {
       
     } catch (error) {
       logger.error('Error updating exercise session:', error);
-      throw new Error(`Failed to update exercise session: ${error.message}`);
+      throw new Error(`Failed to update exercise session: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -178,7 +178,7 @@ export class ProgressService {
       
     } catch (error) {
       logger.error('Error adding word attempt:', error);
-      throw new Error(`Failed to add word attempt: ${error.message}`);
+      throw new Error(`Failed to add word attempt: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -206,7 +206,7 @@ export class ProgressService {
       
     } catch (error) {
       logger.error('Error completing exercise session:', error);
-      throw new Error(`Failed to complete exercise session: ${error.message}`);
+      throw new Error(`Failed to complete exercise session: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -433,7 +433,10 @@ export class ProgressService {
     }> = [];
     
     phonemeStats.forEach((stats, key) => {
-      const [consonant, vowel, position] = key.split('-');
+      const parts = key.split('-');
+      const consonant = parts[0] || '';
+      const vowel = parts[1] || '';
+      const position = parts[2] || '';
       const accuracy = Math.round(stats.totalAccuracy / stats.count);
       
       // Consider phonemes with accuracy < 70% as difficult

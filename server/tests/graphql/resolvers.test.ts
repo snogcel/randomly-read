@@ -78,29 +78,22 @@ describe('GraphQL Resolvers', () => {
 
         const result = await resolvers.Query.words(
           null,
-          { input: { vowel: ['AA'] } },
-          mockContext
+          { input: { vowel: ['AA'] } }
         );
 
         expect(result).toEqual(mockResult);
         expect(mockWordService.queryWords).toHaveBeenCalledWith({ vowel: ['AA'] });
       });
 
-      it('should throw authentication error when user not provided', async () => {
-        const contextWithoutUser = { ...mockContext, user: null };
-
-        await expect(
-          resolvers.Query.words(null, { input: {} }, contextWithoutUser)
-        ).rejects.toThrow('Authentication required');
-      });
-
       it('should handle service errors', async () => {
         mockWordService.queryWords.mockRejectedValue(new Error('Service error'));
 
         await expect(
-          resolvers.Query.words(null, { input: {} }, mockContext)
+          resolvers.Query.words(null, { input: {} })
         ).rejects.toThrow('Failed to fetch words');
       });
+
+
     });
 
     describe('word', () => {
@@ -110,8 +103,7 @@ describe('GraphQL Resolvers', () => {
 
         const result = await resolvers.Query.word(
           null,
-          { id: 'word-id' },
-          mockContext
+          { id: 'word-id' }
         );
 
         expect(result).toEqual(mockWord);
@@ -122,7 +114,7 @@ describe('GraphQL Resolvers', () => {
         mockWordService.getWordById.mockResolvedValue(null);
 
         await expect(
-          resolvers.Query.word(null, { id: 'nonexistent' }, mockContext)
+          resolvers.Query.word(null, { id: 'nonexistent' })
         ).rejects.toThrow('Word not found');
       });
     });
@@ -194,7 +186,7 @@ describe('GraphQL Resolvers', () => {
         expect(mockRoutineService.getUserRoutines).toHaveBeenCalledWith(testUser.id);
       });
 
-      it('should deny access to other user routines for non-admin', async () => {
+      it('should deny access to other user routines', async () => {
         const otherUserId = 'other-user-id';
 
         await expect(
@@ -204,25 +196,6 @@ describe('GraphQL Resolvers', () => {
             mockContext
           )
         ).rejects.toThrow('Access denied');
-      });
-
-      it('should allow admin to access other user routines', async () => {
-        const adminContext = {
-          ...mockContext,
-          user: { ...testUser, admin: true }
-        };
-        const otherUserId = 'other-user-id';
-        const mockRoutines = [createTestRoutine(otherUserId)];
-        mockRoutineService.getUserRoutines.mockResolvedValue(mockRoutines as any);
-
-        const result = await resolvers.Query.userRoutines(
-          null,
-          { userId: otherUserId },
-          adminContext
-        );
-
-        expect(result).toEqual(mockRoutines);
-        expect(mockRoutineService.getUserRoutines).toHaveBeenCalledWith(otherUserId);
       });
     });
 

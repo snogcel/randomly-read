@@ -100,18 +100,18 @@ export class DefaultRoutineService {
     
     const routinesByLevel = this.getDefaultRoutinesByDifficulty(level);
     if (routinesByLevel.length > 0) {
-      return routinesByLevel[0];
+      return routinesByLevel[0]!;
     }
 
     // Fallback to beginner if no routines found for level
     const beginnerRoutines = this.getDefaultRoutinesByDifficulty('beginner');
     if (beginnerRoutines.length > 0) {
-      return beginnerRoutines[0];
+      return beginnerRoutines[0]!;
     }
 
     // Final fallback to first routine
     if (this.routines.length > 0) {
-      return this.routines[0];
+      return this.routines[0]!;
     }
 
     throw new Error('No default routines available');

@@ -3,7 +3,7 @@ import { RoutineService } from '../services/RoutineService';
 import { ProgressService } from '../services/ProgressService';
 import { UserService } from '../services/UserService';
 import { SentenceService } from '../services/SentenceService';
-import { UserInputError } from 'apollo-server-express';
+import { UserInputError, AuthenticationError, ForbiddenError } from 'apollo-server-express';
 import { GraphQLScalarType, Kind } from 'graphql';
 import { logger } from '../utils/logger';
 
@@ -48,6 +48,10 @@ export const resolvers = {
         return word;
       } catch (error) {
         logger.error('Error in word query:', error);
+        // Preserve UserInputError messages
+        if (error instanceof UserInputError) {
+          throw error;
+        }
         throw new Error('Failed to fetch word');
       }
     },
@@ -102,8 +106,14 @@ export const resolvers = {
       if (!user) throw new AuthenticationError('Authentication required');
       
       // Users can only see their own routines
-      const targetUserId = userId || user.id;
-      if (targetUserId !== user.id) {
+      const targetUserId = userId || user.id || user._id?.toString();
+      const currentUserId = user.id || user._id?.toString();
+      
+      // Convert both to strings for comparison
+      const targetUserIdStr = targetUserId?.toString();
+      const currentUserIdStr = currentUserId?.toString();
+      
+      if (targetUserIdStr !== currentUserIdStr) {
         throw new ForbiddenError('Access denied');
       }
       
@@ -282,7 +292,7 @@ export const resolvers = {
         return await routineService.createRoutine(user.id, input);
       } catch (error) {
         logger.error('Error in createRoutine mutation:', error);
-        throw new Error(`Failed to create routine: ${error.message}`);
+        throw new Error(`Failed to create routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     },
 
@@ -294,7 +304,7 @@ export const resolvers = {
         return await routineService.createRoutineFromDefault(user.id, defaultRoutineId);
       } catch (error) {
         logger.error('Error in createRoutineFromDefault mutation:', error);
-        throw new Error(`Failed to create routine from default: ${error.message}`);
+        throw new Error(`Failed to create routine from default: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     },
 
@@ -306,7 +316,7 @@ export const resolvers = {
         return await routineService.updateRoutine(id, user.id, input);
       } catch (error) {
         logger.error('Error in updateRoutine mutation:', error);
-        throw new Error(`Failed to update routine: ${error.message}`);
+        throw new Error(`Failed to update routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     },
 
@@ -319,7 +329,7 @@ export const resolvers = {
         return true;
       } catch (error) {
         logger.error('Error in deleteRoutine mutation:', error);
-        throw new Error(`Failed to delete routine: ${error.message}`);
+        throw new Error(`Failed to delete routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     },
 
@@ -332,7 +342,7 @@ export const resolvers = {
         return true;
       } catch (error) {
         logger.error('Error in assignRoutine mutation:', error);
-        throw new Error(`Failed to assign routine: ${error.message}`);
+        throw new Error(`Failed to assign routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     },
 
@@ -345,7 +355,7 @@ export const resolvers = {
         return true;
       } catch (error) {
         logger.error('Error in unassignRoutine mutation:', error);
-        throw new Error(`Failed to unassign routine: ${error.message}`);
+        throw new Error(`Failed to unassign routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
       }
     },
 

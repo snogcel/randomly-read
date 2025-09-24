@@ -94,7 +94,7 @@ export class RoutineService {
       
     } catch (error) {
       logger.error('Error creating routine:', error);
-      throw new Error(`Failed to create routine: ${error.message}`);
+      throw new Error(`Failed to create routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -185,7 +185,7 @@ export class RoutineService {
       
     } catch (error) {
       logger.error('Error updating routine:', error);
-      throw new Error(`Failed to update routine: ${error.message}`);
+      throw new Error(`Failed to update routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -218,7 +218,7 @@ export class RoutineService {
       
     } catch (error) {
       logger.error('Error deleting routine:', error);
-      throw new Error(`Failed to delete routine: ${error.message}`);
+      throw new Error(`Failed to delete routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -285,7 +285,7 @@ export class RoutineService {
         throw new Error('User not found');
       }
 
-      return user.routines as IRoutine[] || [];
+      return (user.routines as unknown as IRoutine[]) || [];
       
     } catch (error) {
       logger.error('Error getting user routines:', error);
@@ -330,7 +330,7 @@ export class RoutineService {
       
     } catch (error) {
       logger.error('Error assigning routine to users:', error);
-      throw new Error(`Failed to assign routine: ${error.message}`);
+      throw new Error(`Failed to assign routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -365,7 +365,7 @@ export class RoutineService {
       
     } catch (error) {
       logger.error('Error unassigning routine from users:', error);
-      throw new Error(`Failed to unassign routine: ${error.message}`);
+      throw new Error(`Failed to unassign routine: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -386,6 +386,11 @@ export class RoutineService {
 
     for (let i = 0; i < subroutine.length; i++) {
       const step = subroutine[i];
+      
+      if (!step) {
+        errors.push(`Step ${i + 1}: Step is undefined`);
+        continue;
+      }
       
       if (!step.id) {
         errors.push(`Step ${i + 1}: Missing step ID`);
@@ -464,7 +469,7 @@ export class RoutineService {
           phoneticConfig: step.phoneticConfig ? {
             vowels: step.phoneticConfig.vowels,
             consonants: step.phoneticConfig.consonants,
-            position: step.phoneticConfig.positions[0] || 'initial',
+            position: (step.phoneticConfig.positions[0] || 'initial') as 'initial' | 'medial' | 'final',
             syllables: step.phoneticConfig.syllables,
             gradeLevel: step.phoneticConfig.grades.join(',')
           } : undefined,
@@ -476,7 +481,7 @@ export class RoutineService {
       
     } catch (error) {
       logger.error('Error creating routine from default:', error);
-      throw new Error(`Failed to create routine from default: ${error.message}`);
+      throw new Error(`Failed to create routine from default: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
