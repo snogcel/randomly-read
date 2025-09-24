@@ -28,9 +28,7 @@ const DateType = new graphql_1.GraphQLScalarType({
 exports.resolvers = {
     Date: DateType,
     Query: {
-        async words(_, { input }, { user }) {
-            if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+        async words(_, { input }) {
             try {
                 const wordService = WordService_1.WordService.getInstance();
                 return await wordService.queryWords(input);
@@ -40,9 +38,7 @@ exports.resolvers = {
                 throw new Error('Failed to fetch words');
             }
         },
-        async word(_, { id }, { user }) {
-            if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+        async word(_, { id }) {
             try {
                 const wordService = WordService_1.WordService.getInstance();
                 const word = await wordService.getWordById(id);
@@ -55,9 +51,7 @@ exports.resolvers = {
                 throw new Error('Failed to fetch word');
             }
         },
-        async randomWord(_, { input }, { user }) {
-            if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+        async randomWord(_, { input }) {
             try {
                 const wordService = WordService_1.WordService.getInstance();
                 return await wordService.getRandomWord(input);
@@ -67,12 +61,10 @@ exports.resolvers = {
                 throw new Error('Failed to fetch random word');
             }
         },
-        async sentences(_, { input }, { user }) {
-            if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+        async sentences(_, { input }) {
             try {
                 const sentenceService = SentenceService_1.SentenceService.getInstance();
-                return await sentenceService.generateSentence(input, user.id);
+                return await sentenceService.generateSentence(input, 'anonymous');
             }
             catch (error) {
                 logger_1.logger.error('Error in sentences query:', error);
@@ -81,7 +73,7 @@ exports.resolvers = {
         },
         async routines(_, { input }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 return await routineService.queryRoutines(input || {});
@@ -91,12 +83,10 @@ exports.resolvers = {
                 throw new Error('Failed to fetch routines');
             }
         },
-        async routine(_, { id }, { user }) {
-            if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+        async routine(_, { id }) {
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
-                const routine = await routineService.getRoutineById(id, user.id);
+                const routine = await routineService.getRoutineById(id);
                 if (!routine)
                     throw new apollo_server_express_1.UserInputError('Routine not found');
                 return routine;
@@ -108,10 +98,10 @@ exports.resolvers = {
         },
         async userRoutines(_, { userId }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             const targetUserId = userId || user.id;
             if (targetUserId !== user.id) {
-                throw new apollo_server_express_1.ForbiddenError('Access denied');
+                throw new ForbiddenError('Access denied');
             }
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
@@ -124,9 +114,9 @@ exports.resolvers = {
         },
         async exerciseSessions(_, { userId, routineId, limit, offset }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             if (userId !== user.id) {
-                throw new apollo_server_express_1.ForbiddenError('Access denied');
+                throw new ForbiddenError('Access denied');
             }
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
@@ -139,14 +129,14 @@ exports.resolvers = {
         },
         async exerciseSession(_, { id }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
                 const session = await progressService.getExerciseSessionById(id);
                 if (!session)
                     throw new apollo_server_express_1.UserInputError('Exercise session not found');
                 if (session.userId.toString() !== user.id) {
-                    throw new apollo_server_express_1.ForbiddenError('Access denied');
+                    throw new ForbiddenError('Access denied');
                 }
                 return session;
             }
@@ -157,9 +147,9 @@ exports.resolvers = {
         },
         async progressRecords(_, { userId, routineId, startDate, endDate }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             if (userId !== user.id) {
-                throw new apollo_server_express_1.ForbiddenError('Access denied');
+                throw new ForbiddenError('Access denied');
             }
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
@@ -172,9 +162,9 @@ exports.resolvers = {
         },
         async fluencyReport(_, { userId, routineId, startDate, endDate }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             if (userId !== user.id) {
-                throw new apollo_server_express_1.ForbiddenError('Access denied');
+                throw new ForbiddenError('Access denied');
             }
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
@@ -187,12 +177,12 @@ exports.resolvers = {
         },
         async me(_, __, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             return user;
         },
         async users(_, { limit, offset }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const userService = UserService_1.UserService.getInstance();
                 return await userService.getUsers({ limit, offset });
@@ -204,9 +194,9 @@ exports.resolvers = {
         },
         async user(_, { id }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             if (id !== user.id) {
-                throw new apollo_server_express_1.ForbiddenError('Access denied');
+                throw new ForbiddenError('Access denied');
             }
             try {
                 const userService = UserService_1.UserService.getInstance();
@@ -255,7 +245,7 @@ exports.resolvers = {
     Mutation: {
         async voteWord(_, { wordId, vote }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const wordService = WordService_1.WordService.getInstance();
                 return await wordService.voteOnWord(wordId, user.id, vote);
@@ -267,7 +257,7 @@ exports.resolvers = {
         },
         async createRoutine(_, { input }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 return await routineService.createRoutine(user.id, input);
@@ -279,7 +269,7 @@ exports.resolvers = {
         },
         async createRoutineFromDefault(_, { defaultRoutineId }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 return await routineService.createRoutineFromDefault(user.id, defaultRoutineId);
@@ -291,7 +281,7 @@ exports.resolvers = {
         },
         async updateRoutine(_, { id, input }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 return await routineService.updateRoutine(id, user.id, input);
@@ -303,7 +293,7 @@ exports.resolvers = {
         },
         async deleteRoutine(_, { id }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 await routineService.deleteRoutine(id, user.id);
@@ -316,7 +306,7 @@ exports.resolvers = {
         },
         async assignRoutine(_, { routineId, userIds }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 await routineService.assignRoutineToUsers(routineId, userIds, user.id);
@@ -329,7 +319,7 @@ exports.resolvers = {
         },
         async unassignRoutine(_, { routineId, userIds }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const routineService = RoutineService_1.RoutineService.getInstance();
                 await routineService.unassignRoutineFromUsers(routineId, userIds, user.id);
@@ -342,7 +332,7 @@ exports.resolvers = {
         },
         async createExerciseSession(_, { input }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
                 return await progressService.createExerciseSession(user.id, input);
@@ -354,7 +344,7 @@ exports.resolvers = {
         },
         async updateExerciseSession(_, { id, input }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
                 return await progressService.updateExerciseSession(id, user.id, input);
@@ -366,7 +356,7 @@ exports.resolvers = {
         },
         async addWordAttempt(_, { sessionId, attempt }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
                 return await progressService.addWordAttempt(sessionId, user.id, attempt);
@@ -378,7 +368,7 @@ exports.resolvers = {
         },
         async completeExerciseSession(_, { id }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const progressService = ProgressService_1.ProgressService.getInstance();
                 return await progressService.completeExerciseSession(id, user.id);
@@ -390,7 +380,7 @@ exports.resolvers = {
         },
         async updateProfile(_, { firstName, lastName, email }, { user }) {
             if (!user)
-                throw new apollo_server_express_1.AuthenticationError('Authentication required');
+                throw new AuthenticationError('Authentication required');
             try {
                 const userService = UserService_1.UserService.getInstance();
                 return await userService.updateUser(user.id, { firstName, lastName, email });

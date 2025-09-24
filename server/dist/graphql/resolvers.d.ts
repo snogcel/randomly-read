@@ -2,16 +2,16 @@ import { GraphQLScalarType } from 'graphql';
 export declare const resolvers: {
     Date: GraphQLScalarType<Date | null, string | null>;
     Query: {
-        words(_: any, { input }: any, { user }: any): Promise<import("../services/WordService").WordFilterResult>;
-        word(_: any, { id }: any, { user }: any): Promise<import("../models/Word").IWord>;
-        randomWord(_: any, { input }: any, { user }: any): Promise<import("../models/Word").IWord | null>;
-        sentences(_: any, { input }: any, { user }: any): Promise<import("../services/SentenceService").GeneratedSentence>;
+        words(_: any, { input }: any): Promise<import("../services/WordService").WordFilterResult>;
+        word(_: any, { id }: any): Promise<import("../models/Word").IWord>;
+        randomWord(_: any, { input }: any): Promise<import("../models/Word").IWord | null>;
+        sentences(_: any, { input }: any): Promise<import("../services/SentenceService").GeneratedSentence>;
         routines(_: any, { input }: any, { user }: any): Promise<{
             routines: import("../models/Routine").IRoutine[];
             totalCount: number;
             hasMore: boolean;
         }>;
-        routine(_: any, { id }: any, { user }: any): Promise<import("../models/Routine").IRoutine>;
+        routine(_: any, { id }: any): Promise<import("../models/Routine").IRoutine>;
         userRoutines(_: any, { userId }: any, { user }: any): Promise<import("../models/Routine").IRoutine[]>;
         exerciseSessions(_: any, { userId, routineId, limit, offset }: any, { user }: any): Promise<import("../models/Progress").IExerciseSession[]>;
         exerciseSession(_: any, { id }: any, { user }: any): Promise<import("../models/Progress").IExerciseSession>;

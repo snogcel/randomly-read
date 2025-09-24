@@ -4,6 +4,5 @@ export interface AuthenticatedRequest extends Request {
 }
 export declare function authMiddleware(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void>;
 export declare function requireAuth(req: AuthenticatedRequest, res: Response, next: NextFunction): void;
-export declare function requireSuperuser(req: AuthenticatedRequest, res: Response, next: NextFunction): void;
 export declare function optionalAuth(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void>;
 //# sourceMappingURL=auth.d.ts.map

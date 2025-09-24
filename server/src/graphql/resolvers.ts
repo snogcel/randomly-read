@@ -3,7 +3,7 @@ import { RoutineService } from '../services/RoutineService';
 import { ProgressService } from '../services/ProgressService';
 import { UserService } from '../services/UserService';
 import { SentenceService } from '../services/SentenceService';
-import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server-express';
+import { UserInputError } from 'apollo-server-express';
 import { GraphQLScalarType, Kind } from 'graphql';
 import { logger } from '../utils/logger';
 
@@ -30,9 +30,7 @@ export const resolvers = {
 
   Query: {
     // Word queries
-    async words(_: any, { input }: any, { user }: any) {
-      if (!user) throw new AuthenticationError('Authentication required');
-      
+    async words(_: any, { input }: any) {
       try {
         const wordService = WordService.getInstance();
         return await wordService.queryWords(input);
@@ -42,9 +40,7 @@ export const resolvers = {
       }
     },
 
-    async word(_: any, { id }: any, { user }: any) {
-      if (!user) throw new AuthenticationError('Authentication required');
-      
+    async word(_: any, { id }: any) {
       try {
         const wordService = WordService.getInstance();
         const word = await wordService.getWordById(id);
@@ -56,9 +52,7 @@ export const resolvers = {
       }
     },
 
-    async randomWord(_: any, { input }: any, { user }: any) {
-      if (!user) throw new AuthenticationError('Authentication required');
-      
+    async randomWord(_: any, { input }: any) {
       try {
         const wordService = WordService.getInstance();
         return await wordService.getRandomWord(input);
@@ -69,12 +63,10 @@ export const resolvers = {
     },
 
     // Sentence queries
-    async sentences(_: any, { input }: any, { user }: any) {
-      if (!user) throw new AuthenticationError('Authentication required');
-      
+    async sentences(_: any, { input }: any) {
       try {
         const sentenceService = SentenceService.getInstance();
-        return await sentenceService.generateSentence(input, user.id);
+        return await sentenceService.generateSentence(input, 'anonymous');
       } catch (error) {
         logger.error('Error in sentences query:', error);
         throw new Error('Failed to generate sentences');
@@ -94,12 +86,10 @@ export const resolvers = {
       }
     },
 
-    async routine(_: any, { id }: any, { user }: any) {
-      if (!user) throw new AuthenticationError('Authentication required');
-      
+    async routine(_: any, { id }: any) {
       try {
         const routineService = RoutineService.getInstance();
-        const routine = await routineService.getRoutineById(id, user.id);
+        const routine = await routineService.getRoutineById(id);
         if (!routine) throw new UserInputError('Routine not found');
         return routine;
       } catch (error) {

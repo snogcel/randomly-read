@@ -18,10 +18,6 @@ exports.config = {
             bufferCommands: false,
         },
     },
-    jwt: {
-        secret: process.env.JWT_SECRET || 'development_secret_change_in_production',
-        expiresIn: process.env.JWT_EXPIRES_IN || '7d',
-    },
     redis: {
         url: process.env.REDIS_URL || 'redis://localhost:6379',
         ttl: parseInt(process.env.REDIS_TTL || '3600', 10),
@@ -51,7 +47,7 @@ exports.config = {
     },
 };
 if (exports.config.nodeEnv === 'production') {
-    const requiredEnvVars = ['DATABASE_URL', 'JWT_SECRET'];
+    const requiredEnvVars = ['DATABASE_URL'];
     for (const envVar of requiredEnvVars) {
         if (!process.env[envVar]) {
             throw new Error(`Required environment variable ${envVar} is not set`);

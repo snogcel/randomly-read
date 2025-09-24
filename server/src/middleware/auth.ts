@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { UserService } from '../services/UserService';
 import { logger } from '../utils/logger';
 
 export interface AuthenticatedRequest extends Request {
@@ -7,96 +6,28 @@ export interface AuthenticatedRequest extends Request {
 }
 
 /**
- * Authentication middleware for REST endpoints
+ * No-op authentication middleware (auth removed)
  */
 export async function authMiddleware(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
-  try {
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      req.user = null;
-      return next();
-    }
-
-    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
-    const userService = UserService.getInstance();
-    const user = await userService.verifyToken(token);
-
-    if (user) {
-      req.user = user;
-      logger.debug(`Authenticated user: ${user.username}`);
-    } else {
-      req.user = null;
-      logger.debug('Invalid or expired token');
-    }
-
-    next();
-  } catch (error) {
-    logger.error('Authentication middleware error:', error);
-    req.user = null;
-    next();
-  }
+  // No authentication - all requests pass through
+  req.user = null;
+  next();
 }
 
 /**
- * Require authentication middleware
+ * No-op require authentication middleware (auth removed)
  */
 export function requireAuth(req: AuthenticatedRequest, res: Response, next: NextFunction): void {
-  if (!req.user) {
-    res.status(401).json({ 
-      error: 'Authentication required',
-      code: 'UNAUTHORIZED'
-    });
-    return;
-  }
-  next();
-}
-
-
-
-/**
- * Require superuser privileges middleware
- */
-export function requireSuperuser(req: AuthenticatedRequest, res: Response, next: NextFunction): void {
-  if (!req.user) {
-    res.status(401).json({ 
-      error: 'Authentication required',
-      code: 'UNAUTHORIZED'
-    });
-    return;
-  }
-
-  if (!req.user.superuser) {
-    res.status(403).json({ 
-      error: 'Superuser privileges required',
-      code: 'FORBIDDEN'
-    });
-    return;
-  }
-
+  // No authentication required - all requests pass through
+  req.user = null;
   next();
 }
 
 /**
- * Optional authentication middleware (doesn't fail if no token)
+ * No-op optional authentication middleware (auth removed)
  */
 export async function optionalAuth(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
-  try {
-    const authHeader = req.headers.authorization;
-    
-    if (authHeader && authHeader.startsWith('Bearer ')) {
-      const token = authHeader.substring(7);
-      const userService = UserService.getInstance();
-      const user = await userService.verifyToken(token);
-      
-      if (user) {
-        req.user = user;
-      }
-    }
-
-    next();
-  } catch (error) {
-    logger.error('Optional auth middleware error:', error);
-    next(); // Continue without authentication
-  }
+  // No authentication - all requests pass through
+  req.user = null;
+  next();
 }

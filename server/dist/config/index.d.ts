@@ -10,10 +10,6 @@ export declare const config: {
             readonly bufferCommands: false;
         };
     };
-    readonly jwt: {
-        readonly secret: string;
-        readonly expiresIn: string;
-    };
     readonly redis: {
         readonly url: string;
         readonly ttl: number;

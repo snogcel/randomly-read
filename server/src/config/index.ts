@@ -19,11 +19,7 @@ export const config = {
     },
   },
 
-  // JWT configuration
-  jwt: {
-    secret: process.env.JWT_SECRET || 'development_secret_change_in_production',
-    expiresIn: process.env.JWT_EXPIRES_IN || '7d',
-  },
+
 
   // Redis configuration (for caching)
   redis: {
@@ -67,7 +63,7 @@ export const config = {
 
 // Validate required environment variables in production
 if (config.nodeEnv === 'production') {
-  const requiredEnvVars = ['DATABASE_URL', 'JWT_SECRET'];
+  const requiredEnvVars = ['DATABASE_URL'];
   
   for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {

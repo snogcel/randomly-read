@@ -5,7 +5,6 @@ const express_1 = require("express");
 const express_validator_1 = require("express-validator");
 const UserService_1 = require("../services/UserService");
 const errorHandler_1 = require("../middleware/errorHandler");
-const auth_1 = require("../middleware/auth");
 const logger_1 = require("../utils/logger");
 const router = (0, express_1.Router)();
 exports.authRoutes = router;
@@ -30,8 +29,7 @@ router.post('/login', [
         res.json({
             success: true,
             data: {
-                user: result.user,
-                token: result.token
+                user: result.user
             },
             message: 'Login successful'
         });
@@ -42,7 +40,7 @@ router.post('/login', [
             success: false,
             error: {
                 code: 'LOGIN_FAILED',
-                message: error.message
+                message: `Login failed: ${error.message}`
             }
         });
     }
@@ -86,13 +84,11 @@ router.post('/register', [
             lastName,
             email
         });
-        const loginResult = await userService.login({ username, password });
-        logger_1.logger.info(`User registered and logged in: ${username}`);
+        logger_1.logger.info(`User registered: ${username}`);
         res.status(201).json({
             success: true,
             data: {
-                user: loginResult.user,
-                token: loginResult.token
+                user
             },
             message: 'Registration successful'
         });
@@ -107,84 +103,5 @@ router.post('/register', [
             }
         });
     }
-}));
-router.post('/change-password', auth_1.requireAuth, [
-    (0, express_validator_1.body)('currentPassword')
-        .notEmpty()
-        .withMessage('Current password is required'),
-    (0, express_validator_1.body)('newPassword')
-        .isLength({ min: 6 })
-        .withMessage('New password must be at least 6 characters')
-], (0, errorHandler_1.asyncHandler)(async (req, res) => {
-    const errors = (0, express_validator_1.validationResult)(req);
-    if (!errors.isEmpty()) {
-        throw (0, errorHandler_1.createValidationError)('Validation failed', errors.array());
-    }
-    const { currentPassword, newPassword } = req.body;
-    try {
-        await userService.changePassword(req.user.id, currentPassword, newPassword);
-        logger_1.logger.info(`Password changed for user: ${req.user.username}`);
-        res.json({
-            success: true,
-            message: 'Password changed successfully'
-        });
-    }
-    catch (error) {
-        logger_1.logger.warn(`Password change failed for user: ${req.user.username}`);
-        res.status(400).json({
-            success: false,
-            error: {
-                code: 'PASSWORD_CHANGE_FAILED',
-                message: error.message
-            }
-        });
-    }
-}));
-router.post('/verify', (0, errorHandler_1.asyncHandler)(async (req, res) => {
-    const { token } = req.body;
-    if (!token) {
-        return res.status(400).json({
-            success: false,
-            error: {
-                code: 'TOKEN_REQUIRED',
-                message: 'Token is required'
-            }
-        });
-    }
-    try {
-        const user = await userService.verifyToken(token);
-        if (user) {
-            res.json({
-                success: true,
-                data: { user },
-                message: 'Token is valid'
-            });
-        }
-        else {
-            res.status(401).json({
-                success: false,
-                error: {
-                    code: 'INVALID_TOKEN',
-                    message: 'Token is invalid or expired'
-                }
-            });
-        }
-    }
-    catch (error) {
-        res.status(401).json({
-            success: false,
-            error: {
-                code: 'TOKEN_VERIFICATION_FAILED',
-                message: 'Token verification failed'
-            }
-        });
-    }
-}));
-router.get('/me', auth_1.requireAuth, (0, errorHandler_1.asyncHandler)(async (req, res) => {
-    res.json({
-        success: true,
-        data: { user: req.user },
-        message: 'User profile retrieved successfully'
-    });
 }));
 //# sourceMappingURL=auth.js.map

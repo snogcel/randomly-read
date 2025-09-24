@@ -57,6 +57,5 @@ export declare class UserService {
     unassignClientFromTherapist(therapistId: string, clientId: string): Promise<void>;
     getTherapistClients(therapistId: string): Promise<IUser[]>;
     changePassword(userId: string, currentPassword: string, newPassword: string): Promise<void>;
-    verifyToken(token: string): Promise<IUser | null>;
 }
 //# sourceMappingURL=UserService.d.ts.map

@@ -1,13 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const User_1 = require("../models/User");
 const logger_1 = require("../utils/logger");
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const config_1 = require("../config");
 class UserService {
     static getInstance() {
         if (!UserService.instance) {
@@ -50,14 +45,9 @@ class UserService {
             if (!isValidPassword) {
                 throw new Error('Invalid username or password');
             }
-            const token = jsonwebtoken_1.default.sign({
-                userId: user._id.toString(),
-                username: user.username
-            }, config_1.config.jwt.secret, { expiresIn: config_1.config.jwt.expiresIn });
             logger_1.logger.info(`User logged in: ${user.username}`);
             return {
-                user,
-                token
+                user
             };
         }
         catch (error) {
@@ -220,20 +210,6 @@ class UserService {
         catch (error) {
             logger_1.logger.error('Error changing password:', error);
             throw new Error(`Failed to change password: ${error.message}`);
-        }
-    }
-    async verifyToken(token) {
-        try {
-            const decoded = jsonwebtoken_1.default.verify(token, config_1.config.jwt.secret);
-            const user = await User_1.User.findById(decoded.userId);
-            if (!user || user.isActive === false) {
-                return null;
-            }
-            return user;
-        }
-        catch (error) {
-            logger_1.logger.error('Error verifying token:', error);
-            return null;
         }
     }
 }

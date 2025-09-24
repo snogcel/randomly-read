@@ -1,7 +1,5 @@
 import { User, IUser } from '../models/User';
 import { logger } from '../utils/logger';
-import jwt from 'jsonwebtoken';
-import { config } from '../config';
 
 export interface CreateUserData {
   username: string;
@@ -45,7 +43,6 @@ export interface LoginCredentials {
 
 export interface AuthResult {
   user: IUser;
-  token: string;
 }
 
 export class UserService {
@@ -110,21 +107,10 @@ export class UserService {
         throw new Error('Invalid username or password');
       }
 
-      // Generate JWT token
-      const token = jwt.sign(
-        { 
-          userId: user._id.toString(),
-          username: user.username
-        },
-        config.jwt.secret,
-        { expiresIn: config.jwt.expiresIn } as jwt.SignOptions
-      );
-
       logger.info(`User logged in: ${user.username}`);
       
       return {
-        user,
-        token
+        user
       };
       
     } catch (error) {
@@ -360,23 +346,4 @@ export class UserService {
     }
   }
 
-  /**
-   * Verify JWT token and get user
-   */
-  async verifyToken(token: string): Promise<IUser | null> {
-    try {
-      const decoded = jwt.verify(token, config.jwt.secret) as any;
-      const user = await User.findById(decoded.userId);
-      
-      if (!user || user.isActive === false) {
-        return null;
-      }
-      
-      return user;
-      
-    } catch (error) {
-      logger.error('Error verifying token:', error);
-      return null;
-    }
-  }
 }
