@@ -1,9 +1,6 @@
-import { IUser } from '../../src/models/User';
-import { IRoutine, ISubroutineStep } from '../../src/models/Routine';
-import { IWord } from '../../src/models/Word';
-import { IExerciseSession, IWordAttempt } from '../../src/models/Progress';
+// Core type definitions for the RandomlyRead application
 
-export const createTestUser = (overrides: Partial<IUser> = {}): Partial<IUser> => ({
+export const createTestUser = (overrides: any = {}): any => ({
   username: 'testuser',
   password: 'password123',
   firstName: 'Test',
@@ -15,21 +12,21 @@ export const createTestUser = (overrides: Partial<IUser> = {}): Partial<IUser> =
   ...overrides
 });
 
-export const createTestAdmin = (overrides: Partial<IUser> = {}): Partial<IUser> => ({
+export const createTestAdmin = (overrides: any = {}): any => ({
   ...createTestUser(),
   username: 'admin',
   admin: true,
   ...overrides
 });
 
-export const createTestSuperuser = (overrides: Partial<IUser> = {}): Partial<IUser> => ({
+export const createTestSuperuser = (overrides: any = {}): any => ({
   ...createTestUser(),
   username: 'superuser',
   superuser: true,
   ...overrides
 });
 
-export const createTestSubroutineStep = (overrides: Partial<ISubroutineStep> = {}): ISubroutineStep => ({
+export const createTestSubroutineStep = (overrides: any = {}): any => ({
   id: 'step-1',
   type: 'word',
   duration: 30,
@@ -44,7 +41,7 @@ export const createTestSubroutineStep = (overrides: Partial<ISubroutineStep> = {
   ...overrides
 });
 
-export const createTestRoutine = (createdBy: string, overrides: Partial<IRoutine> = {}): Partial<IRoutine> => ({
+export const createTestRoutine = (createdBy: any, overrides: any = {}): any => ({
   name: 'Test Routine',
   description: 'A test routine for unit testing',
   gradeLevel: 'K',
@@ -55,7 +52,7 @@ export const createTestRoutine = (createdBy: string, overrides: Partial<IRoutine
   ...overrides
 });
 
-export const createTestWord = (overrides: Partial<IWord> = {}): Partial<IWord> => ({
+export const createTestWord = (overrides: any = {}): any => ({
   cmudict_id: 12345,
   wordid: 1,
   lexeme: 'test',
@@ -87,7 +84,7 @@ export const createTestWord = (overrides: Partial<IWord> = {}): Partial<IWord> =
   ...overrides
 });
 
-export const createTestWordAttempt = (wordId: string, overrides: Partial<IWordAttempt> = {}): IWordAttempt => ({
+export const createTestWordAttempt = (wordId: string, overrides: any = {}): any => ({
   wordId: wordId as any,
   word: 'test',
   timestamp: new Date(),
@@ -100,7 +97,7 @@ export const createTestWordAttempt = (wordId: string, overrides: Partial<IWordAt
   ...overrides
 });
 
-export const createTestExerciseSession = (userId: string, routineId: string, overrides: Partial<IExerciseSession> = {}): Partial<IExerciseSession> => ({
+export const createTestExerciseSession = (userId: string, routineId: string, overrides: any = {}): any => ({
   userId: userId as any,
   routineId: routineId as any,
   sessionId: 'test-session-123',
