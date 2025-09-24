@@ -9,6 +9,7 @@ import WordViewFilter from './elements/WordViewFilter';
 
 import PropTypes from 'prop-types';
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -105,8 +106,7 @@ class ViewHistory extends React.Component {
     let selectedFilterObj = this.parseSelectedFilter(this.props.filter);
     let dataSet = this.props.dataSet || [];
 
-    const { width, theme } = this.props;
-    const classes = styles(theme || {});
+    const { width, classes } = this.props;
 
     console.log(width);
 
@@ -197,6 +197,9 @@ ViewHistory.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
+// Wrap the class component with withStyles
+const ViewHistoryWithStyles = withStyles(styles)(ViewHistory);
+
 // Wrapper component to provide theme and width
 function ViewHistoryWrapper(props) {
   const theme = useTheme();
@@ -215,7 +218,7 @@ function ViewHistoryWrapper(props) {
   else if (isLg) width = 'lg';
   else if (isXl) width = 'xl';
   
-  return <ViewHistory {...props} theme={theme} width={width} />;
+  return <ViewHistoryWithStyles {...props} theme={theme} width={width} />;
 }
 
 export default ViewHistoryWrapper;

@@ -7,6 +7,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 
 import { styled, useTheme } from "@mui/material/styles";
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
@@ -825,10 +826,12 @@ Timer.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-// Wrapper component to provide theme, styles, and width
+// Wrap the class component with withStyles
+const TimerWithStyles = withStyles(styles)(Timer);
+
+// Wrapper component to provide theme and width
 function TimerWrapper(props) {
   const theme = useTheme();
-  const classes = styles(theme);
   
   // Use useMediaQuery to replace withWidth
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -843,7 +846,7 @@ function TimerWrapper(props) {
   else if (isMd) width = 'md';
   else if (isSm) width = 'sm';
   
-  return <Timer {...props} classes={classes} theme={theme} width={width} />;
+  return <TimerWithStyles {...props} theme={theme} width={width} />;
 }
 
 export default TimerWrapper;

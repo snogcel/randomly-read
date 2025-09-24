@@ -7,7 +7,7 @@ import RoutinePreview from '../components/RoutineBuilder/elements/RoutinePreview
 import { gql } from '@apollo/client';
 
 // Mock the RoutinePreviewBuilder
-jest.mock('../../RRLayout/RoutineBuilder', () => {
+jest.mock('../components/RRLayout/RoutineBuilder', () => {
   return jest.fn().mockImplementation(() => ({
     build: jest.fn().mockReturnValue(new Map([
       ['step1', {

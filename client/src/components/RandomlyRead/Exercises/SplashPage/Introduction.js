@@ -7,13 +7,14 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 function Introduction(props) {
   const theme = useTheme();
-  const classes = styles(theme);
+  const { classes } = props;
 
   return (
     <React.Fragment>
@@ -127,4 +128,6 @@ function Introduction(props) {
   );
 }
 
-export default Introduction;
+const IntroductionWithStyles = withStyles(styles)(Introduction);
+
+export default IntroductionWithStyles;

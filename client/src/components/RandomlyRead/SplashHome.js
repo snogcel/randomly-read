@@ -4,6 +4,7 @@ import { Helmet } from 'react-helmet';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
 import Identities from './Identities/Identities';
 
@@ -72,7 +73,7 @@ function LinkTab(props) {
 
 const RRHome = props => {
   const theme = useTheme();
-  const classes = styles(theme);
+  const { classes } = props;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -363,4 +364,6 @@ RRHome.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-export default RRHome;
+const RRHomeWrapped = withStyles(styles)(RRHome);
+
+export default RRHomeWrapped;

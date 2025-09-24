@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useTheme } from "@mui/material/styles";
+import { withStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 
@@ -16,7 +17,7 @@ import store from "../../store";
 
 function InteractionsHome(props) {
   const theme = useTheme();
-  const classes = styles(theme);
+  const { classes } = props;
   const navigate = useNavigate();
   
   const { user, fetchInteractions, isVoting, attemptCreateInteraction, attemptDeleteInteraction } = props;
@@ -88,4 +89,6 @@ function InteractionsHome(props) {
   );
 }
 
-export default InteractionsHome;
+const InteractionsHomeWithStyles = withStyles(styles)(InteractionsHome);
+
+export default InteractionsHomeWithStyles;

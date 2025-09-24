@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
@@ -264,12 +265,14 @@ class Technique extends React.Component {
   }
 }
 
-// Wrapper component to provide theme and styles
+// Wrap the class component with withStyles
+const TechniqueWithStyles = withStyles(styles)(Technique);
+
+// Wrapper component to provide theme
 function TechniqueWrapper(props) {
   const theme = useTheme();
-  const classes = styles(theme);
   
-  return <Technique {...props} classes={classes} theme={theme} />;
+  return <TechniqueWithStyles {...props} theme={theme} />;
 }
 
 export default TechniqueWrapper;

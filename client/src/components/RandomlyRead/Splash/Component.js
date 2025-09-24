@@ -7,12 +7,13 @@ import Modal from '@mui/material/Modal';
 import Hidden from '@mui/material/Hidden';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 const SplashPage = props => {
   const theme = useTheme();
-  const classes = styles(theme);
+  const { classes } = props;
   
   // Use useMediaQuery to replace withWidth
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -202,4 +203,6 @@ SplashPage.propTypes = {
   // width is now determined internally using useMediaQuery
 };
 
-export default SplashPage;
+const SplashPageWithStyles = withStyles(styles)(SplashPage);
+
+export default SplashPageWithStyles;

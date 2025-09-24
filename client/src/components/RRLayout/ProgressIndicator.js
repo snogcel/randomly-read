@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import CircularProgress from '@mui/material/CircularProgress';
 import { styles } from '../../themeHandler';
@@ -12,7 +13,7 @@ const StyledColumnDesktop = styled('div')(({ theme }) => styles(theme).columnDes
 
 function ProgressIndicator(props) {
   const theme = useTheme();
-  const classes = styles(theme);
+  const { classes } = props;
   
   // Use useMediaQuery to replace withWidth
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -111,4 +112,6 @@ ProgressIndicator.propTypes = {
   // width is now determined internally using useMediaQuery
 };
 
-export default ProgressIndicator;
+const ProgressIndicatorWithStyles = withStyles(styles)(ProgressIndicator);
+
+export default ProgressIndicatorWithStyles;

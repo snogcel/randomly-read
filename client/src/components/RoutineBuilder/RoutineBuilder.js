@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 
 import Hidden from '@mui/material/Hidden';
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
@@ -976,9 +977,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
-    const { theme } = this.props;
-    const classes = styles(theme || {});
+    const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission, classes } = this.props;
 
     const { width } = this.props;
 
@@ -1316,6 +1315,9 @@ RoutineBuilder.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
+// Wrap the class component with withStyles
+const RoutineBuilderWithStyles = withStyles(styles)(RoutineBuilder);
+
 // Wrapper component to provide theme and width
 function RoutineBuilderWrapper(props) {
   const theme = useTheme();
@@ -1345,7 +1347,7 @@ function RoutineBuilderWrapper(props) {
     return null;
   }
   
-  return <RoutineBuilder {...props} theme={theme} width={width} />;
+  return <RoutineBuilderWithStyles {...props} theme={theme} width={width} />;
 }
 
 export default RoutineBuilderWrapper;

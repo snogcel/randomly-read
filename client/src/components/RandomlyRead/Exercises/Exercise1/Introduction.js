@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -44,12 +45,14 @@ class Introduction extends React.Component {
   }
 }
 
-// Wrapper component to provide theme and styles
+// Wrap the class component with withStyles
+const IntroductionWithStyles = withStyles(styles)(Introduction);
+
+// Wrapper component to provide theme
 function IntroductionWrapper(props) {
   const theme = useTheme();
-  const classes = styles(theme);
   
-  return <Introduction {...props} classes={classes} theme={theme} />;
+  return <IntroductionWithStyles {...props} theme={theme} />;
 }
 
 export default IntroductionWrapper;

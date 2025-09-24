@@ -11,6 +11,7 @@ import List from '@mui/material/List';
 import CheckboxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
@@ -94,8 +95,7 @@ class ExerciseHistory extends React.Component {
 
 
   render() {
-    const {currentExerciseNumber, theme, width} = this.props;
-    const classes = styles(theme || {});
+    const {currentExerciseNumber, classes, width} = this.props;
 
     let exerciseHistory = <React.Fragment>
       <List dense={true}>
@@ -222,6 +222,9 @@ ExerciseHistory.propTypes = {
 };
 
 // Wrapper component to provide theme and width
+// Wrap the class component with withStyles
+const ExerciseHistoryWithStyles = withStyles(styles)(ExerciseHistory);
+
 function ExerciseHistoryWrapper(props) {
   const theme = useTheme();
   
@@ -239,7 +242,7 @@ function ExerciseHistoryWrapper(props) {
   else if (isLg) width = 'lg';
   else if (isXl) width = 'xl';
   
-  return <ExerciseHistory {...props} theme={theme} width={width} />;
+  return <ExerciseHistoryWithStyles {...props} theme={theme} width={width} />;
 }
 
 export default ExerciseHistoryWrapper;

@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import { styles } from '../../../../exerciseThemeHandler';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -64,12 +65,14 @@ function Techniques(props) {
   );
 }
 
-// Wrapper component to provide theme and styles
+// Wrap the functional component with withStyles
+const TechniquesWithStyles = withStyles(styles)(Techniques);
+
+// Wrapper component to provide theme
 function TechniquesWrapper(props) {
   const theme = useTheme();
-  const classes = styles(theme);
   
-  return <Techniques {...props} classes={classes} theme={theme} />;
+  return <TechniquesWithStyles {...props} theme={theme} />;
 }
 
 export default TechniquesWrapper;

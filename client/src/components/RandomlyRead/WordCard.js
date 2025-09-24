@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 // import Fader from 'react-fader';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -390,10 +391,12 @@ WordCard.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-// Wrapper component to provide theme, styles, and width
+// Wrap the class component with withStyles
+const WordCardWithStyles = withStyles(styles)(WordCard);
+
+// Wrapper component to provide theme and width
 function WordCardWrapper(props) {
   const theme = useTheme();
-  const classes = styles(theme);
   
   // Use useMediaQuery to replace withWidth
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -408,7 +411,7 @@ function WordCardWrapper(props) {
   else if (isMd) width = 'md';
   else if (isSm) width = 'sm';
   
-  return <WordCard {...props} classes={classes} theme={theme} width={width} />;
+  return <WordCardWithStyles {...props} theme={theme} width={width} />;
 }
 
 export default WordCardWrapper;

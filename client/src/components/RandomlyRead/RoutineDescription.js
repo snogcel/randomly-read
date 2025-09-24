@@ -5,6 +5,7 @@ import { styles } from '../../exerciseThemeHandler';
 import { Typography } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -264,10 +265,12 @@ RoutineDescription.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-// Wrapper component to provide theme, styles, and width
+// Wrap the class component with withStyles
+const RoutineDescriptionWithStyles = withStyles(styles)(RoutineDescription);
+
+// Wrapper component to provide theme and width
 function RoutineDescriptionWrapper(props) {
   const theme = useTheme();
-  const classes = styles(theme);
   
   // Use useMediaQuery to replace withWidth
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -282,7 +285,7 @@ function RoutineDescriptionWrapper(props) {
   else if (isMd) width = 'md';
   else if (isSm) width = 'sm';
   
-  return <RoutineDescription {...props} classes={classes} theme={theme} width={width} />;
+  return <RoutineDescriptionWithStyles {...props} theme={theme} width={width} />;
 }
 
 export default RoutineDescriptionWrapper;

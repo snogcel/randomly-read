@@ -7,6 +7,7 @@ import Identities from './Identities/Identities';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
@@ -82,7 +83,7 @@ function LinkTab(props) {
 
 const RRHome = props => {
   const theme = useTheme();
-  const classes = styles(theme);
+  const { classes } = props;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -396,4 +397,6 @@ const RRHome = props => {
 
 // { (width === "xs" || width === "sm") ? (((!props.inProgress) ? ((!props.inProgress && !props.isCompleted) ? ( <RoutineDescriptionContainer /> ) : null ) : null )) : ( <RoutineDescriptionContainer /> ) }
 
-export default RRHome;
+const RRHomeWrapped = withStyles(styles)(RRHome);
+
+export default RRHomeWrapped;

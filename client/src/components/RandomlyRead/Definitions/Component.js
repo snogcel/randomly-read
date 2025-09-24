@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import { styles } from '../../../exerciseThemeHandler';
 
 import Typography from '@mui/material/Typography';
@@ -15,8 +16,7 @@ class Definitions extends Component {
   }
 
   render() {
-    const { theme } = this.props;
-    const classes = styles(theme || {});
+    const { classes } = this.props;
 
     switch(this.props.word){
       case 'FluencyShaping': return <React.Fragment>
@@ -221,10 +221,13 @@ class Definitions extends Component {
   }
 }
 
+// Wrap the class component with withStyles
+const DefinitionsWithStyles = withStyles(styles)(Definitions);
+
 // Wrapper component to provide theme
 function DefinitionsWrapper(props) {
   const theme = useTheme();
-  return <Definitions {...props} theme={theme} />;
+  return <DefinitionsWithStyles {...props} theme={theme} />;
 }
 
 export default DefinitionsWrapper;
