@@ -52,28 +52,7 @@ export function requireAuth(req: AuthenticatedRequest, res: Response, next: Next
   next();
 }
 
-/**
- * Require admin privileges middleware
- */
-export function requireAdmin(req: AuthenticatedRequest, res: Response, next: NextFunction): void {
-  if (!req.user) {
-    res.status(401).json({ 
-      error: 'Authentication required',
-      code: 'UNAUTHORIZED'
-    });
-    return;
-  }
 
-  if (!req.user.admin && !req.user.superuser) {
-    res.status(403).json({ 
-      error: 'Admin privileges required',
-      code: 'FORBIDDEN'
-    });
-    return;
-  }
-
-  next();
-}
 
 /**
  * Require superuser privileges middleware

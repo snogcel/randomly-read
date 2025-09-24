@@ -160,14 +160,14 @@ wordSchema.virtual('upvotePercentage').get(function(this: IWord) {
 
 // Instance methods
 wordSchema.methods.vote = async function(userId: mongoose.Types.ObjectId, voteValue: number): Promise<IWord> {
-  const existingVote = this.votes.find(vote => vote.user.equals(userId));
+  const existingVote = this.votes.find((vote: any) => vote.user.equals(userId));
   
   if (existingVote) {
     // Update existing vote
     this.score -= existingVote.vote;
     if (voteValue === 0) {
       // Remove vote
-      this.votes = this.votes.filter(vote => !vote.user.equals(userId));
+      this.votes = this.votes.filter((vote: any) => !vote.user.equals(userId));
     } else {
       // Change vote
       this.score += voteValue;
@@ -184,7 +184,7 @@ wordSchema.methods.vote = async function(userId: mongoose.Types.ObjectId, voteVa
 
 wordSchema.methods.getUpvotePercentage = function(): number {
   if (this.votes.length === 0) return 0;
-  const upvotes = this.votes.filter(vote => vote.vote === 1);
+  const upvotes = this.votes.filter((vote: any) => vote.vote === 1);
   return Math.floor((upvotes.length / this.votes.length) * 100);
 };
 

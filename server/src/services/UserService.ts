@@ -11,8 +11,6 @@ export interface CreateUserData {
   email?: string;
   age?: number;
   gender?: string;
-  admin?: boolean;
-  superuser?: boolean;
   company?: string;
 }
 
@@ -35,8 +33,6 @@ export interface UserQueryOptions {
   limit?: number;
   offset?: number;
   isActive?: boolean;
-  admin?: boolean;
-  superuser?: boolean;
   company?: string;
   sortBy?: 'username' | 'createdAt' | 'updatedAt';
   sortOrder?: 'asc' | 'desc';
@@ -89,7 +85,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error creating user:', error);
-      throw new Error(`Failed to create user: ${error.message}`);
+      throw new Error(`Failed to create user: ${(error as Error).message}`);
     }
   }
 
@@ -117,13 +113,11 @@ export class UserService {
       // Generate JWT token
       const token = jwt.sign(
         { 
-          userId: user._id,
-          username: user.username,
-          admin: user.admin,
-          superuser: user.superuser
+          userId: user._id.toString(),
+          username: user.username
         },
         config.jwt.secret,
-        { expiresIn: config.jwt.expiresIn }
+        { expiresIn: config.jwt.expiresIn } as jwt.SignOptions
       );
 
       logger.info(`User logged in: ${user.username}`);
@@ -135,7 +129,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error during login:', error);
-      throw new Error(`Login failed: ${error.message}`);
+      throw new Error(`Login failed: ${(error as Error).message}`);
     }
   }
 
@@ -194,7 +188,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error updating user:', error);
-      throw new Error(`Failed to update user: ${error.message}`);
+      throw new Error(`Failed to update user: ${(error as Error).message}`);
     }
   }
 
@@ -215,7 +209,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error deleting user:', error);
-      throw new Error(`Failed to delete user: ${error.message}`);
+      throw new Error(`Failed to delete user: ${(error as Error).message}`);
     }
   }
 
@@ -236,13 +230,7 @@ export class UserService {
         filter.isActive = { $ne: false }; // Default to active users
       }
       
-      if (typeof options.admin === 'boolean') {
-        filter.admin = options.admin;
-      }
-      
-      if (typeof options.superuser === 'boolean') {
-        filter.superuser = options.superuser;
-      }
+
       
       if (options.company) {
         filter.company = options.company;
@@ -302,7 +290,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error assigning client to therapist:', error);
-      throw new Error(`Failed to assign client: ${error.message}`);
+      throw new Error(`Failed to assign client: ${(error as Error).message}`);
     }
   }
 
@@ -320,7 +308,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error unassigning client from therapist:', error);
-      throw new Error(`Failed to unassign client: ${error.message}`);
+      throw new Error(`Failed to unassign client: ${(error as Error).message}`);
     }
   }
 
@@ -336,7 +324,7 @@ export class UserService {
         throw new Error('Therapist not found');
       }
 
-      return therapist.clients as IUser[] || [];
+      return (therapist.clients as unknown as IUser[]) || [];
       
     } catch (error) {
       logger.error('Error getting therapist clients:', error);
@@ -368,7 +356,7 @@ export class UserService {
       
     } catch (error) {
       logger.error('Error changing password:', error);
-      throw new Error(`Failed to change password: ${error.message}`);
+      throw new Error(`Failed to change password: ${(error as Error).message}`);
     }
   }
 

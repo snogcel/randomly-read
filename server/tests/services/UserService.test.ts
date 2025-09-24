@@ -268,14 +268,14 @@ describe('UserService', () => {
       const result = await userService.getUsers({ admin: true });
 
       expect(result.users).toHaveLength(1);
-      expect(result.users[0].admin).toBe(true);
+      expect(result.users[0]?.admin).toBe(true);
     });
 
     it('should include inactive users when specified', async () => {
       const result = await userService.getUsers({ isActive: false });
 
       expect(result.users).toHaveLength(1);
-      expect(result.users[0].isActive).toBe(false);
+      expect(result.users[0]?.isActive).toBe(false);
     });
 
     it('should handle pagination', async () => {
@@ -418,7 +418,7 @@ describe('UserService', () => {
 
       const updatedTherapist = await User.findById(therapist._id);
       const clientCount = updatedTherapist?.clients?.filter(
-        id => id.equals(client._id)
+        id => (id as any).equals(client._id)
       ).length;
       
       expect(clientCount).toBe(1);
@@ -448,7 +448,7 @@ describe('UserService', () => {
       const clients = await userService.getTherapistClients(therapist._id.toString());
 
       expect(clients).toHaveLength(1);
-      expect(clients[0]._id).toEqual(client._id);
+      expect(clients[0]?._id).toEqual(client._id);
     });
   });
 });

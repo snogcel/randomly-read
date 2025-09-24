@@ -104,6 +104,26 @@ export const typeDefs = gql`
     hasMore: Boolean!
   }
 
+  # Default routine types
+  type DefaultRoutineStep {
+    id: ID!
+    type: String!
+    duration: Int!
+    repetitions: Int!
+    phoneticConfig: PhoneticConfiguration
+    intermissionText: String
+  }
+
+  type DefaultRoutine {
+    id: ID!
+    name: String!
+    description: String!
+    category: String!
+    difficulty: String!
+    isDefault: Boolean!
+    steps: [DefaultRoutineStep!]!
+  }
+
   # User types
   type User {
     id: ID!
@@ -114,8 +134,6 @@ export const typeDefs = gql`
     routines: [Routine!]
     age: Int
     gender: String
-    admin: Boolean
-    superuser: Boolean
     company: String
     clients: [User!]
     isActive: Boolean
@@ -309,6 +327,9 @@ export const typeDefs = gql`
     routines(input: RoutineQueryInput): RoutineQueryResult!
     routine(id: ID!): Routine
     userRoutines(userId: ID): [Routine!]!
+    defaultRoutines: [DefaultRoutine!]!
+    defaultRoutine(id: ID!): DefaultRoutine
+    recommendedRoutine(userLevel: String): DefaultRoutine
     
     # Progress queries
     exerciseSessions(userId: ID!, routineId: ID, limit: Int, offset: Int): [ExerciseSession!]!
@@ -329,6 +350,7 @@ export const typeDefs = gql`
     
     # Routine mutations
     createRoutine(input: CreateRoutineInput!): Routine!
+    createRoutineFromDefault(defaultRoutineId: ID!): Routine!
     updateRoutine(id: ID!, input: UpdateRoutineInput!): Routine!
     deleteRoutine(id: ID!): Boolean!
     assignRoutine(routineId: ID!, userIds: [ID!]!): Boolean!

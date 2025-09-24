@@ -111,9 +111,9 @@ export const resolvers = {
     async userRoutines(_: any, { userId }: any, { user }: any) {
       if (!user) throw new AuthenticationError('Authentication required');
       
-      // Users can only see their own routines unless they're admin
+      // Users can only see their own routines
       const targetUserId = userId || user.id;
-      if (targetUserId !== user.id && !user.admin && !user.superuser) {
+      if (targetUserId !== user.id) {
         throw new ForbiddenError('Access denied');
       }
       
@@ -130,8 +130,8 @@ export const resolvers = {
     async exerciseSessions(_: any, { userId, routineId, limit, offset }: any, { user }: any) {
       if (!user) throw new AuthenticationError('Authentication required');
       
-      // Users can only see their own sessions unless they're admin
-      if (userId !== user.id && !user.admin && !user.superuser) {
+      // Users can only see their own sessions
+      if (userId !== user.id) {
         throw new ForbiddenError('Access denied');
       }
       
@@ -153,7 +153,7 @@ export const resolvers = {
         if (!session) throw new UserInputError('Exercise session not found');
         
         // Check access
-        if (session.userId.toString() !== user.id && !user.admin && !user.superuser) {
+        if (session.userId.toString() !== user.id) {
           throw new ForbiddenError('Access denied');
         }
         
@@ -167,8 +167,8 @@ export const resolvers = {
     async progressRecords(_: any, { userId, routineId, startDate, endDate }: any, { user }: any) {
       if (!user) throw new AuthenticationError('Authentication required');
       
-      // Users can only see their own progress unless they're admin
-      if (userId !== user.id && !user.admin && !user.superuser) {
+      // Users can only see their own progress
+      if (userId !== user.id) {
         throw new ForbiddenError('Access denied');
       }
       
@@ -184,8 +184,8 @@ export const resolvers = {
     async fluencyReport(_: any, { userId, routineId, startDate, endDate }: any, { user }: any) {
       if (!user) throw new AuthenticationError('Authentication required');
       
-      // Users can only see their own reports unless they're admin
-      if (userId !== user.id && !user.admin && !user.superuser) {
+      // Users can only see their own reports
+      if (userId !== user.id) {
         throw new ForbiddenError('Access denied');
       }
       
@@ -206,7 +206,6 @@ export const resolvers = {
 
     async users(_: any, { limit, offset }: any, { user }: any) {
       if (!user) throw new AuthenticationError('Authentication required');
-      if (!user.admin && !user.superuser) throw new ForbiddenError('Admin access required');
       
       try {
         const userService = UserService.getInstance();
@@ -220,8 +219,8 @@ export const resolvers = {
     async user(_: any, { id }: any, { user }: any) {
       if (!user) throw new AuthenticationError('Authentication required');
       
-      // Users can only see their own profile unless they're admin
-      if (id !== user.id && !user.admin && !user.superuser) {
+      // Users can only see their own profile
+      if (id !== user.id) {
         throw new ForbiddenError('Access denied');
       }
       
@@ -231,6 +230,41 @@ export const resolvers = {
       } catch (error) {
         logger.error('Error in user query:', error);
         throw new Error('Failed to fetch user');
+      }
+    },
+
+    // Default routine queries
+    async defaultRoutines() {
+      try {
+        const routineService = RoutineService.getInstance();
+        return routineService.getDefaultRoutines();
+      } catch (error) {
+        logger.error('Error in defaultRoutines query:', error);
+        throw new Error('Failed to fetch default routines');
+      }
+    },
+
+    async defaultRoutine(_: any, { id }: any) {
+      try {
+        const routineService = RoutineService.getInstance();
+        const routine = routineService.getDefaultRoutineById(id);
+        if (!routine) {
+          throw new Error('Default routine not found');
+        }
+        return routine;
+      } catch (error) {
+        logger.error('Error in defaultRoutine query:', error);
+        throw new Error('Failed to fetch default routine');
+      }
+    },
+
+    async recommendedRoutine(_: any, { userLevel }: any) {
+      try {
+        const routineService = RoutineService.getInstance();
+        return routineService.getRecommendedRoutine(userLevel);
+      } catch (error) {
+        logger.error('Error in recommendedRoutine query:', error);
+        throw new Error('Failed to fetch recommended routine');
       }
     },
   },
@@ -259,6 +293,18 @@ export const resolvers = {
       } catch (error) {
         logger.error('Error in createRoutine mutation:', error);
         throw new Error(`Failed to create routine: ${error.message}`);
+      }
+    },
+
+    async createRoutineFromDefault(_: any, { defaultRoutineId }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        return await routineService.createRoutineFromDefault(user.id, defaultRoutineId);
+      } catch (error) {
+        logger.error('Error in createRoutineFromDefault mutation:', error);
+        throw new Error(`Failed to create routine from default: ${error.message}`);
       }
     },
 

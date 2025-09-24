@@ -1,6 +1,7 @@
 import { Routine, IRoutine, ISubroutineStep } from '../models/Routine';
 import { User } from '../models/User';
 import { logger } from '../utils/logger';
+import { defaultRoutineService, DefaultRoutineConfig } from './DefaultRoutineService';
 import mongoose from 'mongoose';
 
 export interface CreateRoutineData {
@@ -135,10 +136,7 @@ export class RoutineService {
 
       // Check if user can update this routine
       if (!routine.createdBy.equals(userId)) {
-        const user = await User.findById(userId);
-        if (!user?.admin && !user?.superuser) {
-          throw new Error('Access denied to update this routine');
-        }
+        throw new Error('Access denied to update this routine');
       }
 
       // Validate assigned users if provided
@@ -203,10 +201,7 @@ export class RoutineService {
 
       // Check if user can delete this routine
       if (!routine.createdBy.equals(userId)) {
-        const user = await User.findById(userId);
-        if (!user?.admin && !user?.superuser) {
-          throw new Error('Access denied to delete this routine');
-        }
+        throw new Error('Access denied to delete this routine');
       }
 
       // Remove routine from all assigned users
@@ -310,10 +305,7 @@ export class RoutineService {
 
       // Check if user can assign this routine
       if (!routine.createdBy.equals(assignedBy)) {
-        const user = await User.findById(assignedBy);
-        if (!user?.admin && !user?.superuser) {
-          throw new Error('Access denied to assign this routine');
-        }
+        throw new Error('Access denied to assign this routine');
       }
 
       // Validate users exist
@@ -354,10 +346,7 @@ export class RoutineService {
 
       // Check if user can unassign this routine
       if (!routine.createdBy.equals(unassignedBy)) {
-        const user = await User.findById(unassignedBy);
-        if (!user?.admin && !user?.superuser) {
-          throw new Error('Access denied to unassign this routine');
-        }
+        throw new Error('Access denied to unassign this routine');
       }
 
       // Remove users from routine
@@ -434,5 +423,61 @@ export class RoutineService {
       routine.createdBy.equals(userId) ||
       routine.assignedUsers.some(user => user.equals && user.equals(userId))
     );
+  }
+
+  /**
+   * Get all default routines
+   */
+  getDefaultRoutines(): DefaultRoutineConfig[] {
+    return defaultRoutineService.getDefaultRoutines();
+  }
+
+  /**
+   * Get default routine by ID
+   */
+  getDefaultRoutineById(id: string): DefaultRoutineConfig | null {
+    return defaultRoutineService.getDefaultRoutineById(id);
+  }
+
+  /**
+   * Create user routine from default routine
+   */
+  async createRoutineFromDefault(userId: string, defaultRoutineId: string): Promise<IRoutine> {
+    try {
+      const defaultRoutine = defaultRoutineService.getDefaultRoutineById(defaultRoutineId);
+      if (!defaultRoutine) {
+        throw new Error('Default routine not found');
+      }
+
+      const routineData = defaultRoutineService.convertToUserRoutine(defaultRoutine, userId);
+      
+      // Convert to the format expected by createRoutine
+      const createData: CreateRoutineData = {
+        name: routineData.name,
+        description: routineData.description,
+        gradeLevel: routineData.difficulty,
+        subroutine: routineData.steps.map(step => ({
+          id: step.id,
+          type: step.type,
+          duration: step.duration,
+          repetitions: step.repetitions,
+          phoneticConfig: step.phoneticConfig,
+          intermissionText: step.intermissionText
+        }))
+      };
+
+      return await this.createRoutine(userId, createData);
+      
+    } catch (error) {
+      logger.error('Error creating routine from default:', error);
+      throw new Error(`Failed to create routine from default: ${error.message}`);
+    }
+  }
+
+  /**
+   * Get recommended routine for user
+   */
+  getRecommendedRoutine(userLevel?: string): DefaultRoutineConfig {
+    return defaultRoutineService.getRecommendedRoutine(userLevel);
   }
 }

@@ -191,7 +191,7 @@ fluencyReportSchema.set('toJSON', {
 // Instance methods for ExerciseSession
 exerciseSessionSchema.methods.calculateAccuracy = function(): number {
   if (this.wordsAttempted.length === 0) return 0;
-  const totalAccuracy = this.wordsAttempted.reduce((sum, attempt) => sum + attempt.accuracy, 0);
+  const totalAccuracy = this.wordsAttempted.reduce((sum: number, attempt: any) => sum + attempt.accuracy, 0);
   return Math.round(totalAccuracy / this.wordsAttempted.length);
 };
 

@@ -17,8 +17,6 @@ export interface IUser extends Document {
   stateProvince?: string;
   postalCode?: string;
   country?: string;
-  admin?: boolean;
-  superuser?: boolean;
   company?: string;
   clients?: string[];
   isActive?: boolean;
@@ -106,16 +104,6 @@ const userSchema = new Schema<IUser>({
     required: false,
     maxlength: 100
   },
-  admin: { 
-    type: Boolean, 
-    required: false,
-    default: false
-  },
-  superuser: { 
-    type: Boolean, 
-    required: false,
-    default: false
-  },
   company: { 
     type: String, 
     required: false,
@@ -139,7 +127,6 @@ const userSchema = new Schema<IUser>({
 userSchema.index({ username: 1 });
 userSchema.index({ email: 1 });
 userSchema.index({ isActive: 1 });
-userSchema.index({ admin: 1, superuser: 1 });
 
 // Transform output
 userSchema.set('toJSON', { 

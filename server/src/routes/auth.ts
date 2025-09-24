@@ -48,7 +48,7 @@ router.post('/login', [
       success: false,
       error: {
         code: 'LOGIN_FAILED',
-        message: error.message
+        message: (error as Error).message
       }
     });
   }
@@ -120,7 +120,7 @@ router.post('/register', [
       success: false,
       error: {
         code: 'REGISTRATION_FAILED',
-        message: error.message
+        message: (error as Error).message
       }
     });
   }
@@ -161,7 +161,7 @@ router.post('/change-password', requireAuth, [
       success: false,
       error: {
         code: 'PASSWORD_CHANGE_FAILED',
-        message: error.message
+        message: (error as Error).message
       }
     });
   }
