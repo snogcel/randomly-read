@@ -1,50 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 
-import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
 
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-    marginBottom: theme.spacing(0)
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1
-  },
-  headerLink: {
-    cursor: "pointer"
-  },
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
+const StyledRoot = styled('div')(({ theme }) => ({
+  flexGrow: 1,
+  marginBottom: theme.spacing(0)
+}));
+
+const StyledMenuButton = styled(IconButton)(({ theme }) => ({
+  marginRight: theme.spacing(2),
+}));
+
+const StyledTitle = styled(Typography)(({ theme }) => ({
+  flexGrow: 1
+}));
+
+const StyledHeaderLink = styled('span')(({ theme }) => ({
+  cursor: "pointer"
+}));
+
+const StyledList = styled('div')(({ theme }) => ({
+  width: 250,
 }));
 
 function MenuAppBar(props) {
-  const classes = useStyles();
-  const { width } = props;
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up('lg'));
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -74,12 +76,12 @@ function MenuAppBar(props) {
 
   const handleProfile = () => {
     setAnchorEl(null);
-    props.history.push('/Profile');
+    navigate('/Profile');
   };
 
   const handleFocusWords = () => {
     setAnchorEl(null);
-    props.history.push('/FocusWords');
+    navigate('/FocusWords');
   };
 
   const handleLogout = () => {
@@ -88,26 +90,25 @@ function MenuAppBar(props) {
   };
 
   const handleLogin = () => {
-    props.history.push('/login');
+    navigate('/login');
   };
 
   const handleRandomlyRead = () => {
-    props.history.push('/');
+    navigate('/');
   };
 
   const handleRoutineBuilder = () => {
-    props.history.push('/RoutineBuilder');
+    navigate('/RoutineBuilder');
   };
 
   const handleUserAdministration = () => {
-    props.history.push('/Administration');
+    navigate('/Administration');
   };
 
   let user = props.user;
 
   const sideList = side => (
-    <div
-      className={classes.list}
+    <StyledList
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
@@ -124,18 +125,18 @@ function MenuAppBar(props) {
         </ListItem>
       </List>
 
-    </div>
+    </StyledList>
   );
 
   return (
-    <div className={classes.root}>
+    <StyledRoot>
       <AppBar position="static">
         <Toolbar>
 
           {(typeof user !== "undefined" && user !== null && user.superuser === true) ? (
-            <IconButton onClick={toggleDrawer('left', true)} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <StyledMenuButton onClick={toggleDrawer('left', true)} edge="start" color="inherit" aria-label="menu">
               <MenuIcon />
-            </IconButton>
+            </StyledMenuButton>
           ) : ( null )}
 
           <SwipeableDrawer
@@ -146,9 +147,9 @@ function MenuAppBar(props) {
             {sideList('left')}
           </SwipeableDrawer>
 
-          <Typography onClick={handleRandomlyRead} variant="h6" className={classes.title}>
-            <span className={classes.headerLink}>Fluency Shaping</span>
-          </Typography>
+          <StyledTitle onClick={handleRandomlyRead} variant="h6">
+            <StyledHeaderLink>Fluency Shaping</StyledHeaderLink>
+          </StyledTitle>
 
           {user ? (
             <div>
@@ -176,7 +177,7 @@ function MenuAppBar(props) {
                 open={open}
                 onClose={handleClose}
               >
-                {(width !== "lg" && width !== "xl") && (<MenuItem onClick={handleFocusWords}>Words</MenuItem>)}
+                {!isLargeScreen && (<MenuItem onClick={handleFocusWords}>Words</MenuItem>)}
                 <MenuItem onClick={handleProfile}>Profile</MenuItem>
                 <MenuItem onClick={handleLogout}>Log Out</MenuItem>
               </Menu>
@@ -188,13 +189,8 @@ function MenuAppBar(props) {
           )}
         </Toolbar>
       </AppBar>
-    </div>
+    </StyledRoot>
   );
 }
 
-
-MenuAppBar.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
-
-export default withWidth()(MenuAppBar);
+export default MenuAppBar;

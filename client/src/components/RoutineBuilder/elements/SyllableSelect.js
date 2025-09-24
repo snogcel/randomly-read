@@ -1,33 +1,30 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
-import InputBase from '@material-ui/core/InputBase';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
+import InputBase from '@mui/material/InputBase';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-    maxWidth: 240,
-  },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {
-    margin: 2,
-  },
-  noLabel: {
-    marginTop: theme.spacing(3),
-  },
+const StyledRoot = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 120,
+  maxWidth: 240,
+}));
+
+const StyledChips = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledChip = styled(Chip)(({ theme }) => ({
+  margin: 2,
 }));
 
 const ITEM_HEIGHT = 48;
@@ -41,13 +38,8 @@ const MenuProps = {
   },
 };
 
-const BootstrapInput = withStyles(theme => ({
-  root: {
-    'label + &': {
-      marginTop: theme.spacing(3),
-    },
-  },
-  input: {
+const BootstrapInput = styled(InputBase)(({ theme }) => ({
+  '& .MuiInputBase-input': {
     borderRadius: 4,
     position: 'relative',
     backgroundColor: theme.palette.background.paper,
@@ -55,7 +47,6 @@ const BootstrapInput = withStyles(theme => ({
     fontSize: 16,
     padding: '10px 26px 10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -74,7 +65,12 @@ const BootstrapInput = withStyles(theme => ({
       boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
     },
   },
-}))(InputBase);
+  '&.Mui-focused .MuiInputBase-input': {
+    borderRadius: 4,
+    borderColor: '#80bdff',
+    boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+  },
+}));
 
 // TODO - import
 
@@ -87,7 +83,6 @@ const syllables = [
 ];
 
 export default function SyllableSelect(props) {
-  const classes = useStyles();
   const [selectedSyllables, setSyllable] = React.useState(props.syllables);
 
   const handleChange = event => {
@@ -96,9 +91,8 @@ export default function SyllableSelect(props) {
   };
 
   return (
-    <div className={classes.root}>
-
-      <FormControl className={classes.formControl}>
+    <StyledRoot>
+      <StyledFormControl>
         <InputLabel shrink={true} id="select-multiple-chip-syllables">Syllables</InputLabel>
         <Select
           id="syllable-customized-select"
@@ -108,11 +102,11 @@ export default function SyllableSelect(props) {
           onChange={handleChange}
           input={<BootstrapInput id="syllable-customized-select" />}
           renderValue={selected => (
-            <div className={classes.chips}>
+            <StyledChips>
               {selected.map(value => (
-                <Chip key={value} value={value} label={value} className={classes.chip} />
+                <StyledChip key={value} value={value} label={value} />
               ))}
-            </div>
+            </StyledChips>
           )}
           MenuProps={MenuProps}
         >
@@ -122,8 +116,7 @@ export default function SyllableSelect(props) {
             </MenuItem>
           ))}
         </Select>
-      </FormControl>
-
-    </div>
+      </StyledFormControl>
+    </StyledRoot>
   );
 }

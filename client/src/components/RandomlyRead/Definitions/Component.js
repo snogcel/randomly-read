@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import { styles } from '../../../exerciseThemeHandler';
 
-import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -23,7 +24,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Fluency Shaping
                 </Typography>
@@ -49,7 +50,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Phonation
                 </Typography>
@@ -75,7 +76,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Diaphragmatic Breathing
                 </Typography>
@@ -101,7 +102,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Pelvic Floor
                 </Typography>
@@ -130,7 +131,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Articulation
                 </Typography>
@@ -156,7 +157,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Larynx
                 </Typography>
@@ -185,7 +186,7 @@ class Definitions extends Component {
           <ListItemText
             primary={
               <React.Fragment>
-                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                 <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                   Transfer
                 </Typography>
@@ -220,6 +221,13 @@ class Definitions extends Component {
   }
 }
 
-const DefinitionsWrapped = withStyles(styles)(Definitions);
+// Wrap the class component with withStyles
+const DefinitionsWithStyles = withStyles(styles)(Definitions);
 
-export default DefinitionsWrapped;
+// Wrapper component to provide theme
+function DefinitionsWrapper(props) {
+  const theme = useTheme();
+  return <DefinitionsWithStyles {...props} theme={theme} />;
+}
+
+export default DefinitionsWrapper;

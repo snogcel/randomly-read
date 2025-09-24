@@ -1,6 +1,6 @@
-import { createMuiTheme, responsiveFontSizes } from '@material-ui/core/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 
-let MuiTheme = createMuiTheme({
+let MuiTheme = createTheme({
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,

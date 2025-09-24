@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import HomeMainSection from './MainSection';
 import CategoryMenuContainer from '../CategoryMenu/Container';
 import PostListContainer from '../PostList/Container';
@@ -60,7 +60,9 @@ const Home = () => (
 
   <HomeMainSection>
 
-    <Route exact path='/' component={UserHomeContainer} />
+    <Routes>
+      <Route path='/' element={<UserHomeContainer />} />
+    </Routes>
 
   </HomeMainSection>
 

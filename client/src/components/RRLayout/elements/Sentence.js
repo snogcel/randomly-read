@@ -1,7 +1,7 @@
 import React from 'react';
 import { styles } from '../../../themeHandler';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
 
 class Sentence extends React.Component {
 
@@ -36,6 +36,12 @@ class Sentence extends React.Component {
   }
 }
 
-const SentenceWrapped = withStyles(styles)(Sentence);
+// Wrapper component to provide theme and styles
+function SentenceWrapper(props) {
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  return <Sentence {...props} classes={classes} theme={theme} />;
+}
 
-export default SentenceWrapped;
+export default SentenceWrapper;

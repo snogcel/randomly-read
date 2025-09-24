@@ -1,7 +1,7 @@
 import React from 'react';
-import TableCell from '@material-ui/core/TableCell';
-import Typography from '@material-ui/core/Typography';
-import Hidden from '@material-ui/core/Hidden';
+import TableCell from '@mui/material/TableCell';
+import Typography from '@mui/material/Typography';
+import Hidden from '@mui/material/Hidden';
 
 const availableCharacters = [
   { id: "AA", name: "ɑ"},

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Route } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import CategoryMenuDropdown from './Dropdown';
 import CategoryMenuCreatePostButton from './CreatePostButton';
 
@@ -15,19 +15,21 @@ const Menu = styled.nav`
   }
 `;
 
-const CategoryMenu = props => (
-  <Menu>
-    <Route
-      path='/a/:category'
-      children={({ match, history }) => (
-        <CategoryMenuDropdown
-          category={match ? match.params.category : 'all'}
-          history={history}
-        />
-      )}
-    />
-    {props.token && <CategoryMenuCreatePostButton />}
-  </Menu>
-);
+const CategoryMenu = props => {
+  const params = useParams();
+  const location = useLocation();
+  
+  const category = params.category || 'all';
+  
+  return (
+    <Menu>
+      <CategoryMenuDropdown
+        category={category}
+        location={location}
+      />
+      {props.token && <CategoryMenuCreatePostButton />}
+    </Menu>
+  );
+};
 
 export default CategoryMenu;

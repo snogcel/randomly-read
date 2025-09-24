@@ -1,15 +1,33 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import CircularProgress from '@mui/material/CircularProgress';
 import { styles } from '../../themeHandler';
-import { Typography } from '@material-ui/core';
-
-import withWidth from '@material-ui/core/withWidth';
+import { Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
-function ProgressIndicator(props) {
+// Create styled components from the styles
+const StyledColumn = styled('div')(({ theme }) => styles(theme).column);
+const StyledColumnDesktop = styled('div')(({ theme }) => styles(theme).columnDesktop);
 
-  const {classes} = props;
+function ProgressIndicator(props) {
+  const theme = useTheme();
+  const { classes } = props;
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
 
   let status = null;
   let progressClass = classes.intermissionIndicator;
@@ -32,8 +50,6 @@ function ProgressIndicator(props) {
 
   let value = (total - (increment * (range - timeLeft)));
 
-  const { width } = props;
-
   let size = 36;
 
   if (width === "md" || width === "sm" || width === "xs") size = 28;
@@ -44,61 +60,47 @@ function ProgressIndicator(props) {
 
   if ((width === "xs" || width === "sm")) {
     return (
-    
-      <div className={classes.column}>
-  
+      <StyledColumn>
         {(props.currentExerciseNumber !== null && props.text !== "" && props.auto) ? (
           <>
             <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />      
           </>
         ) : (
           <>
-  
           </>
         )}
-  
         <br />
-  
         {(props.currentExerciseNumber !== null && props.text !== "") ? (
           <>          
             <Typography variant="h6" color="secondary">{status}</Typography>
           </>
         ) : (
           <>
-  
           </>
         )}
-  
-      </div>
+      </StyledColumn>
     );
   } else if ((width === "md" || width === "lg" || width === "xl")) {
     return (
-    
-      <div className={classes.columnDesktop}>
-  
+      <StyledColumnDesktop>
         {(props.currentExerciseNumber !== null && props.text !== "" && props.auto) ? (
           <>
             <CircularProgress size={size} variant="determinate" value={value} color="inherit" className={progressClass} />      
           </>
         ) : (
           <>
-  
           </>
         )}
-  
         <br />
-  
         {(props.currentExerciseNumber !== null && props.text !== "") ? (
           <>          
             <Typography variant="h6" color="secondary">{status}</Typography>
           </>
         ) : (
           <>
-  
           </>
         )}
-  
-      </div>
+      </StyledColumnDesktop>
     );
   } 
 
@@ -107,9 +109,9 @@ function ProgressIndicator(props) {
 }
 
 ProgressIndicator.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+  // width is now determined internally using useMediaQuery
 };
 
-const ProgressIndicatorWrapped = withStyles(styles)(ProgressIndicator);
+const ProgressIndicatorWithStyles = withStyles(styles)(ProgressIndicator);
 
-export default withWidth()(ProgressIndicatorWrapped);
+export default ProgressIndicatorWithStyles;

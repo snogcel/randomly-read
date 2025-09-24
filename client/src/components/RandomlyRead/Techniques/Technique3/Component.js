@@ -1,18 +1,19 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
-import Modal from '@material-ui/core/Modal';
+import Modal from '@mui/material/Modal';
 import Definitions from '../../Definitions/Container';
 
 import ReactPlayer from 'react-player/youtube';
@@ -115,7 +116,7 @@ class Technique extends React.Component {
         <List className={classes.techniqueListRoot}>
 
         <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
             <ListItemText
               primary={
                 <React.Fragment>
@@ -140,7 +141,7 @@ class Technique extends React.Component {
             />
           </ListItem>
           <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
             <ListItemText
               primary={
                 <React.Fragment>
@@ -165,7 +166,7 @@ class Technique extends React.Component {
             />
           </ListItem>
           <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
             <ListItemText
               primary={
                 <React.Fragment>
@@ -187,7 +188,7 @@ class Technique extends React.Component {
             />
           </ListItem>
           <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
             <ListItemText
               primary={
                 <React.Fragment>
@@ -209,7 +210,7 @@ class Technique extends React.Component {
             />
           </ListItem>
           <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
             <ListItemText
               primary={
                 <React.Fragment>
@@ -231,7 +232,7 @@ class Technique extends React.Component {
             />
           </ListItem>
           <ListItem alignItems="flex-start">
-            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" className={classes.techniqueIcon} />
+            <FontAwesomeIcon icon={faAngleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
             <ListItemText
               primary={
                 <React.Fragment>
@@ -308,6 +309,14 @@ class Technique extends React.Component {
   }
 }
 
-const TechniqueWrapped = withStyles(styles)(Technique);
+// Wrap the class component with withStyles
+const TechniqueWithStyles = withStyles(styles)(Technique);
 
-export default TechniqueWrapped;
+// Wrapper component to provide theme
+function TechniqueWrapper(props) {
+  const theme = useTheme();
+  
+  return <TechniqueWithStyles {...props} theme={theme} />;
+}
+
+export default TechniqueWrapper;

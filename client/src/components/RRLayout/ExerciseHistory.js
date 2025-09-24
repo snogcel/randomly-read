@@ -1,32 +1,31 @@
 import React from 'react';
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { withStyles } from "@material-ui/core/styles";
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import List from '@material-ui/core/List';
-import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import withWidth from '@material-ui/core/withWidth';
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { styled } from "@mui/material/styles";
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import ListItemIcon from "@mui/material/ListItemIcon";
+import List from '@mui/material/List';
+import CheckboxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 import { styles } from '../../themeHandler';
 
 
-const StyledListItem = withStyles({
-  root: {
-    border: "0px solid #E0E0F5",
-    marginTop: 2,
-    marginBottom: 2,
-    "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "#ECECEC"
-    }
-  },
-  selected: {}
-})(ListItem);
+const StyledListItem = styled(ListItem)({
+  border: "0px solid #E0E0F5",
+  marginTop: 2,
+  marginBottom: 2,
+  "&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:focus": {
+    backgroundColor: "#ECECEC"
+  }
+});
 
 const availableConsonants = [
   { id: "AA", name: "ɑ"},
@@ -93,13 +92,10 @@ class ExerciseHistory extends React.Component {
 
   }
 
-  UNSAFE_componentWillReceiveProps() {
 
-  }
 
   render() {
-    const {classes, currentExerciseNumber} = this.props;
-    const { width } = this.props;
+    const {currentExerciseNumber, classes, width} = this.props;
 
     let exerciseHistory = <React.Fragment>
       <List dense={true}>
@@ -225,6 +221,28 @@ ExerciseHistory.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const ExerciseHistoryWrapped = withStyles(styles)(ExerciseHistory);
+// Wrapper component to provide theme and width
+// Wrap the class component with withStyles
+const ExerciseHistoryWithStyles = withStyles(styles)(ExerciseHistory);
 
-export default withWidth()(ExerciseHistoryWrapped);
+function ExerciseHistoryWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  return <ExerciseHistoryWithStyles {...props} theme={theme} width={width} />;
+}
+
+export default ExerciseHistoryWrapper;

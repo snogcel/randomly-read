@@ -1,12 +1,32 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import Chip from '@material-ui/core/Chip';
-import InputBase from '@material-ui/core/InputBase';
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from '@mui/material/styles';
+import { makeStyles, withStyles } from '@mui/styles';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Chip from '@mui/material/Chip';
+import InputBase from '@mui/material/InputBase';
+
+const StyledRoot = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledFormControl = styled(FormControl)(({ theme }) => ({
+  margin: theme.spacing(1),
+  minWidth: 120,
+  maxWidth: 240,
+}));
+
+const StyledChips = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexWrap: 'wrap',
+}));
+
+const StyledChip = styled(Chip)(({ theme }) => ({
+  margin: 2,
+}));
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,9 +44,6 @@ const useStyles = makeStyles(theme => ({
   },
   chip: {
     margin: 2,
-  },
-  noLabel: {
-    marginTop: theme.spacing(3),
   },
 }));
 

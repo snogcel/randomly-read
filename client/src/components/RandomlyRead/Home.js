@@ -1,23 +1,24 @@
 import React from 'react';
 import ReactGA from "react-ga4";
-import { withStyles } from "@material-ui/core/styles";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Identities from './Identities/Identities';
 
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import withWidth from '@material-ui/core/withWidth';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 
-import Hidden from '@material-ui/core/Hidden';
-import Fade from '@material-ui/core/Fade';
-import Typography from '@material-ui/core/Typography';
+import Hidden from '@mui/material/Hidden';
+import Fade from '@mui/material/Fade';
+import Typography from '@mui/material/Typography';
 // import Header from './Header/Container';
 import RoutineDescriptionContainer from './Exercises/RoutineDescriptionContainer';
 import WordCardContainer from './Exercises/WordCardContainer';
@@ -26,14 +27,12 @@ import ProgressIndicator from '../RRLayout/ProgressIndicatorContainer'
 import IdentityConfig from './Identities/Config';
 // import Subnavigation from './Exercises/SubnavigationContainer';
 import WordHistoryList from '../WordHistoryList/Container';
-import Link from '@material-ui/core/Link';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Link from '@mui/material/Link';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
-import BuyMeACoffee from './Donate/Component';
+import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 
 import { styles } from '../../exerciseThemeHandler';
 
@@ -83,19 +82,32 @@ function LinkTab(props) {
 }
 
 const RRHome = props => {
-
-  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient, auto } = props;
+  const theme = useTheme();
   const { classes } = props;
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const { width } = props;
+  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
+  
+  // Use useMediaQuery to replace withWidth
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width = 'xs';
+  if (isXl) width = 'xl';
+  else if (isLg) width = 'lg';
+  else if (isMd) width = 'md';
+  else if (isSm) width = 'sm';
 
   let subpath = 0;
-  let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+  let { levels, stages, leveltitle } = IdentityConfig;
 
-  let location = props.history.location.pathname;
+  let currentLocation = location.pathname;
 
   for (let i = 0; i < levels.length; i++) {
-    if (location.includes(levels[i])) {
+    if (currentLocation.includes(levels[i])) {
       subpath = i;   
     }
   }
@@ -109,7 +121,7 @@ const RRHome = props => {
   let selectedStage = 0; // set default stage
 
   for (let i = 0; i < stages.length; i++) {
-    if (location.includes(stages[i])) {
+    if (currentLocation.includes(stages[i])) {
       selectedStage = i; // render selected stage
     }
   }
@@ -126,16 +138,16 @@ const RRHome = props => {
     // set router url to match page section
     // console.log(subpath);
 
-    let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+    let { root, levels, stages } = IdentityConfig;
 
     if (!subpath) subpath = 0;
 
-    let location = props.history.location.pathname;
+    let currentLocation = location.pathname;
 
     for (let i = 0; i < levels.length; i++) {
-      if (location.includes(levels[i])) {
-        location = root + levels[i] + "/" + stages[subpath];
-        props.history.push(location);
+      if (currentLocation.includes(levels[i])) {
+        currentLocation = root + levels[i] + "/" + stages[subpath];
+        navigate(currentLocation);
       }
     }
     
@@ -145,20 +157,18 @@ const RRHome = props => {
 
   }
 
-  function handleShortcut(e, subpath, location, routineId) {
+  function handleShortcut(e, subpath, targetPath, routineId) {
 
     // set router url to match page section
     console.log(subpath);
 
-    let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+    let { root, levels, stages } = IdentityConfig;
 
     if (!subpath) subpath = 0;
 
-    // let location = props.history.location.pathname;
+    console.log(targetPath);
 
-    console.log(location);
-
-    if (props.history.location.pathname !== location) {
+    if (location.pathname !== targetPath) {
       props.setInProgress(false);
       props.setExercisePause(false);
       props.updateTime(0);
@@ -170,39 +180,21 @@ const RRHome = props => {
     }
 
     for (let i = 0; i < levels.length; i++) {
-      if (location.includes(levels[i])) {
-        location = root + levels[i] + "/" + stages[subpath];
-        props.history.push(location);
+      if (location.pathname.includes(levels[i])) {
+        let newPath = root + levels[i] + "/" + stages[subpath];
+        navigate(newPath);
       }
     }
     
     const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
     ReactGA.initialize(GA_ID);
-    ReactGA.send({ hitType: "pageview", page: location });  
+    ReactGA.send({ hitType: "pageview", page: targetPath });  
 
     setValue(subpath);
 
   }
 
-  function handleClick(e, pathname, routineId) {
 
-    // console.log(pathname);
-
-    if (props.history.location.pathname !== pathname) {
-      props.setInProgress(false);
-      props.setExercisePause(false);
-      props.updateTime(0);
-      props.updateTimeLeft(0);
-      props.resetRoutineSelect();
-      props.clearQueryResults();
-      props.resetWordCard();
-      props.updateId(routineId);
-
-      updatePathname(pathname);
-      setValue(pathname);
-      props.history.push({pathname});
-    }
-  }
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;
@@ -271,7 +263,7 @@ const RRHome = props => {
                           
                           <List className={classes.introductionListRoot}>
                             <ListItem alignItems="flex-start">
-                              { (props.pageContext === "beginner" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                              { (props.pageContext === "beginner" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6"}} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC"}} /></>) }
                               <ListItemText
                                 primary={
                                   <React.Fragment>
@@ -290,7 +282,7 @@ const RRHome = props => {
                               />
                             </ListItem>
                             <ListItem alignItems="flex-start">
-                            { (props.pageContext === "intermediate" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                            { (props.pageContext === "intermediate" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6"}} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC"}} /></>) }
                               <ListItemText
                                 primary={
                                   <React.Fragment>
@@ -309,7 +301,7 @@ const RRHome = props => {
                               />
                             </ListItem>
                             <ListItem alignItems="flex-start">
-                            { (props.pageContext === "advanced" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} /></>) }
+                            { (props.pageContext === "advanced" ? <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6"}} /></> : <><FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC"}} /></>) }
                               <ListItemText
                                 primary={
                                   <React.Fragment>
@@ -405,10 +397,6 @@ const RRHome = props => {
 
 // { (width === "xs" || width === "sm") ? (((!props.inProgress) ? ((!props.inProgress && !props.isCompleted) ? ( <RoutineDescriptionContainer /> ) : null ) : null )) : ( <RoutineDescriptionContainer /> ) }
 
-RRHome.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
-
 const RRHomeWrapped = withStyles(styles)(RRHome);
 
-export default withWidth()(RRHomeWrapped);
+export default RRHomeWrapped;

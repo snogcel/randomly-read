@@ -1,18 +1,20 @@
-import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 
-import Hidden from '@material-ui/core/Hidden';
-import withWidth from '@material-ui/core/withWidth';
+import Hidden from '@mui/material/Hidden';
+import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import Modal from '@material-ui/core/Modal';
+import Modal from '@mui/material/Modal';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
-// import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@mui/material/styles';
 
 import NewRoutineButton from './elements/NewRoutineButton';
 import DeleteRoutineButton from './elements/DeleteRoutineButton';
@@ -20,9 +22,9 @@ import InsertButton from './elements/InsertButton';
 import UpdateButton from './elements/UpdateButton';
 import DeleteButton from './elements/DeleteButton';
 import PreviewButton from './elements/PreviewButton';
-import IconButton from '@material-ui/core/IconButton';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import IconButton from '@mui/material/IconButton';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import DescriptionEditor from './elements/DescriptionEditor';
 
@@ -225,20 +227,14 @@ class RoutineBuilder extends React.Component {
 
   }
 
-  UNSAFE_componentWillMount() {
-
+  componentDidMount() {
     this.props.resetRoutineBuilder();
 
     if (typeof this.props.user !== "undefined") this.prepareRoutineBuilder();
-
   }
 
   prepareRoutineBuilder(){
     this.props.fetchUsers();
-  }
-
-  componentDidMount() {
-
   }
 
   expandLessHandler() {
@@ -981,8 +977,7 @@ class RoutineBuilder extends React.Component {
   render() {
 
     const { user } = this.props;
-    const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission } = this.props;
-    const { classes } = this.props;
+    const { userId, name, description, id, routine, vowels, consonants, mode, position, age, rangeVal, repetitions, syllables, intermissionText, isIntermission, classes } = this.props;
 
     const { width } = this.props;
 
@@ -1307,7 +1302,7 @@ class RoutineBuilder extends React.Component {
             </Grid>
 
           </>
-        ) : ( this.props.history.push("/") )}
+        ) : null}
 
       </Grid>
 
@@ -1320,6 +1315,39 @@ RoutineBuilder.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const RoutineBuilderWrapped = withStyles(styles)(RoutineBuilder);
+// Wrap the class component with withStyles
+const RoutineBuilderWithStyles = withStyles(styles)(RoutineBuilder);
 
-export default withWidth()(RoutineBuilderWrapped);
+// Wrapper component to provide theme and width
+function RoutineBuilderWrapper(props) {
+  const theme = useTheme();
+  const navigate = useNavigate();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  useEffect(() => {
+    if (!props.user) {
+      navigate("/");
+    }
+  }, [props.user, navigate]);
+
+  if (!props.user) {
+    return null;
+  }
+  
+  return <RoutineBuilderWithStyles {...props} theme={theme} width={width} />;
+}
+
+export default RoutineBuilderWrapper;

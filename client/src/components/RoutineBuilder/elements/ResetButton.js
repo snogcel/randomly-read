@@ -1,24 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    margin: theme.spacing(1),
-  },
-  input: {
-    display: 'none',
-  },
+const StyledButton = styled(Button)(({ theme }) => ({
+  margin: theme.spacing(1),
 }));
 
 export default function ResetButton(props) {
-  const classes = useStyles();
-
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="contained" className={classes.button}>
+      <StyledButton onClick={() => { props.action(); }} variant="contained">
         Reset Form
-      </Button>
+      </StyledButton>
     </div>
   );
 }

@@ -1,16 +1,18 @@
 import React from 'react';
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Typography } from '@material-ui/core';
-import { withStyles } from "@material-ui/core/styles";
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import List from '@material-ui/core/List';
-import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import withWidth from '@material-ui/core/withWidth';
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Typography } from '@mui/material';
+import { withStyles } from '@mui/styles';
+import { styled } from "@mui/material/styles";
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import ListItemIcon from "@mui/material/ListItemIcon";
+import List from '@mui/material/List';
+import CheckboxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 import { styles } from '../../../exerciseThemeHandler';
@@ -52,10 +54,8 @@ class BuyMeACoffee extends React.Component {
     }
 }
 
-BuyMeACoffee.propTypes = {
-    width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// BuyMeACoffee.propTypes removed - no longer using withWidth
 
 const BuyMeACoffeeWrapped = withStyles(styles)(BuyMeACoffee);
 
-export default withWidth()(BuyMeACoffeeWrapped);
+export default BuyMeACoffeeWrapped;

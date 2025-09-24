@@ -1,25 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-  },
-  input: {
-    display: 'none',
-  },
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginLeft: theme.spacing(1),
+  marginRight: theme.spacing(1),
 }));
 
 export default function DeleteButton(props) {
-  const classes = useStyles();
-
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="outlined" className={classes.button}>
+      <StyledButton onClick={() => { props.action(); }} variant="outlined">
         Delete Exercise Step
-      </Button>
+      </StyledButton>
     </div>
   );
 }

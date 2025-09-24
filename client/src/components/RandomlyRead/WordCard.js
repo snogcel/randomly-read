@@ -1,16 +1,17 @@
 import React from 'react';
 import PropTypes from "prop-types";
 // import Fader from 'react-fader';
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import Grid from '@mui/material/Grid';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 import Intermission from '../RRLayout/IntermissionContainer';
 import { styles } from '../../exerciseThemeHandler';
 import Word from '../RRLayout/elements/Word';
 import Sentence from '../RRLayout/elements/Sentence';
 
-import withWidth from '@material-ui/core/withWidth';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 
 class WordCard extends React.Component  {
@@ -390,6 +391,27 @@ WordCard.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const WordCardWrapped = withStyles(styles)(WordCard);
+// Wrap the class component with withStyles
+const WordCardWithStyles = withStyles(styles)(WordCard);
 
-export default withWidth()(WordCardWrapped);
+// Wrapper component to provide theme and width
+function WordCardWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width = 'xs';
+  if (isXl) width = 'xl';
+  else if (isLg) width = 'lg';
+  else if (isMd) width = 'md';
+  else if (isSm) width = 'sm';
+  
+  return <WordCardWithStyles {...props} theme={theme} width={width} />;
+}
+
+export default WordCardWrapper;

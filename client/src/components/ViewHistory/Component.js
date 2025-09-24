@@ -1,14 +1,16 @@
-import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
+import React, { useEffect } from 'react';
+import { styled } from "@mui/material/styles";
 import { styles } from '../../themeHandler';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import StartDatePicker from './elements/StartDatePicker';
 import EndDatePicker from './elements/EndDatePicker';
 import WordViewFilter from './elements/WordViewFilter';
 
 import PropTypes from 'prop-types';
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DefaultTooltipContent from 'recharts/lib/component/DefaultTooltipContent';
@@ -54,8 +56,10 @@ class ViewHistory extends React.Component {
     this.props.fetchViewHistory(userId, startDate, endDate);
   };
 
-  UNSAFE_componentWillMount() {
-    if (this.props.userId && this.props.startDate && this.props.endDate) this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
+  componentDidMount() {
+    if (this.props.userId && this.props.startDate && this.props.endDate) {
+      this.loadHistory(this.props.userId, this.props.startDate, this.props.endDate);
+    }
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -102,8 +106,7 @@ class ViewHistory extends React.Component {
     let selectedFilterObj = this.parseSelectedFilter(this.props.filter);
     let dataSet = this.props.dataSet || [];
 
-    const { width } = this.props;
-    const { classes } = this.props;
+    const { width, classes } = this.props;
 
     console.log(width);
 
@@ -194,6 +197,28 @@ ViewHistory.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const ViewHistoryWrapped = withStyles(styles)(ViewHistory);
+// Wrap the class component with withStyles
+const ViewHistoryWithStyles = withStyles(styles)(ViewHistory);
 
-export default withWidth()(ViewHistoryWrapped);
+// Wrapper component to provide theme and width
+function ViewHistoryWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  return <ViewHistoryWithStyles {...props} theme={theme} width={width} />;
+}
+
+export default ViewHistoryWrapper;

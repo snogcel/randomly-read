@@ -1,10 +1,12 @@
-import React from 'react';
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
+import React, { useEffect, useCallback } from 'react';
+import { useTheme } from "@mui/material/styles";
+import { withStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
+import Grid from '@mui/material/Grid';
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
 
 import { styles } from '../../themeHandler';
 
@@ -13,115 +15,80 @@ import InteractionTable from './elements/InteractionTable';
 
 import store from "../../store";
 
-class InteractionsHome extends React.Component {
-  constructor(props) {
-    super(props);
+function InteractionsHome(props) {
+  const theme = useTheme();
+  const { classes } = props;
+  const navigate = useNavigate();
+  
+  const { user, fetchInteractions, isVoting, attemptCreateInteraction, attemptDeleteInteraction } = props;
 
-    this.interactionHandler = this.interactionHandler.bind(this);
-    this.removeInteractionHandler = this.removeInteractionHandler.bind(this);
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
-    this.state = {
-      intention: [
-        { id: 1, name: "Did not remember", value: 1 },
-        { id: 2, name: "Remembered", value: 50 },
-        { id: 3, name: "Remembered and used", value: 100 }
-      ],
-      ease: [
-        { id: 1, name: "Difficult", value: 25 },
-        { id: 2, name: "Less Difficult", value: 50 },
-        { id: 3, name: "Easier", value: 75 },
-        { id: 4, name: "Easy", value: 100 }
-      ],
-      options: null,
-      selectedOption: {}
-    };
+  const prepareInteractionForm = useCallback(() => {
+    fetchInteractions();
+  }, [fetchInteractions]);
 
-  }
+  useEffect(() => {
+    if (typeof user !== "undefined") {
+      prepareInteractionForm();
+    }
+  }, [user, prepareInteractionForm]);
 
-  UNSAFE_componentWillMount() {
-    if (typeof this.props.user !== "undefined") this.prepareInteractionForm();
-  }
-
-  prepareInteractionForm(){
-
-    this.props.fetchInteractions();
-
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-
-    if (typeof this.props.isVoting !== "undefined") {
-      if ((prevProps.isVoting !== this.props.isVoting) && !this.props.isVoting) { // fetch updated routines
-
-        this.props.fetchInteractions();
-
+  useEffect(() => {
+    if (typeof isVoting !== "undefined") {
+      if (!isVoting) {
+        fetchInteractions();
       }
     }
+  }, [isVoting, fetchInteractions]);
 
-  }
+  const interactionHandler = (interaction) => {
+    attemptCreateInteraction(interaction);
+  };
 
-  interactionHandler(interaction) {
-    this.props.attemptCreateInteraction(interaction);
-    // this.props.fetchInteractions({});
-  }
+  const removeInteractionHandler = (id) => {
+    attemptDeleteInteraction(id);
+  };
 
-  removeInteractionHandler(id) {
-    this.props.attemptDeleteInteraction(id);
-  }
+  let items = store.getState().interaction.items;
 
-  componentDidMount() {
+  return (
+    <Grid className={classes.root}>
+      {user ? (
+        <Card className={classes.userAdminCard}>
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
+              Focus Words
+            </Typography>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Enter a word using the following search box, a practice routine will be available until it is removed from this list.
+            </Typography>
 
-  }
+            <br />
 
-  render() {
-
-    const { user } = this.props;
-    const { classes } = this.props;
-
-    let items = store.getState().interaction.items;
-
-
-    return (
-
-      <Grid className={classes.root}>
-
-        {user ? (
-
-          <Card className={classes.userAdminCard}>
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="h2" className={classes.heading}>
-                Focus Words
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Enter a word using the following search box, a practice routine will be available until it is removed from this list.
-              </Typography>
-
-              <br />
-
-              <Grid container justify="center">
-                <Grid item xs={11} sm={11} md={10}>
-                  <InteractionForm action={this.interactionHandler}/>
-                </Grid>
+            <Grid container justifyContent="center">
+              <Grid item xs={11} sm={11} md={10}>
+                <InteractionForm action={interactionHandler}/>
               </Grid>
+            </Grid>
 
-              <Grid container justify="center">
-                <Grid item xs={11} sm={11} md={10}>
-                  <InteractionTable interactions={items} action={this.removeInteractionHandler}/>
-                </Grid>
+            <Grid container justifyContent="center">
+              <Grid item xs={11} sm={11} md={10}>
+                <InteractionTable interactions={items} action={removeInteractionHandler}/>
               </Grid>
+            </Grid>
 
-            </CardContent>
-          </Card>
-
-        ) : ( this.props.history.push("/") )}
-
-      </Grid>
-
-    )
-
-  }
+          </CardContent>
+        </Card>
+      ) : null}
+    </Grid>
+  );
 }
 
-const InteractionsHomeWrapped = withStyles(styles)(InteractionsHome);
+const InteractionsHomeWithStyles = withStyles(styles)(InteractionsHome);
 
-export default InteractionsHomeWrapped;
+export default InteractionsHomeWithStyles;

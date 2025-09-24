@@ -1,9 +1,10 @@
 import React from 'react';
-import TableCell from '@material-ui/core/TableCell';
+import TableCell from '@mui/material/TableCell';
 import styled from 'styled-components/macro';
 import PostVoteUpvote from './Upvote';
 import PostVoteDownvote from './Downvote';
-// import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
+// import { styled } from '@mui/material/styles';
 
 const Wrapper = styled.div`
   display: flex;
@@ -46,16 +47,16 @@ class PostVote extends React.Component {
     return existingVote ? existingVote.vote : 0;
   }
 
-  UNSAFE_componentWillUpdate(nextProps, nextState, nextContext) {
-    if (this.props.score !== nextProps.score) {
-      const didVote = PostVote.existingVote(nextProps);
+  componentDidUpdate(prevProps) {
+    if (this.props.score !== prevProps.score) {
+      const didVote = PostVote.existingVote(this.props);
       this.setState({
-        score: nextProps.score,
+        score: this.props.score,
         didVote,
         didUpvote: didVote === 1,
         didDownvote: didVote === -1
       });
-    } else if (this.props.token !== nextProps.token && !nextProps.token) {
+    } else if (this.props.token !== prevProps.token && !this.props.token) {
       this.setState({
         didVote: false,
         didUpvote: false,

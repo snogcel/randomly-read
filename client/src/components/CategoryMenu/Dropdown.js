@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/macro';
+import { useNavigate } from 'react-router-dom';
 import categories from '../../categories';
 import SelectWrapper from '../shared/form/SelectWrapper';
 
@@ -14,31 +15,31 @@ const Dropdown = styled.select`
   appearance: none;
 `;
 
-class CategoryMenuDropdown extends React.Component {
-  mapCategories = () =>
+const CategoryMenuDropdown = (props) => {
+  const navigate = useNavigate();
+
+  const mapCategories = () =>
     ['all', ...categories].map((category, index) => (
       <option key={index} value={category}>
         {category}
       </option>
     ));
 
-  handleOnChange = event => {
+  const handleOnChange = (event) => {
     const category = event.target.value;
-    if (category !== this.props.category) {
+    if (category !== props.category) {
       const url = category === 'all' ? '/' : `/a/${category}`;
-      this.props.history.push(url);
+      navigate(url);
     }
   };
 
-  render() {
-    return (
-      <SelectWrapper flex>
-        <Dropdown value={this.props.category} onChange={this.handleOnChange}>
-          {this.mapCategories()}
-        </Dropdown>
-      </SelectWrapper>
-    );
-  }
-}
+  return (
+    <SelectWrapper flex>
+      <Dropdown value={props.category} onChange={handleOnChange}>
+        {mapCategories()}
+      </Dropdown>
+    </SelectWrapper>
+  );
+};
 
 export default CategoryMenuDropdown;

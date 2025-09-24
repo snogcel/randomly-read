@@ -1,18 +1,33 @@
 import React from 'react';
 import { styles } from '../../../exerciseThemeHandler';
-import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Modal from '@material-ui/core/Modal';
-import Hidden from '@material-ui/core/Hidden';
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import withStyles from '@material-ui/core/styles/withStyles';
-import withWidth from '@material-ui/core/withWidth';
+import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Hidden from '@mui/material/Hidden';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 const SplashPage = props => {
-
-  const { classes, width } = props;
+  const theme = useTheme();
+  const { classes } = props;
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
 
   const [open_1, setOpen_1] = React.useState(false);
   const [open_2, setOpen_2] = React.useState(false);
@@ -184,10 +199,10 @@ const SplashPage = props => {
 
 };
 
-const SplashWrapped = withStyles(styles)(SplashPage);
-
-SplashWrapped.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
+SplashPage.propTypes = {
+  // width is now determined internally using useMediaQuery
 };
 
-export default withWidth()(SplashWrapped);
+const SplashPageWithStyles = withStyles(styles)(SplashPage);
+
+export default SplashPageWithStyles;

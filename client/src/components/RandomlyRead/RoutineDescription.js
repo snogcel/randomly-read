@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import renderHTML from 'react-render-html';
-import { withStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import { styles } from '../../exerciseThemeHandler';
-import { Typography } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import withWidth from '@material-ui/core/withWidth';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import Button from '@material-ui/core/Button';
-import Modal from '@material-ui/core/Modal';
+import { Typography } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 import PropTypes from 'prop-types';
 
 class RoutineDescription extends Component {
@@ -27,6 +29,15 @@ class RoutineDescription extends Component {
     this.decrementRoutine = this.decrementRoutine.bind(this);
   }
 
+  componentDidMount() {
+    if (typeof this.props.description !== 'undefined') {
+      let description = this.props.description;
+      let trimmed = description.replace(/^"|"$/g, '');
+
+      this.setState({text: trimmed });
+    }
+  }
+
   componentDidUpdate(prevProps) {
 
     if (prevProps.description !== this.props.description) {
@@ -35,17 +46,6 @@ class RoutineDescription extends Component {
       let trimmed = description.replace(/^"|"$/g, '');
 
       this.setState({text: trimmed });
-    }
-
-  }
-
-  UNSAFE_componentWillMount() {
-
-    if (typeof this.props.description !== 'undefined') {
-    	let description = this.props.description;
-	    let trimmed = description.replace(/^"|"$/g, '');
-
-	    this.setState({text: trimmed });
     }
 
   }
@@ -265,6 +265,27 @@ RoutineDescription.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const RoutineDescriptionWrapped = withStyles(styles)(RoutineDescription);
+// Wrap the class component with withStyles
+const RoutineDescriptionWithStyles = withStyles(styles)(RoutineDescription);
 
-export default withWidth()(RoutineDescriptionWrapped);
+// Wrapper component to provide theme and width
+function RoutineDescriptionWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width = 'xs';
+  if (isXl) width = 'xl';
+  else if (isLg) width = 'lg';
+  else if (isMd) width = 'md';
+  else if (isSm) width = 'sm';
+  
+  return <RoutineDescriptionWithStyles {...props} theme={theme} width={width} />;
+}
+
+export default RoutineDescriptionWrapper;

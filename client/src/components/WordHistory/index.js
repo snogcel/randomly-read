@@ -1,13 +1,31 @@
 import React from 'react';
 import PostVoteContainer from './Vote/Container';
-import Grid from '@material-ui/core/Grid';
-import withWidth from '@material-ui/core/withWidth';
+import Grid from '@mui/material/Grid';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import { withStyles } from "@material-ui/core/styles";
+import { styled } from "@mui/material/styles";
 import { styles } from '../../themeHandler';
 
-const WordHistory = function({ wordid, id, votes, score, comments, full, title, type, ...content }) {
+const WordHistory = function({ wordid, id, votes, score, comments, full, title, type, width, ...content }) {
+  const theme = useTheme();
+  const classes = styles(theme);
+  
+  // Use useMediaQuery to replace withWidth if width is not provided
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  if (!width) {
+    if (isXl) width = 'xl';
+    else if (isLg) width = 'lg';
+    else if (isMd) width = 'md';
+    else if (isSm) width = 'sm';
+    else width = 'xs';
+  }
 
   if (type === "sentence") {
 
@@ -33,9 +51,7 @@ const WordHistory = function({ wordid, id, votes, score, comments, full, title, 
 };
 
 
-const WordHistoryWrapped = withStyles(styles)(WordHistory);
-
-export default withWidth()(WordHistoryWrapped);
+export default WordHistory;
 
 
 {/* <Grid container spacing={1} justify="center">

@@ -1,25 +1,18 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
 
-const useStyles = makeStyles(theme => ({
-  button: {
-    marginRight: theme.spacing(1),
-    marginTop: theme.spacing(1)
-  },
-  input: {
-    display: 'none',
-  },
+const StyledButton = styled(Button)(({ theme }) => ({
+  marginRight: theme.spacing(1),
+  marginTop: theme.spacing(1)
 }));
 
 export default function InsertButton(props) {
-  const classes = useStyles();
-
   return (
     <div>
-      <Button onClick={() => { props.action(); }} variant="contained" color="primary" className={classes.button}>
+      <StyledButton onClick={() => { props.action(); }} variant="contained" color="primary">
         Insert Exercise Step
-      </Button>
+      </StyledButton>
     </div>
   );
 }

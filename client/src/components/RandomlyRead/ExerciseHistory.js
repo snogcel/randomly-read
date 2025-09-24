@@ -1,32 +1,31 @@
 import React from 'react';
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Typography } from '@material-ui/core';
-import { withStyles } from "@material-ui/core/styles";
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import List from '@material-ui/core/List';
-import CheckboxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import withWidth from '@material-ui/core/withWidth';
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import { Typography } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import ListItemIcon from "@mui/material/ListItemIcon";
+import List from '@mui/material/List';
+import CheckboxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import { useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
 import { styles } from '../../exerciseThemeHandler';
 
 
-const StyledListItem = withStyles({
-  root: {
-    border: "0px solid #E0E0F5",
-    marginTop: 2,
-    marginBottom: 2,
-    "&$selected, &$selected:hover, &$selected:focus": {
-      backgroundColor: "transparent"
-    }
-  },
-  selected: {}
-})(ListItem);
+const StyledListItem = styled(ListItem)({
+  border: "0px solid #E0E0F5",
+  marginTop: 2,
+  marginBottom: 2,
+  "&.Mui-selected, &.Mui-selected:hover, &.Mui-selected:focus": {
+    backgroundColor: "transparent"
+  }
+});
 
 const availableConsonants = [
   { id: "AA", name: "ɑ"},
@@ -94,8 +93,7 @@ class ExerciseHistory extends React.Component {
   }
 
   render() {
-    const { classes, currentExerciseNumber, inProgress } = this.props;
-    const { width } = this.props;
+    const { currentExerciseNumber, inProgress, classes, width } = this.props;
 
     let exerciseHistory = <React.Fragment>
       <List dense={true}>
@@ -260,6 +258,28 @@ ExerciseHistory.propTypes = {
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 
-const ExerciseHistoryWrapped = withStyles(styles)(ExerciseHistory);
+// Wrap the class component with withStyles
+const ExerciseHistoryWithStyles = withStyles(styles)(ExerciseHistory);
 
-export default withWidth()(ExerciseHistoryWrapped);
+// Wrapper component to provide theme and width
+function ExerciseHistoryWrapper(props) {
+  const theme = useTheme();
+  
+  // Use useMediaQuery to replace withWidth
+  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
+  const isSm = useMediaQuery(theme.breakpoints.only('sm'));
+  const isMd = useMediaQuery(theme.breakpoints.only('md'));
+  const isLg = useMediaQuery(theme.breakpoints.only('lg'));
+  const isXl = useMediaQuery(theme.breakpoints.only('xl'));
+  
+  let width;
+  if (isXs) width = 'xs';
+  else if (isSm) width = 'sm';
+  else if (isMd) width = 'md';
+  else if (isLg) width = 'lg';
+  else if (isXl) width = 'xl';
+  
+  return <ExerciseHistoryWithStyles {...props} theme={theme} width={width} />;
+}
+
+export default ExerciseHistoryWrapper;

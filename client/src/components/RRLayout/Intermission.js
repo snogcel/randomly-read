@@ -1,21 +1,20 @@
 import React from 'react';
 import { styles } from '../../themeHandler';
-import Typography from '@material-ui/core/Typography';
-import { withStyles } from '@material-ui/core';
+import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
-class Intermission extends React.Component {
+function Intermission(props) {
+  const theme = useTheme();
+  const { classes } = props;
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <Typography variant="h3" component="h3" className={classes.intermission}>
-        {this.props.intermissionText}
-      </Typography>
-    );
-  }
+  return (
+    <Typography variant="h3" component="h3" className={classes.intermission}>
+      {props.intermissionText}
+    </Typography>
+  );
 }
 
-const IntermissionWrapped = withStyles(styles)(Intermission);
+const IntermissionWithStyles = withStyles(styles)(Intermission);
 
-export default IntermissionWrapped;
+export default IntermissionWithStyles;

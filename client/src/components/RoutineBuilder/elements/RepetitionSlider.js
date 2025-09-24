@@ -1,7 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-import Slider from '@material-ui/core/Slider';
+import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import Slider from '@mui/material/Slider';
 
 const useStyles = makeStyles(theme => ({
   root: {

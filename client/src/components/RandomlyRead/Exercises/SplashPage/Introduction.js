@@ -1,33 +1,29 @@
 import React from 'react';
 import { styles } from '../../../../exerciseThemeHandler';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Link from '@material-ui/core/Link';
-import { withStyles } from '@material-ui/core';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Link from '@mui/material/Link';
+import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-class Introduction extends React.Component {
+function Introduction(props) {
+  const theme = useTheme();
+  const { classes } = props;
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
+  return (
+    <React.Fragment>
+      <Box>
+        <Typography variant="h5" component="h2" className={classes.contentHeading}>
+          Advanced Introduction
+        </Typography>
 
-  }
-
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <React.Fragment>
-        <Box>
-          <Typography variant="h5" component="h2" className={classes.contentHeading}>
-            Advanced Introduction
-          </Typography>
-
-          <br />
+        <br />
 
           <Typography variant="body1" color="textPrimary" component="p" >
             This program provides step-by-step speaking techniques and practice routines that will teach you how to use a speech therapy approach known as Fluency Shaping. This program is intended for people who stutter (PWS) and involves three phases.
@@ -36,7 +32,7 @@ class Introduction extends React.Component {
 
           <List className={classes.introductionListRoot}>
             <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC", margin: "8px"}} />
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -55,7 +51,7 @@ class Introduction extends React.Component {
               />
             </ListItem>
             <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIcon} />
+              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#CCCCCC", margin: "8px"}} />
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -74,7 +70,7 @@ class Introduction extends React.Component {
               />
             </ListItem>
             <ListItem alignItems="flex-start">
-              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" className={classes.introductionIconActive} />
+              <FontAwesomeIcon icon={faChevronCircleRight} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
               <ListItemText
                 primary={
                   <React.Fragment>
@@ -109,7 +105,7 @@ class Introduction extends React.Component {
               <ListItemText
                 primary={
                   <React.Fragment>
-                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" className={classes.definitionIcon} />
+                    <FontAwesomeIcon icon={faInfoCircle} size="2x" pull="left" style={{color: "#4045A6", margin: "8px"}} />
                     <Typography variant="body1" component="span" className={classes.definitionHeading} color="textPrimary">
                       Resonance
                     </Typography>
@@ -127,12 +123,11 @@ class Introduction extends React.Component {
 
           </List>
 
-        </Box>
-      </React.Fragment>
-    );
-  }
+      </Box>
+    </React.Fragment>
+  );
 }
 
-const IntroductionWrapped = withStyles(styles)(Introduction);
+const IntroductionWithStyles = withStyles(styles)(Introduction);
 
-export default IntroductionWrapped;
+export default IntroductionWithStyles;

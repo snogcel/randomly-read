@@ -1,18 +1,20 @@
 import React from 'react';
 import RoutineBuilder from '../RRLayout/RoutineBuilder';
 
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
 
-import { withStyles } from "@material-ui/core/styles";
-import IconButton from '@material-ui/core/IconButton';
+import { withStyles } from '@mui/styles';
+import { styled } from "@mui/material/styles";
+import IconButton from '@mui/material/IconButton';
 
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import PlayCircleFilledIcon from '@material-ui/icons/PlayCircleFilled';
-import PauseCircleFilledIcon from '@material-ui/icons/PauseCircleFilled';
-import ReplayIcon from '@material-ui/icons/Replay';
+import PlayCircleFilledIcon from '@mui/icons-material/PlayCircleFilled';
+import PauseCircleFilledIcon from '@mui/icons-material/PauseCircleFilled';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 import { styles } from '../../exerciseThemeHandler';
 
@@ -681,10 +683,8 @@ class Timer extends React.Component {
   }
 }
 
-Timer.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// Timer.propTypes removed - no longer using withWidth
 
 const TimerWrapped = withStyles(styles)(Timer);
 
-export default withWidth()(TimerWrapped);
+export default TimerWrapped;

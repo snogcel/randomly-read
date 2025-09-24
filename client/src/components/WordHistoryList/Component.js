@@ -1,10 +1,12 @@
 import React from 'react';
 import WordHistoryListItem from './Item';
-import withWidth from '@material-ui/core/withWidth';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import PropTypes from 'prop-types';
 
-import { withStyles } from "@material-ui/core/styles";
-import Grid from '@material-ui/core/Grid';
+import { withStyles } from '@mui/styles';
+import { styled } from "@mui/material/styles";
+import Grid from '@mui/material/Grid';
 import { styles } from '../../themeHandler';
 
 class WordHistoryList extends React.Component {
@@ -57,10 +59,8 @@ class WordHistoryList extends React.Component {
   }
 }
 
-WordHistoryList.propTypes = {
-  width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
-};
+// WordHistoryList.propTypes removed - no longer using withWidth
 
 const WordHistoryListWrapped = withStyles(styles)(WordHistoryList);
 
-export default withWidth()(WordHistoryListWrapped);
+export default WordHistoryListWrapped;
