@@ -36,17 +36,28 @@ export class WordService {
   async queryWords(options: WordQueryOptions): Promise<WordFilterResult> {
     try {
       const filter = this.buildWordFilter(options);
-      const limit = Math.min(options.limit || config.wordDatabase.defaultLimit, config.wordDatabase.maxQueryLimit);
+      // Ensure limit is positive and within bounds
+      const rawLimit = options.limit || config.wordDatabase.defaultLimit;
+      const limit = Math.max(1, Math.min(rawLimit, config.wordDatabase.maxQueryLimit));
       
       logger.info('Querying words with filter:', { filter, limit });
       
       // Get total count for pagination
       const totalCount = await Word.countDocuments(filter);
       
+      // If no words match, return empty result
+      if (totalCount === 0) {
+        return {
+          words: [],
+          totalCount: 0,
+          hasMore: false
+        };
+      }
+      
       // Execute query with random sampling
       const words = await Word.aggregate([
         { $match: filter },
-        { $sample: { size: limit } },
+        { $sample: { size: Math.min(limit, totalCount) } }, // Don't sample more than available
         { $lookup: {
           from: 'users',
           localField: 'votes.user',
@@ -140,6 +151,10 @@ export class WordService {
       return await word.vote(userId as any, vote);
     } catch (error) {
       logger.error('Error voting on word:', error);
+      // Preserve original error message if it's already a meaningful error
+      if (error instanceof Error && error.message === 'Word not found') {
+        throw error;
+      }
       throw new Error('Failed to vote on word');
     }
   }
@@ -157,6 +172,10 @@ export class WordService {
       return await word.incrementViews();
     } catch (error) {
       logger.error('Error incrementing word views:', error);
+      // Preserve original error message if it's already a meaningful error
+      if (error instanceof Error && error.message === 'Word not found') {
+        throw error;
+      }
       throw new Error('Failed to increment word views');
     }
   }

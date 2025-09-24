@@ -53,8 +53,8 @@ export const createTestRoutine = (createdBy: any, overrides: any = {}): any => (
 });
 
 export const createTestWord = (overrides: any = {}): any => ({
-  cmudict_id: 12345,
-  wordid: 1,
+  cmudict_id: Math.floor(Math.random() * 1000000) + 10000, // Generate unique ID
+  wordid: Math.floor(Math.random() * 1000000) + 1,
   lexeme: 'test',
   consonant: 'T',
   vowel: 'EH',

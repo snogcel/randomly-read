@@ -45,10 +45,10 @@ describe('Routine Model', () => {
       const savedRoutine = await routine.save();
 
       expect(savedRoutine.subroutine).toHaveLength(3);
-      expect(savedRoutine.subroutine[0].type).toBe('word');
-      expect(savedRoutine.subroutine[1].type).toBe('sentence');
-      expect(savedRoutine.subroutine[2].type).toBe('intermission');
-      expect(savedRoutine.subroutine[2].intermissionText).toBe('Take a break');
+      expect(savedRoutine.subroutine[0]?.type).toBe('word');
+      expect(savedRoutine.subroutine[1]?.type).toBe('sentence');
+      expect(savedRoutine.subroutine[2]?.type).toBe('intermission');
+      expect(savedRoutine.subroutine[2]?.intermissionText).toBe('Take a break');
     });
   });
 

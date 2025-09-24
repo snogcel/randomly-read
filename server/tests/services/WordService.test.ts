@@ -1,6 +1,4 @@
 import { WordService } from '../../src/services/WordService';
-import { Word } from '../../src/models/Word';
-import { createTestWord } from '../helpers/testData';
 import { createWordInDB, createUserInDB, expectToThrowAsync } from '../helpers/testUtils';
 
 describe('WordService', () => {
@@ -23,6 +21,7 @@ describe('WordService', () => {
     beforeEach(async () => {
       // Create test words with different phonetic properties
       await createWordInDB({
+        cmudict_id: 10001,
         lexeme: 'bat',
         consonant: 'B',
         vowel: 'AE',
@@ -33,6 +32,7 @@ describe('WordService', () => {
       });
 
       await createWordInDB({
+        cmudict_id: 10002,
         lexeme: 'cat',
         consonant: 'K',
         vowel: 'AE',
@@ -43,6 +43,7 @@ describe('WordService', () => {
       });
 
       await createWordInDB({
+        cmudict_id: 10003,
         lexeme: 'dog',
         consonant: 'D',
         vowel: 'AO',
@@ -53,6 +54,7 @@ describe('WordService', () => {
       });
 
       await createWordInDB({
+        cmudict_id: 10004,
         lexeme: 'big',
         consonant: 'B',
         vowel: 'IH',
@@ -62,6 +64,7 @@ describe('WordService', () => {
       });
 
       await createWordInDB({
+        cmudict_id: 10005,
         lexeme: 'happy',
         consonant: 'HH',
         vowel: 'AE',
@@ -180,11 +183,13 @@ describe('WordService', () => {
 
     it('should handle age of acquisition filter', async () => {
       await createWordInDB({
+        cmudict_id: 20001,
         lexeme: 'simple',
         age_of_acquisition: 3
       });
 
       await createWordInDB({
+        cmudict_id: 20002,
         lexeme: 'complex',
         age_of_acquisition: 8
       });
@@ -212,8 +217,8 @@ describe('WordService', () => {
 
   describe('getRandomWord', () => {
     beforeEach(async () => {
-      await createWordInDB({ lexeme: 'test1' });
-      await createWordInDB({ lexeme: 'test2' });
+      await createWordInDB({ cmudict_id: 30001, lexeme: 'test1' });
+      await createWordInDB({ cmudict_id: 30002, lexeme: 'test2' });
     });
 
     it('should return a single random word', async () => {
@@ -233,6 +238,7 @@ describe('WordService', () => {
 
     it('should apply filters correctly', async () => {
       await createWordInDB({
+        cmudict_id: 30003,
         lexeme: 'filtered',
         consonant: 'F',
         vowel: 'IH'
@@ -295,8 +301,8 @@ describe('WordService', () => {
 
       expect(updatedWord.score).toBe(1);
       expect(updatedWord.votes).toHaveLength(1);
-      expect(updatedWord.votes[0].vote).toBe(1);
-      expect(updatedWord.votes[0].user).toEqual(testUser._id);
+      expect(updatedWord.votes[0]?.vote).toBe(1);
+      expect(updatedWord.votes[0]?.user).toEqual(testUser._id);
     });
 
     it('should add downvote to word', async () => {
@@ -308,7 +314,7 @@ describe('WordService', () => {
 
       expect(updatedWord.score).toBe(-1);
       expect(updatedWord.votes).toHaveLength(1);
-      expect(updatedWord.votes[0].vote).toBe(-1);
+      expect(updatedWord.votes[0]?.vote).toBe(-1);
     });
 
     it('should update existing vote', async () => {
@@ -328,7 +334,7 @@ describe('WordService', () => {
 
       expect(updatedWord.score).toBe(-1);
       expect(updatedWord.votes).toHaveLength(1);
-      expect(updatedWord.votes[0].vote).toBe(-1);
+      expect(updatedWord.votes[0]?.vote).toBe(-1);
     });
 
     it('should remove vote when voting 0', async () => {
@@ -366,7 +372,7 @@ describe('WordService', () => {
     let testWord: any;
 
     beforeEach(async () => {
-      testWord = await createWordInDB({ views: 5 });
+      testWord = await createWordInDB({ cmudict_id: 50001, views: 5 });
     });
 
     it('should increment word views', async () => {
@@ -387,30 +393,35 @@ describe('WordService', () => {
     beforeEach(async () => {
       // Create nouns with different subtypes
       await createWordInDB({
+        cmudict_id: 40001,
         lexeme: 'cat',
         type: 'noun',
         subtype: 'animal'
       });
 
       await createWordInDB({
+        cmudict_id: 40002,
         lexeme: 'park',
         type: 'noun',
         subtype: 'location'
       });
 
       await createWordInDB({
+        cmudict_id: 40003,
         lexeme: 'teacher',
         type: 'noun',
         subtype: 'person'
       });
 
       await createWordInDB({
+        cmudict_id: 40004,
         lexeme: 'apple',
         type: 'noun',
         subtype: 'food'
       });
 
       await createWordInDB({
+        cmudict_id: 40005,
         lexeme: 'book',
         type: 'noun',
         subtype: 'artifact'
@@ -418,11 +429,13 @@ describe('WordService', () => {
 
       // Create adjectives
       await createWordInDB({
+        cmudict_id: 40006,
         lexeme: 'big',
         type: 'adj'
       });
 
       await createWordInDB({
+        cmudict_id: 40007,
         lexeme: 'happy',
         type: 'adj'
       });
