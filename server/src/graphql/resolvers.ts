@@ -1,0 +1,400 @@
+import { WordService } from '../services/WordService';
+import { RoutineService } from '../services/RoutineService';
+import { ProgressService } from '../services/ProgressService';
+import { UserService } from '../services/UserService';
+import { SentenceService } from '../services/SentenceService';
+import { AuthenticationError, ForbiddenError, UserInputError } from 'apollo-server-express';
+import { GraphQLScalarType, Kind } from 'graphql';
+import { logger } from '../utils/logger';
+
+// Custom Date scalar
+const DateType = new GraphQLScalarType({
+  name: 'Date',
+  description: 'Date custom scalar type',
+  serialize(value: any) {
+    return value instanceof Date ? value.toISOString() : null;
+  },
+  parseValue(value: any) {
+    return new Date(value);
+  },
+  parseLiteral(ast) {
+    if (ast.kind === Kind.STRING) {
+      return new Date(ast.value);
+    }
+    return null;
+  },
+});
+
+export const resolvers = {
+  Date: DateType,
+
+  Query: {
+    // Word queries
+    async words(_: any, { input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const wordService = WordService.getInstance();
+        return await wordService.queryWords(input);
+      } catch (error) {
+        logger.error('Error in words query:', error);
+        throw new Error('Failed to fetch words');
+      }
+    },
+
+    async word(_: any, { id }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const wordService = WordService.getInstance();
+        const word = await wordService.getWordById(id);
+        if (!word) throw new UserInputError('Word not found');
+        return word;
+      } catch (error) {
+        logger.error('Error in word query:', error);
+        throw new Error('Failed to fetch word');
+      }
+    },
+
+    async randomWord(_: any, { input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const wordService = WordService.getInstance();
+        return await wordService.getRandomWord(input);
+      } catch (error) {
+        logger.error('Error in randomWord query:', error);
+        throw new Error('Failed to fetch random word');
+      }
+    },
+
+    // Sentence queries
+    async sentences(_: any, { input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const sentenceService = SentenceService.getInstance();
+        return await sentenceService.generateSentence(input, user.id);
+      } catch (error) {
+        logger.error('Error in sentences query:', error);
+        throw new Error('Failed to generate sentences');
+      }
+    },
+
+    // Routine queries
+    async routines(_: any, { input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        return await routineService.queryRoutines(input || {});
+      } catch (error) {
+        logger.error('Error in routines query:', error);
+        throw new Error('Failed to fetch routines');
+      }
+    },
+
+    async routine(_: any, { id }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        const routine = await routineService.getRoutineById(id, user.id);
+        if (!routine) throw new UserInputError('Routine not found');
+        return routine;
+      } catch (error) {
+        logger.error('Error in routine query:', error);
+        throw new Error('Failed to fetch routine');
+      }
+    },
+
+    async userRoutines(_: any, { userId }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      // Users can only see their own routines unless they're admin
+      const targetUserId = userId || user.id;
+      if (targetUserId !== user.id && !user.admin && !user.superuser) {
+        throw new ForbiddenError('Access denied');
+      }
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        return await routineService.getUserRoutines(targetUserId);
+      } catch (error) {
+        logger.error('Error in userRoutines query:', error);
+        throw new Error('Failed to fetch user routines');
+      }
+    },
+
+    // Progress queries
+    async exerciseSessions(_: any, { userId, routineId, limit, offset }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      // Users can only see their own sessions unless they're admin
+      if (userId !== user.id && !user.admin && !user.superuser) {
+        throw new ForbiddenError('Access denied');
+      }
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.getExerciseSessions(userId, { routineId, limit, offset });
+      } catch (error) {
+        logger.error('Error in exerciseSessions query:', error);
+        throw new Error('Failed to fetch exercise sessions');
+      }
+    },
+
+    async exerciseSession(_: any, { id }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        const session = await progressService.getExerciseSessionById(id);
+        if (!session) throw new UserInputError('Exercise session not found');
+        
+        // Check access
+        if (session.userId.toString() !== user.id && !user.admin && !user.superuser) {
+          throw new ForbiddenError('Access denied');
+        }
+        
+        return session;
+      } catch (error) {
+        logger.error('Error in exerciseSession query:', error);
+        throw new Error('Failed to fetch exercise session');
+      }
+    },
+
+    async progressRecords(_: any, { userId, routineId, startDate, endDate }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      // Users can only see their own progress unless they're admin
+      if (userId !== user.id && !user.admin && !user.superuser) {
+        throw new ForbiddenError('Access denied');
+      }
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.getProgressRecords(userId, { routineId, startDate, endDate });
+      } catch (error) {
+        logger.error('Error in progressRecords query:', error);
+        throw new Error('Failed to fetch progress records');
+      }
+    },
+
+    async fluencyReport(_: any, { userId, routineId, startDate, endDate }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      // Users can only see their own reports unless they're admin
+      if (userId !== user.id && !user.admin && !user.superuser) {
+        throw new ForbiddenError('Access denied');
+      }
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.generateFluencyReport(userId, routineId, startDate, endDate);
+      } catch (error) {
+        logger.error('Error in fluencyReport query:', error);
+        throw new Error('Failed to generate fluency report');
+      }
+    },
+
+    // User queries
+    async me(_: any, __: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      return user;
+    },
+
+    async users(_: any, { limit, offset }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      if (!user.admin && !user.superuser) throw new ForbiddenError('Admin access required');
+      
+      try {
+        const userService = UserService.getInstance();
+        return await userService.getUsers({ limit, offset });
+      } catch (error) {
+        logger.error('Error in users query:', error);
+        throw new Error('Failed to fetch users');
+      }
+    },
+
+    async user(_: any, { id }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      // Users can only see their own profile unless they're admin
+      if (id !== user.id && !user.admin && !user.superuser) {
+        throw new ForbiddenError('Access denied');
+      }
+      
+      try {
+        const userService = UserService.getInstance();
+        return await userService.getUserById(id);
+      } catch (error) {
+        logger.error('Error in user query:', error);
+        throw new Error('Failed to fetch user');
+      }
+    },
+  },
+
+  Mutation: {
+    // Word mutations
+    async voteWord(_: any, { wordId, vote }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const wordService = WordService.getInstance();
+        return await wordService.voteOnWord(wordId, user.id, vote);
+      } catch (error) {
+        logger.error('Error in voteWord mutation:', error);
+        throw new Error('Failed to vote on word');
+      }
+    },
+
+    // Routine mutations
+    async createRoutine(_: any, { input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        return await routineService.createRoutine(user.id, input);
+      } catch (error) {
+        logger.error('Error in createRoutine mutation:', error);
+        throw new Error(`Failed to create routine: ${error.message}`);
+      }
+    },
+
+    async updateRoutine(_: any, { id, input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        return await routineService.updateRoutine(id, user.id, input);
+      } catch (error) {
+        logger.error('Error in updateRoutine mutation:', error);
+        throw new Error(`Failed to update routine: ${error.message}`);
+      }
+    },
+
+    async deleteRoutine(_: any, { id }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        await routineService.deleteRoutine(id, user.id);
+        return true;
+      } catch (error) {
+        logger.error('Error in deleteRoutine mutation:', error);
+        throw new Error(`Failed to delete routine: ${error.message}`);
+      }
+    },
+
+    async assignRoutine(_: any, { routineId, userIds }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        await routineService.assignRoutineToUsers(routineId, userIds, user.id);
+        return true;
+      } catch (error) {
+        logger.error('Error in assignRoutine mutation:', error);
+        throw new Error(`Failed to assign routine: ${error.message}`);
+      }
+    },
+
+    async unassignRoutine(_: any, { routineId, userIds }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const routineService = RoutineService.getInstance();
+        await routineService.unassignRoutineFromUsers(routineId, userIds, user.id);
+        return true;
+      } catch (error) {
+        logger.error('Error in unassignRoutine mutation:', error);
+        throw new Error(`Failed to unassign routine: ${error.message}`);
+      }
+    },
+
+    // Progress mutations
+    async createExerciseSession(_: any, { input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.createExerciseSession(user.id, input);
+      } catch (error) {
+        logger.error('Error in createExerciseSession mutation:', error);
+        throw new Error('Failed to create exercise session');
+      }
+    },
+
+    async updateExerciseSession(_: any, { id, input }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.updateExerciseSession(id, user.id, input);
+      } catch (error) {
+        logger.error('Error in updateExerciseSession mutation:', error);
+        throw new Error('Failed to update exercise session');
+      }
+    },
+
+    async addWordAttempt(_: any, { sessionId, attempt }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.addWordAttempt(sessionId, user.id, attempt);
+      } catch (error) {
+        logger.error('Error in addWordAttempt mutation:', error);
+        throw new Error('Failed to add word attempt');
+      }
+    },
+
+    async completeExerciseSession(_: any, { id }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const progressService = ProgressService.getInstance();
+        return await progressService.completeExerciseSession(id, user.id);
+      } catch (error) {
+        logger.error('Error in completeExerciseSession mutation:', error);
+        throw new Error('Failed to complete exercise session');
+      }
+    },
+
+    // User mutations
+    async updateProfile(_: any, { firstName, lastName, email }: any, { user }: any) {
+      if (!user) throw new AuthenticationError('Authentication required');
+      
+      try {
+        const userService = UserService.getInstance();
+        return await userService.updateUser(user.id, { firstName, lastName, email });
+      } catch (error) {
+        logger.error('Error in updateProfile mutation:', error);
+        throw new Error('Failed to update profile');
+      }
+    },
+  },
+
+  // Field resolvers
+  Routine: {
+    totalDuration(routine: any) {
+      return routine.getTotalDuration();
+    },
+    stepCount(routine: any) {
+      return routine.getStepCount();
+    },
+  },
+
+  ExerciseSession: {
+    duration(session: any) {
+      return session.getDuration();
+    },
+  },
+
+  Word: {
+    upvotePercentage(word: any) {
+      return word.getUpvotePercentage();
+    },
+  },
+};
