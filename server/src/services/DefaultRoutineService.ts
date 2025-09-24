@@ -31,7 +31,7 @@ export class DefaultRoutineService {
   private routines: DefaultRoutineConfig[];
 
   private constructor() {
-    this.routines = defaultRoutinesConfig.defaultRoutines;
+    this.routines = defaultRoutinesConfig.defaultRoutines as DefaultRoutineConfig[];
     logger.info(`Loaded ${this.routines.length} default routines`);
   }
 
@@ -105,7 +105,16 @@ export class DefaultRoutineService {
 
     // Fallback to beginner if no routines found for level
     const beginnerRoutines = this.getDefaultRoutinesByDifficulty('beginner');
-    return beginnerRoutines[0] || this.routines[0];
+    if (beginnerRoutines.length > 0) {
+      return beginnerRoutines[0];
+    }
+
+    // Final fallback to first routine
+    if (this.routines.length > 0) {
+      return this.routines[0];
+    }
+
+    throw new Error('No default routines available');
   }
 
   /**

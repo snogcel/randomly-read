@@ -276,7 +276,13 @@ class RoutineService {
                     type: step.type,
                     duration: step.duration,
                     repetitions: step.repetitions,
-                    phoneticConfig: step.phoneticConfig,
+                    phoneticConfig: step.phoneticConfig ? {
+                        vowels: step.phoneticConfig.vowels,
+                        consonants: step.phoneticConfig.consonants,
+                        position: step.phoneticConfig.positions[0] || 'initial',
+                        syllables: step.phoneticConfig.syllables,
+                        gradeLevel: step.phoneticConfig.grades.join(',')
+                    } : undefined,
                     intermissionText: step.intermissionText
                 }))
             };

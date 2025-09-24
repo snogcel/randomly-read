@@ -458,10 +458,16 @@ export class RoutineService {
         gradeLevel: routineData.difficulty,
         subroutine: routineData.steps.map(step => ({
           id: step.id,
-          type: step.type,
+          type: step.type as 'word' | 'sentence' | 'intermission',
           duration: step.duration,
           repetitions: step.repetitions,
-          phoneticConfig: step.phoneticConfig,
+          phoneticConfig: step.phoneticConfig ? {
+            vowels: step.phoneticConfig.vowels,
+            consonants: step.phoneticConfig.consonants,
+            position: step.phoneticConfig.positions[0] || 'initial',
+            syllables: step.phoneticConfig.syllables,
+            gradeLevel: step.phoneticConfig.grades.join(',')
+          } : undefined,
           intermissionText: step.intermissionText
         }))
       };

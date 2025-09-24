@@ -54,7 +54,13 @@ class DefaultRoutineService {
             return routinesByLevel[0];
         }
         const beginnerRoutines = this.getDefaultRoutinesByDifficulty('beginner');
-        return beginnerRoutines[0] || this.routines[0];
+        if (beginnerRoutines.length > 0) {
+            return beginnerRoutines[0];
+        }
+        if (this.routines.length > 0) {
+            return this.routines[0];
+        }
+        throw new Error('No default routines available');
     }
     validateRoutineConfig(routine) {
         const errors = [];
