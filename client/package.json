@@ -70,6 +70,9 @@
     "test:graphql": "node src/tests/runGraphQLTests.js",
     "test:apollo": "react-scripts test --testPathPattern=Apollo --watchAll=false",
     "test:wordcard": "react-scripts test --testPathPattern=WordCard --watchAll=false",
+    "test:routes": "node src/tests/runRandomlyReadTests.js",
+    "test:randomly-read": "react-scripts test --testPathPattern=RandomlyRead --watchAll=false",
+    "test:randomly-read-coverage": "react-scripts test --testPathPattern=RandomlyRead --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "type-check": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx,.js,.jsx",
@@ -131,6 +134,6 @@
   "resolutions": {
     "cheerio": "1.0.0-rc.12"
   },
-  "proxy": "https://api.easyonset.com",
+  "proxy": "http://localhost:4000",
   "homepage": "https://easyonset.com/"
 }

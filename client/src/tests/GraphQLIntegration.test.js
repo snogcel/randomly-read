@@ -11,7 +11,7 @@ describe('GraphQL Integration Tests', () => {
   beforeEach(() => {
     // Setup Apollo Client
     const httpLink = createHttpLink({
-      uri: `https://api.easyonset.com/graphql`,
+      uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'https://api.easyonset.com/graphql',
     });
 
     const authLink = setContext((_, { headers }) => {

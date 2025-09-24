@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-const baseUrl = `https://api.easyonset.com/api`;
+const baseUrl = `${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api`;
 
 const methods = {
   get: async function (endpoint, token = null) {

@@ -31,32 +31,32 @@ class FluencyReportHistory extends React.Component {
     
       componentDidMount() {
 
-        fetch('https://api.easyonset.com/api/posts')
+        fetch(`${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api/posts`)
          .then(response => response.json())
          .then(data => console.log("posts", data[0]))
          .catch(error => console.log("posts", error))
      
-        fetch('https://api.easyonset.com/api/interactions')
+        fetch(`${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api/interactions`)
          .then(response => response.json())
          .then(data => console.log("interactions", {data}))
          .catch(error => console.log("interactions",error))
 
-        fetch('https://api.easyonset.com/api/interactions/day')
+        fetch(`${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api/interactions/day`)
          .then(response => response.json())
          .then(data => console.log("interactions by day", {data}))
          .catch(error => console.log("interactions by day", error)) 
 
-        fetch('https://api.easyonset.com/api/interactions/week')
+        fetch(`${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api/interactions/week`)
          .then(response => response.json())
          .then(data => console.log("interactions by week", {data}))
          .catch(error => console.log("interactions by week", error)) 
 
-        fetch('https://api.easyonset.com/api/interactions/month')
+        fetch(`${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api/interactions/month`)
          .then(response => response.json())
          .then(data => console.log("interactions by month", {data}))
          .catch(error => console.log("interactions by month", error))   
 
-        fetch('https://api.easyonset.com/api/interactions/3months')
+        fetch(`${process.env.REACT_APP_API_URL || 'https://api.easyonset.com'}/api/interactions/3months`)
          .then(response => response.json())
          .then(data => console.log("interactions by 3 months", {data}))
          .catch(error => console.log("interactions by 3 months", error)) 

@@ -11,7 +11,7 @@ import { buildQuery } from '../util/api';
 
 // Test configuration
 const TEST_CONFIG = {
-  apiUrl: 'https://api.easyonset.com/graphql',
+  apiUrl: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'https://api.easyonset.com/graphql',
   testToken: 'your-test-token-here', // Replace with actual token for testing
   testQueries: [
     {

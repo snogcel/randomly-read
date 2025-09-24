@@ -8,7 +8,7 @@ describe('Apollo Client Configuration', () => {
   beforeEach(() => {
     // Recreate the Apollo Client configuration from App/Component.js
     const httpLink = createHttpLink({
-      uri: `https://api.easyonset.com/graphql`,
+      uri: process.env.REACT_APP_GRAPHQL_ENDPOINT || 'https://api.easyonset.com/graphql',
     });
 
     const authLink = setContext((_, { headers }) => {
