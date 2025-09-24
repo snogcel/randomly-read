@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
 
@@ -1307,7 +1308,7 @@ class RoutineBuilder extends React.Component {
             </Grid>
 
           </>
-        ) : ( this.props.history.push("/") )}
+        ) : null}
 
       </Grid>
 
@@ -1323,6 +1324,7 @@ RoutineBuilder.propTypes = {
 // Wrapper component to provide theme and width
 function RoutineBuilderWrapper(props) {
   const theme = useTheme();
+  const navigate = useNavigate();
   
   // Use useMediaQuery to replace withWidth
   const isXs = useMediaQuery(theme.breakpoints.only('xs'));
@@ -1337,6 +1339,16 @@ function RoutineBuilderWrapper(props) {
   else if (isMd) width = 'md';
   else if (isLg) width = 'lg';
   else if (isXl) width = 'xl';
+  
+  useEffect(() => {
+    if (!props.user) {
+      navigate("/");
+    }
+  }, [props.user, navigate]);
+
+  if (!props.user) {
+    return null;
+  }
   
   return <RoutineBuilder {...props} theme={theme} width={width} />;
 }

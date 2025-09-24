@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
+import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -436,7 +437,7 @@ class Administration extends React.Component {
             </Grid>
 
           </>
-        ) : (this.props.history.push("/"))}
+        ) : null}
 
       </Grid>
 
@@ -446,6 +447,22 @@ class Administration extends React.Component {
 
 }
 
-const AdministrationWrapped = withStyles(styles)(Administration);
+const AdministrationWithStyles = withStyles(styles)(Administration);
 
-export default AdministrationWrapped;
+const AdministrationWrapper = (props) => {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!props.user) {
+      navigate("/");
+    }
+  }, [props.user, navigate]);
+
+  if (!props.user) {
+    return null;
+  }
+
+  return <AdministrationWithStyles {...props} />;
+};
+
+export default AdministrationWrapper;

@@ -1,74 +1,58 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@mui/styles';
-import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
-
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 import { styles } from '../../themeHandler';
-
 import ViewHistoryContainer from '../ViewHistory/Container';
 
-class UserProfile extends React.Component {
+const UserProfile = (props) => {
+  const navigate = useNavigate();
+  const { user, classes, width } = props;
 
-  render() {
+  let selectedUserId;
+  let selectedUsername;
+  let pageWrapperWidth = 12;
 
-    const { user } = this.props;
-    const { classes } = this.props;
-    const { width } = this.props;
-
-    let selectedUserId;
-    let selectedUsername;
-    let pageWrapperWidth = 12;
-
-    if (width === "xl") {
-      pageWrapperWidth = 8;
-    }
-
-    if (user) {
-      selectedUserId = user.id;
-      selectedUsername = user.username;
-    }
-
-    return (
-
-      <Grid className={classes.root}>
-
-        <Grid container spacing={0} justify="center">
-
-          <Grid item xs={pageWrapperWidth}>
-
-            {user ? (
-              <>
-                <Card className={classes.userAdminCard}>
-                  <CardContent>
-
-                    <Grid container justify="center">
-                      <Grid item xs={12}>
-                        <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
-                      </Grid>
-                    </Grid>
-
-                  </CardContent>
-                </Card>
-              </>
-            ) : ( this.props.history.push("/") )}
-
-          </Grid>
-
-        </Grid>
-
-      </Grid>
-
-    )
-
+  if (width === "xl") {
+    pageWrapperWidth = 8;
   }
-}
+
+  if (user) {
+    selectedUserId = user.id;
+    selectedUsername = user.username;
+  }
+
+  useEffect(() => {
+    if (!user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
+
+  if (!user) {
+    return null;
+  }
+
+  return (
+    <Grid className={classes.root}>
+      <Grid container spacing={0} justify="center">
+        <Grid item xs={pageWrapperWidth}>
+          <Card className={classes.userAdminCard}>
+            <CardContent>
+              <Grid container justify="center">
+                <Grid item xs={12}>
+                  <ViewHistoryContainer userId={selectedUserId} username={selectedUsername} />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+};
 
 // UserProfile.propTypes removed - no longer using withWidth
 

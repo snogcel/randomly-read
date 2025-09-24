@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Field } from 'redux-form';
+import { useNavigate } from 'react-router-dom';
 import categories from '../../categories';
 import Form from '../shared/form/Form';
 import renderField from '../shared/form/renderField';
@@ -16,60 +17,60 @@ const postTypes = [
   }
 ];
 
-class CreatePostForm extends React.Component {
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const { token, post, history } = this.props;
-    if (!token) history.push('/');
-    if (post) history.push(`/a/${post.category}/${post.id}`);
-  }
+const CreatePostForm = (props) => {
+  const navigate = useNavigate();
+  const { token, post, isFetching, handleSubmit, attemptCreatePost, form } = props;
 
-  onSubmit = post => this.props.attemptCreatePost(post);
+  useEffect(() => {
+    if (!token) navigate('/');
+    if (post) navigate(`/a/${post.category}/${post.id}`);
+  }, [token, post, navigate]);
 
-  mapCategories = () =>
+  const onSubmit = post => attemptCreatePost(post);
+
+  const mapCategories = () =>
     categories.map((category, index) => (
       <option key={index} value={category}>
         {category}
       </option>
     ));
 
-  render() {
-    return (
-      <Form
-        loading={this.props.isFetching}
-        onSubmit={this.props.handleSubmit(this.onSubmit)}
-        wide
+  return (
+    <Form
+      loading={isFetching}
+      onSubmit={handleSubmit(onSubmit)}
+      wide
+    >
+      <Field
+        name='type'
+        label='type'
+        type='radiogroup'
+        component={renderField}
+        options={postTypes}
+      />
+      <Field
+        name='category'
+        label='category'
+        type='select'
+        component={renderField}
       >
+        {mapCategories()}
+      </Field>
+      <Field name='title' label='title' type='text' component={renderField} />
+      {form.values.type === 'link' && (
+        <Field name='url' label='url' type='url' component={renderField} />
+      )}
+      {form.values.type === 'text' && (
         <Field
-          name='type'
-          label='type'
-          type='radiogroup'
+          name='text'
+          label='text'
+          type='textarea'
           component={renderField}
-          options={postTypes}
         />
-        <Field
-          name='category'
-          label='category'
-          type='select'
-          component={renderField}
-        >
-          {this.mapCategories()}
-        </Field>
-        <Field name='title' label='title' type='text' component={renderField} />
-        {this.props.form.values.type === 'link' && (
-          <Field name='url' label='url' type='url' component={renderField} />
-        )}
-        {this.props.form.values.type === 'text' && (
-          <Field
-            name='text'
-            label='text'
-            type='textarea'
-            component={renderField}
-          />
-        )}
-        <SubmitButton type='submit'>create post</SubmitButton>
-      </Form>
-    );
-  }
-}
+      )}
+      <SubmitButton type='submit'>create post</SubmitButton>
+    </Form>
+  );
+};
 
 export default CreatePostForm;

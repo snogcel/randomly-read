@@ -104,7 +104,7 @@ const App = (props) => {
 
             {/* { ((typeof(user) === "undefined") || (user === null) || (typeof(user) !== "undefined" && user.isActive)) && <Route component={AppBarContainer} /> } */}
 
-            <Route component={ErrorNotificationContainer} />
+            <ErrorNotificationContainer />
             <Routes>
 
               <Route path='/login' element={<LoginFormContainer />} />

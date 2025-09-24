@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { styled, useTheme } from "@mui/material/styles";
+import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 
 import Card from '@mui/material/Card';
@@ -16,6 +17,13 @@ import store from "../../store";
 function InteractionsHome(props) {
   const theme = useTheme();
   const classes = styles(theme);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!props.user) {
+      navigate("/");
+    }
+  }, [props.user, navigate]);
 
   const [state, setState] = useState({
     intention: [
@@ -91,7 +99,7 @@ function InteractionsHome(props) {
 
           </CardContent>
         </Card>
-      ) : ( props.history.push("/") )}
+      ) : null}
     </Grid>
   );
 }

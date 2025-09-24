@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from "react-ga4";
 import { styled } from "@mui/material/styles";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Identities from './Identities/Identities';
 
@@ -86,6 +87,8 @@ function LinkTab(props) {
 const RRHome = props => {
   const theme = useTheme();
   const classes = styles(theme);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient, auto } = props;
   
@@ -143,12 +146,12 @@ const RRHome = props => {
 
     if (!subpath) subpath = 0;
 
-    let location = props.history.location.pathname;
+    let currentLocation = location.pathname;
 
     for (let i = 0; i < levels.length; i++) {
-      if (location.includes(levels[i])) {
-        location = root + levels[i] + "/" + stages[subpath];
-        props.history.push(location);
+      if (currentLocation.includes(levels[i])) {
+        currentLocation = root + levels[i] + "/" + stages[subpath];
+        navigate(currentLocation);
       }
     }
     
@@ -185,7 +188,7 @@ const RRHome = props => {
     for (let i = 0; i < levels.length; i++) {
       if (location.includes(levels[i])) {
         location = root + levels[i] + "/" + stages[subpath];
-        props.history.push(location);
+        navigate(location);
       }
     }
     
@@ -213,7 +216,7 @@ const RRHome = props => {
 
       updatePathname(pathname);
       setValue(pathname);
-      props.history.push({pathname});
+      navigate(pathname);
     }
   }
 

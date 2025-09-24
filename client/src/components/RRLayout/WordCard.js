@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useCallback } from 'react';
 import PropTypes from "prop-types";
 import { withStyles } from '@mui/styles';
-import { styled } from "@mui/material/styles";
+
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Card from '@mui/material/Card';
@@ -15,40 +15,8 @@ import Word from './elements/Word';
 import Sentence from './elements/Sentence';
 
 const WordCard = (props) => {
-  const [open, setOpen] = React.useState(false);
-  const [buttonColor, setButtonColor] = React.useState('White');
   const fetchingRef = useRef(false);
   const resultRef = useRef(null);
-
-  useEffect(() => {
-    window.scrollTo(0, 0); // solves case of registration from splash page / scroll
-  }, []);
-
-  const handleOpen = () => {
-    setOpen(true);
-    props.setModalOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    props.setModalOpen(false);
-  };
-
-  const handleChange = (name) => {
-    console.log("-state change-");
-    console.log("-fetching:", fetchingRef.current);
-
-    props.addRoutineVowel([name]);
-    // Query will automatically refetch due to variable changes
-
-    // TODO - determine if query should be refreshed
-  };
-
-  const setWord = (word, definitions) => {
-    let obj = {word: word, definitions: definitions};
-    console.log("OBJ" , obj);
-    props.addWord(obj);
-  };
 
   const buildQuery = useCallback(() => {
     let vowel = JSON.stringify(props.vowel);
@@ -200,48 +168,9 @@ const WordCard = (props) => {
     }
   }, [props.vowel, props.consonant, props.syllables, props.limit, props.position, props.age, props.mode]);
 
-  const { classes } = props;
-
-  // Early return for routine display
-  if (props.currentExercise.length > 0 && props.currentExerciseNumber === null) {
-    // calculate and format routine duration
-    let duration = 0;
-
-    for (let i = 0; i < props.currentExercise.length; i++) {
-      duration += (props.currentExercise[i].rangeVal * props.currentExercise[i].repetitions);
-    }
-
-    let minutes = Math.floor(duration / 60);
-    let seconds = duration - (minutes * 60);
-
-    let formattedDuration;
-    if (minutes === 0) {
-      formattedDuration = "Duration: " + seconds + " seconds";
-    } else if (minutes === 1) {
-      formattedDuration = "Duration: " + minutes + " minute and " + seconds + " seconds";
-    } else {
-      formattedDuration = "Duration: " + minutes + " minutes and " + seconds + " seconds";
-    }
-
-    return (
-      <Grid container justify="center">
-        <Grid item xs={10} sm={12}>
-          <Paper className={classes.routineDetails}>
-            <Typography variant="h5" component="h2" className={classes.heading}>{props.name}</Typography>
-            <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
-            <br />
-            <RoutineDescription description={props.description} />
-          </Paper>
-        </Grid>
-      </Grid>
-    );
-  }
-
-  if (props.vowel === null || props.consonant === null) return null;
-
   const query = buildQuery();
   
-  // Use useQuery hook with proper configuration
+  // Use useQuery hook with proper configuration - moved to top to follow hooks rules
   const { loading, error, data, refetch } = useQuery(query, {
     skip: !query || props.mode === 'Intermission',
     fetchPolicy: "no-cache",
@@ -252,32 +181,16 @@ const WordCard = (props) => {
     }
   });
 
-  // Set fetching state
-  fetchingRef.current = true;
+  useEffect(() => {
+    window.scrollTo(0, 0); // solves case of registration from splash page / scroll
+  }, []);
 
-  // Handle error state
-  if (error) {
-    resultRef.current = null;
-    fetchingRef.current = false;
-
-    const errorContent = (
-      <div>
-        <Word value={{name: "No Result Found", selectedVowel: props.vowel}} />
-      </div>
-    );
-
-    return (
-      <Grid container className={classes.wordGrid} justify="center">
-        <Grid item>
-          {errorContent}
-        </Grid>
-      </Grid>
-    );
-  }
-
-  // Process data when available
+  // Process data when available - moved to top to follow hooks rules
   useEffect(() => {
     if (data) {
+      // Set fetching state
+      fetchingRef.current = true;
+
       // check if data object is empty
       if (Object.keys(data).length === 0 && data.constructor === Object) {
         resultRef.current = null;
@@ -355,6 +268,67 @@ const WordCard = (props) => {
       }
     }
   }, [data, props.mode, props.addQueryResult, refetch]);
+
+
+
+  const { classes } = props;
+
+  // Early return for routine display
+  if (props.currentExercise.length > 0 && props.currentExerciseNumber === null) {
+    // calculate and format routine duration
+    let duration = 0;
+
+    for (let i = 0; i < props.currentExercise.length; i++) {
+      duration += (props.currentExercise[i].rangeVal * props.currentExercise[i].repetitions);
+    }
+
+    let minutes = Math.floor(duration / 60);
+    let seconds = duration - (minutes * 60);
+
+    let formattedDuration;
+    if (minutes === 0) {
+      formattedDuration = "Duration: " + seconds + " seconds";
+    } else if (minutes === 1) {
+      formattedDuration = "Duration: " + minutes + " minute and " + seconds + " seconds";
+    } else {
+      formattedDuration = "Duration: " + minutes + " minutes and " + seconds + " seconds";
+    }
+
+    return (
+      <Grid container justify="center">
+        <Grid item xs={10} sm={12}>
+          <Paper className={classes.routineDetails}>
+            <Typography variant="h5" component="h2" className={classes.heading}>{props.name}</Typography>
+            <Typography gutterBottom variant="body2" color="textSecondary" component="p">{formattedDuration}</Typography>
+            <br />
+            <RoutineDescription description={props.description} />
+          </Paper>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  if (props.vowel === null || props.consonant === null) return null;
+
+  // Handle error state
+  if (error) {
+    resultRef.current = null;
+    fetchingRef.current = false;
+
+    const errorContent = (
+      <div>
+        <Word value={{name: "No Result Found", selectedVowel: props.vowel}} />
+      </div>
+    );
+
+    return (
+      <Grid container className={classes.wordGrid} justify="center">
+        <Grid item>
+          {errorContent}
+        </Grid>
+      </Grid>
+    );
+  }
 
   // Show loading state
   if (loading) return null;

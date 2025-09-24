@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactGA from "react-ga4";
 import { Helmet } from 'react-helmet';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import { styled } from "@mui/material/styles";
 import { useTheme } from '@mui/material/styles';
@@ -91,6 +92,8 @@ function LinkTab(props) {
 const RRHome = props => {
   const theme = useTheme();
   const classes = styles(theme);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
 
@@ -141,7 +144,7 @@ const RRHome = props => {
     for (let i = 0; i < levels.length; i++) {
       if (location.includes(levels[i])) {
         location = root + stages[subpath];
-        props.history.push(location);
+        navigate(location);
       }
     }
     
@@ -152,7 +155,7 @@ const RRHome = props => {
   }
 
   function handleClick(e, pathname, routineId) {
-    if (props.history.location.pathname !== pathname) {
+    if (location.pathname !== pathname) {
       props.setInProgress(false);
       props.setExercisePause(false);
       props.updateTime(0);
@@ -161,7 +164,7 @@ const RRHome = props => {
       props.clearQueryResults();
       props.resetWordCard();
       props.updateId(routineId);
-      props.history.push({pathname});
+      navigate(pathname);
     }
   }
 
