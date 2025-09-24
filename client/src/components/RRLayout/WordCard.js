@@ -17,22 +17,24 @@ import Sentence from './elements/Sentence';
 const WordCard = (props) => {
   const fetchingRef = useRef(false);
   const resultRef = useRef(null);
+  
+  const { vowel, consonant, syllables, limit, position, age, mode, addQueryResult } = props;
 
   const buildQuery = useCallback(() => {
-    let vowel = JSON.stringify(props.vowel);
-    let consonant = JSON.stringify(props.consonant);
-    let syllables = JSON.stringify(props.syllables);
-    let limit = parseInt(props.limit);
+    let vowelStr = JSON.stringify(vowel);
+    let consonantStr = JSON.stringify(consonant);
+    let syllablesStr = JSON.stringify(syllables);
+    let limitInt = parseInt(limit);
 
-    let position = JSON.stringify(props.position);
-    let age = JSON.stringify(props.age);
+    let positionStr = JSON.stringify(position);
+    let ageStr = JSON.stringify(age);
 
-    switch(props.mode) {
+    switch(mode) {
         case 'Sentence':
-            if (props.consonant.length > 0 && props.vowel.length > 0) {
+            if (consonant.length > 0 && vowel.length > 0) {
                 return gql`
                 {
-                    sentences(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    sentences(vowel: ${vowelStr}, consonant: ${consonantStr}, syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         words {
                           id
                           votes {
@@ -46,10 +48,10 @@ const WordCard = (props) => {
                     }
                 }
                 `;
-            } else if (props.consonant.length > 0 && !props.vowel.length > 0) {
+            } else if (consonant.length > 0 && !vowel.length > 0) {
               return gql`
                 {
-                    sentences(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    sentences(consonant: ${consonantStr}, syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         words {
                           id
                           votes {
@@ -63,10 +65,10 @@ const WordCard = (props) => {
                     }
                 }
                 `;
-            } else if (!props.consonant.length > 0 && props.vowel.length > 0) {
+            } else if (!consonant.length > 0 && vowel.length > 0) {
               return gql`
                 {
-                    sentences(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    sentences(vowel: ${vowelStr}, syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         words {
                           id
                           votes {
@@ -83,7 +85,7 @@ const WordCard = (props) => {
             } else {
                 return gql`
                 {
-                    sentences(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    sentences(syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         words {
                           id
                           votes {
@@ -100,10 +102,10 @@ const WordCard = (props) => {
             }
 
         case 'Word':
-            if (props.consonant.length > 0 && props.vowel.length > 0) {
+            if (consonant.length > 0 && vowel.length > 0) {
                 return gql`
                 {
-                    words(vowel: ${vowel}, consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    words(vowel: ${vowelStr}, consonant: ${consonantStr}, syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         id
                         votes {
                           user
@@ -115,10 +117,10 @@ const WordCard = (props) => {
                     }
                 }
                 `;
-            } else if (props.consonant.length > 0 && !props.vowel.length > 0) {
+            } else if (consonant.length > 0 && !vowel.length > 0) {
               return gql`
                 {
-                    words(consonant: ${consonant}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    words(consonant: ${consonantStr}, syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         id
                         votes {
                           user
@@ -130,10 +132,10 @@ const WordCard = (props) => {
                     }
                 }
                 `;
-            } else if (!props.consonant.length > 0 && props.vowel.length > 0) {
+            } else if (!consonant.length > 0 && vowel.length > 0) {
               return gql`
                 {
-                    words(vowel: ${vowel}, syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    words(vowel: ${vowelStr}, syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         id
                         votes {
                           user
@@ -148,7 +150,7 @@ const WordCard = (props) => {
             } else {
                 return gql`
                 {
-                    words(syllables: ${syllables}, limit: ${limit}, position: ${position}, age: ${age}) {                    
+                    words(syllables: ${syllablesStr}, limit: ${limitInt}, position: ${positionStr}, age: ${ageStr}) {                    
                         id
                         votes {
                           user
@@ -166,13 +168,13 @@ const WordCard = (props) => {
             // console.log("No Query...");
             return null;
     }
-  }, [props.vowel, props.consonant, props.syllables, props.limit, props.position, props.age, props.mode]);
+  }, [vowel, consonant, syllables, limit, position, age, mode]);
 
   const query = buildQuery();
   
   // Use useQuery hook with proper configuration - moved to top to follow hooks rules
   const { loading, error, data, refetch } = useQuery(query, {
-    skip: !query || props.mode === 'Intermission',
+    skip: !query || mode === 'Intermission',
     fetchPolicy: "no-cache",
     errorPolicy: "all",
     variables: { v: Math.random() },
@@ -199,7 +201,7 @@ const WordCard = (props) => {
       }
 
       // check if word is a repeat...
-      if (props.mode === 'Word' && data.words) {
+      if (mode === 'Word' && data.words) {
         if (resultRef.current === data.words.lexeme && fetchingRef.current) { // if repeat word, refetch
           refetch();
         }
@@ -219,10 +221,10 @@ const WordCard = (props) => {
           };
 
           fetchingRef.current = false;
-          props.addQueryResult(fetched);
+          addQueryResult(fetched);
         }
 
-      } else if (props.mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
+      } else if (mode === 'Sentence' && (typeof data.sentences !== "undefined") && data.sentences.words.length > 0) { // if we are fetching sentences
 
         // build result
         let result = "";
@@ -255,7 +257,7 @@ const WordCard = (props) => {
             })
           }
 
-          props.addQueryResult({
+          addQueryResult({
             "id": null,
             "title": fetched,
             "score": null,
@@ -267,7 +269,7 @@ const WordCard = (props) => {
         }
       }
     }
-  }, [data, props.mode, props.addQueryResult, refetch]);
+  }, [data, mode, addQueryResult, refetch]);
 
 
 
@@ -308,7 +310,7 @@ const WordCard = (props) => {
     );
   }
 
-  if (props.vowel === null || props.consonant === null) return null;
+  if (vowel === null || consonant === null) return null;
 
   // Handle error state
   if (error) {
@@ -317,7 +319,7 @@ const WordCard = (props) => {
 
     const errorContent = (
       <div>
-        <Word value={{name: "No Result Found", selectedVowel: props.vowel}} />
+        <Word value={{name: "No Result Found", selectedVowel: vowel}} />
       </div>
     );
 
@@ -334,11 +336,11 @@ const WordCard = (props) => {
   if (loading) return null;
 
   // Show intermission if needed
-  if (!props.vowel || (!props.vowel.length && !props.mode)) {
+  if (!vowel || (!vowel.length && !mode)) {
     return null;
   }
 
-  if (props.mode === 'Intermission') {
+  if (mode === 'Intermission') {
     return (
       <Grid container className={classes.wordGrid} justify="center">
         <Grid item>
@@ -350,19 +352,19 @@ const WordCard = (props) => {
 
   // Render the word/sentence content
   let content;
-  if (props.mode === 'Sentence') {
+  if (mode === 'Sentence') {
     content = (
       <Card elevation={1} className={classes.card}>
         <CardContent>
-          <Sentence value={{name: resultRef.current, selectedVowel: props.vowel}} />
+          <Sentence value={{name: resultRef.current, selectedVowel: vowel}} />
         </CardContent>
       </Card>
     );
-  } else if (props.mode === 'Word') {
+  } else if (mode === 'Word') {
     content = (
       <Card elevation={1} className={classes.card}>
         <CardContent>
-          <Word value={{name: resultRef.current, selectedVowel: props.vowel}} />
+          <Word value={{name: resultRef.current, selectedVowel: vowel}} />
         </CardContent>
       </Card>
     );
@@ -370,7 +372,7 @@ const WordCard = (props) => {
     content = (
       <Card elevation={0} className={classes.card}>
         <CardContent>
-          <Sentence value={{name: resultRef.current, selectedVowel: props.vowel}} />
+          <Sentence value={{name: resultRef.current, selectedVowel: vowel}} />
         </CardContent>
       </Card>
     );

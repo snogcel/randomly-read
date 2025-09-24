@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactGA from "react-ga4";
-import { styled } from "@mui/material/styles";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Identities from './Identities/Identities';
@@ -15,7 +14,6 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 
 import Hidden from '@mui/material/Hidden';
 import Fade from '@mui/material/Fade';
@@ -33,9 +31,7 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronCircleRight, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-
-import BuyMeACoffee from './Donate/Component';
+import { faChevronCircleRight } from '@fortawesome/free-solid-svg-icons';
 
 import { styles } from '../../exerciseThemeHandler';
 
@@ -90,10 +86,9 @@ const RRHome = props => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient, auto } = props;
+  const { TimerContainer, RoutineSelectContainer, ExerciseIntroduction, ExerciseTechniques, ApolloClient } = props;
   
   // Use useMediaQuery to replace withWidth
-  const isXs = useMediaQuery(theme.breakpoints.only('xs'));
   const isSm = useMediaQuery(theme.breakpoints.only('sm'));
   const isMd = useMediaQuery(theme.breakpoints.only('md'));
   const isLg = useMediaQuery(theme.breakpoints.only('lg'));
@@ -106,12 +101,12 @@ const RRHome = props => {
   else if (isSm) width = 'sm';
 
   let subpath = 0;
-  let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+  let { levels, stages, leveltitle } = IdentityConfig;
 
-  let location = props.history.location.pathname;
+  let currentLocation = location.pathname;
 
   for (let i = 0; i < levels.length; i++) {
-    if (location.includes(levels[i])) {
+    if (currentLocation.includes(levels[i])) {
       subpath = i;   
     }
   }
@@ -125,7 +120,7 @@ const RRHome = props => {
   let selectedStage = 0; // set default stage
 
   for (let i = 0; i < stages.length; i++) {
-    if (location.includes(stages[i])) {
+    if (currentLocation.includes(stages[i])) {
       selectedStage = i; // render selected stage
     }
   }
@@ -142,7 +137,7 @@ const RRHome = props => {
     // set router url to match page section
     // console.log(subpath);
 
-    let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+    let { root, levels, stages } = IdentityConfig;
 
     if (!subpath) subpath = 0;
 
@@ -161,20 +156,18 @@ const RRHome = props => {
 
   }
 
-  function handleShortcut(e, subpath, location, routineId) {
+  function handleShortcut(e, subpath, targetPath, routineId) {
 
     // set router url to match page section
     console.log(subpath);
 
-    let { root, levels, stages, leveltitle, pathtitle } = IdentityConfig;
+    let { root, levels, stages } = IdentityConfig;
 
     if (!subpath) subpath = 0;
 
-    // let location = props.history.location.pathname;
+    console.log(targetPath);
 
-    console.log(location);
-
-    if (props.history.location.pathname !== location) {
+    if (location.pathname !== targetPath) {
       props.setInProgress(false);
       props.setExercisePause(false);
       props.updateTime(0);
@@ -186,39 +179,21 @@ const RRHome = props => {
     }
 
     for (let i = 0; i < levels.length; i++) {
-      if (location.includes(levels[i])) {
-        location = root + levels[i] + "/" + stages[subpath];
-        navigate(location);
+      if (location.pathname.includes(levels[i])) {
+        let newPath = root + levels[i] + "/" + stages[subpath];
+        navigate(newPath);
       }
     }
     
     const GA_ID = 'G-HZ4HM6M2GK'; // your google analytics id
     ReactGA.initialize(GA_ID);
-    ReactGA.send({ hitType: "pageview", page: location });  
+    ReactGA.send({ hitType: "pageview", page: targetPath });  
 
     setValue(subpath);
 
   }
 
-  function handleClick(e, pathname, routineId) {
 
-    // console.log(pathname);
-
-    if (props.history.location.pathname !== pathname) {
-      props.setInProgress(false);
-      props.setExercisePause(false);
-      props.updateTime(0);
-      props.updateTimeLeft(0);
-      props.resetRoutineSelect();
-      props.clearQueryResults();
-      props.resetWordCard();
-      props.updateId(routineId);
-
-      updatePathname(pathname);
-      setValue(pathname);
-      navigate(pathname);
-    }
-  }
 
   let exerciseHistoryContainerWidth = 12;
   let timerContainerWidth = 12;

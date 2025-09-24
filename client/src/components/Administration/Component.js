@@ -1,14 +1,10 @@
 import React, { useEffect } from 'react';
 import { withStyles } from '@mui/styles';
-import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import { useTheme } from '@mui/material/styles';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import PropTypes from 'prop-types';
 
 
 import { styles } from '../../themeHandler';
@@ -56,10 +52,6 @@ class Administration extends React.Component {
 
   prepareAdministration() {
     this.props.fetchUsers();
-  }
-
-  componentDidMount() {
-
   }
 
   saveHandler() {

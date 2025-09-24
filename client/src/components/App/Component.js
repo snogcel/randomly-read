@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import myGa from './myGa';
 import { Route, Routes, useLocation, Navigate } from 'react-router-dom';
 
@@ -9,8 +9,6 @@ import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles'
 import { MuiTheme } from '../../exerciseThemeHandler';
 
 import GlobalStyle from '../../globalStyle';
-import AppBarContainer from '../AppBar/Container';
-// import HeaderContainer from '../Header/Container';
 import ErrorNotificationContainer from '../ErrorNotification/Container';
 import LoginFormContainer from '../LoginForm/Container';
 import SignupFormContainer from '../SignupForm/Container';
@@ -19,8 +17,6 @@ import CreatePostFormContainer from '../CreatePostForm/Container';
 import { ApolloClient, InMemoryCache, createHttpLink, from } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ApolloProvider } from '@apollo/client';
-
-import SplashContainer from '../RandomlyRead/Splash/Container';
 
 import Identities from '../RandomlyRead/Identities/Identities';
 
@@ -37,7 +33,7 @@ import UserProfile from '../UserProfile/Container';
 
 const App = (props) => {
 
-  let {user, token, exerciseUser, exerciseToken} = props;
+  let {user, token} = props;
 
   let location = useLocation();
 

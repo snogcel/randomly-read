@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { styled } from "@mui/material/styles";
 import Grid from '@mui/material/Grid';
 
 import Hidden from '@mui/material/Hidden';
@@ -235,10 +234,6 @@ class RoutineBuilder extends React.Component {
 
   prepareRoutineBuilder(){
     this.props.fetchUsers();
-  }
-
-  componentDidMount() {
-
   }
 
   expandLessHandler() {

@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { styled, useTheme } from "@mui/material/styles";
+import React, { useEffect, useCallback } from 'react';
+import { useTheme } from "@mui/material/styles";
 import { useNavigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 
@@ -18,56 +18,40 @@ function InteractionsHome(props) {
   const theme = useTheme();
   const classes = styles(theme);
   const navigate = useNavigate();
+  
+  const { user, fetchInteractions, isVoting, attemptCreateInteraction, attemptDeleteInteraction } = props;
 
   useEffect(() => {
-    if (!props.user) {
+    if (!user) {
       navigate("/");
     }
-  }, [props.user, navigate]);
+  }, [user, navigate]);
 
-  const [state, setState] = useState({
-    intention: [
-      { id: 1, name: "Did not remember", value: 1 },
-      { id: 2, name: "Remembered", value: 50 },
-      { id: 3, name: "Remembered and used", value: 100 }
-    ],
-    ease: [
-      { id: 1, name: "Difficult", value: 25 },
-      { id: 2, name: "Less Difficult", value: 50 },
-      { id: 3, name: "Easier", value: 75 },
-      { id: 4, name: "Easy", value: 100 }
-    ],
-    options: null,
-    selectedOption: {}
-  });
-
-  const prepareInteractionForm = () => {
-    props.fetchInteractions();
-  };
+  const prepareInteractionForm = useCallback(() => {
+    fetchInteractions();
+  }, [fetchInteractions]);
 
   useEffect(() => {
-    if (typeof props.user !== "undefined") {
+    if (typeof user !== "undefined") {
       prepareInteractionForm();
     }
-  }, [props.user]);
+  }, [user, prepareInteractionForm]);
 
   useEffect(() => {
-    if (typeof props.isVoting !== "undefined") {
-      if (!props.isVoting) {
-        props.fetchInteractions();
+    if (typeof isVoting !== "undefined") {
+      if (!isVoting) {
+        fetchInteractions();
       }
     }
-  }, [props.isVoting]);
+  }, [isVoting, fetchInteractions]);
 
   const interactionHandler = (interaction) => {
-    props.attemptCreateInteraction(interaction);
+    attemptCreateInteraction(interaction);
   };
 
   const removeInteractionHandler = (id) => {
-    props.attemptDeleteInteraction(id);
+    attemptDeleteInteraction(id);
   };
-
-  const { user } = props;
 
   let items = store.getState().interaction.items;
 
