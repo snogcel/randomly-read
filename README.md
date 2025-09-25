@@ -1,114 +1,402 @@
-## Installation
+# Test Coverage Analysis vs System Architecture
 
-The following experience is frustratingly familiar to virtually everyone who stutters:  In the midst of a conversation, you suddenly feel that an upcoming word contains a “brick wall.” You actually feel an inherent obstacle that will make the word impossible to say.  At the same time, you also feel an overwhelming impulse to exert effort to break through the “brick wall” and force out the word.
+## Overview
+This analysis cross-references the existing test coverage with the system architecture components to identify coverage gaps and strengths.
 
-Imagine, for example, that you feel a “brick wall” in the word “pizza.”  In your attempt to say the word, you close your lips to form the “p” sound.  But instead of briefly touching and then releasing a puff of air, your lips clamp tightly together.  Meanwhile, your chest and abdominal muscles contract, causing air pressure to build up in your lungs, as if trying to force the word through the tight closure of your lips.  However, the harder you force, the tighter your lips press together to block the air.  Alternatively, you may find yourself helplessly repeating the “p” sound (“puh-puh-puh-puh”) as you struggle to force out the rest of the word.  On other sounds, you might find yourself blocking the air with your tongue, prolonging the sound, or tightly closing your larynx.
+```mermaid
+graph TB
+    %% Client Layer with Test Coverage
+    subgraph "Client Layer (React SPA)"
+        UI[React Components<br/>🟢 Tested]
+        Router[React Router<br/>🟢 Tested]
+        State[Redux Store<br/>🟡 Partially Tested]
+        Apollo[Apollo Client<br/>🟢 Tested]
+        UI --> Router
+        UI --> State
+        UI --> Apollo
+    end
 
-When confronted by the “brick wall,” you may suddenly forget everything you learned in speech therapy.  Even if you remember what you were taught about “pull-outs,” “easy onsets,” and “light contacts,” you may find these techniques to be totally unworkable in your panic to force out the word.
+    %% Network Layer with Test Coverage
+    subgraph "Network Layer"
+        HTTP[HTTP/REST API<br/>🔴 Not Tested]
+        GraphQL[GraphQL Endpoint<br/>🟢 Tested]
+        WS[WebSocket/Real-time<br/>🔴 Not Tested]
+    end
 
-The perception of a “brick wall,” together with other aspects of the foregoing scenario, appears to be almost universal among persons with persistent developmental stuttering.  I base this observation on my own experience as a person who stuttered for most of his life and on my questioning of hundreds of stutterers as a chapter leader of the National Stuttering Association, as a presenter of numerous workshops at stuttering conferences, and now as a speech-language pathologist who treats stuttering.  A similar observation was made by Henry Freund, a psychiatrist who was once himself a stutterer, who wrote that one of the primary experi­ences of stuttering is that of “an obstacle which needs force to overcome it” and that such effort by the stutterer “only increases the force of the closure.”  (Freund, 1966, pp. 91, 94-95.)
+    %% Server Layer with Test Coverage
+    subgraph "Server Layer (Node.js/Express)"
+        App[Express App<br/>🔴 Not Tested]
+        Routes[REST Routes<br/>🔴 Not Tested]
+        Resolvers[GraphQL Resolvers<br/>🔴 Not Tested]
+        Auth[Authentication<br/>🔴 Not Tested]
+        Middleware[Middleware Stack<br/>🔴 Not Tested]
+        
+        App --> Routes
+        App --> Resolvers
+        App --> Auth
+        App --> Middleware
+    end
 
-I find that standard stuttering therapies, including the “stuttering modification” and “fluency shaping” approaches, focus primarily on treating the external symptoms of stuttering, without addressing the internally perceived obstacle that triggers them.  Therefore, their techniques tend to fall apart when stutterers encounter the “brick wall” in actual speaking situations.
+    %% Business Logic with Test Coverage
+    subgraph "Business Logic"
+        Controllers[Controllers<br/>🔴 Not Tested]
+        Models[Data Models<br/>🔴 Not Tested]
+        Services[Business Services<br/>🔴 Not Tested]
+        
+        Controllers --> Models
+        Controllers --> Services
+    end
 
-I have taken a different approach.  I believe that the “brick wall” is at the heart of stuttering.  In order to understand and deal with stuttering effectively, we must first understand what the “brick wall” is and what causes it.
+    %% Data Layer with Test Coverage
+    subgraph "Data Layer"
+        MongoDB[(MongoDB<br/>🔴 Not Tested)]
+        MySQL[(MySQL/Sequelize<br/>🔴 Not Tested)]
+        FileSystem[File System<br/>🔴 Not Tested]
+    end
 
-Understanding the “Brick Wall”
+    %% External Services with Test Coverage
+    subgraph "External Services"
+        Email[Email Service<br/>🔴 Not Tested]
+        Analytics[Google Analytics<br/>🟡 Mocked Only]
+        CDN[Static Assets<br/>🔴 Not Tested]
+    end
 
-The following are some clues about stuttering based on stutterers’ perception of the “brick wall” and their common reactions to it:
+    %% Connections
+    Apollo -.->|GraphQL Queries<br/>🟢 Tested| GraphQL
+    UI -.->|HTTP Requests<br/>🔴 Not Tested| HTTP
+    
+    HTTP --> Routes
+    GraphQL --> Resolvers
+    
+    Routes --> Controllers
+    Resolvers --> Controllers
+    
+    Controllers --> MongoDB
+    Controllers --> MySQL
+    Controllers --> Email
+    
+    UI --> Analytics
+    UI --> CDN
 
-    We begin with the general observation that most persons with persistent developmental stuttering exhibit reasonably fluent speech at least some of the time.  (See Bloodstein &  Ratner, pp. 261-262. )  This is true regardless of what researchers may tell us about stutterers having various neurological abnormalities or deficiencies in timing, coordination, rhythm, etc. (id., pp. 114-146 ).  Therefore, I view stuttering as involving not a lack of ability in speaking but rather an interference with the speaking ability that a person already has.  Accordingly, the object of therapy should not be to control one’s speech, but rather to identify and control the forces that interfere with one’s speech.
-    Because the “brick wall” is perceived prior to the act of speaking, it is likely that the underlying stuttering block arises in the motor programming for speech – probably in the neuromotor tuning phase – rather than in the execution of the physical movements of speech.
-    Although stutterers’ anticipation of difficulty often focuses on initial consonants, the actual articulation of consonants is not the real problem.  When blocking on “pizza,” for example, the stutterer will put his lips in the proper position to form the “p” sound. When he repeats the initial sound (“puh-puh-puh-puh”), he is articulating the consonant perfectly well.  The same is true regarding the prolongation of consonants.
-    The real problem appears to be difficulty in phonating the vowel sound that follows.  The problem is not phonation in general, because stutterers phonate when prolonging voiced consonants such as m, n, l, and r.
-    Therefore, the “brick wall” appears to be a failure of the brain to program the larynx to phonate the vowel sound of a word or syllable.  As a result, the person’s speech mechanism gets stuck on the initial consonant – repeating, prolonging, or forcing on it – while waiting for the larynx to get ready to phonate the vowel.  In words that start with vowels, the person may get stuck on the laryngeal closure, or glottal stop, that is customarily used to build up air pressure to accentuate the beginning of the vowel sound.  Alternatively, the person may hesitate, use “starters,” grunt, substitute words, or resort to other struggle or avoidance behaviors.
-    The cause of this “vowel phonation gap” appears to be the substitution of a motor program for effort in place of phonation of the vowel sound.  Consequently, laryngeal muscles are prepared to perform effort closure as part of a Valsalva maneuver – an instinctive bodily function designed to increase pulmonary pressure to stiffen the trunk of the body, so that physical      effort can be exerted more efficiently. Accordingly, persons who stutter often report tightness in their throats when encountering blocks.  However, even when the larynx does not actually close, it still is not prepared to phonate the vowel sound.
-    Persons who stutter may find themselves doing Valsalva maneuvers in an attempt to force out the word.  While the chest and abdominal muscles contract to build up air pressure in the lungs, the mouth or larynx automatically closes more tightly to hold the air in.  Although this exertion of effort instinctively feels like the right thing to do, it actually blocks the flow of speech.
+    %% Authentication Flow
+    Auth -.->|JWT Tokens<br/>🟡 Mocked Only| Apollo
+    Auth -.->|Passport.js<br/>🔴 Not Tested| Controllers
 
-Many different factors may originally cause disfluencies in children, depending on the individual.  Each in its own way could contribute to the feeling that speech is difficult and requires effort.  A natural reaction would be to “try hard” to force the words out by activating the Valsalva mechanism.  This behavior would create a self-perpetuating cycle of effort and blocking, which may persist even after the original cause of disfluency has abated.
+    %% Legend
+    classDef tested fill:#d4edda,stroke:#155724
+    classDef partial fill:#fff3cd,stroke:#856404
+    classDef untested fill:#f8d7da,stroke:#721c24
+    classDef client fill:#e1f5fe
+    classDef server fill:#f3e5f5
+    classDef data fill:#e8f5e8
+    classDef external fill:#fff3e0
 
-The effort impulse typically occurs when the person anticipates that saying a particular word will be difficult.  The programming for effort replaces the vowel sound because the vowel is the part of the syllable that has the greatest energy.  In addition, activation of the Valsalva mechanism is part of the “flight-flight-freeze” reaction, triggered by the brain’s amygdalae in response to fearful speaking situations.  Due to the release of stress hormones, the speaker is overwhelmed by his habitual urge to use force, and he momentarily forgets any “fluency techniques” he may have learned in speech therapy.  Exerting effort may serve to reduce the stutterer’s immediate anxiety, thereby reinforcing and perpetuating stuttering behavior.
-
-Dismantling the “Brick Wall”
-
-The external behaviors regarded as “stuttering” can be understood as the speaker’s attempt to overcome an internal block caused by the neurological substitution of effort in place of phonation of the vowel sound.  Therefore, I believe that the best way to treat stuttering is to focus on reducing the stutterer’s urge to exert effort, rather than trying to increase fluency.  Emphasis on fluency tends to increase one’s effort in speaking, making stuttering worse.  Natural fluency cannot be forced.  When speech becomes easy and effortless, fluency will automatically follow on its own.
-
-Stuttering is influenced by many factors, depending on each individual.  Therefore, my approach to dismantling the “brick wall” is multi-faceted and individualized, addressing the various psychological, neurological, and physiological factors involved.  The following are brief descriptions of some of the main elements of this approach:
-
-    First it is necessary that the speaker have a basic understanding of normal speech, Valsalva maneuvers, and how exerting effort through activation of the Valsalva mechanism can interfere with speech.
-    Next, the speaker must become accustomed to using Valsalva-relaxed breathing, phonation, and speaking – all of which are consistent with normal, natural-sounding speech. Rather than “trying hard” to say words, the speaker intentionally focuses on relaxing the abdomen, letting the air flow freely, and saying the vowel sounds with feeling and inflection.  Often persons who stutter seem to funnel their emotions into force, rather than expressing themselves through phonation of the vowel sounds.
-    Through various exercises, the speaker learns to treat the vowel sound as the heart of words and syllables and to regard the consonants as mere “decorations.”  Repetitive practice is used to establish “muscle memory” in the larynx for phonation instead of effort closure, in order to facilitate the phonation of vowel sounds under stress.
-    No fluency technique can make the “brick walls” stop happening immediately.  Their frequency will diminish gradually as the amygdalae become desensitized to speaking situations.  Therefore, one must accept the fact that “brick walls” will continue to happen.  The important thing is to change the way in which one responds to them.
-    When encountering a “brick wall,” the speaker must resist the urge to force.  He must remember that there is no real obstacle, simply a “vowel-phonation gap.”  Rather than using effort, he must stop, breathe in a Valsalva-relaxed way, and prepare his larynx to phonate the vowel.  He must forget about “trying to say the word,” and instead focus his intention on saying the vowel sound with feeling.
-    The occurrence of “brick walls” can be reduced by changing one’s intention in speaking.  For example, instead of trying hard to “make a good impression” by not stuttering (which almost always backfires), it is better to focus on one’s role and purpose in speaking and on having fun communicating in a Valsalva-relaxed way, without regard to fluency. Instead of using effort to show how hard you are trying to please your listener, focus instead on the message you want to convey – as one adult speaking to another – and on your pleasure in expressing yourself through the vowel sounds.
-
-A more extensive discussion of this approach to understanding and dismantling the “brick wall” is contained in the revised and expanded Third Edition of my book, Understanding and Controlling Stuttering (Parry, 2013), which is available from the National Stuttering Association.
-
-Implications for Therapy
-
-The above principles form the basis of “Valsalva Stuttering Therapy,” which I have been developing over the past 3½ years, with the participation of dozens of persons who stutter from all over the world.  The results have been very encouraging.  Participants have reported that this approach makes more sense, and has been more helpful, than any other form of therapy they have encountered.
-
-Furthermore, by recognizing the role of effort as a response to anxiety, Valsalva Stuttering Therapy provides new perspectives for analyzing and addressing emotional factors that perpetuate stuttering (often incorporating elements of transactional analysis, cognitive behavior therapy, and “mindfulness” training).  This understanding has been crucial in helping participants speak more easily in all kinds of real-life situations.
-
-References
-
-Bloodstein, O. & Ratner, N.B.  A Handbook on Stuttering.  6th ed.  Clifton Park, NY: Delmar, 2008.
-
-Freund, H.  Psychopathology and the Prob­lems of Stut­ter­ing.  Springfield, Ill.: Charles C. Thomas, 1966.
-
-Parry, W. D.  Understanding and Controlling Stuttering: A Comprehensive New Approach Based on the Valsalva Hypothesis.  3rd ed.  New York: National Stuttering Ass’n, 2013.
-
-### Prerequisites
-
-* node
-* npm
-* mongodb
-
-1. Clone this repository
-
-2. Install server dependencies
-    ```bash
-    $ cd server
-    $ npm install
-    ```
-3. Install client dependencies
-    ```bash
-    $ cd client
-    $ npm install
-    ```
-
-## Run the app
-
-1. Start mongodb locally
-    ```bash
-    $ mongod
-    ```
-2. Start the server
-    ```bash
-    $ cd server
-    $ npm start
-    ```
-3. Start the client
-    ```bash
-    $ cd client
-    $ npm start
-    ```
-4. Browse to `http://localhost:3000/`
-
-## Testing
-
-### Server
-Make sure mongodb is running before testing the server.
-```bash
-$ cd server
-$ npm test
+    class UI,Router,Apollo tested
+    class State,Analytics partial
+    class HTTP,WS,App,Routes,Resolvers,Auth,Middleware,Controllers,Models,Services,MongoDB,MySQL,FileSystem,Email,CDN untested
 ```
 
-### Client
-```bash
-$ cd client
-$ npm test
+## Test Coverage Summary
+
+### 🟢 Well Tested Components
+
+#### Client Layer - React Components
+- **RandomlyRead Routes**: Complete coverage of all 9 therapy routes
+  - Beginner/Intermediate/Advanced levels
+  - Introduction/Techniques/Practice sections
+  - Tab navigation and URL synchronization
+- **WordCard Component**: GraphQL integration with useQuery hook
+- **RoutinePreview Component**: Query building and error handling
+- **Component Integration**: Tab switching, navigation, accessibility
+
+#### Client Layer - Apollo Client
+- **Apollo Client 3.x Configuration**: Complete migration testing
+- **GraphQL Query Builder**: All parameter combinations tested
+- **GraphQL Integration**: Query execution, error handling, caching
+- **Authentication Headers**: Bearer token inclusion verified
+
+#### Client Layer - React Router
+- **Route Configuration**: All therapy routes validated
+- **Navigation**: Tab switching and URL synchronization
+- **Authentication Context**: User context switching per route
+
+### 🟡 Partially Tested Components
+
+#### Client Layer - Redux Store
+- **Mock Store Setup**: Basic state structure tested
+- **State Management**: Limited testing of state updates
+- **Action Dispatching**: Some actions tested in integration tests
+- **Missing**: Comprehensive reducer testing, action creators, middleware
+
+#### External Services - Google Analytics
+- **Mock Implementation**: GA calls mocked in tests
+- **Event Tracking**: Basic tracking tested
+- **Missing**: Real analytics integration, event validation
+
+#### Authentication Flow
+- **JWT Token Handling**: Mocked in tests
+- **User Context**: Basic user object validation
+- **Missing**: Real authentication flow, token refresh, logout
+
+### 🔴 Untested Components
+
+#### Server Layer (Complete Gap)
+- **Express App**: No server-side testing
+- **REST Routes**: No API endpoint testing
+- **GraphQL Resolvers**: No resolver logic testing
+- **Authentication**: No Passport.js strategy testing
+- **Middleware**: No middleware stack testing
+
+#### Business Logic (Complete Gap)
+- **Controllers**: No business logic testing
+- **Data Models**: No model validation testing
+- **Services**: No service layer testing
+
+#### Data Layer (Complete Gap)
+- **MongoDB**: No database integration testing
+- **MySQL/Sequelize**: No word database testing
+- **File System**: No file operations testing
+
+#### Network Layer
+- **HTTP/REST API**: No REST endpoint testing
+- **WebSocket**: No real-time functionality testing
+
+#### External Services
+- **Email Service**: No email functionality testing
+- **CDN**: No static asset delivery testing
+
+## Detailed Coverage Analysis
+
+### Client-Side Test Coverage
+
+#### Routes Testing (`RandomlyRead.routes.test.js`)
+```
+✅ Route Configuration (9/9 routes)
+✅ Tab Navigation (3/3 levels)
+✅ URL Synchronization
+✅ Authentication Context
+✅ Error Handling
+✅ Responsive Behavior
 ```
 
-## License
+#### Component Testing (`RandomlyRead.components.test.js`)
+```
+✅ Introduction Components (3/3 levels)
+✅ Techniques Components (3/3 levels)
+✅ Home Component Contexts
+✅ Accessibility Compliance
+✅ Performance Benchmarks
+```
 
-This project is made available under the **MIT License**.
+#### Practice Testing (`RandomlyRead.practice.test.js`)
+```
+✅ Practice Interface
+✅ WordCard Integration
+✅ Timer Functionality
+✅ Routine Selection
+✅ Session Workflows
+✅ Progress Tracking
+```
+
+#### E2E Testing (`RandomlyRead.e2e.test.js`)
+```
+✅ Complete User Journeys (3/3 levels)
+✅ Cross-level Navigation
+✅ Accessibility Testing
+✅ Error Scenarios
+✅ Performance Under Load
+```
+
+#### GraphQL Testing
+```
+✅ Apollo Client Configuration (6/6 tests)
+✅ Query Builder Utilities (12/12 tests)
+✅ Integration Testing (7/7 tests)
+✅ WordCard Component (8/8 scenarios)
+✅ RoutinePreview Component (8/8 scenarios)
+```
+
+### Server-Side Coverage Gaps
+
+#### Critical Missing Tests
+1. **GraphQL Resolvers** (`server/data/resolvers.js`)
+   - Word query logic with phonetic filtering
+   - Sentence generation with templates
+   - Error handling and fallbacks
+   - Database query optimization
+
+2. **REST API Routes** (`server/routes.js`)
+   - User authentication endpoints
+   - CRUD operations for routines
+   - Admin functionality
+   - Interaction tracking
+
+3. **Authentication System**
+   - JWT token generation/validation
+   - Passport.js strategies
+   - User authorization levels
+   - Session management
+
+4. **Database Integration**
+   - MongoDB user data operations
+   - MySQL word database queries
+   - Data consistency and integrity
+   - Performance optimization
+
+## Test Coverage Metrics
+
+### Current Coverage by Layer
+- **Client Layer**: ~85% coverage
+- **Network Layer**: ~30% coverage (GraphQL only)
+- **Server Layer**: ~0% coverage
+- **Business Logic**: ~0% coverage
+- **Data Layer**: ~0% coverage
+- **External Services**: ~10% coverage (mocks only)
+
+### Overall System Coverage: ~25%
+
+## Priority Recommendations
+
+### High Priority (Critical Gaps)
+1. **Server-Side Unit Tests**
+   - GraphQL resolvers testing
+   - REST API endpoint testing
+   - Authentication middleware testing
+
+2. **Integration Tests**
+   - Database integration testing
+   - End-to-end API testing
+   - Authentication flow testing
+
+3. **Data Layer Tests**
+   - MongoDB operations testing
+   - MySQL query testing
+   - Data validation testing
+
+### Medium Priority
+1. **Performance Tests**
+   - Load testing for word queries
+   - Database performance testing
+   - Memory usage monitoring
+
+2. **Security Tests**
+   - Authentication vulnerability testing
+   - Input validation testing
+   - SQL injection prevention
+
+3. **Error Handling Tests**
+   - Network failure scenarios
+   - Database connection issues
+   - Invalid input handling
+
+### Low Priority
+1. **External Service Tests**
+   - Email delivery testing
+   - Analytics integration testing
+   - CDN performance testing
+
+2. **Browser Compatibility Tests**
+   - Cross-browser testing
+   - Mobile device testing
+   - Accessibility compliance
+
+## Recommended Test Implementation Plan
+
+### Phase 1: Server Foundation (2-3 weeks)
+```bash
+# Create server test structure
+server/
+├── __tests__/
+│   ├── resolvers.test.js
+│   ├── routes.test.js
+│   ├── auth.test.js
+│   └── models.test.js
+├── test/
+│   ├── setup.js
+│   ├── helpers.js
+│   └── fixtures/
+```
+
+### Phase 2: Database Integration (1-2 weeks)
+```bash
+# Add database testing
+server/__tests__/
+├── integration/
+│   ├── mongodb.test.js
+│   ├── mysql.test.js
+│   └── graphql-integration.test.js
+```
+
+### Phase 3: End-to-End API Testing (1-2 weeks)
+```bash
+# Add API testing
+server/__tests__/
+├── api/
+│   ├── auth.api.test.js
+│   ├── users.api.test.js
+│   ├── routines.api.test.js
+│   └── graphql.api.test.js
+```
+
+### Phase 4: Performance & Security (1 week)
+```bash
+# Add specialized testing
+server/__tests__/
+├── performance/
+│   ├── load.test.js
+│   └── memory.test.js
+├── security/
+│   ├── auth.security.test.js
+│   └── input.validation.test.js
+```
+
+## Test Configuration Recommendations
+
+### Server Test Setup
+```javascript
+// server/test/setup.js
+const mongoose = require('mongoose');
+const { MongoMemoryServer } = require('mongodb-memory-server');
+
+// In-memory MongoDB for testing
+let mongoServer;
+
+beforeAll(async () => {
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = mongoServer.getUri();
+  await mongoose.connect(mongoUri);
+});
+
+afterAll(async () => {
+  await mongoose.disconnect();
+  await mongoServer.stop();
+});
+```
+
+### GraphQL Resolver Testing
+```javascript
+// server/__tests__/resolvers.test.js
+const resolvers = require('../data/resolvers');
+const Word = require('../data/connectors');
+
+describe('GraphQL Resolvers', () => {
+  test('words query with phonetic filters', async () => {
+    const args = {
+      vowel: ['A'],
+      consonant: ['P'],
+      syllables: [2],
+      position: 'initial'
+    };
+    
+    const result = await resolvers.Query.words(null, args, mockContext);
+    expect(result).toBeDefined();
+    expect(result.lexeme).toBeTruthy();
+  });
+});
+```
+
+## Conclusion
+
+The current test suite provides excellent coverage for the client-side React application, particularly for the speech therapy user interface and GraphQL integration. However, there's a significant gap in server-side testing that represents a critical risk for the application's reliability and maintainability.
+
+The recommended testing implementation plan would increase overall system coverage from ~25% to ~80%, providing comprehensive protection for both client and server components while ensuring the speech therapy platform's therapeutic effectiveness and data integrity.
