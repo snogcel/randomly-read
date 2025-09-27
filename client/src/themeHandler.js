@@ -17,14 +17,19 @@ let MuiTheme = createTheme({
 
     },
     // error: will use the default color
-  }
+  },
+  spacing: 8, // Ensure spacing is properly configured
 });
 
 // EDEDF3
 
 MuiTheme = responsiveFontSizes(MuiTheme);
 
-const styles = theme => ({
+const styles = theme => {
+  // Ensure spacing function exists, fallback to default MUI spacing
+  const spacing = theme.spacing || ((factor) => `${8 * factor}px`);
+  
+  return {
   root: {
     flexGrow: 1
   },
@@ -36,7 +41,7 @@ const styles = theme => ({
     textAlign: "center",
   },
   mobileHeading: {
-    marginTop: theme.spacing(2),
+    marginTop: spacing(2),
     color: "#14197E",
     fontWeight: "bold"
   },
@@ -45,10 +50,10 @@ const styles = theme => ({
     margin: 50
   },
   margin: {
-    height: theme.spacing(3)
+    height: spacing(3)
   },
   formTable: {
-    marginTop: theme.spacing(3)
+    marginTop: spacing(3)
   },
   form: {
     textAlign: "left",
@@ -57,19 +62,19 @@ const styles = theme => ({
     marginRight: 40,
   },
   columnDesktop: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingTop: spacing(2),
+    paddingBottom: spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
     paddingRight: "50%"
   },
   column: {
-    padding: theme.spacing(2),
+    padding: spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   sideColumn: {
-    padding: theme.spacing(2),
+    padding: spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
@@ -83,26 +88,26 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: spacing(2, 4, 3),
   },
   paper: {
     position: "absolute",
-    width: theme.spacing(50),
+    width: spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
+    padding: spacing(4),
     outline: "none"
   },
   wordGrid: {
     alignItems: "end",
     minHeight: 150,
-    marginTop: theme.spacing(4),
+    marginTop: spacing(4),
     paddingRight: "50%"
   },
   wordGridDesktop: {
     alignItems: "end",
     minHeight: 150,
-    marginTop: theme.spacing(4),
+    marginTop: spacing(4),
     paddingRight: "50%"
   },
   wordHistoryGrid: {
@@ -121,7 +126,7 @@ const styles = theme => ({
     boxShadow: "0 4px 20px -6px rgba(0,0,0,0.15)",
   },
   previewCard: {
-    marginTop: theme.spacing(2),
+    marginTop: spacing(2),
     textAlign: "center",
     backgroundColor:"#FBFBFB",
   },
@@ -140,14 +145,14 @@ const styles = theme => ({
     transition: "0.3s",
   },
   routineBuilderCard: {
-    marginTop: theme.spacing(4),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginTop: spacing(4),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
   },
   userAdminCard: {
-    marginTop: theme.spacing(4),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginTop: spacing(4),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
   },
   sideCard: {
     marginBottom: 20
@@ -173,10 +178,10 @@ const styles = theme => ({
     fontSize: 24,
     fontFamily: "'Noto Sans', sans-serif",
     fontWeight: "bold",
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
+    marginTop: spacing(1),
+    marginBottom: spacing(1),
     textAlign: "center"
   },
   historyTitle: {
@@ -211,8 +216,8 @@ const styles = theme => ({
     backgroundColor: '#33a0ff',
   },
   iconButton: {
-    margin: theme.spacing(0),
-    padding: theme.spacing(1)
+    margin: spacing(0),
+    padding: spacing(1)
   },
   button: {
     margin: 4,
@@ -242,10 +247,10 @@ const styles = theme => ({
     margin: "0.25em"
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: spacing(2)
   },
   resetContainer: {
-    padding: theme.spacing(3)
+    padding: spacing(3)
   },
   wordHistoryContainer: {
   },
@@ -254,12 +259,12 @@ const styles = theme => ({
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
-    marginBottom: theme.spacing(2),
+    marginBottom: spacing(2),
   },
   RoutineSelector: {
     display: "inline-flex",
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
+    paddingLeft: spacing(1),
+    paddingRight: spacing(1)
   },
   TimerControls: {
     display: "inline-flex",
@@ -282,12 +287,12 @@ const styles = theme => ({
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginTop: spacing(2),
+    marginBottom: spacing(2)
   },
   isActiveSelector: {
     alignItems: "center",
-    marginTop: theme.spacing(2),
+    marginTop: spacing(2),
   },
   focusWordCardMobile: {
     margin: 0,
@@ -298,39 +303,39 @@ const styles = theme => ({
     position: 'fixed',
   },
   DescriptionEditor: {
-    margin: theme.spacing(1),
+    margin: spacing(1),
   },
   routineDetails: {
-    padding: theme.spacing(3, 2),
-    marginTop: theme.spacing(4),
+    padding: spacing(3, 2),
+    marginTop: spacing(4),
   },
   homePageContainer: {
 
   },
   homePageHeader: {
-    paddingTop: theme.spacing(10),
-    paddingBottom: theme.spacing(10),
+    paddingTop: spacing(10),
+    paddingBottom: spacing(10),
     textAlign: "center",
     backgroundImage: "url(./connect-20333.png)",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat"
   },
   homePageMobileHeader: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: spacing(4),
+    paddingBottom: spacing(4),
     textAlign: "center",
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
   },
   homePageHeaderBox: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    paddingLeft: spacing(2),
+    paddingRight: spacing(2),
+    paddingTop: spacing(3),
+    paddingBottom: spacing(3),
+    marginLeft: spacing(2),
+    marginRight: spacing(2),
+    marginTop: spacing(3),
+    marginBottom: spacing(3),
     textAlign: "center",
     backgroundColor: "#EFEFEF",
     borderRadius: 10
@@ -339,30 +344,30 @@ const styles = theme => ({
     backgroundColor: "#F7F7F7",
   },
   homePageSubHeader: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: spacing(4),
+    paddingBottom: spacing(4),
   },
   homePageBulletPointContainer: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(2),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    paddingLeft: spacing(2),
+    paddingRight: spacing(2),
+    paddingTop: spacing(4),
+    paddingBottom: spacing(2),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
     backgroundColor: "#FFFFFF",
     borderRadius: 10
   },
   homePageGetStartedContainer: {
-    marginTop: theme.spacing(3),
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
+    marginTop: spacing(3),
+    paddingLeft: spacing(4),
+    paddingRight: spacing(4),
   },
   homePageBulletPoint: {
     display: "flex",
     alignItems: "center",
-    marginTop: theme.spacing(3.5),
-    marginBottom: theme.spacing(3.5),
-    marginLeft: theme.spacing(2)
+    marginTop: spacing(3.5),
+    marginBottom: spacing(3.5),
+    marginLeft: spacing(2)
   },
   contactFormContainer: {
 
@@ -373,24 +378,24 @@ const styles = theme => ({
   },
   homepageTitleHeadingContainer: {
     backgroundColor: "#fbfbfb",
-    padding: theme.spacing(1)
+    padding: spacing(1)
   },
   homepageTitleSubheading: {
     color: "#FFF",
-    marginTop: theme.spacing(1)
+    marginTop: spacing(1)
   },
   homepageTitleSubheadingContainer: {
     backgroundColor: "#2f8eed",
-    padding: theme.spacing(1)
+    padding: spacing(1)
   },
   homepageScreenshotContainer: {
     textAlign: "center",
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
+    paddingLeft: spacing(1),
+    paddingRight: spacing(1),
+    paddingTop: spacing(1),
+    paddingBottom: spacing(1),
     color: "#2f8eed",
   },
   homePageHeading: {
@@ -404,13 +409,13 @@ const styles = theme => ({
     textAlign: "center"
   },
   signupContainer: {
-    marginBottom: theme.spacing(3),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(4),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    marginBottom: spacing(3),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
+    paddingTop: spacing(3),
+    paddingBottom: spacing(4),
+    paddingLeft: spacing(2),
+    paddingRight: spacing(2)
   },
   homePageSignupText: {
     textAlign: "center"
@@ -418,7 +423,7 @@ const styles = theme => ({
   homePagePreviewImage: {
     cursor: "pointer",
     backgroundColor: "#FFFFFF",
-    padding: theme.spacing(2),
+    padding: spacing(2),
     borderRadius: 10
   },
   previewImage: {
@@ -443,7 +448,7 @@ const styles = theme => ({
   userAdminSelectContainer: {
     display: "flex",
   }
-});
+};};
 
 export {
   MuiTheme,

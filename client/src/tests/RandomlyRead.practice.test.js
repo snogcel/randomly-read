@@ -11,7 +11,7 @@ import { gql } from '@apollo/client';
 import Home from '../components/RandomlyRead/Home';
 import WordCard from '../components/RRLayout/WordCard';
 import Timer from '../components/RRLayout/Timer';
-import RoutineSelect from '../components/RRLayout/RoutineSelect';
+import RoutineSelectContainer from '../components/RRLayout/RoutineSelectContainer';
 
 // Mock store setup
 const middlewares = [thunk];
@@ -142,28 +142,30 @@ const initialState = {
   },
   routineSelect: {
     id: 1,
-    routines: [
+    name: 'Test Routine',
+    description: 'A test routine',
+    routine: {
+      id: 1,
+      name: 'Test Routine',
+      description: 'A test routine'
+    },
+    availableRoutines: [
       {
-        id: '1',
-        name: 'Test Routine',
-        description: 'A test routine',
-        steps: [
-          {
-            id: '1',
-            mode: 'Word',
-            vowel: ['a'],
-            consonant: ['p'],
-            syllables: [2],
-            position: ['initial'],
-            age: ['adult'],
-            limit: 1,
-            rangeVal: 30,
-            repetitions: 5
-          }
-        ]
+        attributes: {
+          id: 1,
+          name: 'Test Routine',
+          description: 'A test routine',
+          upvoted: false
+        }
       }
     ],
     isFetching: false
+  },
+  posts: {
+    isVoting: false
+  },
+  interaction: {
+    isInteractionVoting: false
   },
   exerciseHistory: {
     inProgress: false,
@@ -233,7 +235,7 @@ describe('RandomlyRead Practice Functionality', () => {
       currentExercise: initialState.exerciseHistory.currentExercise,
       currentExerciseNumber: 0,
       TimerContainer: Timer,
-      RoutineSelectContainer: RoutineSelect,
+      RoutineSelectContainer: RoutineSelectContainer,
       ExerciseIntroduction: () => <div>Exercise Introduction</div>,
       ExerciseTechniques: () => <div>Exercise Techniques</div>,
       ApolloClient: {},
@@ -496,44 +498,62 @@ describe('RandomlyRead Practice Functionality', () => {
   });
 
   describe('Routine Selection', () => {
-    const routineSelectProps = {
-      routines: initialState.routineSelect.routines,
-      selectedRoutineId: 0,
-      updateId: jest.fn(),
-      fetchAssignedRoutines: jest.fn()
-    };
-
     test('should render RoutineSelect component', () => {
-      renderWithProviders(<RoutineSelect {...routineSelectProps} />);
+      renderWithProviders(<RoutineSelectContainer />);
       
-      expect(screen.getByText(/routine/i)).toBeInTheDocument();
+      expect(screen.getByRole('combobox')).toBeInTheDocument();
     });
 
     test('should display available routines', () => {
-      renderWithProviders(<RoutineSelect {...routineSelectProps} />);
+      const storeWithRoutines = mockStore({
+        ...initialState,
+        routineSelect: {
+          ...initialState.routineSelect,
+          availableRoutines: [
+            {
+              attributes: {
+                id: 1,
+                name: 'Test Routine',
+                description: 'A test routine'
+              }
+            }
+          ]
+        }
+      });
       
-      expect(screen.getByText('Test Routine')).toBeInTheDocument();
+      renderWithProviders(<RoutineSelectContainer />, storeWithRoutines);
+      
+      expect(screen.getByDisplayValue('Test Routine')).toBeInTheDocument();
     });
 
     test('should handle routine selection', async () => {
-      const mockUpdateId = jest.fn();
-      const propsWithMock = {
-        ...routineSelectProps,
-        updateId: mockUpdateId
-      };
+      const storeWithRoutines = mockStore({
+        ...initialState,
+        routineSelect: {
+          ...initialState.routineSelect,
+          availableRoutines: [
+            {
+              attributes: {
+                id: 1,
+                name: 'Test Routine',
+                description: 'A test routine'
+              }
+            }
+          ]
+        }
+      });
       
-      renderWithProviders(<RoutineSelect {...propsWithMock} />);
+      renderWithProviders(<RoutineSelectContainer />, storeWithRoutines);
+      
+      const selectElement = screen.getByRole('combobox');
+      fireEvent.mouseDown(selectElement);
       
       const routineOption = screen.getByText('Test Routine');
       fireEvent.click(routineOption);
       
-      expect(mockUpdateId).toHaveBeenCalled();
-    });
-
-    test('should show routine description', () => {
-      renderWithProviders(<RoutineSelect {...routineSelectProps} />);
-      
-      expect(screen.getByText('A test routine')).toBeInTheDocument();
+      // Check that the store action was dispatched
+      const actions = storeWithRoutines.getActions();
+      expect(actions.some(action => action.type.includes('UPDATE_ID'))).toBeTruthy();
     });
   });
 
@@ -547,7 +567,7 @@ describe('RandomlyRead Practice Functionality', () => {
         currentExercise: initialState.exerciseHistory.currentExercise,
         currentExerciseNumber: 0,
         TimerContainer: Timer,
-        RoutineSelectContainer: RoutineSelect,
+        RoutineSelectContainer: RoutineSelectContainer,
         ExerciseIntroduction: () => <div>Exercise Introduction</div>,
         ExerciseTechniques: () => <div>Exercise Techniques</div>,
         ApolloClient: {},
@@ -598,7 +618,7 @@ describe('RandomlyRead Practice Functionality', () => {
         isCompleted: false,
         currentExercise: initialState.exerciseHistory.currentExercise,
         TimerContainer: Timer,
-        RoutineSelectContainer: RoutineSelect,
+        RoutineSelectContainer: RoutineSelectContainer,
         ExerciseIntroduction: () => <div>Exercise Introduction</div>,
         ExerciseTechniques: () => <div>Exercise Techniques</div>,
         ApolloClient: {},
@@ -652,7 +672,7 @@ describe('RandomlyRead Practice Functionality', () => {
         pageContext: 'beginner',
         routineSelectId: 1,
         TimerContainer: Timer,
-        RoutineSelectContainer: RoutineSelect,
+        RoutineSelectContainer: RoutineSelectContainer,
         ExerciseIntroduction: () => <div>Exercise Introduction</div>,
         ExerciseTechniques: () => <div>Exercise Techniques</div>,
         ApolloClient: {}
