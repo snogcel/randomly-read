@@ -53,8 +53,7 @@ export class CacheService {
       this.client = Redis.createClient({
         url: config.redis.url,
         socket: {
-          connectTimeout: 5000,
-          lazyConnect: true
+          connectTimeout: 5000
         }
       });
 
@@ -396,7 +395,7 @@ export class CacheService {
       // Update memory usage and key count from Redis
       const info = await this.client!.info('memory');
       const memoryMatch = info.match(/used_memory:(\d+)/);
-      const memoryUsage = memoryMatch ? parseInt(memoryMatch[1]) : 0;
+      const memoryUsage = memoryMatch && memoryMatch[1] ? parseInt(memoryMatch[1], 10) : 0;
 
       const keyCount = await this.client!.dbSize();
 

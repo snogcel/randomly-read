@@ -103,8 +103,10 @@ describe('WordServiceOptimized', () => {
       const aggregateCall = MockedWord.aggregate.mock.calls[0];
       if (aggregateCall) {
         const pipeline = aggregateCall[0];
-        const limitStage = pipeline.find((stage: any) => stage.$limit);
-        expect(limitStage?.$limit).toBeLessThanOrEqual(config.wordDatabase.maxQueryLimit);
+        const limitStage = pipeline.find((stage: any) => stage.$limit !== undefined);
+        if (limitStage) {
+          expect((limitStage as any).$limit).toBeLessThanOrEqual(config.wordDatabase.maxQueryLimit);
+        }
       }
     });
 

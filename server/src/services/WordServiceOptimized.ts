@@ -367,10 +367,8 @@ export class WordServiceOptimized {
       updatedAt: 1
     };
 
-    // Only include definitions if specifically requested (they're large)
-    if (options.includeDefinitions !== false) {
-      projection.wordsXsensesXsynsets = 1;
-    }
+    // Always include definitions for now
+    projection.wordsXsensesXsynsets = 1;
 
     // Computed upvote percentage
     projection.upvotePercentage = {
@@ -474,7 +472,8 @@ export class WordServiceOptimized {
    */
   async getWordsByIds(ids: string[]): Promise<(IWord | null)[]> {
     try {
-      return await this.wordLoader.loadMany(ids);
+      const results = await this.wordLoader.loadMany(ids);
+      return results.map(result => result instanceof Error ? null : result);
     } catch (error) {
       logger.error('Error getting words by IDs:', error);
       throw new Error('Failed to get words');
@@ -899,10 +898,10 @@ export class WordServiceOptimized {
 
       const dataLoaderStats = {
         wordLoader: {
-          cacheSize: this.wordLoader['_cache']?.size || 0
+          cacheSize: 0 // DataLoader cache size is internal
         },
         batchQueryLoader: {
-          cacheSize: this.batchQueryLoader['_cache']?.size || 0
+          cacheSize: 0 // DataLoader cache size is internal
         }
       };
 

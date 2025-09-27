@@ -67,39 +67,21 @@ export class WordService {
 
     // DataLoader for batch word queries
     this.batchQueryLoader = new DataLoader<string, WordFilterResult>(
-      async (queryKeys: readonly string[]) => {
-        const results: WordFilterResult[] = [];
-        
-        for (const queryKey of queryKeys) {
-          try {
-            const options = JSON.parse(queryKey) as WordQueryOptions;
-            const result = await this.executeWordQuery(options);
-            results.push(result);
-          } catch (error) {
-            logger.error('Error in batch query loader:', error);
-            results.push({
-              words: [],
-              totalCount: 0,
-              hasMore: false,
-              queryStats: {
-                executionTimeMs: 0,
-                docsExamined: 0,
-                indexUsed: 'ERROR'
-              }
-            });
-          }
+      async (ids: readonly string[]) => {
+        try {
+          const words = await Word.find({ _id: { $in: ids } });
+          const wordMap = new Map(words.map(word => [word._id.toString(), word]));
+          return ids.map(id => wordMap.get(id) || null);
+        } catch (error) {
+          logger.error('Error in word batch loader:', error);
+          return ids.map(() => null);
         }
-        
-        return results;
       },
       {
-        maxBatchSize: 10,
-        cacheKeyFn: (key) => key
+        maxBatchSize: 100,
+        cacheKeyFn: (key) => key.toString()
       }
     );
-
-    // Clean cache periodically
-    setInterval(() => this.cleanCache(), 5 * 60 * 1000); // Every 5 minutes
   }
 
   public static getInstance(): WordService {

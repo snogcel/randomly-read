@@ -247,7 +247,7 @@ export const wordResolvers = {
           throw new UserInputError('Invalid word ID format');
         }
 
-        if (![−1, 0, 1].includes(vote)) {
+        if (![-1, 0, 1].includes(vote)) {
           throw new UserInputError('Vote must be -1, 0, or 1');
         }
 

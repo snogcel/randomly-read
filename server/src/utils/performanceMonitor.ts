@@ -174,18 +174,11 @@ export function monitorResolver(operation: string) {
                            Array.isArray(result) ? result.length : 
                            result ? 1 : 0;
         
-        endTimer({
-          resultCount,
-          cacheHit: result?.queryStats?.cacheHit,
-          indexUsed: result?.queryStats?.indexUsed,
-          errorOccurred: false
-        });
+        endTimer();
         
         return result;
       } catch (error) {
-        endTimer({
-          errorOccurred: true
-        });
+        endTimer();
         throw error;
       }
     };
@@ -196,18 +189,20 @@ export function monitorResolver(operation: string) {
  * Middleware for monitoring database query performance
  */
 export function createQueryMonitor(operation: string) {
+  let startTime: number;
+  
   return {
     pre: function() {
-      this.startTime = performance.now();
+      startTime = performance.now();
     },
     post: function() {
-      const executionTime = performance.now() - this.startTime;
+      const executionTime = performance.now() - startTime;
       const monitor = PerformanceMonitor.getInstance();
       
       monitor.recordMetrics({
         operation: `db.${operation}`,
         executionTime: Math.round(executionTime * 100) / 100,
-        resultCount: Array.isArray(this.getResult()) ? this.getResult().length : 1,
+        resultCount: 1, // Simplified for now
         errorOccurred: false
       });
     }

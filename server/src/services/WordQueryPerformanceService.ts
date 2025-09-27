@@ -116,7 +116,7 @@ export class WordQueryPerformanceService {
   }> {
     try {
       // Execute explain plan
-      const explainResult = await Word.find(filter).explain('executionStats');
+      const explainResult = await Word.find(filter).explain('executionStats') as any;
       
       const executionStats = explainResult.executionStats;
       const recommendations: string[] = [];

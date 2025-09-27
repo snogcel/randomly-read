@@ -300,11 +300,7 @@ export class PhoneticFilterOptimizer {
         indexHint = 'consonant_syllable_position';
       }
 
-      endTimer({
-        resultCount: 1,
-        indexUsed: indexHint || 'AUTO',
-        errorOccurred: false
-      });
+      endTimer();
 
       return {
         mongoFilter,
@@ -312,7 +308,7 @@ export class PhoneticFilterOptimizer {
         estimatedSelectivity: Math.max(0.01, estimatedSelectivity) // Minimum 1% selectivity
       };
     } catch (error) {
-      endTimer({ errorOccurred: true });
+      endTimer();
       throw error;
     }
   }
@@ -382,10 +378,7 @@ export class PhoneticFilterOptimizer {
       const filteredCount = filteredWords.length;
       const filterEfficiency = originalCount > 0 ? (filteredCount / originalCount) : 1;
 
-      endTimer({
-        resultCount: filteredCount,
-        errorOccurred: false
-      });
+      endTimer();
 
       logger.debug('Applied blacklist filtering', {
         originalCount,
@@ -396,7 +389,7 @@ export class PhoneticFilterOptimizer {
 
       return filteredWords;
     } catch (error) {
-      endTimer({ errorOccurred: true });
+      endTimer();
       logger.error('Error applying blacklist filter:', error);
       return words; // Return original words if filtering fails
     }
@@ -438,7 +431,7 @@ export class PhoneticFilterOptimizer {
     );
 
     if (matchingPairs.length > 0) {
-      suggestions.push(`Therapeutic benefit: ${matchingPairs[0].reason}`);
+      suggestions.push(`Therapeutic benefit: ${matchingPairs[0]?.reason}`);
     }
 
     return {
