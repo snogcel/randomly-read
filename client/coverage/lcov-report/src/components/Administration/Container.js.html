@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/5</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -109,7 +109,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,17 +126,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { connect } from 'react-redux';
@@ -147,7 +147,7 @@ import { createNewUser, cancelCreateNewUser, updateNewUsername, updateNewPasswor
 import {compose} from "redux";
 import withAuth from "../../util/withAuth";
 &nbsp;
-const mapStateToProps = <span class="fstat-no" title="function not covered" >st</span>ate =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+const mapStateToProps = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >st</span>ate =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
   availableUsers: state.administration.availableUsers,
   selectedUserId: state.administration.selectedUserId,
   selectedUsername: state.administration.selectedUsername,
@@ -164,9 +164,9 @@ const mapStateToProps = <span class="fstat-no" title="function not covered" >st<
   isFetching: state.administration.isFetching,
 });
 &nbsp;
-const mapDispatchToProps = { createNewUser, cancelCreateNewUser, updateNewUsername, updateNewPassword, updateNewFirstName, updateNewLastName, fetchUsers, fetchUser, updateUserId, updateUsername, updatePassword, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser, attemptCreateUser };
+const mapDispatchToProps = <span class="cstat-no" title="statement not covered" >{ createNewUser, cancelCreateNewUser, updateNewUsername, updateNewPassword, updateNewFirstName, updateNewLastName, fetchUsers, fetchUser, updateUserId, updateUsername, updatePassword, updateFirstName, updateLastName, updateActive, changePassword, attemptUpdateUser, attemptCreateUser };</span>
 &nbsp;
-const enhance = compose(
+const enhance = <span class="cstat-no" title="statement not covered" >compose(</span>
   withAuth,
   connect(
     mapStateToProps,
@@ -174,7 +174,7 @@ const enhance = compose(
   )
 );
 &nbsp;
-const AdministrationContainer = enhance(Administration);
+const AdministrationContainer = <span class="cstat-no" title="statement not covered" >enhance(Administration);</span>
 &nbsp;
 export default AdministrationContainer;
 &nbsp;</pre></td></tr></table></pre>
@@ -184,7 +184,7 @@ export default AdministrationContainer;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

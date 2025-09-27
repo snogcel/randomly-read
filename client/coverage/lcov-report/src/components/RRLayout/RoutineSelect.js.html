@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">19.64% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/56</span>
+                <span class='fraction'>0/56</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.64% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>9/51</span>
+                <span class='fraction'>0/51</span>
             </div>
         
             
@@ -270,7 +270,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -307,7 +307,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -340,9 +340,9 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">17x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -420,14 +420,14 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -468,7 +468,7 @@ import { withStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
 import ListSubheader from '@mui/material/ListSubheader';
 &nbsp;
-const BootstrapInput = withStyles(<span class="fstat-no" title="function not covered" >th</span>eme =&gt; (<span class="cstat-no" title="statement not covered" >{</span>
+const BootstrapInput = <span class="cstat-no" title="statement not covered" >withStyles(<span class="fstat-no" title="function not covered" >th</span>eme =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
   root: {
     'label + &amp;': {
       marginTop: theme.spacing(3),
@@ -505,7 +505,7 @@ const BootstrapInput = withStyles(<span class="fstat-no" title="function not cov
 }))(InputBase);
 &nbsp;
 &nbsp;
-const styles = theme =&gt; ({
+const styles = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >th</span>eme =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
       routine: {
         "&amp;:before": {
             borderColor: 'white'
@@ -537,10 +537,10 @@ const styles = theme =&gt; ({
 &nbsp;
 &nbsp;
 class RoutineSelect extends React.Component {
-    constructor(props) {
-      super(props);
+<span class="fstat-no" title="function not covered" >    co</span>nstructor(props) {
+<span class="cstat-no" title="statement not covered" >      super(props);</span>
 &nbsp;
-      this.handleChange = this.handleChange.bind(this);
+<span class="cstat-no" title="statement not covered" >      this.handleChange = this.handleChange.bind(this);</span>
 &nbsp;
     }
 &nbsp;
@@ -617,15 +617,15 @@ class RoutineSelect extends React.Component {
 <span class="cstat-no" title="statement not covered" >        this.props.action(selectedRoutine); </span>// pass mode update back to QueryManager
     }
 &nbsp;
-    render() {
-        const { classes } = this.props;
-        const { theme } = this.props;
+<span class="fstat-no" title="function not covered" >    re</span>nder() {
+        const { classes } = <span class="cstat-no" title="statement not covered" >this.props;</span>
+        const { theme } = <span class="cstat-no" title="statement not covered" >this.props;</span>
 &nbsp;
         // split into assigned / system generated routines
-        let upvotedRoutines = [];
-        let routines = [];
+        let upvotedRoutines = <span class="cstat-no" title="statement not covered" >[];</span>
+        let routines = <span class="cstat-no" title="statement not covered" >[];</span>
 &nbsp;
-        for (let i = 0; i &lt; this.props.availableRoutines.length; i++) {
+<span class="cstat-no" title="statement not covered" >        for (let i = <span class="cstat-no" title="statement not covered" >0;</span> i &lt; this.props.availableRoutines.length; i++) {</span>
 <span class="cstat-no" title="statement not covered" >          if (this.props.availableRoutines[i].attributes.upvoted) {</span>
 <span class="cstat-no" title="statement not covered" >            upvotedRoutines.push(this.props.availableRoutines[i]);</span>
           } else {
@@ -664,7 +664,7 @@ export default withStyles(styles)(RoutineSelect);
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

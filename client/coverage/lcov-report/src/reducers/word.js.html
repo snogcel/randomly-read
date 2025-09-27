@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/20</span>
+                <span class='fraction'>0/20</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">8.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/24</span>
+                <span class='fraction'>0/24</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">15.78% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/19</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
@@ -149,7 +149,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,8 +162,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,8 +195,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {RESET_WORD_CARD} from '../actions/word';
@@ -218,7 +218,7 @@ import {REMOVE_CONSONANT} from '../actions/word';
 import {BUILD_GRAPHQL} from '../actions/word';
 import {LOGOUT} from "../actions/auth";
 &nbsp;
-const initialState = {
+const initialState = <span class="cstat-no" title="statement not covered" >{</span>
     text: "",
     vowel: [],
     consonant: [],
@@ -231,43 +231,43 @@ const initialState = {
     isFetching: false
 };
 &nbsp;
-export default (state = initialState, action) =&gt; {
-    switch (action.type) {
-<span class="branch-0 cbranch-no" title="branch not covered" >        case RESET_WORD_CARD:</span>
+export default <span class="fstat-no" title="function not covered" >(s</span>tate = <span class="branch-0 cbranch-no" title="branch not covered" >initialState,</span> action) =&gt; {
+<span class="cstat-no" title="statement not covered" >    switch (action.type) {</span>
+        case RESET_WORD_CARD:
 <span class="cstat-no" title="statement not covered" >          return {...initialState};</span>
-<span class="branch-1 cbranch-no" title="branch not covered" >        case ADD_VOWEL:</span>
+        case ADD_VOWEL:
 <span class="cstat-no" title="statement not covered" >          return {...state, vowel: !Array.isArray(state.vowel) ? action.text : [...new Set([...state.vowel].concat(action.text))]}; </span>//vowel: state.vowel.concat([action.text])}
-<span class="branch-2 cbranch-no" title="branch not covered" >        case ADD_ROUTINE_VOWEL:</span>
+        case ADD_ROUTINE_VOWEL:
 <span class="cstat-no" title="statement not covered" >          return {...state, vowel: action.text};</span>
-<span class="branch-3 cbranch-no" title="branch not covered" >        case ADD_WORD:</span>
+        case ADD_WORD:
 <span class="cstat-no" title="statement not covered" >          return {...state, text: action.text};</span>
-<span class="branch-4 cbranch-no" title="branch not covered" >        case REMOVE_VOWEL:</span>
+        case REMOVE_VOWEL:
 <span class="cstat-no" title="statement not covered" >          return {...state, vowel: !Array.isArray(state.vowel) ? null : state.vowel.filter(<span class="fstat-no" title="function not covered" >va</span>l =&gt; <span class="cstat-no" title="statement not covered" >val !== action.text)</span>};</span>
-<span class="branch-5 cbranch-no" title="branch not covered" >        case REMOVE_WORD:</span>
+        case REMOVE_WORD:
 <span class="cstat-no" title="statement not covered" >          return {...state, text: ""};</span>
-<span class="branch-6 cbranch-no" title="branch not covered" >        case ADD_CONSONANT:</span>
+        case ADD_CONSONANT:
 <span class="cstat-no" title="statement not covered" >          return {...state, consonant: action.text}; </span>//state.consonant.concat([action.text])}
-<span class="branch-7 cbranch-no" title="branch not covered" >        case REMOVE_CONSONANT:</span>
+        case REMOVE_CONSONANT:
 <span class="cstat-no" title="statement not covered" >          return {...state, consonant: initialState.consonant};</span>
-<span class="branch-8 cbranch-no" title="branch not covered" >        case ADD_SYLLABLES:</span>
+        case ADD_SYLLABLES:
 <span class="cstat-no" title="statement not covered" >          return {...state, syllables: !Array.isArray(state.syllables) ? action.text : action.text.map(Number)}; </span>//state.syllables.concat([parseInt(action.integer)])}
-<span class="branch-9 cbranch-no" title="branch not covered" >        case SET_POSITION:</span>
+        case SET_POSITION:
 <span class="cstat-no" title="statement not covered" >          return {...state, position: action.text};</span>
-<span class="branch-10 cbranch-no" title="branch not covered" >        case SET_AGE:</span>
+        case SET_AGE:
 <span class="cstat-no" title="statement not covered" >          return {...state, age: action.text};</span>
-<span class="branch-11 cbranch-no" title="branch not covered" >        case SET_LIMIT:</span>
+        case SET_LIMIT:
 <span class="cstat-no" title="statement not covered" >          return {...state, limit: action.text};</span>
-<span class="branch-12 cbranch-no" title="branch not covered" >        case SET_MODE:</span>
+        case SET_MODE:
 <span class="cstat-no" title="statement not covered" >          return {...state, mode: action.text};</span>
-<span class="branch-13 cbranch-no" title="branch not covered" >        case ADD_INTERMISSION_TEXT:</span>
+        case ADD_INTERMISSION_TEXT:
 <span class="cstat-no" title="statement not covered" >          return {...state, intermissionText: action.text};</span>
-<span class="branch-14 cbranch-no" title="branch not covered" >        case BUILD_GRAPHQL:</span>
+        case BUILD_GRAPHQL:
 <span class="cstat-no" title="statement not covered" >          return {...state, query: action};</span>
-<span class="branch-15 cbranch-no" title="branch not covered" >        case LOGOUT:</span>
+        case LOGOUT:
 <span class="cstat-no" title="statement not covered" >            return initialState;</span>
 &nbsp;
           default:
-            return state;
+<span class="cstat-no" title="statement not covered" >            return state;</span>
     }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -277,7 +277,7 @@ export default (state = initialState, action) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

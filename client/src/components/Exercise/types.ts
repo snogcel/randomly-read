@@ -47,6 +47,8 @@ export interface ExerciseSession {
   accuracy: number;
   completionRate: number;
   difficultWords: Word[];
+  currentStreak?: number; // Added missing streak tracking
+  bestStreak?: number; // Added missing best streak tracking
 }
 
 export interface WordAttempt {
@@ -56,6 +58,8 @@ export interface WordAttempt {
   accuracy: number;
   timeSpent: number;
   difficulty: number;
+  skipped?: boolean; // Added missing skipped flag
+  interaction?: string; // Added missing interaction type
 }
 
 export interface Word {
@@ -72,6 +76,7 @@ export interface Word {
   wordsXsensesXsynsets: Definition[];
   score: number;
   votes: Vote[];
+  difficulty?: number; // Added missing difficulty property (0-1 scale)
 }
 
 export interface Definition {

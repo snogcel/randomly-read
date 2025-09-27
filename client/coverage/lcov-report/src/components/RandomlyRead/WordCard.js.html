@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0.9% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/111</span>
+                <span class='fraction'>0/111</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">1.03% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/97</span>
+                <span class='fraction'>0/97</span>
             </div>
         
             
@@ -477,7 +477,10 @@
 <a name='L412'></a><a href='#L412'>412</a>
 <a name='L413'></a><a href='#L413'>413</a>
 <a name='L414'></a><a href='#L414'>414</a>
-<a name='L415'></a><a href='#L415'>415</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L415'></a><a href='#L415'>415</a>
+<a name='L416'></a><a href='#L416'>416</a>
+<a name='L417'></a><a href='#L417'>417</a>
+<a name='L418'></a><a href='#L418'>418</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -495,6 +498,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -864,14 +868,16 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -895,6 +901,7 @@
 import PropTypes from "prop-types";
 // import Fader from 'react-fader';
 import { styled, useTheme } from '@mui/material/styles';
+import { withStyles } from '@mui/styles';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -1278,15 +1285,17 @@ class WordCard extends React.Component  {
   }
  }
 &nbsp;
-WordCard.propTypes = {
+<span class="cstat-no" title="statement not covered" >WordCard.propTypes = {</span>
   classes: PropTypes.object.isRequired,
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 &nbsp;
-// Wrapper component to provide theme, styles, and width
+// Wrap the class component with withStyles
+const WordCardWithStyles = <span class="cstat-no" title="statement not covered" >withStyles(styles)(WordCard);</span>
+&nbsp;
+// Wrapper component to provide theme and width
 function <span class="fstat-no" title="function not covered" >WordCardWrapper(</span>props) {
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
-  const classes = <span class="cstat-no" title="statement not covered" >styles(theme);</span>
   
   // Use useMediaQuery to replace withWidth
   const isXs = <span class="cstat-no" title="statement not covered" >useMediaQuery(theme.breakpoints.only('xs'));</span>
@@ -1301,7 +1310,7 @@ function <span class="fstat-no" title="function not covered" >WordCardWrapper(</
   else <span class="cstat-no" title="statement not covered" >if (isMd) <span class="cstat-no" title="statement not covered" >width = 'md';</span></span>
   else <span class="cstat-no" title="statement not covered" >if (isSm) <span class="cstat-no" title="statement not covered" >width = 'sm';</span></span>
   
-<span class="cstat-no" title="statement not covered" >  return &lt;WordCard {...props} classes={classes} theme={theme} width={width} /&gt;;</span>
+<span class="cstat-no" title="statement not covered" >  return &lt;WordCardWithStyles {...props} theme={theme} width={width} /&gt;;</span>
 }
 &nbsp;
 export default WordCardWrapper;
@@ -1312,7 +1321,7 @@ export default WordCardWrapper;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

@@ -6,7 +6,6 @@ import {
   LinearProgress,
   Card,
   CardContent,
-  IconButton,
   Fade,
   useTheme
 } from '@mui/material';

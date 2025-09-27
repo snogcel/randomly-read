@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0.3% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>1/327</span>
+                <span class='fraction'>0/327</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>1/298</span>
+                <span class='fraction'>0/298</span>
             </div>
         
             
@@ -912,7 +912,10 @@
 <a name='L847'></a><a href='#L847'>847</a>
 <a name='L848'></a><a href='#L848'>848</a>
 <a name='L849'></a><a href='#L849'>849</a>
-<a name='L850'></a><a href='#L850'>850</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L850'></a><a href='#L850'>850</a>
+<a name='L851'></a><a href='#L851'>851</a>
+<a name='L852'></a><a href='#L852'>852</a>
+<a name='L853'></a><a href='#L853'>853</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -941,6 +944,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -1735,13 +1739,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1770,6 +1776,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 &nbsp;
 import { styled, useTheme } from "@mui/material/styles";
+import { withStyles } from '@mui/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Checkbox from '@mui/material/Checkbox';
 import IconButton from '@mui/material/IconButton';
@@ -2584,14 +2591,16 @@ class Timer extends React.Component {
   }
 }
 &nbsp;
-Timer.propTypes = {
+<span class="cstat-no" title="statement not covered" >Timer.propTypes = {</span>
   width: PropTypes.oneOf(['lg', 'md', 'sm', 'xl', 'xs']).isRequired,
 };
 &nbsp;
-// Wrapper component to provide theme, styles, and width
+// Wrap the class component with withStyles
+const TimerWithStyles = <span class="cstat-no" title="statement not covered" >withStyles(styles)(Timer);</span>
+&nbsp;
+// Wrapper component to provide theme and width
 function <span class="fstat-no" title="function not covered" >TimerWrapper(</span>props) {
   const theme = <span class="cstat-no" title="statement not covered" >useTheme();</span>
-  const classes = <span class="cstat-no" title="statement not covered" >styles(theme);</span>
   
   // Use useMediaQuery to replace withWidth
   const isXs = <span class="cstat-no" title="statement not covered" >useMediaQuery(theme.breakpoints.only('xs'));</span>
@@ -2606,7 +2615,7 @@ function <span class="fstat-no" title="function not covered" >TimerWrapper(</spa
   else <span class="cstat-no" title="statement not covered" >if (isMd) <span class="cstat-no" title="statement not covered" >width = 'md';</span></span>
   else <span class="cstat-no" title="statement not covered" >if (isSm) <span class="cstat-no" title="statement not covered" >width = 'sm';</span></span>
   
-<span class="cstat-no" title="statement not covered" >  return &lt;Timer {...props} classes={classes} theme={theme} width={width} /&gt;;</span>
+<span class="cstat-no" title="statement not covered" >  return &lt;TimerWithStyles {...props} theme={theme} width={width} /&gt;;</span>
 }
 &nbsp;
 export default TimerWrapper;
@@ -2617,7 +2626,7 @@ export default TimerWrapper;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../../prettify.js"></script>
         <script>

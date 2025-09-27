@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.18% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/11</span>
+                <span class='fraction'>0/11</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">25% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/12</span>
+                <span class='fraction'>0/12</span>
             </div>
         
             
@@ -124,22 +124,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,6 +143,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -158,7 +158,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {FETCH_ASSIGNED_ROUTINES_REQUEST} from '../actions/routineSelect';
@@ -173,7 +173,7 @@ import {UPDATE_ACTIVE_ROUTINE} from '../actions/routineSelect';
 import {RESET_ROUTINE_SELECT} from '../actions/routineSelect';
 import {LOGOUT} from "../actions/auth";
 &nbsp;
-const initialState = {
+const initialState = <span class="cstat-no" title="statement not covered" >{</span>
   availableRoutines: [],
   routine: {},
   id: 0,
@@ -182,32 +182,32 @@ const initialState = {
   isFetchingRoutines: false
 };
 &nbsp;
-export default (state = initialState, action) =&gt; {
-  switch (action.type) {
+export default <span class="fstat-no" title="function not covered" >(s</span>tate = <span class="branch-0 cbranch-no" title="branch not covered" >initialState,</span> action) =&gt; {
+<span class="cstat-no" title="statement not covered" >  switch (action.type) {</span>
 &nbsp;
-<span class="branch-0 cbranch-no" title="branch not covered" >    case FETCH_ASSIGNED_ROUTINES_REQUEST:</span>
+    case FETCH_ASSIGNED_ROUTINES_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetchingRoutines: true, name: '', id: 0 };</span>
-<span class="branch-1 cbranch-no" title="branch not covered" >    case FETCH_ASSIGNED_ROUTINES_SUCCESS:</span>
+    case FETCH_ASSIGNED_ROUTINES_SUCCESS:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetchingRoutines: false, availableRoutines: action.routines };</span>
-<span class="branch-2 cbranch-no" title="branch not covered" >    case FETCH_ASSIGNED_ROUTINES_ERROR:</span>
+    case FETCH_ASSIGNED_ROUTINES_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetchingRoutines: false };</span>
 &nbsp;
-<span class="branch-3 cbranch-no" title="branch not covered" >    case RESET_ROUTINE_SELECT:</span>
+    case RESET_ROUTINE_SELECT:
 <span class="cstat-no" title="statement not covered" >      return {...initialState};</span>
-<span class="branch-4 cbranch-no" title="branch not covered" >    case UPDATE_ROUTINE_ID:</span>
+    case UPDATE_ROUTINE_ID:
 <span class="cstat-no" title="statement not covered" >      return {...state, id: action.id};</span>
-<span class="branch-5 cbranch-no" title="branch not covered" >    case UPDATE_ROUTINE_NAME:</span>
+    case UPDATE_ROUTINE_NAME:
 <span class="cstat-no" title="statement not covered" >      return {...state, name: action.name};</span>
-<span class="branch-6 cbranch-no" title="branch not covered" >    case UPDATE_ROUTINE_DESCRIPTION:</span>
+    case UPDATE_ROUTINE_DESCRIPTION:
 <span class="cstat-no" title="statement not covered" >      return {...state, description: action.description};</span>
-<span class="branch-7 cbranch-no" title="branch not covered" >    case UPDATE_ACTIVE_ROUTINE:</span>
+    case UPDATE_ACTIVE_ROUTINE:
 <span class="cstat-no" title="statement not covered" >      return {...state, routine: action.routine};</span>
 &nbsp;
-<span class="branch-8 cbranch-no" title="branch not covered" >    case LOGOUT:</span>
+    case LOGOUT:
 <span class="cstat-no" title="statement not covered" >      return initialState;</span>
 &nbsp;
     default:
-      return state;
+<span class="cstat-no" title="statement not covered" >      return state;</span>
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -217,7 +217,7 @@ export default (state = initialState, action) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

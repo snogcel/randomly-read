@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.45% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>10/22</span>
+                <span class='fraction'>0/22</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.63% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>10/19</span>
+                <span class='fraction'>0/19</span>
             </div>
         
             
@@ -107,19 +107,19 @@
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -149,19 +149,19 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { getViewHistory } from "../util/api";
 &nbsp;
-export const UPDATE_START_DATE = 'UPDATE_START_DATE';
-export const UPDATE_END_DATE = 'UPDATE_END_DATE';
-export const UPDATE_FILTER = 'UPDATE_FILTER';
+export const UPDATE_START_DATE = <span class="cstat-no" title="statement not covered" >'UPDATE_START_DATE';</span>
+export const UPDATE_END_DATE = <span class="cstat-no" title="statement not covered" >'UPDATE_END_DATE';</span>
+export const UPDATE_FILTER = <span class="cstat-no" title="statement not covered" >'UPDATE_FILTER';</span>
 &nbsp;
-export const FETCH_VIEW_HISTORY_REQUEST = 'FETCH_VIEW_HISTORY_REQUEST';
-export const FETCH_VIEW_HISTORY_SUCCESS = 'FETCH_VIEW_HISTORY_SUCCESS';
-export const FETCH_VIEW_HISTORY_ERROR = 'FETCH_VIEW_HISTORY_ERROR';
+export const FETCH_VIEW_HISTORY_REQUEST = <span class="cstat-no" title="statement not covered" >'FETCH_VIEW_HISTORY_REQUEST';</span>
+export const FETCH_VIEW_HISTORY_SUCCESS = <span class="cstat-no" title="statement not covered" >'FETCH_VIEW_HISTORY_SUCCESS';</span>
+export const FETCH_VIEW_HISTORY_ERROR = <span class="cstat-no" title="statement not covered" >'FETCH_VIEW_HISTORY_ERROR';</span>
 &nbsp;
-const fetchViewHistoryRequest = { type: FETCH_VIEW_HISTORY_REQUEST };
-const fetchViewHistorySuccess = <span class="fstat-no" title="function not covered" >vi</span>ewHistory =&gt; (<span class="cstat-no" title="statement not covered" >{ type: FETCH_VIEW_HISTORY_SUCCESS, viewHistory })</span>;
-const fetchViewHistoryError = <span class="fstat-no" title="function not covered" >er</span>ror =&gt; (<span class="cstat-no" title="statement not covered" >{ type: FETCH_VIEW_HISTORY_ERROR, error })</span>;
+const fetchViewHistoryRequest = <span class="cstat-no" title="statement not covered" >{ type: FETCH_VIEW_HISTORY_REQUEST };</span>
+const fetchViewHistorySuccess = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >vi</span>ewHistory =&gt; (<span class="cstat-no" title="statement not covered" >{ type: FETCH_VIEW_HISTORY_SUCCESS, viewHistory })</span>;</span>
+const fetchViewHistoryError = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >er</span>ror =&gt; (<span class="cstat-no" title="statement not covered" >{ type: FETCH_VIEW_HISTORY_ERROR, error })</span>;</span>
 &nbsp;
-export const fetchViewHistory = <span class="fstat-no" title="function not covered" >(u</span>serId, startDate, endDate) =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (dispatch, getState) =&gt; {</span>
+export const fetchViewHistory = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(u</span>serId, startDate, endDate) =&gt; <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >as</span>ync (dispatch, getState) =&gt; {</span></span>
 <span class="cstat-no" title="statement not covered" >  dispatch(fetchViewHistoryRequest);</span>
 <span class="cstat-no" title="statement not covered" >  try {</span>
     const { token } = <span class="cstat-no" title="statement not covered" >getState().auth;</span>
@@ -196,7 +196,7 @@ export function <span class="fstat-no" title="function not covered" >updateFilte
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">33.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>5/15</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -119,26 +119,10 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -150,7 +134,23 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import jwtDecode from 'jwt-decode';
@@ -164,21 +164,21 @@ import {
   LOGOUT
 } from '../actions/auth';
 &nbsp;
-const token = localStorage.getItem('token');
-const user = token &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >jwtDecode(token).user;</span>
+const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem('token');</span>
+const user = <span class="cstat-no" title="statement not covered" >token &amp;&amp; jwtDecode(token).user;</span>
 &nbsp;
-const initialState = {
-  ...(token &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >{ token })</span>,
-  ...(user &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >{ user })</span>
+const initialState = <span class="cstat-no" title="statement not covered" >{</span>
+  ...(token &amp;&amp; { token }),
+  ...(user &amp;&amp; { user })
 };
 &nbsp;
-export default (state = initialState, action) =&gt; {
-  switch (action.type) {
-<span class="branch-0 cbranch-no" title="branch not covered" >    case SIGNUP_REQUEST:</span>
-<span class="branch-1 cbranch-no" title="branch not covered" >    case LOGIN_REQUEST:</span>
+export default <span class="fstat-no" title="function not covered" >(s</span>tate = <span class="branch-0 cbranch-no" title="branch not covered" >initialState,</span> action) =&gt; {
+<span class="cstat-no" title="statement not covered" >  switch (action.type) {</span>
+    case SIGNUP_REQUEST:
+    case LOGIN_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, loading: true };</span>
-<span class="branch-2 cbranch-no" title="branch not covered" >    case SIGNUP_SUCCESS:</span>
-<span class="branch-3 cbranch-no" title="branch not covered" >    case LOGIN_SUCCESS:</span>
+    case SIGNUP_SUCCESS:
+    case LOGIN_SUCCESS:
       const user = <span class="cstat-no" title="statement not covered" >jwtDecode(action.token).user;</span>
 <span class="cstat-no" title="statement not covered" >      return {</span>
         ...state,
@@ -187,15 +187,15 @@ export default (state = initialState, action) =&gt; {
         user
       };
 &nbsp;
-<span class="branch-4 cbranch-no" title="branch not covered" >    case SIGNUP_ERROR:</span>
-<span class="branch-5 cbranch-no" title="branch not covered" >    case LOGIN_ERROR:</span>
+    case SIGNUP_ERROR:
+    case LOGIN_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, loading: false };</span>
 &nbsp;
-<span class="branch-6 cbranch-no" title="branch not covered" >    case LOGOUT:</span>
+    case LOGOUT:
 <span class="cstat-no" title="statement not covered" >      return { ...state, token: null, user: null };</span>
 &nbsp;
     default:
-      return state;
+<span class="cstat-no" title="statement not covered" >      return state;</span>
   }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -205,7 +205,7 @@ export default (state = initialState, action) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">22.22% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/9</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">30% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/10</span>
+                <span class='fraction'>0/10</span>
             </div>
         
             
@@ -114,7 +114,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,15 +122,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -144,7 +141,10 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {UPDATE_START_DATE} from '../actions/viewHistory';
@@ -156,7 +156,7 @@ import {FETCH_VIEW_HISTORY_SUCCESS} from '../actions/viewHistory';
 import {FETCH_VIEW_HISTORY_ERROR} from '../actions/viewHistory';
 import {LOGOUT} from "../actions/auth";
 &nbsp;
-const initialState = {
+const initialState = <span class="cstat-no" title="statement not covered" >{</span>
   startDate: null,
   endDate: null,
   dataSet: [],
@@ -164,29 +164,29 @@ const initialState = {
   isFetching: false
 };
 &nbsp;
-export default (state = initialState, action) =&gt; {
-  switch (action.type) {
-<span class="branch-0 cbranch-no" title="branch not covered" >    case FETCH_VIEW_HISTORY_REQUEST:</span>
+export default <span class="fstat-no" title="function not covered" >(s</span>tate = <span class="branch-0 cbranch-no" title="branch not covered" >initialState,</span> action) =&gt; {
+<span class="cstat-no" title="statement not covered" >  switch (action.type) {</span>
+    case FETCH_VIEW_HISTORY_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: true };</span>
-<span class="branch-1 cbranch-no" title="branch not covered" >    case FETCH_VIEW_HISTORY_SUCCESS:</span>
+    case FETCH_VIEW_HISTORY_SUCCESS:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false, dataSet: action.viewHistory.dataSet, startDate: action.viewHistory.startDate, endDate: action.viewHistory.endDate };</span>
-<span class="branch-2 cbranch-no" title="branch not covered" >    case FETCH_VIEW_HISTORY_ERROR:</span>
+    case FETCH_VIEW_HISTORY_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false };</span>
 &nbsp;
-<span class="branch-3 cbranch-no" title="branch not covered" >    case UPDATE_START_DATE:</span>
+    case UPDATE_START_DATE:
 <span class="cstat-no" title="statement not covered" >      return {...state, startDate: action.startDate };</span>
 &nbsp;
-<span class="branch-4 cbranch-no" title="branch not covered" >    case UPDATE_END_DATE:</span>
+    case UPDATE_END_DATE:
 <span class="cstat-no" title="statement not covered" >      return {...state, endDate: action.endDate };</span>
 &nbsp;
-<span class="branch-5 cbranch-no" title="branch not covered" >    case UPDATE_FILTER:</span>
+    case UPDATE_FILTER:
 <span class="cstat-no" title="statement not covered" >      return {...state, filter: action.filter };</span>
 &nbsp;
-<span class="branch-6 cbranch-no" title="branch not covered" >    case LOGOUT:</span>
+    case LOGOUT:
 <span class="cstat-no" title="statement not covered" >      return initialState;</span>
 &nbsp;
     default:
-      return state;
+<span class="cstat-no" title="statement not covered" >      return state;</span>
   }
 }
 &nbsp;</pre></td></tr></table></pre>
@@ -196,7 +196,7 @@ export default (state = initialState, action) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

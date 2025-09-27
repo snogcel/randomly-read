@@ -42,7 +42,18 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
   const [showErrorSnackbar, setShowErrorSnackbar] = useState(false);
   const exerciseSessionRef = useRef<string | null>(null);
 
-  // Custom hooks for exercise functionality
+  // Custom hooks for exercise functionality - using refs to avoid circular dependencies
+  const timerCallbacksRef = useRef<{
+    onComplete?: () => void;
+    onTick?: (remaining: number) => void;
+  }>({});
+
+  const routineCallbacksRef = useRef<{
+    onStepChange?: (stepIndex: number, stepConfig: any) => void;
+    onRoutineComplete?: () => void;
+    onWordFetch?: (word: any) => Promise<void>;
+  }>({});
+
   const {
     timeRemaining,
     isRunning,
@@ -53,8 +64,8 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
     resetTimer,
     setDuration,
   } = useExerciseTimer({
-    onComplete: handleTimerComplete,
-    onTick: handleTimerTick,
+    onComplete: () => timerCallbacksRef.current.onComplete?.(),
+    onTick: (remaining) => timerCallbacksRef.current.onTick?.(remaining),
   });
 
   const {
@@ -70,9 +81,9 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
     getCurrentStepConfig,
   } = useRoutineExecution({
     routine,
-    onStepChange: handleStepChange,
-    onRoutineComplete: handleRoutineComplete,
-    onWordFetch: handleWordFetch,
+    onStepChange: (stepIndex, stepConfig) => routineCallbacksRef.current.onStepChange?.(stepIndex, stepConfig),
+    onRoutineComplete: () => routineCallbacksRef.current.onRoutineComplete?.(),
+    onWordFetch: (word) => routineCallbacksRef.current.onWordFetch?.(word),
   });
 
   const {
@@ -87,13 +98,13 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
   });
 
   // Timer event handlers
-  function handleTimerComplete() {
+  const handleTimerComplete = useCallback(() => {
     if (exerciseState === 'running') {
       skipToNext();
     }
-  }
+  }, [exerciseState, skipToNext]);
 
-  function handleTimerTick(remaining: number) {
+  const handleTimerTick = useCallback((remaining: number) => {
     // Update any UI that needs real-time timer updates
     if (onProgressUpdate) {
       onProgressUpdate({
@@ -102,10 +113,10 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
         progress: routineProgress,
       });
     }
-  }
+  }, [onProgressUpdate, currentStep, routineProgress]);
 
   // Routine event handlers
-  function handleStepChange(stepIndex: number, stepConfig: any) {
+  const handleStepChange = useCallback((stepIndex: number, stepConfig: any) => {
     const duration = stepConfig?.duration || 30;
     setDuration(duration);
     
@@ -113,9 +124,9 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
       resetTimer();
       startTimer();
     }
-  }
+  }, [exerciseState, setDuration, resetTimer, startTimer]);
 
-  function handleRoutineComplete() {
+  const handleRoutineComplete = useCallback(() => {
     setExerciseState('completed');
     pauseTimer();
     
@@ -123,13 +134,29 @@ const ExerciseEngine: React.FC<ExerciseEngineProps> = ({
       const summary = getSessionSummary();
       onExerciseComplete(summary);
     }
-  }
+  }, [onExerciseComplete, pauseTimer, getSessionSummary]);
 
-  async function handleWordFetch(word: any) {
+  const handleWordFetch = useCallback(async (word: any) => {
     if (onWordChange) {
       onWordChange(word);
     }
-  }
+  }, [onWordChange]);
+
+  // Update callback refs when handlers change
+  useEffect(() => {
+    timerCallbacksRef.current = {
+      onComplete: handleTimerComplete,
+      onTick: handleTimerTick,
+    };
+  }, [handleTimerComplete, handleTimerTick]);
+
+  useEffect(() => {
+    routineCallbacksRef.current = {
+      onStepChange: handleStepChange,
+      onRoutineComplete: handleRoutineComplete,
+      onWordFetch: handleWordFetch,
+    };
+  }, [handleStepChange, handleRoutineComplete, handleWordFetch]);
 
   // Exercise control methods
   const startExercise = useCallback(async () => {

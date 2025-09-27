@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/18</span>
+                <span class='fraction'>0/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">13.33% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/15</span>
+                <span class='fraction'>0/15</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">17.64% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/17</span>
+                <span class='fraction'>0/17</span>
             </div>
         
             
@@ -136,18 +136,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -166,6 +159,13 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -174,7 +174,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
@@ -193,45 +193,45 @@
 } from '../actions/interaction';
 import {LOGOUT} from "../actions/auth";
 &nbsp;
-const initialState = { isFetching: false, settings: [], items: [] };
+const initialState = <span class="cstat-no" title="statement not covered" >{ isFetching: false, settings: [], items: [] };</span>
 &nbsp;
 let items;
-export default (state = initialState, action) =&gt; {
-  switch (action.type) {
-<span class="branch-0 cbranch-no" title="branch not covered" >    case FETCH_INTERACTIONS_REQUEST:</span>
+export default <span class="fstat-no" title="function not covered" >(s</span>tate = <span class="branch-0 cbranch-no" title="branch not covered" >initialState,</span> action) =&gt; {
+<span class="cstat-no" title="statement not covered" >  switch (action.type) {</span>
+    case FETCH_INTERACTIONS_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: true, newInteraction: null };</span>
-<span class="branch-1 cbranch-no" title="branch not covered" >    case FETCH_INTERACTIONS_SUCCESS:</span>
+    case FETCH_INTERACTIONS_SUCCESS:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false, items: action.interactions };</span>
-<span class="branch-2 cbranch-no" title="branch not covered" >    case FETCH_INTERACTIONS_ERROR:</span>
+    case FETCH_INTERACTIONS_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false };</span>
 &nbsp;
-<span class="branch-3 cbranch-no" title="branch not covered" >    case FETCH_INTERACTION_SETTINGS_REQUEST:</span>
+    case FETCH_INTERACTION_SETTINGS_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: true };</span>
-<span class="branch-4 cbranch-no" title="branch not covered" >    case FETCH_INTERACTION_SETTINGS_SUCCESS:</span>
+    case FETCH_INTERACTION_SETTINGS_SUCCESS:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false, settings: action.interactionSettings };</span>
-<span class="branch-5 cbranch-no" title="branch not covered" >    case FETCH_INTERACTION_SETTINGS_ERROR:</span>
+    case FETCH_INTERACTION_SETTINGS_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false };</span>
 &nbsp;
-<span class="branch-6 cbranch-no" title="branch not covered" >    case CREATE_INTERACTION_REQUEST:</span>
+    case CREATE_INTERACTION_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: true, isInteractionVoting: true };</span>
-<span class="branch-7 cbranch-no" title="branch not covered" >    case CREATE_INTERACTION_SUCCESS:</span>
+    case CREATE_INTERACTION_SUCCESS:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false, isInteractionVoting: false, items: [action.interaction, ...state.items] };</span>
-<span class="branch-8 cbranch-no" title="branch not covered" >    case CREATE_INTERACTION_ERROR:</span>
+    case CREATE_INTERACTION_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isFetching: false, isInteractionVoting: false, error: action.error };</span>
 &nbsp;
-<span class="branch-9 cbranch-no" title="branch not covered" >    case DELETE_INTERACTION_REQUEST:</span>
+    case DELETE_INTERACTION_REQUEST:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isDeleting: true, isInteractionVoting: true };</span>
-<span class="branch-10 cbranch-no" title="branch not covered" >    case DELETE_INTERACTION_SUCCESS:</span>
+    case DELETE_INTERACTION_SUCCESS:
 <span class="cstat-no" title="statement not covered" >      items = state.items.filter(<span class="fstat-no" title="function not covered" >i </span>=&gt; <span class="cstat-no" title="statement not covered" >i.id !== action.interaction)</span>;</span>
 <span class="cstat-no" title="statement not covered" >      return { ...state, isDeleting: false, isInteractionVoting: false, items, post: null };</span>
-<span class="branch-11 cbranch-no" title="branch not covered" >    case DELETE_INTERACTION_ERROR:</span>
+    case DELETE_INTERACTION_ERROR:
 <span class="cstat-no" title="statement not covered" >      return { ...state, isDeleting: false, isInteractionVoting: false };</span>
 &nbsp;
-<span class="branch-12 cbranch-no" title="branch not covered" >    case LOGOUT:</span>
+    case LOGOUT:
 <span class="cstat-no" title="statement not covered" >      return initialState;</span>
 &nbsp;
     default:
-      return state;
+<span class="cstat-no" title="statement not covered" >      return state;</span>
   }
 };
 &nbsp;</pre></td></tr></table></pre>
@@ -241,7 +241,7 @@ export default (state = initialState, action) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/4</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>0/5</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -514,16 +514,14 @@
 <a name='L449'></a><a href='#L449'>449</a>
 <a name='L450'></a><a href='#L450'>450</a>
 <a name='L451'></a><a href='#L451'>451</a>
-<a name='L452'></a><a href='#L452'>452</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L452'></a><a href='#L452'>452</a>
+<a name='L453'></a><a href='#L453'>453</a>
+<a name='L454'></a><a href='#L454'>454</a>
+<a name='L455'></a><a href='#L455'>455</a>
+<a name='L456'></a><a href='#L456'>456</a>
+<a name='L457'></a><a href='#L457'>457</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -538,9 +536,21 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -967,7 +977,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 &nbsp;
-let MuiTheme = createTheme({
+let MuiTheme = <span class="cstat-no" title="statement not covered" >createTheme({</span>
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
@@ -984,14 +994,19 @@ let MuiTheme = createTheme({
 &nbsp;
     },
     // error: will use the default color
-  }
+  },
+  spacing: 8, // Ensure spacing is properly configured
 });
 &nbsp;
 // EDEDF3
 &nbsp;
-MuiTheme = responsiveFontSizes(MuiTheme);
+<span class="cstat-no" title="statement not covered" >MuiTheme = responsiveFontSizes(MuiTheme);</span>
 &nbsp;
-const styles = theme =&gt; ({
+const styles = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >th</span>eme =&gt; {</span>
+  // Ensure spacing function exists, fallback to default MUI spacing
+  const spacing = <span class="cstat-no" title="statement not covered" >theme.spacing || (<span class="fstat-no" title="function not covered" >(f</span>actor) =&gt; <span class="cstat-no" title="statement not covered" >`${8 * factor}px`)</span>;</span>
+  
+<span class="cstat-no" title="statement not covered" >  return {</span>
   root: {
     flexGrow: 1
   },
@@ -1003,7 +1018,7 @@ const styles = theme =&gt; ({
     textAlign: "center",
   },
   mobileHeading: {
-    marginTop: theme.spacing(2),
+    marginTop: spacing(2),
     color: "#14197E",
     fontWeight: "bold"
   },
@@ -1012,10 +1027,10 @@ const styles = theme =&gt; ({
     margin: 50
   },
   margin: {
-    height: theme.spacing(3)
+    height: spacing(3)
   },
   formTable: {
-    marginTop: theme.spacing(3)
+    marginTop: spacing(3)
   },
   form: {
     textAlign: "left",
@@ -1024,19 +1039,19 @@ const styles = theme =&gt; ({
     marginRight: 40,
   },
   columnDesktop: {
-    paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingTop: spacing(2),
+    paddingBottom: spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
     paddingRight: "50%"
   },
   column: {
-    padding: theme.spacing(2),
+    padding: spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
   sideColumn: {
-    padding: theme.spacing(2),
+    padding: spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary
   },
@@ -1050,26 +1065,26 @@ const styles = theme =&gt; ({
     backgroundColor: theme.palette.background.paper,
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: spacing(2, 4, 3),
   },
   paper: {
     position: "absolute",
-    width: theme.spacing(50),
+    width: spacing(50),
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(4),
+    padding: spacing(4),
     outline: "none"
   },
   wordGrid: {
     alignItems: "end",
     minHeight: 150,
-    marginTop: theme.spacing(4),
+    marginTop: spacing(4),
     paddingRight: "50%"
   },
   wordGridDesktop: {
     alignItems: "end",
     minHeight: 150,
-    marginTop: theme.spacing(4),
+    marginTop: spacing(4),
     paddingRight: "50%"
   },
   wordHistoryGrid: {
@@ -1088,7 +1103,7 @@ const styles = theme =&gt; ({
     boxShadow: "0 4px 20px -6px rgba(0,0,0,0.15)",
   },
   previewCard: {
-    marginTop: theme.spacing(2),
+    marginTop: spacing(2),
     textAlign: "center",
     backgroundColor:"#FBFBFB",
   },
@@ -1107,14 +1122,14 @@ const styles = theme =&gt; ({
     transition: "0.3s",
   },
   routineBuilderCard: {
-    marginTop: theme.spacing(4),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginTop: spacing(4),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
   },
   userAdminCard: {
-    marginTop: theme.spacing(4),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginTop: spacing(4),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
   },
   sideCard: {
     marginBottom: 20
@@ -1140,10 +1155,10 @@ const styles = theme =&gt; ({
     fontSize: 24,
     fontFamily: "'Noto Sans', sans-serif",
     fontWeight: "bold",
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
+    marginTop: spacing(1),
+    marginBottom: spacing(1),
     textAlign: "center"
   },
   historyTitle: {
@@ -1178,8 +1193,8 @@ const styles = theme =&gt; ({
     backgroundColor: '#33a0ff',
   },
   iconButton: {
-    margin: theme.spacing(0),
-    padding: theme.spacing(1)
+    margin: spacing(0),
+    padding: spacing(1)
   },
   button: {
     margin: 4,
@@ -1209,10 +1224,10 @@ const styles = theme =&gt; ({
     margin: "0.25em"
   },
   actionsContainer: {
-    marginBottom: theme.spacing(2)
+    marginBottom: spacing(2)
   },
   resetContainer: {
-    padding: theme.spacing(3)
+    padding: spacing(3)
   },
   wordHistoryContainer: {
   },
@@ -1221,12 +1236,12 @@ const styles = theme =&gt; ({
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
-    marginBottom: theme.spacing(2),
+    marginBottom: spacing(2),
   },
   RoutineSelector: {
     display: "inline-flex",
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1)
+    paddingLeft: spacing(1),
+    paddingRight: spacing(1)
   },
   TimerControls: {
     display: "inline-flex",
@@ -1249,12 +1264,12 @@ const styles = theme =&gt; ({
     alignItems: "center",
     display:"grid",
     justifyItems: "center",
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginTop: spacing(2),
+    marginBottom: spacing(2)
   },
   isActiveSelector: {
     alignItems: "center",
-    marginTop: theme.spacing(2),
+    marginTop: spacing(2),
   },
   focusWordCardMobile: {
     margin: 0,
@@ -1265,39 +1280,39 @@ const styles = theme =&gt; ({
     position: 'fixed',
   },
   DescriptionEditor: {
-    margin: theme.spacing(1),
+    margin: spacing(1),
   },
   routineDetails: {
-    padding: theme.spacing(3, 2),
-    marginTop: theme.spacing(4),
+    padding: spacing(3, 2),
+    marginTop: spacing(4),
   },
   homePageContainer: {
 &nbsp;
   },
   homePageHeader: {
-    paddingTop: theme.spacing(10),
-    paddingBottom: theme.spacing(10),
+    paddingTop: spacing(10),
+    paddingBottom: spacing(10),
     textAlign: "center",
     backgroundImage: "url(./connect-20333.png)",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat"
   },
   homePageMobileHeader: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: spacing(4),
+    paddingBottom: spacing(4),
     textAlign: "center",
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
   },
   homePageHeaderBox: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(3),
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
+    paddingLeft: spacing(2),
+    paddingRight: spacing(2),
+    paddingTop: spacing(3),
+    paddingBottom: spacing(3),
+    marginLeft: spacing(2),
+    marginRight: spacing(2),
+    marginTop: spacing(3),
+    marginBottom: spacing(3),
     textAlign: "center",
     backgroundColor: "#EFEFEF",
     borderRadius: 10
@@ -1306,30 +1321,30 @@ const styles = theme =&gt; ({
     backgroundColor: "#F7F7F7",
   },
   homePageSubHeader: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    paddingTop: spacing(4),
+    paddingBottom: spacing(4),
   },
   homePageBulletPointContainer: {
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(2),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
+    paddingLeft: spacing(2),
+    paddingRight: spacing(2),
+    paddingTop: spacing(4),
+    paddingBottom: spacing(2),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
     backgroundColor: "#FFFFFF",
     borderRadius: 10
   },
   homePageGetStartedContainer: {
-    marginTop: theme.spacing(3),
-    paddingLeft: theme.spacing(4),
-    paddingRight: theme.spacing(4),
+    marginTop: spacing(3),
+    paddingLeft: spacing(4),
+    paddingRight: spacing(4),
   },
   homePageBulletPoint: {
     display: "flex",
     alignItems: "center",
-    marginTop: theme.spacing(3.5),
-    marginBottom: theme.spacing(3.5),
-    marginLeft: theme.spacing(2)
+    marginTop: spacing(3.5),
+    marginBottom: spacing(3.5),
+    marginLeft: spacing(2)
   },
   contactFormContainer: {
 &nbsp;
@@ -1340,24 +1355,24 @@ const styles = theme =&gt; ({
   },
   homepageTitleHeadingContainer: {
     backgroundColor: "#fbfbfb",
-    padding: theme.spacing(1)
+    padding: spacing(1)
   },
   homepageTitleSubheading: {
     color: "#FFF",
-    marginTop: theme.spacing(1)
+    marginTop: spacing(1)
   },
   homepageTitleSubheadingContainer: {
     backgroundColor: "#2f8eed",
-    padding: theme.spacing(1)
+    padding: spacing(1)
   },
   homepageScreenshotContainer: {
     textAlign: "center",
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    paddingLeft: theme.spacing(1),
-    paddingRight: theme.spacing(1),
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
+    paddingLeft: spacing(1),
+    paddingRight: spacing(1),
+    paddingTop: spacing(1),
+    paddingBottom: spacing(1),
     color: "#2f8eed",
   },
   homePageHeading: {
@@ -1371,13 +1386,13 @@ const styles = theme =&gt; ({
     textAlign: "center"
   },
   signupContainer: {
-    marginBottom: theme.spacing(3),
-    marginLeft: theme.spacing(4),
-    marginRight: theme.spacing(4),
-    paddingTop: theme.spacing(3),
-    paddingBottom: theme.spacing(4),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2)
+    marginBottom: spacing(3),
+    marginLeft: spacing(4),
+    marginRight: spacing(4),
+    paddingTop: spacing(3),
+    paddingBottom: spacing(4),
+    paddingLeft: spacing(2),
+    paddingRight: spacing(2)
   },
   homePageSignupText: {
     textAlign: "center"
@@ -1385,7 +1400,7 @@ const styles = theme =&gt; ({
   homePagePreviewImage: {
     cursor: "pointer",
     backgroundColor: "#FFFFFF",
-    padding: theme.spacing(2),
+    padding: spacing(2),
     borderRadius: 10
   },
   previewImage: {
@@ -1410,7 +1425,7 @@ const styles = theme =&gt; ({
   userAdminSelectContainer: {
     display: "flex",
   }
-});
+};};
 &nbsp;
 export {
   MuiTheme,
@@ -1423,7 +1438,7 @@ export {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-09-24T05:39:47.837Z
+                at 2025-09-27T15:16:07.477Z
             </div>
         <script src="../prettify.js"></script>
         <script>
