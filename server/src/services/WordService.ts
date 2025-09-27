@@ -1,6 +1,7 @@
 import { Word, IWord } from '../models/Word';
 import { logger } from '../utils/logger';
 import { config } from '../config';
+import DataLoader from 'dataloader';
 
 export interface WordQueryOptions {
   vowel?: string[];
@@ -12,17 +13,95 @@ export interface WordQueryOptions {
   age?: string;
   limit?: number;
   gradeLevel?: string;
+  offset?: number;
+  sortBy?: 'score' | 'lexeme' | 'syllables' | 'random';
+  sortOrder?: 'asc' | 'desc';
 }
 
 export interface WordFilterResult {
   words: IWord[];
   totalCount: number;
   hasMore: boolean;
+  queryStats?: QueryStats;
+}
+
+export interface QueryStats {
+  executionTimeMs: number;
+  docsExamined: number;
+  indexUsed: string;
+  cacheHit?: boolean;
+}
+
+export interface BatchWordQuery {
+  id: string;
+  options: WordQueryOptions;
 }
 
 export class WordService {
   private static instance: WordService;
+  private wordLoader: DataLoader<string, IWord | null>;
+  private batchQueryLoader: DataLoader<string, WordFilterResult>;
+  private queryCache: Map<string, { result: WordFilterResult; timestamp: number }>;
+  private readonly CACHE_TTL = 30 * 60 * 1000; // 30 minutes
   
+  private constructor() {
+    this.queryCache = new Map();
+    
+    // DataLoader for individual word lookups
+    this.wordLoader = new DataLoader<string, IWord | null>(
+      async (ids: readonly string[]) => {
+        try {
+          const words = await Word.find({ _id: { $in: ids } });
+          const wordMap = new Map(words.map(word => [word._id.toString(), word]));
+          return ids.map(id => wordMap.get(id) || null);
+        } catch (error) {
+          logger.error('Error in word batch loader:', error);
+          return ids.map(() => null);
+        }
+      },
+      {
+        maxBatchSize: 100,
+        cacheKeyFn: (key) => key.toString()
+      }
+    );
+
+    // DataLoader for batch word queries
+    this.batchQueryLoader = new DataLoader<string, WordFilterResult>(
+      async (queryKeys: readonly string[]) => {
+        const results: WordFilterResult[] = [];
+        
+        for (const queryKey of queryKeys) {
+          try {
+            const options = JSON.parse(queryKey) as WordQueryOptions;
+            const result = await this.executeWordQuery(options);
+            results.push(result);
+          } catch (error) {
+            logger.error('Error in batch query loader:', error);
+            results.push({
+              words: [],
+              totalCount: 0,
+              hasMore: false,
+              queryStats: {
+                executionTimeMs: 0,
+                docsExamined: 0,
+                indexUsed: 'ERROR'
+              }
+            });
+          }
+        }
+        
+        return results;
+      },
+      {
+        maxBatchSize: 10,
+        cacheKeyFn: (key) => key
+      }
+    );
+
+    // Clean cache periodically
+    setInterval(() => this.cleanCache(), 5 * 60 * 1000); // Every 5 minutes
+  }
+
   public static getInstance(): WordService {
     if (!WordService.instance) {
       WordService.instance = new WordService();

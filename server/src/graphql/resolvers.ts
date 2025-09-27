@@ -1,4 +1,4 @@
-import { WordService } from '../services/WordService';
+import { WordServiceOptimized } from '../services/WordServiceOptimized';
 import { RoutineService } from '../services/RoutineService';
 import { ProgressService } from '../services/ProgressService';
 import { UserService } from '../services/UserService';
@@ -32,7 +32,7 @@ export const resolvers = {
     // Word queries
     async words(_: any, { input }: any) {
       try {
-        const wordService = WordService.getInstance();
+        const wordService = WordServiceOptimized.getInstance();
         return await wordService.queryWords(input);
       } catch (error) {
         logger.error('Error in words query:', error);
@@ -42,7 +42,7 @@ export const resolvers = {
 
     async word(_: any, { id }: any) {
       try {
-        const wordService = WordService.getInstance();
+        const wordService = WordServiceOptimized.getInstance();
         const word = await wordService.getWordById(id);
         if (!word) throw new UserInputError('Word not found');
         return word;
@@ -58,7 +58,7 @@ export const resolvers = {
 
     async randomWord(_: any, { input }: any) {
       try {
-        const wordService = WordService.getInstance();
+        const wordService = WordServiceOptimized.getInstance();
         return await wordService.getRandomWord(input);
       } catch (error) {
         logger.error('Error in randomWord query:', error);
@@ -275,7 +275,7 @@ export const resolvers = {
       if (!user) throw new AuthenticationError('Authentication required');
       
       try {
-        const wordService = WordService.getInstance();
+        const wordService = WordServiceOptimized.getInstance();
         return await wordService.voteOnWord(wordId, user.id, vote);
       } catch (error) {
         logger.error('Error in voteWord mutation:', error);
