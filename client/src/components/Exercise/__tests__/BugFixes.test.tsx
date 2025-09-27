@@ -17,7 +17,7 @@ const renderWithTheme = (component: React.ReactElement) => {
 };
 
 // Mock the custom hooks to avoid dependency issues
-jest.mock('../../hooks/useExerciseTimer', () => ({
+jest.mock('../../../hooks/useExerciseTimer', () => ({
   useExerciseTimer: () => ({
     timeRemaining: 30,
     isRunning: false,
@@ -30,7 +30,7 @@ jest.mock('../../hooks/useExerciseTimer', () => ({
   }),
 }));
 
-jest.mock('../../hooks/useRoutineExecution', () => ({
+jest.mock('../../../hooks/useRoutineExecution', () => ({
   useRoutineExecution: () => ({
     currentStep: 0,
     currentWord: null,
@@ -45,7 +45,7 @@ jest.mock('../../hooks/useRoutineExecution', () => ({
   }),
 }));
 
-jest.mock('../../hooks/useProgressTracking', () => ({
+jest.mock('../../../hooks/useProgressTracking', () => ({
   useProgressTracking: () => ({
     sessionData: {
       id: 'test-session',
